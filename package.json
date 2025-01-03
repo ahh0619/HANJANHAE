@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cm": "npx gitmoji -c"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.47.10",
     "@tanstack/react-query": "^5.62.11",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
+    "gitmoji-cli": "^9.5.0",
     "next": "14.2.3",
     "openai": "^4.77.0",
     "prettier": "^3.4.2",
