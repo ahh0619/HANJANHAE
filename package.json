@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cm": "npx gitmoji -c"
+    "cli": "npx gitmoji -c"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.47.10",
