@@ -1,4 +1,4 @@
-// components/ProfileEditModal.tsx
+'use client';
 
 import React, { useState } from 'react';
 
@@ -34,7 +34,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         <div className="flex flex-col items-center">
           <label
             htmlFor="file-upload"
-            className="relative mb-6 flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-full"
+            className="border-gray border-gray border-black-100 relative mb-6 flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-black"
           >
             {preview ? (
               <img
@@ -55,7 +55,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           </label>
           <label
             htmlFor="nickname"
-            className="text-md mb-2 self-start font-bold text-gray-700"
+            className="mb-2 self-start text-sm font-medium text-gray-700"
           >
             닉네임
           </label>
