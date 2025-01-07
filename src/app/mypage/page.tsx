@@ -1,6 +1,20 @@
-// pages/my-page.tsx
+'use client';
+
+import { useState } from 'react';
+
+import ProfileEditModal from './_components/ProfileEditModal';
 
 const MyPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col items-center">
       {/* Header */}
@@ -19,7 +33,10 @@ const MyPage = () => {
           <div className="ml-4 flex flex-col justify-center">
             <p className="text-lg font-semibold">슬찌</p>
           </div>
-          <button className="ml-auto rounded bg-gray-200 px-4 py-1 text-sm">
+          <button
+            onClick={handleModalOpen}
+            className="ml-auto rounded bg-gray-200 px-4 py-1 text-sm"
+          >
             수정
           </button>
         </div>
@@ -50,6 +67,9 @@ const MyPage = () => {
           회원 탈퇴
         </button>
       </div>
+
+      {/* Profile Edit Modal */}
+      <ProfileEditModal isOpen={isModalOpen} onClose={handleModalClose} />
     </div>
   );
 };
