@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 interface ProfileEditModalProps {
@@ -37,7 +38,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
             className="border-gray border-gray border-black-100 relative mb-6 flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-black"
           >
             {preview ? (
-              <img
+              <Image
                 src={preview}
                 alt="Preview"
                 className="h-full w-full object-cover"
