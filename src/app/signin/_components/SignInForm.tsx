@@ -1,34 +1,28 @@
-const SignInForm = () => {
-  return (
-    <form className="flex flex-col gap-4">
-      {/* 아이디 */}
-      <div className="flex flex-col gap-1">
-        <label className="font-bold" htmlFor="email">
-          아이디
-        </label>
-        <input
-          className="border border-black p-2"
-          type="text"
-          id="email"
-          placeholder="아이디를 입력해 주세요."
-          autoComplete="off"
-        />
-        {/* <p className="text-sm text-red-500">Error Message</p> */}
-      </div>
+'use client';
+import InputField from '@/components/auth/InputField';
+import useSignIn from '@/hooks/auth/useSignIn';
 
-      {/* 비밀번호 */}
-      <div className="flex flex-col gap-1">
-        <label className="font-bold" htmlFor="password">
-          비밀번호
-        </label>
-        <input
-          className="border border-black p-2"
-          type="password"
-          id="password"
-          placeholder="비밀번호를 입력해 주세요."
-        />
-        {/* <p className="text-sm text-red-500">Error Message</p> */}
-      </div>
+const SignInForm = () => {
+  const { handleSubmit, register, onSubmit, errors } = useSignIn();
+
+  return (
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <InputField
+        id="email"
+        label="아이디"
+        placeholder="아이디를 입력해 주세요."
+        register={register}
+        error={errors.email?.message}
+      />
+
+      <InputField
+        id="password"
+        label="비밀번호"
+        type="password"
+        placeholder="비밀번호를 입력해 주세요."
+        register={register}
+        error={errors.password?.message}
+      />
 
       {/* 아이디 저장 */}
       <div className="flex items-center justify-end gap-1">

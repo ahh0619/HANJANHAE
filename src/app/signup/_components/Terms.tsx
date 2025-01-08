@@ -1,6 +1,6 @@
-const TermsData = () => {
+const Terms = () => {
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <p className="text-sm text-gray-500">
         마주하다를 이용하시려면 이용약관에 동의해주세요.
       </p>
@@ -61,8 +61,8 @@ const TermsData = () => {
           자사
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default TermsData;
+export default Terms;
