@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+import ShareButton from './ShareButton';
+
 type DynamicHeaderProps = {
   name: string;
+  image: string;
+  description: string;
   onBackClick: () => void;
   onFavoriteClick: () => void;
   onShareClick: () => void;
@@ -11,9 +15,10 @@ type DynamicHeaderProps = {
 
 const DynamicHeader = ({
   name,
+  image,
+  description,
   onBackClick,
   onFavoriteClick,
-  onShareClick,
 }: DynamicHeaderProps) => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,9 +51,9 @@ const DynamicHeader = ({
         </p>
 
         {/* 좋아요 및 공유 버튼 */}
-        <div className="flex space-x-4">
+        <div className="flex">
           <button onClick={onFavoriteClick}>❤️</button>
-          <button onClick={onShareClick}>🔗</button>
+          <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
     </div>

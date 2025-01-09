@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 
 import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Providers from '@/providers/Provider';
+
 import '@/styles/globals.css';
+import KakaoInit from './drink/_components/KakaoInit';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,9 +24,16 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
+          strategy="lazyOnload"
+        />
+      </head>
       <body className={inter.className}>
         <Providers>
           <Header />
+          <KakaoInit />
           {children}
           <ScrollTop />
           <Footer />
