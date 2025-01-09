@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import OptionItem from './OptionItem';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceAlcoholLevelProps = {
-  onNext: (data: { alcoholLevel: string }) => void;
-  onPrev: () => void;
-};
-
 const PreferenceAlcoholLevel = ({
   onNext,
   onPrev,
-}: PreferenceAlcoholLevelProps) => {
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  surveyData,
+}: PreferenceTypeProps) => {
+  const [selectedLevel, setSelectedLevel] = useState<string | null>(
+    surveyData.alcoholLevel || null,
+  );
 
   const handleSelect = (level: string) => {
     setSelectedLevel(level);

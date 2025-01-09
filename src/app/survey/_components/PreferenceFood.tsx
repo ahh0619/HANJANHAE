@@ -1,15 +1,18 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceFoodProps = {
-  onNext: (data: { food: string }) => void;
-  onPrev: () => void;
-};
-
-const PreferenceFood = ({ onNext, onPrev }: PreferenceFoodProps) => {
-  const [selectedFood, setSelectedFood] = useState<string>('');
+const PreferenceFood = ({
+  onNext,
+  onPrev,
+  surveyData,
+}: PreferenceTypeProps) => {
+  const [selectedFood, setSelectedFood] = useState<string>(
+    surveyData.food || '',
+  );
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFood(e.target.value);

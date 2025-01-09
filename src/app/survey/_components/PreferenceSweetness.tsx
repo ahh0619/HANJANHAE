@@ -1,17 +1,18 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import OptionItem from './OptionItem';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceSweetnessProps = {
-  onNext: (data: { sweetness: string }) => void;
-  onPrev: () => void;
-};
-
-const PreferenceSweetness = ({ onNext, onPrev }: PreferenceSweetnessProps) => {
+const PreferenceSweetness = ({
+  onNext,
+  onPrev,
+  surveyData,
+}: PreferenceTypeProps) => {
   const [selectedSweetness, setSelectedSweetness] = useState<string | null>(
-    null,
+    surveyData.sweetness || null,
   );
 
   const handleSelect = (sweetness: string) => {
