@@ -34,6 +34,8 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
     <div className="relative">
       <DynamicHeader
         name={drink.name}
+        image={drink.image!}
+        description={drink.description!}
         onBackClick={() => console.log('뒤로가기')}
         onFavoriteClick={() => console.log('좋아요 클릭')}
         onShareClick={() => console.log('공유하기 클릭')}
@@ -41,7 +43,11 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
 
       <div className="mx-auto max-w-md">
         <DrinkImage image={drink.image} name={drink.name} />
-        <DrinkDescription name={drink.name} description={drink.description} />
+        <DrinkDescription
+          name={drink.name}
+          imageUrl={drink.image!}
+          description={drink.description}
+        />
         <DrinkBasicInfo drink={drink} />
 
         {/* Food Pairings */}
