@@ -1,5 +1,11 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+
 const Footer = () => {
-  return <div>Footer</div>;
+  const pathname = usePathname();
+
+  return pathname !== '/survey' && <div> Footer</div>;
 };
 
 export default Footer;
