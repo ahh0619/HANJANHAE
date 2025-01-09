@@ -1,16 +1,19 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import OptionItem from './OptionItem';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceAcidityProps = {
-  onNext: (data: { acidity: string }) => void;
-  onPrev: () => void;
-};
-
-const PreferenceAcidity = ({ onNext, onPrev }: PreferenceAcidityProps) => {
-  const [selectedAcidity, setSelectedAcidity] = useState<string | null>(null);
+const PreferenceAcidity = ({
+  onNext,
+  onPrev,
+  surveyData,
+}: PreferenceTypeProps) => {
+  const [selectedAcidity, setSelectedAcidity] = useState<string | null>(
+    surveyData.acidity || null,
+  );
 
   const handleSelect = (acidity: string) => {
     setSelectedAcidity(acidity);
