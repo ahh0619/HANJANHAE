@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import ProgressBar from './ProgressBar';
+import StepButton from './StepButton';
+
 type PreferenceFoodProps = {
   onNext: (data: { food: string }) => void;
   onPrev: () => void;
@@ -29,35 +32,7 @@ const PreferenceFood = ({ onNext, onPrev }: PreferenceFoodProps) => {
       </div>
 
       {/* 진행바 */}
-      <div className="flex items-center space-x-2">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          1
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          2
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          3
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          4
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          5
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          6
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-sm text-white">
-          7
-        </span>
-      </div>
+      <ProgressBar currentStep={7} />
 
       {/* 질문 */}
       <div className="text-center">
@@ -78,20 +53,11 @@ const PreferenceFood = ({ onNext, onPrev }: PreferenceFoodProps) => {
       </div>
 
       {/* 버튼 */}
-      <div className="fixed bottom-0 left-0 flex w-full flex-col items-center space-y-4 bg-white p-4">
-        <button
-          className={`w-full rounded-lg py-3 ${
-            selectedFood
-              ? 'bg-black text-white'
-              : 'cursor-not-allowed bg-gray-300 text-gray-500'
-          }`}
-          onClick={handleNext}
-          disabled={!selectedFood}
-        >
-          완료
-        </button>
-        <button className="text-sm text-gray-500 underline">그만할래요</button>
-      </div>
+      <StepButton
+        content={'완료'}
+        onClick={handleNext}
+        disabled={!selectedFood}
+      />
     </div>
   );
 };
