@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
@@ -22,6 +23,7 @@ const RootLayout = ({
       <body className={inter.className}>
         <Header />
         {children}
+        <ScrollTop />
         <Footer />
       </body>
     </html>
