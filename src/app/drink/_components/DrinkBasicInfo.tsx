@@ -1,5 +1,7 @@
 import { Database } from '@/types/supabase';
 
+import DrinkInfoRow from './DrinkInfoRow';
+
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
 const DrinkBasicInfo = ({ drink }: { drink: Drink }) => (
@@ -10,24 +12,10 @@ const DrinkBasicInfo = ({ drink }: { drink: Drink }) => (
         {drink.ingredients || '재료 정보 없음'}
       </p>
       <div className="mt-2 space-y-2 text-sm">
-        <div className="flex justify-between">
-          <p className="font-semibold">주종</p>
-          <p className="text-gray-700">{drink.type || '정보 없음'}</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="font-semibold">도수</p>
-          <p className="text-gray-700">
-            {drink.alcohol_content || '정보 없음'}
-          </p>
-        </div>
-        <div className="flex justify-between">
-          <p className="font-semibold">용량</p>
-          <p className="text-gray-700">{drink.volume || '정보 없음'}</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="font-semibold">제조사</p>
-          <p className="text-gray-700">{drink.manufacturer || '정보 없음'}</p>
-        </div>
+        <DrinkInfoRow label="주종" value={drink.type} />
+        <DrinkInfoRow label="도수" value={drink.alcohol_content} />
+        <DrinkInfoRow label="용량" value={drink.volume} />
+        <DrinkInfoRow label="제조사" value={drink.manufacturer} />
       </div>
     </div>
   </section>
