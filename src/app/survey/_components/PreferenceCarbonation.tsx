@@ -1,20 +1,18 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import OptionItem from './OptionItem';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceCarbonationProps = {
-  onNext: (data: { carbonation: string }) => void;
-  onPrev: () => void;
-};
-
 const PreferenceCarbonation = ({
   onNext,
   onPrev,
-}: PreferenceCarbonationProps) => {
+  surveyData,
+}: PreferenceTypeProps) => {
   const [selectedCarbonation, setSelectedCarbonation] = useState<string | null>(
-    null,
+    surveyData.carbonation || null,
   );
 
   const handleSelect = (carbonation: string) => {

@@ -1,16 +1,19 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import OptionItem from './OptionItem';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
-type PreferenceBodyProps = {
-  onNext: (data: { body: string }) => void;
-  onPrev: () => void;
-};
-
-const PreferenceBody = ({ onNext, onPrev }: PreferenceBodyProps) => {
-  const [selectedBody, setSelectedBody] = useState<string | null>(null);
+const PreferenceBody = ({
+  onNext,
+  onPrev,
+  surveyData,
+}: PreferenceTypeProps) => {
+  const [selectedBody, setSelectedBody] = useState<string | null>(
+    surveyData.body || null,
+  );
 
   const handleSelect = (sweetness: string) => {
     setSelectedBody(sweetness);

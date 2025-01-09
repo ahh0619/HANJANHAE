@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
+import { PreferenceTypeProps } from '@/types/surveyTypes';
+
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
-
-type PreferenceTypeSelectionProps = {
-  onNext: (data: { type: string[] }) => void;
-  onPrev: () => void;
-};
 
 const PreferenceTypeSelection = ({
   onNext,
   onPrev,
-}: PreferenceTypeSelectionProps) => {
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  surveyData,
+}: PreferenceTypeProps) => {
+  const [selectedTypes, setSelectedTypes] = useState<string[]>(
+    surveyData.type || [],
+  );
 
   const toggleSelection = (type: string) => {
     setSelectedTypes((prev) =>
