@@ -13,3 +13,8 @@ export type PreferenceTypeProps = {
   onNext: (data: Partial<surveyProps>) => void;
   onPrev: () => void;
 };
+
+export type StepProps = {
+  name: string;
+  children: React.ReactNode;
+};
