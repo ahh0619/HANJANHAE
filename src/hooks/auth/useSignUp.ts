@@ -1,7 +1,12 @@
-import { SignUpDataType } from '@/types/Auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+import { SignUpDataType } from '@/types/Auth';
+
+type UseSignUpProps = {
+  handleSuccess: () => void;
+};
 
 const signupSchema = z
   .object({
@@ -41,7 +46,7 @@ const signupSchema = z
     path: ['passwordConfirm'],
   });
 
-const useSignUp = () => {
+const useSignUp = ({ handleSuccess }: UseSignUpProps) => {
   const {
     register,
     handleSubmit,
@@ -58,11 +63,29 @@ const useSignUp = () => {
     },
   });
 
-  const onSubmit = (data: SignUpDataType) => {
+  const onSubmit = async (values: SignUpDataType) => {
     try {
-      console.log('signup data => ', data);
-    } catch (error) {
-      console.log('signup error');
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (data.errorMessage) {
+        window.alert(data.errorMessage);
+        return;
+      }
+
+      if (data.successMessage) {
+        window.alert(data.successMessage);
+        handleSuccess();
+      }
+    } catch (error: any) {
+      window.alert(error.message);
     }
   };
 

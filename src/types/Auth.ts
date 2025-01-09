@@ -1,12 +1,12 @@
-export interface SignInDataType {
+export type SignInDataType = {
   email: string;
   password: string;
-}
+};
 
-export interface SignUpDataType {
+export type SignUpDataType = {
   email: string;
   password: string;
   passwordConfirm: string;
   nickname: string;
   birth: string;
-}
+};

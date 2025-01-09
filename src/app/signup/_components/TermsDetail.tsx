@@ -1,10 +1,25 @@
-const TermsDetail = () => {
+type TermsDetailProps = {
+  terms: number | null;
+  handleClose: (value: number | null) => void;
+};
+
+const TermsDetail = ({ terms, handleClose }: TermsDetailProps) => {
   return (
     <div className="absolute left-0 right-0 top-0 bg-white">
       <div className="mx-auto w-11/12 max-w-96 py-4">
-        <h1 className="mb-8 text-center text-3xl font-bold">이용약관</h1>
+        <div className="relative">
+          <span
+            className="absolute left-0 top-0 cursor-pointer text-lg"
+            onClick={() => handleClose(null)}
+          >
+            &#60;
+          </span>
+          <h1 className="mb-8 text-center text-3xl font-bold">이용약관</h1>
+        </div>
 
-        <p className="text-xl font-bold">홈페이지 이용 약관</p>
+        <p className="text-xl font-bold">
+          {terms === 1 ? '홈페이지 이용 약관' : '개인정보수집 및 이용동의'}
+        </p>
 
         <p>
           What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing

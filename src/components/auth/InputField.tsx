@@ -1,13 +1,13 @@
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface InputFieldProps<T extends FieldValues> {
+type InputFieldProps<T extends FieldValues> = {
   id: Path<T>;
   label: string;
   type?: string;
   placeholder: string;
   register: UseFormRegister<T>;
   error?: string;
-}
+};
 
 const InputField = <T extends FieldValues>({
   id,
