@@ -1,9 +1,15 @@
 'use client';
+import { useRouter } from 'next/navigation';
+
 import InputField from '@/components/auth/InputField';
 import useSignIn from '@/hooks/auth/useSignIn';
 
 const SignInForm = () => {
-  const { handleSubmit, register, onSubmit, errors } = useSignIn();
+  const router = useRouter();
+
+  const { handleSubmit, register, onSubmit, errors } = useSignIn({
+    handleSuccess: () => router.push('/'),
+  });
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -39,7 +45,12 @@ const SignInForm = () => {
       <div className="flex justify-center gap-2">
         <p className="cursor-pointer text-sm text-gray-500">비밀번호 찾기</p>
         <p className="cursor-pointer text-sm text-gray-500">|</p>
-        <p className="cursor-pointer text-sm text-gray-500">회원가입</p>
+        <p
+          className="cursor-pointer text-sm text-gray-500"
+          onClick={() => router.push('/signup')}
+        >
+          회원가입
+        </p>
       </div>
     </form>
   );

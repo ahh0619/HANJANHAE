@@ -1,7 +1,14 @@
-import { SignInDataType } from '@/types/Auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
+import { useAuthStore } from '@/store/authStore';
+import { SignInDataType } from '@/types/Auth';
+import { fetchUser } from '@/utils/auth/action';
+
+type UseSignInProps = {
+  handleSuccess: () => void;
+};
 
 const signinSchema = z.object({
   email: z
@@ -19,7 +26,9 @@ const signinSchema = z.object({
     ),
 });
 
-const useSignIn = () => {
+const useSignIn = ({ handleSuccess }: UseSignInProps) => {
+  const { setUser } = useAuthStore();
+
   const {
     register,
     handleSubmit,
@@ -33,11 +42,30 @@ const useSignIn = () => {
     },
   });
 
-  const onSubmit = (data: SignInDataType) => {
+  const onSubmit = async (values: SignInDataType) => {
     try {
-      console.log('signin data => ', data);
-    } catch (error) {
-      console.log('signin error');
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (data.errorMessage) {
+        window.alert(data.errorMessage);
+        return;
+      }
+
+      if (data.successMessage) {
+        window.alert(data.successMessage);
+        setUser(await fetchUser());
+        handleSuccess();
+      }
+    } catch (error: any) {
+      window.alert(error.message);
     }
   };
 
