@@ -37,7 +37,10 @@ const Page = () => {
   return (
     <div>
       <Step name="주종" currentStep={step}>
-        <PreferenceTypeSelection onNext={(data) => handleNext(data, '도수')} />
+        <PreferenceTypeSelection
+          onNext={(data) => handleNext(data, '도수')}
+          onPrev={() => router.push('/')}
+        />
       </Step>
       <Step name="도수" currentStep={step}>
         <PreferenceAlcoholLevel

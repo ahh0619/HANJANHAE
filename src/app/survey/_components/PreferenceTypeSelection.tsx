@@ -1,11 +1,17 @@
-import Link from 'next/link';
 import { useState } from 'react';
+
+import ProgressBar from './ProgressBar';
+import StepButton from './StepButton';
 
 type PreferenceTypeSelectionProps = {
   onNext: (data: { type: string[] }) => void;
+  onPrev: () => void;
 };
 
-const PreferenceTypeSelection = ({ onNext }: PreferenceTypeSelectionProps) => {
+const PreferenceTypeSelection = ({
+  onNext,
+  onPrev,
+}: PreferenceTypeSelectionProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   const toggleSelection = (type: string) => {
@@ -34,41 +40,14 @@ const PreferenceTypeSelection = ({ onNext }: PreferenceTypeSelectionProps) => {
     <div className="flex flex-col items-center space-y-6 p-6">
       {/* 제목 */}
       <div className="relative w-full">
-        <Link href="/">
-          <p className="absolute left-0">&lt;</p>
-        </Link>
+        <p className="absolute left-0" onClick={onPrev}>
+          &lt;
+        </p>
         <h1 className="text-center text-xl font-bold">내 취향 조사</h1>
       </div>
+
       {/* 진행바 */}
-      <div className="flex items-center space-x-2">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-sm text-white">
-          1
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          2
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          3
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          4
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          5
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          6
-        </span>
-        <span className="h-[2px] w-5 bg-gray-300"></span>
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-300 text-sm text-gray-500">
-          7
-        </span>
-      </div>
+      <ProgressBar currentStep={1} />
 
       {/* 질문 */}
       <div className="text-center">
@@ -94,24 +73,16 @@ const PreferenceTypeSelection = ({ onNext }: PreferenceTypeSelectionProps) => {
         ))}
       </div>
 
+      <span className="ml-5 w-full text-sm text-gray-500">
+        술종류 <span className="underline">?</span>
+      </span>
+
       {/* 버튼 */}
-      <div className="fixed bottom-0 left-0 flex w-full flex-col items-center space-y-4 bg-white p-4">
-        <span className="text-sm text-gray-500">
-          술종류 <span className="underline">?</span>
-        </span>
-        <button
-          className={`w-full rounded-lg py-3 ${
-            selectedTypes.length > 0
-              ? 'bg-black text-white'
-              : 'cursor-not-allowed bg-gray-300 text-gray-500'
-          }`}
-          onClick={handleNext}
-          disabled={selectedTypes.length === 0}
-        >
-          다음
-        </button>
-        <button className="text-sm text-gray-500 underline">그만할래요</button>
-      </div>
+      <StepButton
+        content={'다음'}
+        onClick={handleNext}
+        disabled={!selectedTypes.length}
+      />
     </div>
   );
 };
