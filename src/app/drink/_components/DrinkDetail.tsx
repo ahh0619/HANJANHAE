@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { Database } from '@/types/supabase';
-import { fetchFoodPairings } from '@/utils/foodpairing/action'; // 적절한 경로로 설정하세요
+import { fetchFoodPairings } from '@/utils/foodpairing/action';
 
 import DrinkBasicInfo from './DrinkBasicInfo';
 import DrinkDescription from './DrinkDescription';

@@ -1,4 +1,3 @@
-// DrinkDescription Component
 const DrinkDescription = ({
   name,
   description,
