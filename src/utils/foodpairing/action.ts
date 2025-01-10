@@ -8,6 +8,14 @@ type FoodPairing = {
   food_image: string | null;
 };
 
+type FoodPairingResponse = {
+  id: string;
+  foods: {
+    name: string;
+    image: string | null;
+  };
+};
+
 export const fetchFoodPairings = async (
   drinkId: string,
 ): Promise<FoodPairing[]> => {
@@ -31,10 +39,12 @@ export const fetchFoodPairings = async (
     return [];
   }
 
+  const castedData = data as unknown as FoodPairingResponse[];
+
   // 데이터 정리: `foods` 데이터를 펼쳐서 반환
-  return data.map((pairing) => ({
+  return castedData.map((pairing) => ({
     id: pairing.id,
-    food_name: pairing.foods.name,
-    food_image: pairing.foods.image,
+    food_name: pairing.foods.name as string,
+    food_image: pairing.foods.image as string,
   }));
 };
