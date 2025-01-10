@@ -1,3 +1,5 @@
+import BackButton from '@/components/common/BackButton';
+
 const DrinkImage = ({
   image,
   name,
@@ -6,7 +8,7 @@ const DrinkImage = ({
   name: string;
 }) => (
   <div className="relative">
-    <button className="absolute left-2 top-2 text-lg">{'<'}</button>
+    <BackButton className="absolute left-2 top-2" />
     <div className="flex h-64 w-full items-center justify-center rounded-lg">
       {image ? (
         <img
