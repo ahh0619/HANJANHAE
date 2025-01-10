@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
 
 import ShareButton from './ShareButton';
@@ -42,7 +43,7 @@ const DynamicHeader = ({
     >
       <div className="relative flex items-center justify-between">
         {/* 뒤로가기 버튼 */}
-        <button className="text-lg">{'<'}</button>
+        <BackButton />
 
         {/* 술 이름 */}
         <p className="absolute left-1/2 -translate-x-1/2 transform text-base font-bold">
