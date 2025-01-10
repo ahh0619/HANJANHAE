@@ -19,9 +19,12 @@ type DrinkDetailProps = {
 };
 
 const DrinkDetail = ({ drink }: DrinkDetailProps) => {
+  // 유저 상태 임시로 하드코딩
+  const user = null;
+
   const {
     data: foodPairings = [],
-    isLoading,
+    isPending,
     isError,
     error,
   } = useQuery({
@@ -36,9 +39,8 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
         name={drink.name}
         image={drink.image!}
         description={drink.description!}
-        onBackClick={() => console.log('뒤로가기')}
-        onFavoriteClick={() => console.log('좋아요 클릭')}
-        onShareClick={() => console.log('공유하기 클릭')}
+        userId={user?.id}
+        drinkId={drink.id}
       />
 
       <div className="mx-auto max-w-md">
@@ -47,12 +49,14 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
           name={drink.name}
           imageUrl={drink.image!}
           description={drink.description}
+          userId={user?.id}
+          drinkId={drink.id}
         />
         <DrinkBasicInfo drink={drink} />
 
         {/* Food Pairings */}
         <section className="border-b p-4">
-          {isLoading ? (
+          {isPending ? (
             <FoodPairingSkeleton />
           ) : isError ? (
             <p className="text-sm text-red-500">
