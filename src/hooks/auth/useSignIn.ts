@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
-import { fetchUser } from '@/utils/auth/action';
+import { fetchUser, signin } from '@/utils/auth/action';
 
 type UseSignInProps = {
   handleSuccess: () => void;
@@ -44,28 +44,13 @@ const useSignIn = ({ handleSuccess }: UseSignInProps) => {
 
   const onSubmit = async (values: SignInDataType) => {
     try {
-      const response = await fetch('/api/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      await signin(values);
 
-      const data = await response.json();
-
-      if (data.errorMessage) {
-        window.alert(data.errorMessage);
-        return;
-      }
-
-      if (data.successMessage) {
-        window.alert(data.successMessage);
-        setUser(await fetchUser());
-        handleSuccess();
-      }
+      window.alert('로그인 성공');
+      setUser(await fetchUser());
+      handleSuccess();
     } catch (error: any) {
-      window.alert(error.message);
+      window.alert(error);
     }
   };
 

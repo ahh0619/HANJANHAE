@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { SignUpDataType } from '@/types/Auth';
+import { signup } from '@/utils/auth/action';
 
 type UseSignUpProps = {
   handleSuccess: () => void;
@@ -65,27 +66,12 @@ const useSignUp = ({ handleSuccess }: UseSignUpProps) => {
 
   const onSubmit = async (values: SignUpDataType) => {
     try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      await signup(values);
 
-      const data = await response.json();
-
-      if (data.errorMessage) {
-        window.alert(data.errorMessage);
-        return;
-      }
-
-      if (data.successMessage) {
-        window.alert(data.successMessage);
-        handleSuccess();
-      }
+      window.alert('회원가입 성공');
+      handleSuccess();
     } catch (error: any) {
-      window.alert(error.message);
+      window.alert(error);
     }
   };
 
