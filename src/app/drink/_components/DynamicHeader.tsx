@@ -2,23 +2,25 @@
 
 import { useEffect, useState } from 'react';
 
+import BackButton from '@/components/common/BackButton';
+import LikeButton from '@/components/common/LikeButton';
+
 import ShareButton from './ShareButton';
 
 type DynamicHeaderProps = {
   name: string;
   image: string;
   description: string;
-  onBackClick: () => void;
-  onFavoriteClick: () => void;
-  onShareClick: () => void;
+  userId: string | null;
+  drinkId: string;
 };
 
 const DynamicHeader = ({
   name,
   image,
   description,
-  onBackClick,
-  onFavoriteClick,
+  userId,
+  drinkId,
 }: DynamicHeaderProps) => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -41,9 +43,7 @@ const DynamicHeader = ({
     >
       <div className="relative flex items-center justify-between">
         {/* 뒤로가기 버튼 */}
-        <button onClick={onBackClick} className="text-lg">
-          {'<'}
-        </button>
+        <BackButton />
 
         {/* 술 이름 */}
         <p className="absolute left-1/2 -translate-x-1/2 transform text-base font-bold">
@@ -52,7 +52,7 @@ const DynamicHeader = ({
 
         {/* 좋아요 및 공유 버튼 */}
         <div className="flex">
-          <button onClick={onFavoriteClick}>❤️</button>
+          <LikeButton userId={userId} drinkId={drinkId} />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
