@@ -50,12 +50,12 @@ export const signin = async (data: SignInDataType): Promise<void> => {
 
 /* 사용자 정보 가져오기 */
 export const fetchUser = async (): Promise<UserType | null> => {
+  console.log(1);
   const supabase = createClient();
 
   const { data: authData, error: authError } = await supabase.auth.getUser();
 
   if (authError || !authData.user) return null;
-
   const { data, error } = await supabase
     .from('users')
     .select('id, nickname, profile_image, birth')

@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 
+import { useAuthStore } from '@/store/authStore';
 import { Database } from '@/types/supabase';
 import { fetchFoodPairings } from '@/utils/foodpairing/action';
 
@@ -20,7 +21,8 @@ type DrinkDetailProps = {
 
 const DrinkDetail = ({ drink }: DrinkDetailProps) => {
   // 유저 상태 임시로 하드코딩
-  const user = null;
+  const { user } = useAuthStore();
+  console.log(user);
 
   const {
     data: foodPairings = [],
