@@ -45,7 +45,6 @@ const useSignIn = ({ handleSuccess }: UseSignInProps) => {
   const onSubmit = async (values: SignInDataType) => {
     try {
       await signin(values);
-
       window.alert('로그인 성공');
       setUser(await fetchUser());
       handleSuccess();
