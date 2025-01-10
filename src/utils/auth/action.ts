@@ -16,7 +16,7 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
     email,
     password,
     options: {
-      data: { nickname, birth },
+      data: { nickname, birth, profile_image: '' },
     },
   });
 
@@ -35,34 +35,27 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
 };
 
 /* 로그인 */
-export const signin = async (data: SignInDataType): Promise<void> => {
+export const signin = async (data: SignInDataType): Promise<UserType> => {
   const supabase = createClient();
 
   const { email, password } = data;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) throw new Error(error.message);
-};
 
-/* 사용자 정보 가져오기 */
-export const fetchUser = async (): Promise<UserType | null> => {
-  console.log(1);
-  const supabase = createClient();
-
-  const { data: authData, error: authError } = await supabase.auth.getUser();
-
-  if (authError || !authData.user) return null;
-  const { data, error } = await supabase
-    .from('users')
-    .select('id, nickname, profile_image, birth')
-    .eq('id', authData.user.id)
-    .single();
-
-  return error ? null : data;
+  return {
+    id: user.id,
+    nickname: user.user_metadata.nickname,
+    birth: user.user_metadata.birth,
+    profile_image: user.user_metadata.profile_image,
+  };
 };
 
 /* 로그아웃 */
