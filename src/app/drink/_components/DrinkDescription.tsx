@@ -1,3 +1,5 @@
+import LikeButton from '@/components/common/LikeButton';
+
 import ShareButton from './ShareButton';
 
 const DrinkDescription = ({
@@ -13,7 +15,7 @@ const DrinkDescription = ({
     <div className="flex items-center justify-between">
       <h2 className="text-xl font-bold">{name}</h2>
       <div className="flex">
-        <button>❤️</button>
+        <LikeButton />
         <ShareButton title={name} text={description!} imageUrl={imageUrl} />
       </div>
     </div>

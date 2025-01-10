@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import LikeButton from '@/components/common/LikeButton';
+
 import ShareButton from './ShareButton';
 
 type DynamicHeaderProps = {
@@ -52,7 +54,7 @@ const DynamicHeader = ({
 
         {/* 좋아요 및 공유 버튼 */}
         <div className="flex">
-          <button onClick={onFavoriteClick}>❤️</button>
+          <LikeButton />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
