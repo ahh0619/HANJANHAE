@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2 } from 'lucide-react'; // 루시드 리액트 아이콘 가져오기
+import { Share } from 'lucide-react'; // 루시드 리액트 아이콘 가져오기
 import React, { useState } from 'react';
 
 import { copyLinkToClipboard, shareViaKakao } from '@/utils/share/shareUtils';
@@ -58,7 +58,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         onClick={() => setIsOpen(true)}
         className="flex items-center justify-center rounded-full hover:bg-gray-50"
       >
-        <Share2 size={24} className="text-gray-600" />
+        <Share size={24} className="text-black-400" />
       </button>
       <ShareModal
         isOpen={isOpen}
