@@ -31,7 +31,10 @@ const Page = () => {
   useEffect(() => {
     if (currentStep === '완료') {
       console.log('data: ', surveyData);
-      router.push('/');
+      // 비로그인 유저 - 로컬스토리지 저장
+      localStorage.setItem('surveyData', JSON.stringify(surveyData));
+      // 로그인 유저 - 슈퍼베이스 테이블에 저장
+      router.push('/survey/result');
     }
   }, [currentStep, router, surveyData]);
 
