@@ -20,9 +20,7 @@ type DrinkDetailProps = {
 };
 
 const DrinkDetail = ({ drink }: DrinkDetailProps) => {
-  // 유저 상태 임시로 하드코딩
   const { user } = useAuthStore();
-  console.log(user);
 
   const {
     data: foodPairings = [],
@@ -32,7 +30,7 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
   } = useQuery({
     queryKey: ['foodPairings', drink.id],
     queryFn: () => fetchFoodPairings(drink.id),
-    enabled: !!drink.id, // 쿼리 실행 조건 설정
+    enabled: !!drink.id,
   });
 
   return (

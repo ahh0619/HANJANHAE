@@ -17,7 +17,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
   const { data } = useLikeStatus(drinkId, userId); // 좋아요 상태 가져오기
   const toggleLikeMutation = useToggleLike({ drinkId, userId: userId }); // 좋아요 토글 훅
 
-  const handleClick = () => {
+  const handleLikeButtonClick = () => {
     if (!userId) {
       // 로그인 페이지로 이동
       alert('로그인이 필요한 서비스 입니다.');
@@ -30,7 +30,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
 
   return (
     <button
-      onClick={handleClick}
+      onClick={handleLikeButtonClick}
       className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-gray-50"
       aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
     >

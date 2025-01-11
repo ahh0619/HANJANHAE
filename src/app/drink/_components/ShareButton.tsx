@@ -1,6 +1,6 @@
 'use client';
 
-import { Share } from 'lucide-react'; // 루시드 리액트 아이콘 가져오기
+import { Share } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { copyLinkToClipboard, shareViaKakao } from '@/utils/share/shareUtils';
