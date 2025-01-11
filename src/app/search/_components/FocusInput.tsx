@@ -6,6 +6,7 @@ import FilterModal from './FilterModal';
 
 const FocusInput = () => {
   const [isFocused, setIsFocused] = useState(false);
+  const titleCategory = ['증류주', '막걸리', '전통주'];
 
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => setIsFocused(false);
@@ -62,7 +63,7 @@ const FocusInput = () => {
         <div className="mt-16">
           <p className="mb-2 text-gray-600">추천 검색어</p>
           <div className="flex gap-2">
-            {['증류주', '막걸리', '전통주'].map((word, index) => (
+            {titleCategory.map((word, index) => (
               <button
                 key={index}
                 className="rounded-full border px-4 py-1 text-sm"

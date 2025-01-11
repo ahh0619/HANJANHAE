@@ -23,7 +23,7 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     바디감: 'body',
   };
 
-  const handleClick = (value: number) => {
+  const handleCategoryClick = (value: number) => {
     const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
     setTastePreferences(mappedCategory, value); // 선택된 값 저장
   };
@@ -39,7 +39,7 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
         {levels.map(({ label, value }) => (
           <div
             key={value}
-            onClick={() => handleClick(value)}
+            onClick={() => handleCategoryClick(value)}
             className="flex cursor-pointer flex-col items-center"
           >
             <div
