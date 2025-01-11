@@ -1,3 +1,4 @@
+'use server';
 // app/actions/filterData.ts (서버 액션)
 import { Database } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/client';

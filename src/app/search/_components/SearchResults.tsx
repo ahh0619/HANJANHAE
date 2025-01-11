@@ -1,11 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import useFilterStore from '@/store/filterStore';
-import { Database } from '@/types/supabase';
+import useResults from '@/store/resultStore';
 import { filterDrinks, FilterParams } from '@/utils/filter/action';
 
-type Drink = Database['public']['Tables']['drinks']['Row'];
 const SearchResults = () => {
   const {
     selectedTypes,
@@ -14,7 +13,7 @@ const SearchResults = () => {
     triggerFetch,
     setTriggerFetch,
   } = useFilterStore();
-  const [results, setResults] = useState<Drink[]>([]); // Drink 타입으로 상태 관리
+  const { results, setResults } = useResults();
 
   useEffect(() => {
     if (!triggerFetch) return;

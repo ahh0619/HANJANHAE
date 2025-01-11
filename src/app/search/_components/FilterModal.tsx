@@ -1,26 +1,24 @@
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
 
+import FilterSideBar from './FilterSideBar';
 import FilterType from './FilterTypes';
+import HomeScreenButton from './HomeScreenButton';
 
 const FilterModal = () => {
-  const { isModalOpen, openModal, closeModal } = useModalStore();
-  const setTriggerFetch = useFilterStore((state) => state.setTriggerFetch);
+  const { isModalOpen, closeModal } = useModalStore();
+  const { isFiltered, setIsFiltered, setTriggerFetch } = useFilterStore();
 
   const handleApplyfilters = () => {
     closeModal();
+    setIsFiltered(true); // 필터 UI 변경 상태관리
     setTriggerFetch(true);
   };
 
   return (
     <>
       {/* Filter Button */}
-      <button
-        onClick={openModal}
-        className="mt-6 rounded-full bg-gray-500 px-6 py-2 text-sm font-semibold text-white hover:bg-gray-600"
-      >
-        필터
-      </button>
+      {!isFiltered ? <HomeScreenButton /> : <FilterSideBar />}
 
       {/* Modal */}
       {isModalOpen && (
@@ -37,11 +35,9 @@ const FilterModal = () => {
               <h2 className="text-lg font-semibold">필터</h2>
               <button className="text-sm text-blue-500">초기화</button>
             </div>
-
             {/* Scrollable Content */}
             <FilterType />
-
-            {/* Fixed Apply Button */}
+            {/* 적용하기 */}(
             <div className="fixed bottom-0 left-0 w-full border-t border-gray-300 bg-white p-4">
               <button
                 onClick={handleApplyfilters}
@@ -50,6 +46,7 @@ const FilterModal = () => {
                 적용하기
               </button>
             </div>
+            )
           </div>
         </div>
       )}
