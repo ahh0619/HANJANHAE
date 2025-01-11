@@ -25,9 +25,9 @@ const KakaoShareButton = ({
     window.Kakao.Share.sendDefault({
       objectType: 'feed', // 피드 형식 메시지
       content: {
-        title, // 공유 제목
-        description, // 공유 설명
-        imageUrl, // 공유할 이미지 URL
+        title,
+        description,
+        imageUrl,
         link: {
           webUrl, // 데스크톱에서 열릴 링크
           mobileWebUrl: webUrl, // 모바일에서 열릴 링크
@@ -37,8 +37,8 @@ const KakaoShareButton = ({
         {
           title: '자세히 보기',
           link: {
-            webUrl, // 데스크톱에서 열릴 링크
-            mobileWebUrl: webUrl, // 모바일에서 열릴 링크
+            webUrl,
+            mobileWebUrl: webUrl,
           },
         },
       ],
