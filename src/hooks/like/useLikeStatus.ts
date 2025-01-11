@@ -18,6 +18,6 @@ export const useLikeStatus = (drinkId: string, userId: string) => {
   return useQuery({
     queryKey: ['likeStatus', drinkId, userId],
     queryFn: fetchLikeStatus,
-    enabled: !!drinkId && !!userId, // 쿼리 실행 조건
+    enabled: !!drinkId && !!userId,
   });
 };
