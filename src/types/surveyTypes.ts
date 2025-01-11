@@ -1,6 +1,6 @@
 export type surveyProps = {
   type: string[] | null;
-  alcoholLevel: string | null;
+  level: string | null;
   sweetness: string | null;
   acidity: string | null;
   carbonation: string | null;

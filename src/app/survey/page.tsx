@@ -18,7 +18,7 @@ const Page = () => {
   const { Funnel, Step, next, prev, currentStep } = useFunnel('주종');
   const [surveyData, setSurveyData] = useState<surveyProps>({
     type: null,
-    alcoholLevel: null,
+    level: null,
     sweetness: null,
     acidity: null,
     carbonation: null,
@@ -34,7 +34,7 @@ const Page = () => {
       // 비로그인 유저 - 로컬스토리지 저장
       localStorage.setItem('surveyData', JSON.stringify(surveyData));
       // 로그인 유저 - 슈퍼베이스 테이블에 저장
-      router.push('/survey/result');
+      router.push('/result');
     }
   }, [currentStep, router, surveyData]);
 

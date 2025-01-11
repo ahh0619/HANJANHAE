@@ -1,6 +1,3 @@
-Need to install the following packages:
-supabase@2.2.1
-Ok to proceed? (y) 
 export type Json =
   | string
   | number
@@ -18,6 +15,7 @@ export type Database = {
           created_at: string | null
           drink_id: string
           id: string
+          nickname: string | null
           updated_at: string | null
           user_id: string
         }
@@ -26,6 +24,7 @@ export type Database = {
           created_at?: string | null
           drink_id: string
           id?: string
+          nickname?: string | null
           updated_at?: string | null
           user_id: string
         }
@@ -34,6 +33,7 @@ export type Database = {
           created_at?: string | null
           drink_id?: string
           id?: string
+          nickname?: string | null
           updated_at?: string | null
           user_id?: string
         }
@@ -271,6 +271,7 @@ export type Database = {
       }
       ratings: {
         Row: {
+          comment_id: string | null
           created_at: string | null
           drink_id: string
           id: string
@@ -278,6 +279,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          comment_id?: string | null
           created_at?: string | null
           drink_id: string
           id?: string
@@ -285,6 +287,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          comment_id?: string | null
           created_at?: string | null
           drink_id?: string
           id?: string
@@ -292,6 +295,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "fk_comment_id"
+            columns: ["comment_id"]
+            isOneToOne: true
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "ratings_drink_id_fkey"
             columns: ["drink_id"]
@@ -301,6 +311,92 @@ export type Database = {
           },
           {
             foreignKeyName: "ratings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reco_results: {
+        Row: {
+          drink_id: string
+          id: string
+          name: string
+          reason: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          drink_id: string
+          id?: string
+          name: string
+          reason?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          drink_id?: string
+          id?: string
+          name?: string
+          reason?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reco_results_drink_id_fkey"
+            columns: ["drink_id"]
+            isOneToOne: false
+            referencedRelation: "drinks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reco_results_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      survey: {
+        Row: {
+          acidity: string
+          body: string
+          carbonation: string
+          food: string
+          id: string
+          level: string
+          sweetness: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          acidity: string
+          body: string
+          carbonation: string
+          food: string
+          id?: string
+          level: string
+          sweetness: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          acidity?: string
+          body?: string
+          carbonation?: string
+          food?: string
+          id?: string
+          level?: string
+          sweetness?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
