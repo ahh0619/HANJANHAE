@@ -1,18 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { checkLikeStatus } from '@/utils/like/action';
+
 export const useLikeStatus = (drinkId: string, userId: string) => {
   const fetchLikeStatus = async () => {
-    const response = await fetch('/api/likestatus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ drinkId, userId }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch like status');
+    if (!drinkId || !userId) {
+      throw new Error('Missing parameters');
     }
-
-    return response.json();
+    return checkLikeStatus({ drinkId, userId });
   };
 
   return useQuery({
