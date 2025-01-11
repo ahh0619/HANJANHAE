@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { toggleLike } from '@/utils/like/action';
+
 type LikeStatus = { liked: boolean };
 
 type UseToggleLikeParams = {
@@ -17,27 +19,23 @@ export const useToggleLike = ({ drinkId, userId }: UseToggleLikeParams) => {
     { previousData?: LikeStatus }
   >({
     mutationFn: async () => {
-      const response = await fetch('/api/togglelike', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, drinkId }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to toggle like');
+      if (!drinkId || !userId) {
+        throw new Error('Missing parameters');
       }
-
-      return response.json();
+      return toggleLike({ userId, drinkId });
     },
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['likeStatus', drinkId] });
+      await queryClient.cancelQueries({
+        queryKey: ['likeStatus', drinkId, userId],
+      });
 
       const previousData = queryClient.getQueryData<LikeStatus>([
         'likeStatus',
         drinkId,
+        userId,
       ]);
 
-      queryClient.setQueryData(['likeStatus', drinkId], {
+      queryClient.setQueryData(['likeStatus', drinkId, userId], {
         liked: !(previousData?.liked ?? false),
       });
 
@@ -45,11 +43,16 @@ export const useToggleLike = ({ drinkId, userId }: UseToggleLikeParams) => {
     },
     onError: (err, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(['likeStatus', drinkId], context.previousData);
+        queryClient.setQueryData(
+          ['likeStatus', drinkId, userId],
+          context.previousData,
+        );
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['likeStatus', drinkId] });
+      queryClient.invalidateQueries({
+        queryKey: ['likeStatus', drinkId, userId],
+      });
     },
   });
 
