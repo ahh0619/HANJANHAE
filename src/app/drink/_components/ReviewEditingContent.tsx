@@ -32,12 +32,12 @@ const ReviewEditingContent = ({
   };
 
   return (
-    <div>
+    <div className="relative z-10 rounded-lg bg-white p-4 shadow-md">
       <textarea
         ref={textareaRef}
         value={editComment}
         onChange={(e) => handleCommentChange(e.target.value)}
-        className="w-full resize-none rounded-lg border p-2 text-sm focus:ring-2 focus:ring-gray-400"
+        className="w-full resize-none rounded-lg border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
         style={{ maxHeight: '120px', overflowY: 'auto' }}
         maxLength={101}
       ></textarea>
