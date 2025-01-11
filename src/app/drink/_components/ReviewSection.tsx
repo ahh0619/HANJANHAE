@@ -1,6 +1,7 @@
 'use client';
 
 import { useReviewActions } from '@/hooks/review/useReviewActions';
+import { useAuthStore } from '@/store/authStore';
 
 import ReviewForm from './ReviewForm';
 import ReviewList from './ReviewList';
@@ -8,10 +9,10 @@ import ReviewSkeleton from './ReviewSkeleton';
 
 export type ReviewSectionProps = {
   drinkId: string;
-  user: { id: string; nickname: string } | null;
 };
 
-const ReviewSection = ({ drinkId, user }: ReviewSectionProps) => {
+const ReviewSection = ({ drinkId }: ReviewSectionProps) => {
+  const { user } = useAuthStore();
   const {
     reviews,
     isPending,

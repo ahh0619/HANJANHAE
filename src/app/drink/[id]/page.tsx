@@ -1,5 +1,6 @@
 import DrinkDetail from '@/app/drink/_components/DrinkDetail';
 import { fetchDrinks } from '@/utils/drink/action';
+import { fetchFoodPairings } from '@/utils/foodpairing/action';
 
 type DrinkDetailPageProps = {
   params: { id: string };
@@ -8,6 +9,7 @@ type DrinkDetailPageProps = {
 const DrinkDetailPage = async ({ params }: DrinkDetailPageProps) => {
   const drinkUrlName = decodeURIComponent(params.id);
   const drink = await fetchDrinks(drinkUrlName);
+  const foodPairings = await fetchFoodPairings(drink.id);
 
   if (!drink) {
     return (
@@ -18,7 +20,7 @@ const DrinkDetailPage = async ({ params }: DrinkDetailPageProps) => {
     );
   }
 
-  return <DrinkDetail drink={drink} />;
+  return <DrinkDetail drink={drink} foodPairings={foodPairings} />;
 };
 
 export default DrinkDetailPage;
