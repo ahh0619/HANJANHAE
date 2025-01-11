@@ -12,6 +12,7 @@ import DrinkImage from './DrinkImage';
 import DynamicHeader from './DynamicHeader';
 import FoodPairing from './FoodPairing';
 import FoodPairingSkeleton from './FoodPairingSkeleton';
+import ReviewSection from './ReviewSection';
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
@@ -68,6 +69,9 @@ const DrinkDetail = ({ drink }: DrinkDetailProps) => {
             <p className="text-sm text-gray-500">추천 페어링 음식 정보 없음</p>
           )}
         </section>
+
+        {/* Reviews */}
+        <ReviewSection drinkId={drink.id} user={user} />
       </div>
     </div>
   );
