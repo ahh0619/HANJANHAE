@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
+import { useAuthStore } from '@/store/authStore';
 
 import ShareButton from './ShareButton';
 
@@ -11,7 +12,6 @@ type DynamicHeaderProps = {
   name: string;
   image: string;
   description: string;
-  userId: string | null;
   drinkId: string;
 };
 
@@ -19,9 +19,9 @@ const DynamicHeader = ({
   name,
   image,
   description,
-  userId,
   drinkId,
 }: DynamicHeaderProps) => {
+  const { user } = useAuthStore();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const DynamicHeader = ({
 
         {/* 좋아요 및 공유 버튼 */}
         <div className="flex">
-          <LikeButton userId={userId} drinkId={drinkId} />
+          <LikeButton userId={user.id} drinkId={drinkId} />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
