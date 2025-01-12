@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 import {
   deleteReview,
@@ -112,13 +113,82 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
   };
 
   const handleReviewDelete = async (id: string) => {
+    let deletedReview: Review | null = null;
+
     try {
       if (!user?.id) throw new Error('로그인이 필요합니다.');
 
+      // 삭제 전 데이터 저장
+      deletedReview = reviews.find((review) => review.id === id) || null;
+
+      // 클라이언트에서 미리 삭제 처리
+      queryClient.setQueryData<Review[]>(['reviews', drinkId], (oldReviews) =>
+        oldReviews?.filter((review) => review.id !== id),
+      );
+
+      // 서버에서 리뷰 삭제
       await deleteMutation.mutateAsync(id);
+
+      // 알림 메시지 표시
+      toast(
+        <div className="flex items-center justify-between rounded-lg bg-gray-800 px-4 py-2 text-white shadow-md">
+          <p className="text-sm">리뷰가 삭제되었습니다.</p>
+          <button
+            onClick={async () => {
+              if (deletedReview) {
+                await handleUndoDelete(deletedReview);
+              }
+            }}
+            className="ml-4 text-sm text-blue-400 underline transition-transform hover:scale-105 hover:text-red-500 hover:no-underline"
+          >
+            실행 취소
+          </button>
+        </div>,
+        {
+          autoClose: 5000,
+          onClose: () => {
+            if (deletedReview) {
+              deletedReview = null; // 실행 취소 기회 제거
+            }
+          },
+        },
+      );
+
       console.log('리뷰가 성공적으로 삭제되었습니다.');
     } catch (err) {
       console.error('리뷰 삭제 실패:', err);
+
+      // 삭제 실패 시 복구
+      if (deletedReview) {
+        queryClient.setQueryData<Review[]>(
+          ['reviews', drinkId],
+          (oldReviews) => {
+            const safeReviews = oldReviews || [];
+            return [deletedReview, ...safeReviews];
+          },
+        );
+      }
+    }
+  };
+
+  const handleUndoDelete = async (deletedReview: Review | null) => {
+    if (!deletedReview) return;
+
+    try {
+      // 삭제된 리뷰 복구
+      await submitMutation.mutateAsync({
+        drinkId,
+        userId: deletedReview.user_id!,
+        content: deletedReview.comment,
+        rating: deletedReview.rating,
+        nickname: deletedReview.nickname!,
+      });
+
+      queryClient.invalidateQueries({ queryKey: ['reviews', drinkId] });
+
+      console.log('리뷰가 성공적으로 복구되었습니다.');
+    } catch (err) {
+      console.error('리뷰 복구 실패:', err);
     }
   };
 
