@@ -6,8 +6,9 @@ import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Providers from '@/providers/Provider';
-
+import ToastProvider from '@/providers/ToastProvider';
 import '@/styles/globals.css';
+
 import KakaoInit from './drink/_components/KakaoInit';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -35,6 +36,7 @@ const RootLayout = ({
           <Header />
           <KakaoInit />
           {children}
+          <ToastProvider />
           <ScrollTop />
           <Footer />
         </Providers>
