@@ -1,21 +1,44 @@
+import { useRef } from 'react';
+
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
+import useSearchStore from '@/store/keywordStore';
 import useResults from '@/store/resultStore';
+import useSearchResults from '@/store/searchResultStore';
 
 const SearchBar = () => {
-  const { triggerFetch, isFiltered, resetFilters, setIsFiltered } =
-    useFilterStore();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const {
+    triggerFetch,
+    isFiltered,
+    resetFilters,
+    setIsFiltered,
+    setTriggerFetch,
+  } = useFilterStore();
+  const { keyword, setKeyword, setSearchTriggerFetch } = useSearchStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
   const { clearResults } = useResults();
-  const handleFocus = () => setIsSearchFocuse(true);
-  const handleBlur = () => setIsSearchFocuse(false);
+  const { clearSearchResults } = useSearchResults();
 
   const handleReset = () => {
-    resetStates();
-    resetFilters();
-    setIsFiltered(false);
-    clearResults();
+    resetStates(); // 저장된 정보 삭제
+    resetFilters(); // 필터값 리셋
+    setIsFiltered(false); // 필터 상태정보
+    setSearchTriggerFetch(false); // 검색트리거 상태
+    clearResults(); // 필터 결과 지우기
+    clearSearchResults(); // 검색결과 지우기
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
+      setKeyword(newKeyword);
+      setTriggerFetch(false);
+      setIsSearchFocuse(true);
+      setSearchTriggerFetch(true);
+    }
+  };
+  console.log(keyword);
   return (
     <div
       className={`${
@@ -31,7 +54,7 @@ const SearchBar = () => {
       >
         <svg
           className={`h-5 w-5 ${
-            isSearchFocus || triggerFetch ? 'text-green-500' : 'text-gray-500'
+            triggerFetch ? 'text-green-500' : 'text-gray-500'
           }`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -47,10 +70,13 @@ const SearchBar = () => {
         </svg>
         <input
           type="text"
+          name="search"
           placeholder="무엇을 찾으시나요?"
           className="w-full bg-transparent pl-2 text-sm text-gray-700 outline-none"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          // onFocus={handleFocus}
+          // onBlur={handleBlur}
+          ref={inputRef}
+          onKeyDown={handleKeyDown}
         />
       </div>
       {isSearchFocus || isFiltered ? (

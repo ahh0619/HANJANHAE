@@ -1,25 +1,35 @@
 'use client';
 import { useEffect } from 'react';
 
-import useSearchStore from '@/store/keywordStore';
-import useSearchResults from '@/store/searchResultStore';
-import { filterDrinksByKeyword } from '@/utils/filter/action';
+import useFilterStore from '@/store/filterStore';
+import useResults from '@/store/resultStore';
+import { filterDrinks, FilterParams } from '@/utils/filter/action';
 
 const SearchResults = () => {
-  const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
-    useSearchStore();
-  const { results, setResults } = useSearchResults();
+  const {
+    selectedTypes,
+    alcoholStrength,
+    tastePreferences,
+    triggerFetch,
+    setTriggerFetch,
+  } = useFilterStore();
+  const { results, setResults } = useResults();
 
   useEffect(() => {
-    if (!searchTriggerFetch) return;
+    if (!triggerFetch) return;
     const fetchFilteredResults = async () => {
-      const filteredResults = await filterDrinksByKeyword(keyword); // 서버 액션 호출
+      const filterParams: FilterParams = {
+        types: selectedTypes,
+        alcoholStrength,
+        tastePreferences,
+      };
+      const filteredResults = await filterDrinks(filterParams); // 서버 액션 호출
       setResults(filteredResults);
     };
 
     fetchFilteredResults();
-    setSearchTriggerFetch(false);
-  }, [searchTriggerFetch]);
+    setTriggerFetch(false);
+  }, [triggerFetch]);
 
   return (
     <div className="p-4">

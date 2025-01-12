@@ -44,3 +44,18 @@ export async function filterDrinks({
 
   return data as Drink[];
 }
+
+export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
+  if (!keyword) return;
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('drinks')
+    .select('*')
+    .ilike('name', `%${keyword}%`); // name 컬럼에서 keyword를 포함하는 데이터 검색
+
+  if (error) {
+    throw new Error('Error fetching data by keyword');
+  }
+
+  return data as Drink[];
+}

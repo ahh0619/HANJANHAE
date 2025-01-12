@@ -1,3 +1,4 @@
+import FilterResults from './_components/FilterResults';
 import FocusInput from './_components/FocusInput';
 import SearchResults from './_components/SearchResults';
 
@@ -10,6 +11,7 @@ const Search = () => {
       >
         {/* Search Bar */}
         <FocusInput />
+        <FilterResults />
         <SearchResults />
       </div>
     </div>
