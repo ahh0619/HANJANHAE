@@ -3,7 +3,7 @@
 import React from 'react';
 
 type ShareOption = {
-  icon: string; // 이미지 경로
+  icon: string;
   label: string;
   onClick: () => void;
 };

@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
-import { fetchUser, signin } from '@/utils/auth/action';
+import { signin } from '@/utils/auth/action';
 
 type UseSignInProps = {
   handleSuccess: () => void;
@@ -44,10 +44,9 @@ const useSignIn = ({ handleSuccess }: UseSignInProps) => {
 
   const onSubmit = async (values: SignInDataType) => {
     try {
-      await signin(values);
-
+      const user = await signin(values);
       window.alert('로그인 성공');
-      setUser(await fetchUser());
+      setUser(user);
       handleSuccess();
     } catch (error: any) {
       window.alert(error);
