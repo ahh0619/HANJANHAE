@@ -1,0 +1,49 @@
+.custom-toast {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 240px !important;
+  line-height: 1.2 !important;
+}
+
+.custom-toast-body {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-toast button {
+  background: #ffffff;
+  color: #333333;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.custom-toast button:hover {
+  background: #dddddd;
+}
+
+.custom-toast-container {
+  position: fixed !important;
+  bottom: 65px !important;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+/* 리뷰 전용 스타일: 가로 크기와 정렬 변경 */
+.review-toast {
+  max-width: 360px !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+}
