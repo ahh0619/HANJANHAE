@@ -24,7 +24,7 @@ const DrinkDescription = ({
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">{name}</h2>
         <div className="flex">
-          <LikeButton userId={user?.id} drinkId={drinkId} />
+          <LikeButton userId={user.id} drinkId={drinkId} />
           <ShareButton title={name} text={description!} imageUrl={imageUrl} />
         </div>
       </div>
