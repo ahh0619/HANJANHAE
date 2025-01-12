@@ -9,14 +9,14 @@ import { createClient } from '../supabase/server';
 export const signup = async (data: SignUpDataType): Promise<void> => {
   const supabase = createClient();
 
-  const { email, password, nickname, birth } = data;
+  const { email, password, nickname } = data;
 
   // auth user 데이터 생성
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { nickname, birth, profile_image: '' },
+      data: { name: nickname, avatar_url: '' },
     },
   });
 
@@ -26,7 +26,6 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
   const { error: userError } = await supabase.from('users').insert({
     id: authData.user?.id,
     nickname,
-    birth,
   });
 
   if (userError) throw new Error(userError.message);
@@ -52,9 +51,8 @@ export const signin = async (data: SignInDataType): Promise<UserType> => {
 
   return {
     id: user.id,
-    nickname: user.user_metadata.nickname,
-    birth: user.user_metadata.birth,
-    profile_image: user.user_metadata.profile_image,
+    nickname: user.user_metadata.name,
+    profile_image: user.user_metadata.avatar_url,
   };
 };
 
