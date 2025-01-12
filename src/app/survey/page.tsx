@@ -4,8 +4,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useFunnel from '@/hooks/useFunnel';
-import { surveyProps } from '@/types/surveyTypes';
+import { useAuthStore } from '@/store/authStore';
 
+import { Tables } from '@/types/supabase';
+import { addSurvey } from '../result/action';
 import PreferenceAcidity from './_components/PreferenceAcidity';
 import PreferenceAlcoholLevel from './_components/PreferenceAlcoholLevel';
 import PreferenceBody from './_components/PreferenceBody';
@@ -16,7 +18,7 @@ import PreferenceTypeSelection from './_components/PreferenceTypeSelection';
 
 const Page = () => {
   const { Funnel, Step, next, prev, currentStep } = useFunnel('주종');
-  const [surveyData, setSurveyData] = useState<surveyProps>({
+  const [surveyData, setSurveyData] = useState<Partial<Tables<'survey'>>>({
     type: null,
     level: null,
     sweetness: null,
@@ -26,19 +28,35 @@ const Page = () => {
     food: null,
   });
 
+  const { user } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (currentStep === '완료') {
-      console.log('data: ', surveyData);
-      // 비로그인 유저 - 로컬스토리지 저장
-      localStorage.setItem('surveyData', JSON.stringify(surveyData));
-      // 로그인 유저 - 슈퍼베이스 테이블에 저장
-      router.push('/result');
-    }
-  }, [currentStep, router, surveyData]);
+    const saveSurveyData = async () => {
+      if (currentStep === '완료') {
+        console.log('data: ', surveyData);
 
-  const handleNext = (data: Partial<surveyProps>, nextStep: string) => {
+        try {
+          // 로그인 유저 - 슈퍼베이스 테이블에 저장
+          if (user) {
+            await addSurvey({ surveyData, userId: user.id });
+          }
+          // 비로그인 유저 - 로컬스토리지 저장
+          else {
+            localStorage.setItem('surveyData', JSON.stringify(surveyData));
+          }
+
+          router.push('/result');
+        } catch (error) {
+          console.error('Failed to save survey data:', error);
+        }
+      }
+    };
+
+    saveSurveyData();
+  }, [currentStep, router, surveyData, user]);
+
+  const handleNext = (data: Partial<Tables<'survey'>>, nextStep: string) => {
     setSurveyData((prev) => ({ ...prev, ...data }));
     next(nextStep);
   };

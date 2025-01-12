@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
 import { PreferenceTypeProps } from '@/types/surveyTypes';
+import { useState } from 'react';
 
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
@@ -10,20 +9,25 @@ const PreferenceTypeSelection = ({
   onPrev,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedTypes, setSelectedTypes] = useState<string[]>(
-    surveyData.type || [],
+  const [selectedTypes, setSelectedTypes] = useState<string>(
+    Array.isArray(surveyData.type) ? surveyData.type.join(',') : '',
   );
 
   const toggleSelection = (type: string) => {
-    setSelectedTypes((prev) =>
-      prev.includes(type)
-        ? prev.filter((item) => item !== type)
-        : [...prev, type],
-    );
+    const typesArray = selectedTypes ? selectedTypes.split(',') : [];
+    if (typesArray.includes(type)) {
+      setSelectedTypes(typesArray.filter((item) => item !== type).join(','));
+    } else {
+      setSelectedTypes([...typesArray, type].join(','));
+    }
   };
 
   const handleNext = () => {
-    onNext({ type: selectedTypes });
+    const typesString = selectedTypes
+      .split(',')
+      .filter((type) => type.trim() !== '')
+      .join(',');
+    onNext({ type: typesString });
   };
 
   const options = [
@@ -62,7 +66,7 @@ const PreferenceTypeSelection = ({
           <button
             key={option}
             className={`rounded-full border px-4 py-2 ${
-              selectedTypes.includes(option)
+              selectedTypes.split(',').includes(option)
                 ? 'border-black bg-black text-white'
                 : 'border-gray-300 bg-gray-100 text-gray-700'
             } transition`}
@@ -81,7 +85,7 @@ const PreferenceTypeSelection = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedTypes.length}
+        disabled={!selectedTypes.trim()}
       />
     </div>
   );
