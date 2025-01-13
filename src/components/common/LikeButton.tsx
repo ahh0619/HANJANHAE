@@ -35,9 +35,9 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
       aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
     >
       <HeartIcon
-        className={`mr-3 h-6 w-6 transition-colors ${
+        className={`transition-colors ${
           data?.liked && userId ? 'fill-red-500 text-red-500' : 'text-black-400'
-        }`}
+        } h-5 w-5 sm:h-6 sm:w-6`}
       />
     </button>
   );
