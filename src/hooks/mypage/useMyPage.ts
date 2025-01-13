@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-import { getUserProfile } from '@/utils/mypage/action';
+import { fetchUser } from '@/utils/auth/action';
 
 type UserProfile = {
   nickname: string;
@@ -18,7 +18,7 @@ const useMyPage = (initialUserProfile: UserProfile) => {
   } = useQuery({
     queryKey: ['userProfile'],
     queryFn: async () => {
-      const profile = await getUserProfile();
+      const profile = await fetchUser();
       return profile;
     },
     initialData: initialUserProfile,
