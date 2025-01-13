@@ -18,8 +18,6 @@ export const recommendDrinks = async ({
   surveyData: Partial<Tables<'survey'>>;
   userId?: string;
 }): Promise<Tables<'reco_results'>[] | null> => {
-  console.log('action surveydata: ', surveyData);
-
   const content = `
     1. 어떤 종류의 술을 선호하시나요? 답변: ${surveyData.type}
     2. 어느 정도 도수의 술을 선호하시나요? 답변: ${surveyData.level}
@@ -47,10 +45,8 @@ export const recommendDrinks = async ({
       .text.value;
     const jsonData = JSON.parse(data);
 
-    console.log('reccommend: ', jsonData);
-
-    // 여기서 슈퍼베이스 reco_results 테이블에 레코드 삽입
     if (userId) {
+      await addRecoResult({ recoData: jsonData, userId });
     }
 
     return jsonData;
@@ -111,9 +107,25 @@ export const addRecoResult = async ({
   recoData,
   userId,
 }: {
-  recoData: any;
+  recoData: Tables<'reco_results'>[];
   userId: string;
-}) => {};
+}) => {
+  const supabase = await createClient();
+
+  const insertData = recoData.map((item) => ({
+    type: item.type,
+    name: item.name,
+    drink_id: item.id,
+    reason: item.reason,
+    user_id: userId,
+  }));
+
+  const { error } = await supabase.from('reco_results').insert(insertData);
+
+  if (error) {
+    throw new Error(`전통주 추천 결과 추가에 실패했습니다: ${error!.message}`);
+  }
+};
 
 export const fetchSurveyData = async (
   userId: string,
@@ -141,11 +153,12 @@ export const fetchRecoData = async (
   const { data, error } = await supabase
     .from('reco_results')
     .select('*')
-    .eq('user_id', userId)
-    .single();
+    .eq('user_id', userId);
 
   if (error) {
-    throw new Error(`취향조사 가져오기에 실패했습니다: ${error!.message}`);
+    throw new Error(
+      `전통주 추천 결과 가져오기에 실패했습니다: ${error!.message}`,
+    );
   }
 
   return data;

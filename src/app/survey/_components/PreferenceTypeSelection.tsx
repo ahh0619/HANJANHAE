@@ -1,5 +1,6 @@
-import { PreferenceTypeProps } from '@/types/surveyTypes';
 import { useState } from 'react';
+
+import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
