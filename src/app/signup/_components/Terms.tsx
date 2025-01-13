@@ -1,5 +1,9 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+import useSocial from '@/hooks/auth/useSocial';
+import { useAuthStore } from '@/store/authStore';
 
 type TermsProps = {
   handleMoveStep: (value: number) => void;
@@ -7,6 +11,11 @@ type TermsProps = {
 };
 
 const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
+  const router = useRouter();
+
+  const { isSocial, setIsAgree } = useAuthStore();
+  const { handleGoogle, handleKakao } = useSocial();
+
   const [terms, setTerms] = useState({
     adult: false,
     use: false,
@@ -31,11 +40,24 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   };
 
   /* 다음 단계로 이동 */
-  const handleMoveNext = () => {
+  const handleMoveNext = (provider: string) => {
     if (!terms.adult || !terms.use || !terms.personal) {
       window.alert('모든 항목에 동의해 주세요.');
     } else {
-      handleMoveStep(2);
+      setIsAgree(true);
+      provider === 'email' && handleMoveStep(2);
+      provider === 'google' && handleGoogle({ isSignin: false });
+      provider === 'kakao' && handleKakao({ isSignin: false });
+    }
+  };
+
+  /* 소셜 로그인 완료 */
+  const handleFinishSocial = () => {
+    if (!terms.adult || !terms.use || !terms.personal) {
+      window.alert('모든 항목에 동의해 주세요.');
+    } else {
+      setIsAgree(true);
+      router.push('/');
     }
   };
 
@@ -111,23 +133,41 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
         </p>
       </div>
 
-      {/* 회원가입 방법 */}
-      <p className="mt-10 text-center text-xl font-bold">회원가입 방법 선택</p>
-
-      <div className="flex justify-center gap-4">
-        <div className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm">
-          구글
-        </div>
-        <div className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm">
-          카카오
-        </div>
-        <div
-          className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
-          onClick={handleMoveNext}
+      {isSocial ? (
+        <button
+          type="submit"
+          className="w-full bg-black p-2 font-bold text-white"
+          onClick={handleFinishSocial}
         >
-          자사
-        </div>
-      </div>
+          완료
+        </button>
+      ) : (
+        <>
+          <p className="mt-10 text-center text-xl font-bold">
+            회원가입 방법 선택
+          </p>
+          <div className="flex justify-center gap-4">
+            <div
+              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
+              onClick={() => handleMoveNext('google')}
+            >
+              구글
+            </div>
+            <div
+              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
+              onClick={() => handleMoveNext('kakao')}
+            >
+              카카오
+            </div>
+            <div
+              className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
+              onClick={() => handleMoveNext('email')}
+            >
+              자사
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

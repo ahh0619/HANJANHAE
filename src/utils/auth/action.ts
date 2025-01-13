@@ -87,5 +87,6 @@ export const fetchUser = async (): Promise<UserType | null> => {
     id: userData.id,
     nickname: userData.nickname,
     profile_image: userData.profile_image || null,
+    agree_terms: userData.agree_terms,
   };
 };
