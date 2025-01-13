@@ -1,10 +1,13 @@
 import useDrinkRecommendations from '@/hooks/result/useDrinkRecommendations';
 
+import DrinkList from './DrinkList';
+
 type DrinkAuthRecoProps = {
   userId: string;
+  nickname: string;
 };
 
-const DrinkAuthReco = ({ userId }: DrinkAuthRecoProps) => {
+const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
   const drinks = useDrinkRecommendations(userId);
 
   if (drinks === null) {
@@ -15,17 +18,7 @@ const DrinkAuthReco = ({ userId }: DrinkAuthRecoProps) => {
     return <div>추천 결과 없음</div>;
   }
 
-  return (
-    <div>
-      {drinks.map((drink) => (
-        <div key={drink.id} className="mb-8">
-          <h1>{drink.name}</h1>
-          <p>{drink.type}</p>
-          <span>{drink.reason}</span>
-        </div>
-      ))}
-    </div>
-  );
+  return <DrinkList drinks={drinks} title={`${nickname}을 위한 전통주 추천`} />;
 };
 
 export default DrinkAuthReco;

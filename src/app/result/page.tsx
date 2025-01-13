@@ -8,7 +8,11 @@ import DrinkGuestReco from './_components/DrinkGuestReco';
 const Page = () => {
   const { user } = useAuthStore();
 
-  return user ? <DrinkAuthReco userId={user.id} /> : <DrinkGuestReco />;
+  return user ? (
+    <DrinkAuthReco userId={user.id} nickname={user.nickname} />
+  ) : (
+    <DrinkGuestReco />
+  );
 };
 
 export default Page;

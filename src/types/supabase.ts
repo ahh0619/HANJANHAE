@@ -322,6 +322,7 @@ export type Database = {
         Row: {
           drink_id: string
           id: string
+          image: string | null
           name: string
           reason: string | null
           type: string
@@ -330,6 +331,7 @@ export type Database = {
         Insert: {
           drink_id: string
           id?: string
+          image?: string | null
           name: string
           reason?: string | null
           type: string
@@ -338,6 +340,7 @@ export type Database = {
         Update: {
           drink_id?: string
           id?: string
+          image?: string | null
           name?: string
           reason?: string | null
           type?: string
@@ -406,21 +409,21 @@ export type Database = {
       }
       users: {
         Row: {
-          birth: string
+          agree_terms: boolean
           created_at: string | null
           id: string
           nickname: string
           profile_image: string | null
         }
         Insert: {
-          birth: string
+          agree_terms: boolean
           created_at?: string | null
           id: string
           nickname: string
           profile_image?: string | null
         }
         Update: {
-          birth?: string
+          agree_terms?: boolean
           created_at?: string | null
           id?: string
           nickname?: string

@@ -118,6 +118,7 @@ export const addRecoResult = async ({
     drink_id: item.id,
     reason: item.reason,
     user_id: userId,
+    image: item.image,
   }));
 
   const { error } = await supabase.from('reco_results').insert(insertData);
