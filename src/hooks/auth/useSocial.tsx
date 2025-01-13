@@ -1,9 +1,25 @@
+import { useAuthStore } from '@/store/authStore';
 import { createClient } from '@/utils/supabase/client';
 
+type SocialProps = {
+  isSignin: boolean;
+};
+
+type AgreeProps = {
+  userId: string;
+  isAgree: boolean;
+  onAgree: () => void;
+  onDisagree: () => void;
+};
+
 const useSocial = () => {
+  const { user, setUser, setIsSocial } = useAuthStore();
+
   const supabase = createClient();
 
-  const handleGoogle = async () => {
+  const handleGoogle = async ({ isSignin }: SocialProps) => {
+    setIsSocial(isSignin);
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -18,7 +34,9 @@ const useSocial = () => {
     if (error) throw new Error(error.message);
   };
 
-  const handleKakao = async () => {
+  const handleKakao = async ({ isSignin }: SocialProps) => {
+    setIsSocial(isSignin);
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
@@ -29,9 +47,38 @@ const useSocial = () => {
     if (error) throw new Error(error.message);
   };
 
+  const handleAgree = async ({
+    userId,
+    isAgree,
+    onAgree,
+    onDisagree,
+  }: AgreeProps) => {
+    console.log('handleAgree => ', isAgree);
+    console.log('handleAgree => ', user);
+    if (isAgree) {
+      const { data, error } = await supabase
+        .from('users')
+        .update({
+          agree_terms: true,
+        })
+        .eq('id', userId)
+        .select('id, nickname, profile_image, agree_terms')
+        .single();
+
+      if (error) throw new Error(error.message);
+
+      setUser(data);
+
+      onAgree();
+    } else {
+      onDisagree();
+    }
+  };
+
   return {
     handleGoogle,
     handleKakao,
+    handleAgree,
   };
 };
 

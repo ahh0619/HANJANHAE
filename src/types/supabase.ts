@@ -410,18 +410,21 @@ export type Database = {
           id: string
           nickname: string
           profile_image: string | null
+          agree_terms: boolean
         }
         Insert: {
           created_at?: string | null
           id: string
           nickname: string
           profile_image?: string | null
+          agree_terms: boolean
         }
         Update: {
           created_at?: string | null
           id?: string
           nickname?: string
           profile_image?: string | null
+          agree_terms?: boolean
         }
         Relationships: []
       }
