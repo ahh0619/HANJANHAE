@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 
+import BottomNavBar from '@/components/common/BottomNavBar';
 import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
@@ -36,6 +37,7 @@ const RootLayout = ({
           <KakaoInit />
           {children}
           <ScrollTop />
+          <BottomNavBar />
           <Footer />
         </Providers>
       </body>

@@ -5,4 +5,30 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: white;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: auto;
+}
+
+/* 스크롤바 전체 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* 스크롤바 트랙 (뒷 배경) */
+::-webkit-scrollbar-track {
+  background: #ffe5e5;
+  border-radius: 10px;
+}
+
+/* 스크롤바 손잡이 */
+::-webkit-scrollbar-thumb {
+  background-color: #e63946;
+  border-radius: 10px;
+  border: 2px solid #ffe5e5;
+}
+
+/* 스크롤바 손잡이 hover 시 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #d62828;
 }

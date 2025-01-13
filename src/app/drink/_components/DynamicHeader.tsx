@@ -52,7 +52,7 @@ const DynamicHeader = ({
 
         {/* 좋아요 및 공유 버튼 */}
         <div className="flex">
-          <LikeButton userId={user.id} drinkId={drinkId} />
+          <LikeButton userId={user?.id} drinkId={drinkId} />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
