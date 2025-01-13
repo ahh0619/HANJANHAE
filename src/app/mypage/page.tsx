@@ -2,9 +2,14 @@
 
 import { useState } from 'react';
 
+import { useAuthStore } from '@/store/authStore';
+import { logout } from '@/utils/auth/action';
+
 import ProfileEditModal from './_components/ProfileEditModal';
 
 const MyPage = () => {
+  const { removeUser } = useAuthStore();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -60,7 +65,15 @@ const MyPage = () => {
             <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-300">
               <span className="text-sm">👤</span>
             </div>
-            <span className="ml-4 text-sm">로그아웃</span>
+            <span
+              className="ml-4 cursor-pointer text-sm"
+              onClick={async () => {
+                await logout();
+                removeUser();
+              }}
+            >
+              로그아웃
+            </span>
           </div>
         </div>
         <button className="mt-4 w-full text-center text-sm text-gray-500 underline">
