@@ -46,6 +46,17 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
       });
     },
     onSuccess: () => {
+      // 캐시 수동 업데이트
+      queryClient.setQueryData(['userProfile'], (oldData: User | undefined) => {
+        if (!oldData) return null;
+        return {
+          ...oldData,
+          nickname,
+          profile_image: preview, // 로컬 상태의 미리보기 이미지로 갱신
+        };
+      });
+
+      // 캐시 무효화로 서버에서 최신 데이터 가져오기
       queryClient.invalidateQueries({ queryKey: ['userProfile'] });
       alert('프로필이 성공적으로 수정되었습니다!');
       onClose();
