@@ -1,42 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { Tables } from '@/types/supabase';
-
-import { recommendDrinks } from '../action';
+import useGuestDrinkRecommendations from '@/hooks/result/useGuestDrinkRecommendations';
 
 const DrinkGuestReco = () => {
-  // const [recoData, setRecoData] = useState<Tables<'reco_results'> | null>(
-  //   JSON.parse(localStorage.getItem('recoData')),
-  // );
+  const drinks = useGuestDrinkRecommendations();
 
-  const [recoData, setRecoData] = useState<Tables<'reco_results'>[] | null>([]);
+  if (drinks === null) {
+    return <div>Loading...</div>;
+  }
 
-  useEffect(() => {
-    const storedRecoData = localStorage.getItem('recoData');
-
-    if (storedRecoData) {
-      setRecoData(JSON.parse(storedRecoData));
-    } else {
-      const fetchRecoData = async () => {
-        const surveyData = JSON.parse(
-          localStorage.getItem('surveyData') || '{}',
-        );
-        console.log('local survey: ', surveyData);
-        const data = await recommendDrinks({ surveyData });
-        setRecoData(data);
-
-        localStorage.setItem('recoData', JSON.stringify(data));
-      };
-
-      fetchRecoData();
-    }
-  }, []);
+  if (drinks.length === 0) {
+    return <div>추천 결과 없음</div>;
+  }
 
   return (
     <div>
-      {recoData.map((drink) => (
+      {drinks.map((drink) => (
         <div key={drink.id} className="mb-8">
           <h1>{drink.name}</h1>
           <p>{drink.type}</p>
