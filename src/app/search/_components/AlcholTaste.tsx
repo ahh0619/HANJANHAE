@@ -41,7 +41,7 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
             key={value}
             onClick={() => handleCategoryClick(value)}
             className={`flex cursor-pointer flex-col ${
-              index === levels.length-1 ? 'flex-end' : ''
+              index === levels.length - 1 ? 'items-end' : ''
             }`}
           >
             <div

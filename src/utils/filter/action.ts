@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/client';
 
 export type FilterParams = {
   types: string[];
-  alcoholStrength?: number | null;
+  alcoholStrength?: [number, number] | null;
   tastePreferences?: Record<string, number>;
 };
 
@@ -26,7 +26,13 @@ export async function filterDrinks({
 
   // 도수 필터링
   if (alcoholStrength) {
-    query = query.eq('alcohol_content', alcoholStrength);
+    const [min, max] = alcoholStrength;
+
+    // alcohol_content는 numeric 필드이므로 범위로 필터링
+    query = query.gte('alcohol_content', min).lte('alcohol_content', max);
+  } else {
+    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
+    query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
   }
 
   // 맛 카테고리 필터링
