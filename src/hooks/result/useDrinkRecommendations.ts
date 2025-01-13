@@ -4,7 +4,7 @@ import {
   fetchRecoData,
   fetchSurveyData,
   recommendDrinks,
-} from '@/app/result/action';
+} from '@/utils/preference/action';
 
 const useDrinkRecommendations = (userId: string) => {
   const [drinks, setDrinks] = useState(null);
