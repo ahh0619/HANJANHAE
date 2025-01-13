@@ -17,7 +17,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   userId,
 }) => {
   return (
-    <div className="relative flex w-52 flex-col rounded-lg border p-2">
+    <div className="relative flex w-48 flex-col rounded-lg border p-2">
       {/* 좋아요 버튼 */}
       <div className="absolute right-0 top-1 z-10">
         <LikeButton drinkId={id} userId={userId} />
