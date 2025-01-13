@@ -31,7 +31,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
   return (
     <button
       onClick={handleLikeButtonClick}
-      className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-gray-50"
+      className="flex items-center justify-center rounded-full p-2 transition-colors"
       aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
     >
       <HeartIcon
