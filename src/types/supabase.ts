@@ -322,6 +322,7 @@ export type Database = {
         Row: {
           drink_id: string
           id: string
+          image: string | null
           name: string
           reason: string | null
           type: string
@@ -330,6 +331,7 @@ export type Database = {
         Insert: {
           drink_id: string
           id?: string
+          image?: string | null
           name: string
           reason?: string | null
           type: string
@@ -338,6 +340,7 @@ export type Database = {
         Update: {
           drink_id?: string
           id?: string
+          image?: string | null
           name?: string
           reason?: string | null
           type?: string
@@ -406,6 +409,7 @@ export type Database = {
       }
       users: {
         Row: {
+          agree_terms: boolean
           created_at: string | null
           id: string
           nickname: string
@@ -413,6 +417,7 @@ export type Database = {
           agree_terms: boolean
         }
         Insert: {
+          agree_terms: boolean
           created_at?: string | null
           id: string
           nickname: string
@@ -420,6 +425,7 @@ export type Database = {
           agree_terms: boolean
         }
         Update: {
+          agree_terms?: boolean
           created_at?: string | null
           id?: string
           nickname?: string
