@@ -7,13 +7,10 @@ export type ReviewLoginPromptProps = {
 const ReviewLoginPrompt = ({ onLoginClick }: ReviewLoginPromptProps) => {
   return (
     <div className="mt-4 space-y-6 rounded-lg border p-4">
-      <div className="relative h-32">
-        <textarea
-          id="comment"
-          className="absolute inset-0 h-full w-full resize-none rounded-lg border border-gray-300 bg-gray-100 p-3 text-center text-sm text-gray-500 focus:outline-none"
-          value="리뷰는 로그인을 해야 작성이 가능합니다."
-          readOnly
-        ></textarea>
+      <div className="relative flex h-32 items-center justify-center rounded-lg border border-gray-300 bg-gray-100">
+        <p className="text-center text-sm text-gray-500">
+          리뷰는 로그인을 해야 작성이 가능합니다.
+        </p>
       </div>
       <button
         onClick={onLoginClick}
