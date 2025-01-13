@@ -11,8 +11,7 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
 
   const { email, password, nickname } = data;
 
-  // auth user 데이터 생성
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -20,15 +19,7 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
     },
   });
 
-  if (authError) throw new Error(authError.message);
-
-  // user 데이터 생성
-  const { error: userError } = await supabase.from('users').insert({
-    id: authData.user?.id,
-    nickname,
-  });
-
-  if (userError) throw new Error(userError.message);
+  if (error) throw new Error(error.message);
 
   await logout();
 };
