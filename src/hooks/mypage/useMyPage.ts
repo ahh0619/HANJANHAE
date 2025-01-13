@@ -3,7 +3,12 @@ import { useState } from 'react';
 
 import { getUserProfile } from '@/utils/mypage/action';
 
-const useMyPage = () => {
+type UserProfile = {
+  nickname: string;
+  profile_image: string | null;
+};
+
+const useMyPage = (initialUserProfile: UserProfile) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -16,7 +21,8 @@ const useMyPage = () => {
       const profile = await getUserProfile();
       return profile;
     },
-    staleTime: 1000 * 60 * 5, // 5분 동안 데이터 유지
+    initialData: initialUserProfile,
+    staleTime: 1000 * 60 * 5,
     retry: 1,
   });
 

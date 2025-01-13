@@ -2,8 +2,14 @@
 
 import { createClient } from '../supabase/server';
 
+type UserProfile = {
+  id: string;
+  nickname: string;
+  profile_image: string | null;
+};
+
 // 유저 정보 불러오기
-export const getUserProfile = async () => {
+export const getUserProfile = async (): Promise<UserProfile> => {
   const supabase = createClient();
 
   const {
