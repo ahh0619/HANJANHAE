@@ -34,13 +34,6 @@ const signupSchema = z
         '영문, 숫자, 특수문자 포함 6 ~ 20자로 입력해 주세요',
       ),
     nickname: z.string().nonempty('닉네임을 입력해 주세요.'),
-    birth: z
-      .string()
-      .nonempty('생년월일을 입력해 주세요.')
-      .regex(
-        new RegExp(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/),
-        'YYYY-MM-DD 형태로 입력해 주세요.',
-      ),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다.',
@@ -60,7 +53,6 @@ const useSignUp = ({ handleSuccess }: UseSignUpProps) => {
       password: '',
       passwordConfirm: '',
       nickname: '',
-      birth: '',
     },
   });
 

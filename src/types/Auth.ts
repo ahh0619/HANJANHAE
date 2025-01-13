@@ -10,7 +10,6 @@ export type SignUpDataType = {
   password: string;
   passwordConfirm: string;
   nickname: string;
-  birth: string;
 };
 
 export type UserType = Omit<

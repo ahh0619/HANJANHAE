@@ -48,14 +48,6 @@ const Information = () => {
         error={errors.nickname?.message}
       />
 
-      <InputField
-        id="birth"
-        label="생년월일"
-        placeholder="생년월일을 입력해 주세요."
-        register={register}
-        error={errors.birth?.message}
-      />
-
       <button
         type="submit"
         className="w-full bg-black p-2 font-bold text-white"
