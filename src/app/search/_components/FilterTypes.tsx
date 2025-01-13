@@ -1,4 +1,5 @@
 // import AlcholeStrength from './AlcholStrength';
+import AlcholeStrength from './AlcholStrength';
 import AlcholeTaste from './AlcholTaste';
 import AlcholType from './AlcholType';
 
@@ -10,7 +11,7 @@ const FilterType = () => {
       <AlcholType />
 
       {/* 도수로 찾기 */}
-      {/* <AlcholeStrength /> */}
+      <AlcholeStrength />
 
       {/* 맛 관련 슬라이더 */}
       {categories.map((category) => (

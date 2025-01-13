@@ -36,18 +36,20 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     <div className="mb-6">
       <h3 className="mb-2 text-sm font-semibold">{category}으로 찾기</h3>
       <div className="flex items-center justify-between">
-        {levels.map(({ label, value }) => (
+        {levels.map(({ label, value }, index) => (
           <div
             key={value}
             onClick={() => handleCategoryClick(value)}
-            className="flex cursor-pointer flex-col items-center"
+            className={`flex cursor-pointer flex-col ${
+              index === levels.length-1 ? 'flex-end' : ''
+            }`}
           >
             <div
               className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
                 selectedValue === value
                   ? 'border-black bg-black'
                   : 'border-gray-400 bg-gray-200'
-              }`}
+              }`} // 마지막 요소 스타일링
             >
               {selectedValue === value && (
                 <svg
