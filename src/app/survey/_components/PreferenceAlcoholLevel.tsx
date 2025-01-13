@@ -12,7 +12,7 @@ const PreferenceAlcoholLevel = ({
   surveyData,
 }: PreferenceTypeProps) => {
   const [selectedLevel, setSelectedLevel] = useState<string | null>(
-    surveyData.alcoholLevel || null,
+    surveyData.level || null,
   );
 
   const handleSelect = (level: string) => {
@@ -21,7 +21,7 @@ const PreferenceAlcoholLevel = ({
 
   const handleNext = () => {
     if (selectedLevel) {
-      onNext({ alcoholLevel: selectedLevel });
+      onNext({ level: selectedLevel });
     }
   };
 

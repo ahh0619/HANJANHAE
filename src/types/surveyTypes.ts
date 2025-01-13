@@ -1,6 +1,8 @@
+import { Tables } from './supabase';
+
 export type surveyProps = {
   type: string[] | null;
-  alcoholLevel: string | null;
+  level: string | null;
   sweetness: string | null;
   acidity: string | null;
   carbonation: string | null;
@@ -9,8 +11,8 @@ export type surveyProps = {
 };
 
 export type PreferenceTypeProps = {
-  surveyData: surveyProps;
-  onNext: (data: Partial<surveyProps>) => void;
+  surveyData: Partial<Tables<'survey'>>;
+  onNext: (data: Partial<Tables<'survey'>>) => void;
   onPrev: () => void;
 };
 
