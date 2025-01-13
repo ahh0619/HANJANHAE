@@ -64,3 +64,21 @@ export const logout = async (): Promise<void> => {
 
   redirect('/signin');
 };
+
+/* 사용자 정보 가져오기 */
+export const fetchUser = async (): Promise<UserType | null> => {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) return null;
+
+  return {
+    id: user.id,
+    nickname: user.user_metadata.name,
+    profile_image: user.user_metadata.avatar_url,
+  };
+};
