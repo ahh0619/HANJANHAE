@@ -1,3 +1,5 @@
+'use client';
+
 import useDrinkRecommendations from '@/hooks/result/useDrinkRecommendations';
 
 import DrinkList from './DrinkList';
