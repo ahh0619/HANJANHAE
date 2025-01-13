@@ -7,8 +7,8 @@ const Social = () => {
 
   const handleSubmit = async (provider: string) => {
     try {
-      provider === 'google' && (await handleGoogle());
-      provider === 'kakao' && (await handleKakao());
+      provider === 'google' && (await handleGoogle({ isSignin: true }));
+      provider === 'kakao' && (await handleKakao({ isSignin: true }));
     } catch (error: any) {
       window.alert(error);
     }
