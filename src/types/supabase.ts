@@ -414,6 +414,7 @@ export type Database = {
           id: string
           nickname: string
           profile_image: string | null
+          agree_terms: boolean
         }
         Insert: {
           agree_terms: boolean
@@ -421,6 +422,7 @@ export type Database = {
           id: string
           nickname: string
           profile_image?: string | null
+          agree_terms: boolean
         }
         Update: {
           agree_terms?: boolean
@@ -428,6 +430,7 @@ export type Database = {
           id?: string
           nickname?: string
           profile_image?: string | null
+          agree_terms?: boolean
         }
         Relationships: []
       }
