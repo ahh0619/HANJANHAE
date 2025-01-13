@@ -1,5 +1,7 @@
+'use client';
+
 import LikeButton from '@/components/common/LikeButton';
-import { fetchUser } from '@/utils/auth/action';
+import { useAuthStore } from '@/store/authStore';
 
 import ShareButton from './ShareButton';
 
@@ -10,13 +12,13 @@ type DrinkDescriptionProps = {
   drinkId: string;
 };
 
-const DrinkDescription = async ({
+const DrinkDescription = ({
   name,
   imageUrl,
   description,
   drinkId,
 }: DrinkDescriptionProps) => {
-  const user = await fetchUser();
+  const { user } = useAuthStore();
   return (
     <section className="border-b p-4">
       <div className="flex items-center justify-between">

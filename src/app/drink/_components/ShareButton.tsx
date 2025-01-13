@@ -58,7 +58,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         onClick={() => setIsOpen(true)}
         className="flex items-center justify-center rounded-full hover:bg-gray-50"
       >
-        <Share size={24} className="text-black-400" />
+        <Share className="text-black-400 ml-2 h-5 w-5 transition-colors sm:h-6 sm:w-6" />
       </button>
       <ShareModal
         isOpen={isOpen}
