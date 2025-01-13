@@ -16,6 +16,7 @@ export type Database = {
           drink_id: string
           id: string
           nickname: string | null
+          profile_image: string | null
           updated_at: string | null
           user_id: string
         }
@@ -25,6 +26,7 @@ export type Database = {
           drink_id: string
           id?: string
           nickname?: string | null
+          profile_image?: string | null
           updated_at?: string | null
           user_id: string
         }
@@ -34,6 +36,7 @@ export type Database = {
           drink_id?: string
           id?: string
           nickname?: string | null
+          profile_image?: string | null
           updated_at?: string | null
           user_id?: string
         }
@@ -57,7 +60,7 @@ export type Database = {
       drinks: {
         Row: {
           acidity: number | null
-          alcohol_content: string | null
+          alcohol_content: number | null
           body: number | null
           carbonation: number | null
           created_at: string | null
@@ -73,7 +76,7 @@ export type Database = {
         }
         Insert: {
           acidity?: number | null
-          alcohol_content?: string | null
+          alcohol_content?: number | null
           body?: number | null
           carbonation?: number | null
           created_at?: string | null
@@ -89,7 +92,7 @@ export type Database = {
         }
         Update: {
           acidity?: number | null
-          alcohol_content?: string | null
+          alcohol_content?: number | null
           body?: number | null
           carbonation?: number | null
           created_at?: string | null

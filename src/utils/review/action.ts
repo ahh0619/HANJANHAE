@@ -13,7 +13,7 @@ export const fetchReviews = async (drinkId: string) => {
   // 댓글 데이터 조회
   const { data: comments, error: commentsError } = await supabase
     .from('comments')
-    .select('id, user_id, nickname, content, created_at')
+    .select('id, user_id, nickname, content, created_at, profile_image')
     .eq('drink_id', drinkId)
     .order('created_at', { ascending: false });
 
@@ -46,6 +46,7 @@ export const fetchReviews = async (drinkId: string) => {
       comment: comment.content,
       rating: matchingRating ? matchingRating.rating : 0,
       created_at: comment.created_at,
+      profile_image: comment.profile_image || null,
     };
   });
 
@@ -59,12 +60,14 @@ export const submitReview = async ({
   content,
   rating,
   nickname,
+  profileImage,
 }: {
   drinkId: string;
   userId: string;
   content: string;
   rating: number;
   nickname: string;
+  profileImage: string;
 }) => {
   if (
     !drinkId ||
@@ -87,6 +90,7 @@ export const submitReview = async ({
         user_id: userId,
         nickname,
         content,
+        profile_image: profileImage,
         created_at: new Date().toISOString(),
       },
     ])

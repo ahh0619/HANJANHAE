@@ -31,6 +31,7 @@ export type Review = {
   comment: string;
   rating: number;
   created_at: string | null;
+  profile_image: string | null;
 };
 
 export type ReviewListProps = {

@@ -4,12 +4,22 @@ type ReviewInfoProps = {
   nickname: string | null;
   createdAt: string | null;
   rating: number;
+  profile_image: string | null;
 };
 
-const ReviewInfo = ({ nickname, createdAt, rating }: ReviewInfoProps) => {
+const ReviewInfo = ({
+  nickname,
+  createdAt,
+  rating,
+  profile_image,
+}: ReviewInfoProps) => {
   return (
     <div className="mb-5 flex items-start space-x-4">
-      <div className="h-12 w-12 rounded-full bg-gray-300"></div>
+      <img
+        src={profile_image || '/default-avatar.png'}
+        alt={`${nickname || '유저'}의 프로필 이미지`}
+        className="h-12 w-12 rounded-full object-cover"
+      />
       <div className="flex-1">
         <div className="flex items-center justify-between">
           <span className="text-sm font-bold text-gray-800">{nickname}</span>
