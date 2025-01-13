@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
 import { signin } from '@/utils/auth/action';
 
@@ -27,8 +26,6 @@ const signinSchema = z.object({
 });
 
 const useSignIn = ({ handleSuccess }: UseSignInProps) => {
-  const { setUser } = useAuthStore();
-
   const {
     register,
     handleSubmit,
@@ -44,9 +41,9 @@ const useSignIn = ({ handleSuccess }: UseSignInProps) => {
 
   const onSubmit = async (values: SignInDataType) => {
     try {
-      const user = await signin(values);
+      await signin(values);
+
       window.alert('로그인 성공');
-      setUser(user);
       handleSuccess();
     } catch (error: any) {
       window.alert(error);
