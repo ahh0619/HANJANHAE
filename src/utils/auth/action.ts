@@ -9,27 +9,17 @@ import { createClient } from '../supabase/server';
 export const signup = async (data: SignUpDataType): Promise<void> => {
   const supabase = createClient();
 
-  const { email, password, nickname, birth } = data;
+  const { email, password, nickname } = data;
 
-  // auth user 데이터 생성
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      data: { nickname, birth, profile_image: '' },
+      data: { name: nickname, avatar_url: '' },
     },
   });
 
-  if (authError) throw new Error(authError.message);
-
-  // user 데이터 생성
-  const { error: userError } = await supabase.from('users').insert({
-    id: authData.user?.id,
-    nickname,
-    birth,
-  });
-
-  if (userError) throw new Error(userError.message);
+  if (error) throw new Error(error.message);
 
   await logout();
 };
@@ -52,9 +42,8 @@ export const signin = async (data: SignInDataType): Promise<UserType> => {
 
   return {
     id: user.id,
-    nickname: user.user_metadata.nickname,
-    birth: user.user_metadata.birth,
-    profile_image: user.user_metadata.profile_image,
+    nickname: user.user_metadata.name,
+    profile_image: user.user_metadata.avatar_url,
   };
 };
 
@@ -65,4 +54,22 @@ export const logout = async (): Promise<void> => {
   await supabase.auth.signOut();
 
   redirect('/signin');
+};
+
+/* 사용자 정보 가져오기 */
+export const fetchUser = async (): Promise<UserType | null> => {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) return null;
+
+  return {
+    id: user.id,
+    nickname: user.user_metadata.name,
+    profile_image: user.user_metadata.avatar_url,
+  };
 };
