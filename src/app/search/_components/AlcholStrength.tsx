@@ -1,14 +1,12 @@
 'use client';
-import { useState } from 'react';
 
 import useFilterStore from '@/store/filterStore';
 
 import { DualRangeSlider } from './_ui/DualRangeSliderProps';
 
-
 const AlcholeStrength = () => {
-  const [values, setValues] = useState([1, 3]);
-  const { alcoholStrength, setAlcoholStrength } = useFilterStore();
+  const { values, setValues, alcoholStrength, setAlcoholStrength } =
+    useFilterStore();
 
   const getStrengthRange = (value: number | number[]) => {
     if (Array.isArray(value)) {
@@ -34,6 +32,7 @@ const AlcholeStrength = () => {
     const strengthRanges = getStrengthRange(strength);
     setAlcoholStrength([strengthRanges.min, strengthRanges.max]);
   };
+
   console.log(alcoholStrength);
   console.log(values);
   return (

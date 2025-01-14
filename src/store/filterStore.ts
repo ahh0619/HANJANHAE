@@ -12,6 +12,15 @@ type FilterStore = {
   resetFilters: () => void; // 초기화 기능
   setTriggerFetch: (trigger: boolean) => void; // 트리거 상태 변경
   setIsFiltered: (value: boolean) => void; // 트리거 상태 변경
+
+  // range 범위 타입
+  values: number[];
+  setValues: (values: number[]) => void;
+
+  // 삭제 타입
+  removeSelectedType: (type: string) => void;
+  removeAlcoholStrength: () => void;
+  removeTastePreference: (key: string) => void;
 };
 
 const useFilterStore = create<FilterStore>((set) => ({
@@ -34,6 +43,24 @@ const useFilterStore = create<FilterStore>((set) => ({
     }),
   setTriggerFetch: (trigger) => set({ triggerFetch: trigger }),
   setIsFiltered: (value) => set({ isFiltered: value }),
+  // range 범위 함수
+  values: [1, 3],
+  setValues: (values) => set({ values }),
+
+  // 삭제 함수
+  removeSelectedType: (type: string) =>
+    set((state) => ({
+      selectedTypes: state.selectedTypes.filter((item) => item !== type),
+    })),
+  removeAlcoholStrength: () =>
+    set(() => ({
+      alcoholStrength: [0, 100],
+    })),
+  removeTastePreference: (key: string) =>
+    set((state) => {
+      const { [key]: _, ...rest } = state.tastePreferences;
+      return { tastePreferences: rest };
+    }),
 }));
 
 export default useFilterStore;

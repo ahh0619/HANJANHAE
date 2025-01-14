@@ -3,14 +3,35 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
 
+type FilterItem = {
+  label: string; // 필터에 표시되는 텍스트
+  value: string | number | [number, number]; // 값은 문자열, 숫자, 또는 배열
+  original: string; // 고유 식별자
+};
+
 const FilterSideBar = () => {
   const { openModal } = useModalStore();
-  const { selectedTypes, alcoholStrength, tastePreferences } = useFilterStore();
+  const {
+    selectedTypes,
+    alcoholStrength,
+    tastePreferences,
+    removeSelectedType,
+    removeAlcoholStrength,
+    removeTastePreference,
+    setValues,
+  } = useFilterStore();
   console.log(selectedTypes, alcoholStrength, tastePreferences);
   const getStrengthLabel = (strength: [number, number]): string => {
-    if (strength[1] <= 15) return '15도 이하';
-    if (strength[0] >= 15 && strength[1] <= 30) return '15도 이상 30도 이하';
-    if (strength[0] >= 30) return '30도 이상';
+    const [min, max] = strength;
+
+    if (min === 0 && max === 100) return '전체 도수';
+    if (max <= 15) return '15도 이하';
+    if (min >= 15 && max <= 30) return '15도 이상 30도 이하';
+    if (min === 0 && max === 30) return '30도 이하';
+    if (min === 15 && max === 100) return '15도 이상';
+    if (min >= 30 && max === 100) return '30도 이상'; // 30도 이상으로 수정
+
+    return '알 수 없음'; // 기본값 설정
   };
 
   // tastePreferences를 한글로 변환하는 키-값 매핑
@@ -37,40 +58,79 @@ const FilterSideBar = () => {
   }));
 
   // 변환된 필터 데이터를 배열로 구성
-  const filters = [
-    ...selectedTypes.map((type) => ({ label: type, value: type })), // selectedTypes: 한글 텍스트 그대로 사용
-    { label: getStrengthLabel(alcoholStrength), value: alcoholStrength }, // strength 변환된 값
-    ...tasteFilters, // tastePreferences 변환된 값
-  ].filter((item) => item.label !== undefined); // label이 undefined인 항목을 필터링
+  const filters: FilterItem[] = [
+    ...selectedTypes.map((type) => ({
+      label: type,
+      value: type,
+      original: type, // selectedTypes에서 영문 원문 그대로 사용
+    })),
+    {
+      label: getStrengthLabel(alcoholStrength),
+      value: [alcoholStrength[0], alcoholStrength[1]] as [number, number], // as처리 못지우는지 확인
+      original: 'strength', // 도수에 대한 원문 값
+    },
+    ...Object.entries(tastePreferences).map(([key, value]) => ({
+      label: `${tasteMapping[key] || key}: ${tasteLabels[value] || '알 수 없음'}`,
+      value: value,
+      original: key, // tastePreferences의 key를 original로 사용
+    })),
+  ].filter((item) => item.label !== undefined);
   console.log(filters);
+  const handleRemoveType = (original: string) => {
+    removeSelectedType(original); // selectedTypes에서 해당 타입을 삭제
+  };
+
+  const handleRemoveStrength = () => {
+    setValues([1, 3]);
+    removeAlcoholStrength(); // alcoholStrength를 초기화
+  };
+
+  const handleRemoveTastePreference = (value: string) => {
+    removeTastePreference(value); // tastePreferences에서 해당 맛 항목을 삭제
+  };
 
   return (
     <div className="flex items-center space-x-2 rounded-lg px-4 py-2">
       {/* 각 필터 버튼 */}
       <div className="w-full overflow-hidden">
-        <div>
-          {/* Swiper 컨테이너 영역 */}
-          <Swiper
-            spaceBetween={10} // 슬라이드 간 간격
-            slidesPerView="auto" // 각 슬라이드 크기를 자동으로 조정
-            slidesPerGroup={1}
-            loop={false} // 처음과 끝에서 반복되지 않도록 설정
-          >
-            {filters.map((filter, index) => (
-              <SwiperSlide key={index} className="flex-none">
-                <div className="float-left mr-2 flex items-center space-x-2 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700">
-                  <span>{filter.label}</span>
-                  <button
-                    className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                    aria-label={`${filter.label} 삭제`}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        {/* Swiper 컨테이너 영역 */}
+        <Swiper
+          spaceBetween={10} // 슬라이드 간 간격
+          slidesPerView="auto" // 각 슬라이드 크기를 자동으로 조정
+          slidesPerGroup={1}
+          loop={false} // 처음과 끝에서 반복되지 않도록 설정
+          wrapperClass="w-full flex" // swiper-wrapper class명 추가
+        >
+          {filters.map((filter, index) => (
+            <SwiperSlide key={index} className="flex-none">
+              <div className="float-left mr-2 flex items-center space-x-2 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700">
+                <span>{filter.label}</span>
+                <button
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  aria-label={`${filter.label} 삭제`}
+                  onClick={() => {
+                    if (
+                      Array.isArray(filter.value) && // filter.value가 배열인지 확인
+                      Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
+                      filter.value.length === alcoholStrength.length && // 길이 비교
+                      filter.value.every(
+                        (val, index) => val === alcoholStrength[index],
+                      ) // 모든 요소 비교
+                    ) {
+                      handleRemoveStrength();
+                    } else if (filter.original in tastePreferences) {
+                      handleRemoveTastePreference(filter.original); // 맛 필터 삭제
+                    } else {
+                      handleRemoveType(filter.original); // 술 타입 필터 삭제
+                    }
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
 
       {/* 설정 아이콘 */}
