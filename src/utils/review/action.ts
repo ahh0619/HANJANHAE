@@ -2,6 +2,17 @@
 
 import { createClient } from '@/utils/supabase/server';
 
+type CommentWithUser = {
+  id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  users: {
+    nickname: string | null;
+    profile_image: string | null;
+  } | null;
+};
+
 // 특정 주류에 대한 리뷰 목록 가져오기
 export const fetchReviews = async (drinkId: string) => {
   if (!drinkId) {
@@ -10,12 +21,26 @@ export const fetchReviews = async (drinkId: string) => {
 
   const supabase = createClient();
 
-  // 댓글 데이터 조회
-  const { data: comments, error: commentsError } = await supabase
+  // 댓글과 유저 데이터 조인하여 조회
+  const { data: comments, error: commentsError } = (await supabase
     .from('comments')
-    .select('id, user_id, nickname, content, created_at')
+    .select(
+      `
+    id,
+    user_id,
+    content,
+    created_at,
+    users (
+      nickname,
+      profile_image
+    )
+  `,
+    )
     .eq('drink_id', drinkId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })) as {
+    data: CommentWithUser[];
+    error: any;
+  };
 
   if (commentsError) {
     throw new Error(commentsError.message);
@@ -42,10 +67,11 @@ export const fetchReviews = async (drinkId: string) => {
     return {
       id: comment.id,
       user_id: comment.user_id,
-      nickname: comment.nickname,
+      nickname: comment.users?.nickname,
       comment: comment.content,
       rating: matchingRating ? matchingRating.rating : 0,
       created_at: comment.created_at,
+      profile_image: comment.users?.profile_image,
     };
   });
 
@@ -58,21 +84,13 @@ export const submitReview = async ({
   userId,
   content,
   rating,
-  nickname,
 }: {
   drinkId: string;
   userId: string;
   content: string;
   rating: number;
-  nickname: string;
 }) => {
-  if (
-    !drinkId ||
-    !userId ||
-    !content ||
-    typeof rating !== 'number' ||
-    !nickname
-  ) {
+  if (!drinkId || !userId || !content || typeof rating !== 'number') {
     throw new Error('Invalid input data');
   }
 
@@ -85,7 +103,6 @@ export const submitReview = async ({
       {
         drink_id: drinkId,
         user_id: userId,
-        nickname,
         content,
         created_at: new Date().toISOString(),
       },
