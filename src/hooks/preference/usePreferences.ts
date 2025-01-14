@@ -7,6 +7,8 @@ import { fetchSurveyData, updateSurvey } from '@/utils/preference/action';
 
 const usePreferences = () => {
   const [preferences, setPreferences] = useState<Tables<'survey'> | null>(null);
+  const [defaultPreferences, setDefaultPreferences] =
+    useState<Tables<'survey'> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthStore();
@@ -18,6 +20,7 @@ const usePreferences = () => {
         if (user) {
           const defaults = await fetchSurveyData(user.id);
           setPreferences(defaults);
+          setDefaultPreferences(defaults); // 초기값 저장
           setIsLoading(false);
         }
       } catch (err) {
@@ -67,6 +70,9 @@ const usePreferences = () => {
     preferences?.body !== null &&
     preferences?.food;
 
+  const hasPreferencesChanged =
+    JSON.stringify(preferences) !== JSON.stringify(defaultPreferences);
+
   return {
     preferences,
     handlePreferenceChange,
@@ -74,6 +80,7 @@ const usePreferences = () => {
     handleFoodChange,
     handleSubmit,
     isFormComplete,
+    hasPreferencesChanged,
     isLoading,
     error,
   };

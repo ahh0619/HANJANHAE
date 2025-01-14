@@ -16,6 +16,7 @@ const Page = () => {
     handleFoodChange,
     handleSubmit,
     isFormComplete,
+    hasPreferencesChanged,
     isLoading,
     error,
   } = usePreferences();
@@ -51,9 +52,9 @@ const Page = () => {
 
       <button
         onClick={handleSubmit}
-        disabled={!isFormComplete}
+        disabled={!isFormComplete || !hasPreferencesChanged}
         className={`mb-10 w-full rounded-md py-3 text-lg font-bold ${
-          isFormComplete
+          isFormComplete && hasPreferencesChanged
             ? 'bg-black text-white'
             : 'cursor-not-allowed bg-gray-300 text-gray-500'
         }`}
