@@ -20,3 +20,19 @@ export const fetchDrinks = async (id: string): Promise<Drink | null> => {
 
   return data;
 };
+
+export const fetchDrinksByNames = async (names: string[]): Promise<Drink[]> => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('drinks')
+    .select('*')
+    .in('name', names);
+
+  if (error) {
+    console.error('Error fetching drinks by names:', error.message);
+    return [];
+  }
+
+  return data || [];
+};
