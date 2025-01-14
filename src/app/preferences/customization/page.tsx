@@ -16,7 +16,12 @@ const Page = () => {
     handleFoodChange,
     handleSubmit,
     isFormComplete,
+    isLoading,
+    error,
   } = usePreferences();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="mx-auto max-w-lg p-6">
@@ -31,17 +36,14 @@ const Page = () => {
         preferences={preferences}
         handleTypeChange={handleTypeChange}
       />
-
       <AlcoholLevelSelector
         preferences={preferences}
         handleSelect={handlePreferenceChange}
       />
-
       <TasteSelector
         preferences={preferences}
         handleSelect={handlePreferenceChange}
       />
-
       <FavoriteFoodInput
         preferences={preferences}
         handleFoodChange={handleFoodChange}

@@ -29,12 +29,8 @@ const TasteSelector = ({ preferences, handleSelect }) => {
                 key={option.value}
                 value={option.value}
                 label={option.label}
-                isSelected={
-                  preferences[attr.key] === parseInt(option.value, 10)
-                }
-                onSelect={(value) =>
-                  handleSelect(attr.key, parseInt(value, 10))
-                }
+                isSelected={preferences[attr.key] === option.value}
+                onSelect={(value) => handleSelect(attr.key, value)}
               />
             ))}
           </div>

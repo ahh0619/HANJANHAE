@@ -1,15 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { useAuthStore } from '@/store/authStore';
+import { Tables } from '@/types/supabase';
+import { fetchSurveyData } from '@/utils/preference/action';
 
 const usePreferences = () => {
-  const [preferences, setPreferences] = useState({
-    types: '',
-    level: '',
-    sweetness: null,
-    acidity: null,
-    carbonation: null,
-    body: null,
-    food: '',
-  });
+  const [preferences, setPreferences] = useState<Tables<'survey'> | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    const loadSurveyDefaults = async () => {
+      try {
+        if (user) {
+          const defaults = await fetchSurveyData(user.id);
+          setPreferences(defaults);
+          setIsLoading(false);
+        }
+      } catch (err) {
+        setError('Failed to load survey defaults');
+        setIsLoading(false);
+      }
+    };
+
+    loadSurveyDefaults();
+  }, [user]);
 
   const handlePreferenceChange = (key: string, value: string | number) => {
     setPreferences((prev) => ({ ...prev, [key]: value }));
@@ -17,15 +33,15 @@ const usePreferences = () => {
 
   const handleTypeChange = (type: string) => {
     setPreferences((prev) => {
-      const typesArray = prev.types ? prev.types.split(',') : [];
+      const typesArray = prev.type ? prev.type.split(',') : [];
       if (typesArray.includes(type)) {
         const updatedTypes = typesArray
           .filter((item) => item !== type)
           .join(',');
-        return { ...prev, types: updatedTypes };
+        return { ...prev, type: updatedTypes };
       } else {
         const updatedTypes = [...typesArray, type].join(',');
-        return { ...prev, types: updatedTypes };
+        return { ...prev, type: updatedTypes };
       }
     });
   };
@@ -35,17 +51,17 @@ const usePreferences = () => {
   };
 
   const handleSubmit = () => {
-    console.log('Preferences Saved:', preferences);
+    console.log('preferences Saved:', preferences);
   };
 
   const isFormComplete =
-    preferences.types.length > 0 &&
-    preferences.level &&
-    preferences.sweetness !== null &&
-    preferences.acidity !== null &&
-    preferences.carbonation !== null &&
-    preferences.body !== null &&
-    preferences.food;
+    preferences?.type.length > 0 &&
+    preferences?.level &&
+    preferences?.sweetness !== null &&
+    preferences?.acidity !== null &&
+    preferences?.carbonation !== null &&
+    preferences?.body !== null &&
+    preferences?.food;
 
   return {
     preferences,
@@ -54,6 +70,8 @@ const usePreferences = () => {
     handleFoodChange,
     handleSubmit,
     isFormComplete,
+    isLoading,
+    error,
   };
 };
 

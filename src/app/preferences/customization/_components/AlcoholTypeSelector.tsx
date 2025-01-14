@@ -21,7 +21,7 @@ const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
             key={type.key}
             onClick={() => handleTypeChange(type.key)}
             className={`rounded-full border px-4 py-2 ${
-              preferences.types.includes(type.key)
+              preferences.type.includes(type.key)
                 ? 'bg-black text-white'
                 : 'border-gray-300 bg-white text-black'
             }`}
