@@ -39,4 +39,7 @@ export type ReviewListProps = {
   user: { id?: string; nickname: string } | null;
   onUpdate: (id: string, updatedComment: string) => void;
   onDelete: (id: string) => void;
+  fetchNextPage: () => void;
+  hasNextPage: boolean | undefined;
+  isLoading: boolean;
 };
