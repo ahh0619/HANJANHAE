@@ -17,14 +17,7 @@ const Home = async () => {
 
   return (
     <>
-      <ThematicRecommender
-        season={recommendations.season}
-        foodCategory={recommendations.foodCategory}
-        mood={recommendations.mood}
-        seasonRecommendations={recommendations.seasonRecommendations}
-        foodRecommendations={recommendations.foodRecommendations}
-        moodRecommendations={recommendations.moodRecommendations}
-      />
+      <ThematicRecommender recommendations={recommendations} />
       <UserInitializer />
     </>
   );

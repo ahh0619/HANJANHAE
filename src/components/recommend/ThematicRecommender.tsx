@@ -12,7 +12,7 @@ import ProductCard from '../common/ProductCard';
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
-type ThematicRecommenderProps = {
+type Recommendations = {
   season: string;
   foodCategory: string;
   mood: string;
@@ -21,14 +21,22 @@ type ThematicRecommenderProps = {
   moodRecommendations: Drink[];
 };
 
+type ThematicRecommenderProps = {
+  recommendations: Recommendations;
+};
+
 const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
-  season,
-  foodCategory,
-  mood,
-  seasonRecommendations,
-  foodRecommendations,
-  moodRecommendations,
+  recommendations,
 }) => {
+  const {
+    season,
+    foodCategory,
+    mood,
+    seasonRecommendations,
+    foodRecommendations,
+    moodRecommendations,
+  } = recommendations;
+
   const sections = [
     {
       title: `${season}에 어울리는 전통주`,
