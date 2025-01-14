@@ -20,7 +20,9 @@ const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
     return <div>추천 결과 없음</div>;
   }
 
-  return <DrinkList drinks={drinks} title={`${nickname}을 위한 전통주 추천`} />;
+  return (
+    <DrinkList drinks={drinks} title={`${nickname}님을 위한 전통주 추천`} />
+  );
 };
 
 export default DrinkAuthReco;
