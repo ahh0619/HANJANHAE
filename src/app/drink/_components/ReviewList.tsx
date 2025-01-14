@@ -45,6 +45,7 @@ const ReviewList = ({ reviews, user, onUpdate, onDelete }: ReviewListProps) => {
             nickname={review.nickname}
             createdAt={review.created_at}
             rating={review.rating}
+            profile_image={review.profile_image}
           />
           <ReviewContent
             editing={editingId === review.id}

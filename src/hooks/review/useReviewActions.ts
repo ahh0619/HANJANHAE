@@ -14,6 +14,7 @@ export type Review = {
   comment: string;
   rating: number;
   created_at: string | null;
+  profile_image: string | null;
 };
 
 export type ReviewSubmitData = {
@@ -24,6 +25,7 @@ export type ReviewSubmitData = {
 export type User = {
   id: string;
   nickname: string;
+  profile_image: string | null;
 };
 
 export const useReviewActions = (drinkId: string, user: User | null) => {
@@ -73,7 +75,6 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
         userId: user.id,
         content: data.comment,
         rating: data.rating,
-        nickname: user.nickname,
       });
 
       console.log('리뷰가 성공적으로 등록되었습니다.');
