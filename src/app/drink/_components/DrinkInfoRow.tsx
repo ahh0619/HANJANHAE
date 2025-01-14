@@ -1,6 +1,6 @@
 type InfoRowProps = {
   label: string;
-  value: string | null;
+  value: string | number | null;
 };
 
 const DrinkInfoRow = ({ label, value }: InfoRowProps) => (

@@ -52,7 +52,6 @@ export async function filterDrinks({
 }
 
 export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
-  if (!keyword) return;
   const supabase = createClient();
   const { data, error } = await supabase
     .from('drinks')
@@ -63,5 +62,5 @@ export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
     throw new Error('Error fetching data by keyword');
   }
 
-  return data as Drink[];
+  return (data as Drink[]) || [];
 }

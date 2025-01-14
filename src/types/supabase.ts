@@ -15,7 +15,6 @@ export type Database = {
           created_at: string | null
           drink_id: string
           id: string
-          nickname: string | null
           updated_at: string | null
           user_id: string
         }
@@ -24,7 +23,6 @@ export type Database = {
           created_at?: string | null
           drink_id: string
           id?: string
-          nickname?: string | null
           updated_at?: string | null
           user_id: string
         }
@@ -33,7 +31,6 @@ export type Database = {
           created_at?: string | null
           drink_id?: string
           id?: string
-          nickname?: string | null
           updated_at?: string | null
           user_id?: string
         }

@@ -36,6 +36,9 @@ const SearchBar = () => {
       setTriggerFetch(false);
       setIsSearchFocuse(true);
       setSearchTriggerFetch(true);
+      // 여기서 검색결과 저장 api 요청을 여기서 보내면 되는데
+      // setIsSearchFocuse로 true 보내야지만 useEffect에서 그제서야 확인하고
+      // 요청을 하는 것이라 -> 여기서 요청을 바로 진행하면 된다.
     }
   };
   console.log(keyword);
