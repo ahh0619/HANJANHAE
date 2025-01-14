@@ -36,21 +36,21 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
   const queryClient = useQueryClient();
 
   // 리뷰 데이터 가져오기
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isError,
-    error,
-  } = useInfiniteQuery<Review[]>({
-    queryKey: ['reviews', drinkId],
-    queryFn: ({ pageParam = 1 }: { pageParam: number }) =>
-      fetchReviews(drinkId, pageParam, 10),
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length < 10 ? undefined : allPages.length + 1,
-    enabled: !!drinkId,
-  });
+  const { data, fetchNextPage, hasNextPage, isPending, isError, error } =
+    useInfiniteQuery({
+      queryKey: ['reviews', drinkId],
+      queryFn: ({ pageParam = 1 }: { pageParam: number }) =>
+        fetchReviews(drinkId, pageParam, 5),
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < 5) return undefined;
+        return allPages.length + 1;
+      },
+      initialPageParam: 1,
+      enabled: !!drinkId,
+    });
+
+  // 모든 리뷰 합치기
+  const reviews = data?.pages.flat() || [];
 
   const submitMutation = useMutation({
     mutationFn: submitReview,
@@ -134,6 +134,8 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
 
   return {
     reviews,
+    fetchNextPage,
+    hasNextPage,
     isPending,
     isError,
     error,

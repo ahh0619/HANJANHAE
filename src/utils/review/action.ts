@@ -16,8 +16,8 @@ type CommentWithUser = {
 // 특정 주류에 대한 리뷰 목록 가져오기
 export const fetchReviews = async (
   drinkId: string,
-  page: number,
-  limit: number,
+  page?: number,
+  limit?: number,
 ) => {
   if (!drinkId) {
     throw new Error('drink_id is required');
@@ -25,23 +25,26 @@ export const fetchReviews = async (
 
   const supabase = createClient();
 
+  const offset = page && limit ? (page - 1) * limit : 0; // 기본값 0
+  const rangeEnd = limit ? offset + limit - 1 : undefined;
+
   const { data: comments, error: commentsError } = (await supabase
     .from('comments')
     .select(
       `
-    id,
-    user_id,
-    content,
-    created_at,
-    users (
-      nickname,
-      profile_image
-    )
-  `,
+      id,
+      user_id,
+      content,
+      created_at,
+      users (
+        nickname,
+        profile_image
+      )
+    `,
     )
     .eq('drink_id', drinkId)
     .order('created_at', { ascending: false })
-    .range((page - 1) * limit, page * limit - 1)) as {
+    .range(offset, rangeEnd)) as {
     data: CommentWithUser[];
     error: any;
   };
@@ -50,6 +53,11 @@ export const fetchReviews = async (
     throw new Error(commentsError.message);
   }
 
+  if (!comments || comments.length === 0) {
+    return [];
+  }
+
+  // 평점 데이터 조회
   const { data: ratings, error: ratingsError } = await supabase
     .from('ratings')
     .select('comment_id, rating');
@@ -58,6 +66,7 @@ export const fetchReviews = async (
     throw new Error(ratingsError.message);
   }
 
+  // 댓글 데이터와 평점 데이터를 매핑하여 리뷰 목록 생성
   const reviews = comments.map((comment) => {
     const matchingRating = ratings?.find(
       (rating) => rating.comment_id === comment.id,
