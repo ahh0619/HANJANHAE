@@ -14,14 +14,17 @@ type CommentWithUser = {
 };
 
 // 특정 주류에 대한 리뷰 목록 가져오기
-export const fetchReviews = async (drinkId: string) => {
+export const fetchReviews = async (
+  drinkId: string,
+  page: number,
+  limit: number,
+) => {
   if (!drinkId) {
     throw new Error('drink_id is required');
   }
 
   const supabase = createClient();
 
-  // 댓글과 유저 데이터 조인하여 조회
   const { data: comments, error: commentsError } = (await supabase
     .from('comments')
     .select(
@@ -37,7 +40,8 @@ export const fetchReviews = async (drinkId: string) => {
   `,
     )
     .eq('drink_id', drinkId)
-    .order('created_at', { ascending: false })) as {
+    .order('created_at', { ascending: false })
+    .range((page - 1) * limit, page * limit - 1)) as {
     data: CommentWithUser[];
     error: any;
   };
@@ -46,11 +50,6 @@ export const fetchReviews = async (drinkId: string) => {
     throw new Error(commentsError.message);
   }
 
-  if (!comments || comments.length === 0) {
-    return [];
-  }
-
-  // 평점 데이터 조회
   const { data: ratings, error: ratingsError } = await supabase
     .from('ratings')
     .select('comment_id, rating');
@@ -59,7 +58,6 @@ export const fetchReviews = async (drinkId: string) => {
     throw new Error(ratingsError.message);
   }
 
-  // 댓글 데이터와 평점 데이터를 매핑하여 리뷰 목록 생성
   const reviews = comments.map((comment) => {
     const matchingRating = ratings?.find(
       (rating) => rating.comment_id === comment.id,

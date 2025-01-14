@@ -1,4 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import {
   deleteReview,
@@ -33,13 +37,18 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
 
   // 리뷰 데이터 가져오기
   const {
-    data: reviews = [],
-    isPending,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isError,
     error,
-  } = useQuery<Review[]>({
+  } = useInfiniteQuery<Review[]>({
     queryKey: ['reviews', drinkId],
-    queryFn: () => fetchReviews(drinkId),
+    queryFn: ({ pageParam = 1 }: { pageParam: number }) =>
+      fetchReviews(drinkId, pageParam, 10),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length < 10 ? undefined : allPages.length + 1,
     enabled: !!drinkId,
   });
 
