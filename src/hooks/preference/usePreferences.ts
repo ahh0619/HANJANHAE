@@ -1,14 +1,16 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useAuthStore } from '@/store/authStore';
 import { Tables } from '@/types/supabase';
-import { fetchSurveyData } from '@/utils/preference/action';
+import { fetchSurveyData, updateSurvey } from '@/utils/preference/action';
 
 const usePreferences = () => {
   const [preferences, setPreferences] = useState<Tables<'survey'> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthStore();
+  const router = useRouter();
 
   useEffect(() => {
     const loadSurveyDefaults = async () => {
@@ -50,8 +52,10 @@ const usePreferences = () => {
     setPreferences((prev) => ({ ...prev, food: e.target.value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('preferences Saved:', preferences);
+    await updateSurvey({ surveyData: preferences, userId: user.id });
+    router.push('/preferences/result');
   };
 
   const isFormComplete =

@@ -135,6 +135,41 @@ export const addRecoResult = async ({
   }
 };
 
+export const updateSurvey = async ({
+  surveyData,
+  userId,
+}: {
+  surveyData: Partial<Tables<'survey'>>;
+  userId: string;
+}) => {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from('survey')
+    .update(surveyData)
+    .eq('user_id', userId);
+
+  if (error) {
+    throw new Error(`설문조사 갱신에 실패했습니다: ${error!.message}`);
+  }
+
+  await deleteRecoResult(userId);
+};
+
+export const deleteRecoResult = async (userId: string) => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('reco_results')
+    .delete()
+    .eq('user_id', userId)
+    .select();
+
+  if (error) {
+    throw new Error(`전통주 추천결과 삭제에 실패했습니다: ${error!.message}`);
+  }
+};
+
 export const fetchSurveyData = async (
   userId: string,
 ): Promise<Tables<'survey'> | null> => {
