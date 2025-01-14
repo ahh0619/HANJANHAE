@@ -8,7 +8,7 @@ import { FaHeart, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/drink/')) {
+  if (pathname.startsWith('/drink/') || pathname.startsWith('/place')) {
     return null;
   }
 
