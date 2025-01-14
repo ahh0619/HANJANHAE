@@ -17,12 +17,14 @@ export type ReviewSectionProps = {
 const ReviewSection = ({ drinkId }: ReviewSectionProps) => {
   const { user } = useAuthStore();
   const router = useRouter();
-  
+
   const {
     reviews,
     isPending,
     isError,
     error,
+    fetchNextPage,
+    hasNextPage,
     handleReviewSubmit,
     handleReviewUpdate,
     handleReviewDelete,
@@ -52,6 +54,9 @@ const ReviewSection = ({ drinkId }: ReviewSectionProps) => {
           user={user}
           onUpdate={handleReviewUpdate}
           onDelete={handleReviewDelete}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isLoading={isPending}
         />
       )}
     </section>

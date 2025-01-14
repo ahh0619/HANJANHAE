@@ -14,30 +14,37 @@ type CommentWithUser = {
 };
 
 // 특정 주류에 대한 리뷰 목록 가져오기
-export const fetchReviews = async (drinkId: string) => {
+export const fetchReviews = async (
+  drinkId: string,
+  page?: number,
+  limit?: number,
+) => {
   if (!drinkId) {
     throw new Error('drink_id is required');
   }
 
   const supabase = createClient();
 
-  // 댓글과 유저 데이터 조인하여 조회
+  const offset = page && limit ? (page - 1) * limit : 0; // 기본값 0
+  const rangeEnd = limit ? offset + limit - 1 : undefined;
+
   const { data: comments, error: commentsError } = (await supabase
     .from('comments')
     .select(
       `
-    id,
-    user_id,
-    content,
-    created_at,
-    users (
-      nickname,
-      profile_image
-    )
-  `,
+      id,
+      user_id,
+      content,
+      created_at,
+      users (
+        nickname,
+        profile_image
+      )
+    `,
     )
     .eq('drink_id', drinkId)
-    .order('created_at', { ascending: false })) as {
+    .order('created_at', { ascending: false })
+    .range(offset, rangeEnd)) as {
     data: CommentWithUser[];
     error: any;
   };
