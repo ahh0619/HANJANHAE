@@ -15,7 +15,7 @@ export const useReviewEditing = (
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleEditClick = (
+  const handleReviewEditClick = (
     id: string,
     currentComment: string,
     currentRating: number,
@@ -26,7 +26,7 @@ export const useReviewEditing = (
     setErrorMessage(null);
   };
 
-  const handleSaveClick = (id: string) => {
+  const handleReviewSaveClick = (id: string) => {
     const error = validateComment(editComment, editRating);
     if (error) {
       setErrorMessage(error);
@@ -68,8 +68,8 @@ export const useReviewEditing = (
     editRating,
     errorMessage,
     textareaRef,
-    handleEditClick,
-    handleSaveClick,
+    handleEditClick: handleReviewEditClick,
+    handleSaveClick: handleReviewSaveClick,
     handleCommentChange,
     handleRatingChange,
     resetEditingState,
