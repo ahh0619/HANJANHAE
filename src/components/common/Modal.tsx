@@ -33,13 +33,15 @@ const Modal: React.FC<ModalProps> = ({
         <h2 className="text-lg font-semibold">{title}</h2>
 
         {/* Content */}
-        <p className="mt-2 w-[178px] text-sm font-medium">{content}</p>
+        <p className="mt-2 whitespace-pre-line text-sm font-medium">
+          {content}
+        </p>
 
         {/* Footer */}
         <div className="mt-4 flex justify-center space-x-4">
           {secondaryAction && (
             <button
-              className="text-primary hover:bg-secondary-hover border-secondary w-[136px] rounded-lg border bg-white p-2 font-medium"
+              className="w-[136px] rounded-lg border border-secondary bg-white p-2 font-medium text-primary hover:bg-secondary-hover"
               onClick={secondaryAction.onClick}
             >
               {secondaryAction.text}
@@ -47,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({
           )}
           {primaryAction && (
             <button
-              className="bg-primary hover:bg-primary-hover w-[136px] rounded-lg p-2 font-semibold text-white"
+              className="w-[136px] rounded-lg bg-primary p-2 font-semibold text-white hover:bg-primary-hover"
               onClick={primaryAction.onClick}
             >
               {primaryAction.text}
