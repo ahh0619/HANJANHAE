@@ -4,7 +4,7 @@ import {
   fetchRecoData,
   fetchSurveyData,
   recommendDrinks,
-} from '@/app/result/action';
+} from '@/utils/preference/action';
 
 const useDrinkRecommendations = (userId: string) => {
   const [drinks, setDrinks] = useState(null);
@@ -14,6 +14,7 @@ const useDrinkRecommendations = (userId: string) => {
       try {
         // Step 1:전통주 추천리스트(슈퍼베이스 테이블 )
         const recoData = await fetchRecoData(userId);
+        console.log('recoData: ', recoData);
 
         if (recoData.length > 0) {
           // Step 2-1:  2-1) 1번 데이터가 있으면 state에 넣어주고
@@ -23,6 +24,7 @@ const useDrinkRecommendations = (userId: string) => {
 
         // Step 2-2:  1번 데이터가 없으면, 설문조사 결과 가져오기
         const surveyData = await fetchSurveyData(userId);
+        console.log('surveyData: ', surveyData);
 
         if (!surveyData) {
           console.error('No survey data found');
@@ -35,6 +37,7 @@ const useDrinkRecommendations = (userId: string) => {
           surveyData,
           userId,
         });
+        console.log('updatedRecoData: ', updatedRecoData);
 
         // Step 4: 전통주 추천 결과를 state에 넣어주고
         setDrinks(updatedRecoData);

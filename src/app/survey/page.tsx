@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import useFunnel from '@/hooks/useFunnel';
+import useFunnel from '@/hooks/survey/useFunnel';
 import { useAuthStore } from '@/store/authStore';
 import { Tables } from '@/types/supabase';
+import { addSurvey } from '@/utils/preference/action';
 
-import { addSurvey } from '../result/action';
 import PreferenceAcidity from './_components/PreferenceAcidity';
 import PreferenceAlcoholLevel from './_components/PreferenceAlcoholLevel';
 import PreferenceBody from './_components/PreferenceBody';
@@ -46,7 +46,7 @@ const Page = () => {
             localStorage.setItem('surveyData', JSON.stringify(surveyData));
           }
 
-          router.push('/result');
+          router.push('/preferences/result');
         } catch (error) {
           console.error('Failed to save survey data:', error);
         }
