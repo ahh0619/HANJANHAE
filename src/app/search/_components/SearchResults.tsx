@@ -5,6 +5,8 @@ import useSearchStore from '@/store/keywordStore';
 import useSearchResults from '@/store/searchResultStore';
 import { filterDrinksByKeyword } from '@/utils/filter/action';
 
+import { SelectSorted } from './SelectSorted';
+
 const SearchResults = () => {
   const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
     useSearchStore();
@@ -23,6 +25,12 @@ const SearchResults = () => {
   console.log(results);
   return (
     <div className="p-4">
+      {results.length > 0 && (
+        <div className="flex w-full items-center justify-between">
+          <span>{results.length}개의 검색결과가 있습니다.</span>{' '}
+          <SelectSorted />
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
         {Array.isArray(results) &&
           results.length > 0 &&
