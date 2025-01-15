@@ -9,6 +9,13 @@ export type FilterParams = {
   tastePreferences?: Record<string, number>;
 };
 
+export type PopularDrinks = {
+  id: string;
+  name: string;
+  image: string;
+  like_count: number;
+};
+
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
 export async function filterDrinks({
@@ -64,3 +71,23 @@ export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
 
   return (data as Drink[]) || [];
 }
+
+export const getPopularDrinks = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .rpc('fetch_popular_drinks'); // 수정된 RPC 함수 호출
+
+  if (error) {
+    console.error('Error fetching popular drinks:', error);
+    return [];
+  }
+
+  // name, image, like_count를 기준으로 음료 데이터를 정렬
+  const sortedDrinks = data
+    ? data.sort((a: any, b: any) => b.like_count - a.like_count)
+    : [];
+
+  return sortedDrinks; // name, image, like_count를 포함한 정렬된 데이터 반환
+};
+

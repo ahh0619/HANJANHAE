@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   darkMode: ['class'],
@@ -9,10 +9,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: 'var(--primary-color)',
+        'primary-hover': 'var(--primary-hover-color)',
+        secondary: 'var(--secondary-color)',
+        'secondary-hover': 'var(--secondary-hover-color)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+<<<<<<< HEAD
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -53,9 +60,12 @@ const config: Config = {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
         sm: 'calc(var(--radius) - 4px)',
+=======
+>>>>>>> d026f45d65241c39161320c04783cafd82f1a018
       },
     },
   },
   plugins: [require('tailwindcss-animate')],
 };
+
 export default config;

@@ -3,6 +3,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
 
+const tasteMapping: { [key: string]: string } = {
+  sweetness: '단맛',
+  acidity: '신맛',
+  carbonation: '청량감',
+  body: '바디감',
+};
+
 type FilterItem = {
   label: string; // 필터에 표시되는 텍스트
   value: string | number | [number, number]; // 값은 문자열, 숫자, 또는 배열
@@ -33,14 +40,17 @@ const FilterSideBar = () => {
 
     return '알 수 없음'; // 기본값 설정
   };
+  // 이런 데이터들 => 상수 관리하는 파일 const.ts
+  // 따로 관리를 해서 굳이 컴포넌트 내부에서 선언하지 않고 가져올 수 있다.
+  // 컴포넌트 안에다가 변수를 처리하지 않는다.
+  // 제 렌더링 될 때마다 새로운 변수를 계속 만들어내는 거임.
+  // 이것들은 컴포넌트 밖에 있는게 맞다.
+  // 안에 두고 있는 변수들은 state 가 내부에 있을 때만
+  // 혹은 hook을 사용하거나 state는 매번 바뀌어야 하기 때문에 안에 있는거고,
+  // 여기 있는 데이터는 변하지 않기 때문에 밖에 두는 것이 좋다.
+  // 최상위 폴더나 파일 같은거 만들어서
 
   // tastePreferences를 한글로 변환하는 키-값 매핑
-  const tasteMapping: { [key: string]: string } = {
-    sweetness: '단맛',
-    acidity: '신맛',
-    carbonation: '청량감',
-    body: '바디감',
-  };
 
   // tastePreferences 값(숫자)을 텍스트로 변환하는 매핑
   const tasteLabels: { [key: number]: string } = {

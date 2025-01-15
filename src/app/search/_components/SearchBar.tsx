@@ -33,6 +33,7 @@ const SearchBar = () => {
     if (e.key === 'Enter') {
       const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
       setKeyword(newKeyword);
+      clearResults();
       setTriggerFetch(false);
       setIsSearchFocuse(true);
       setSearchTriggerFetch(true);
