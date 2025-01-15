@@ -32,8 +32,8 @@ const ReviewList = ({
     editRating,
     errorMessage,
     textareaRef,
-    handleEditClick,
-    handleSaveClick,
+    handleReviewEditClick,
+    handleReviewSaveClick,
     handleCommentChange,
     handleRatingChange,
     resetEditingState,
@@ -86,7 +86,7 @@ const ReviewList = ({
             errorMessage={errorMessage}
             textareaRef={textareaRef}
             onEditCommentChange={handleCommentChange}
-            onSave={() => handleSaveClick(review.id)}
+            onSave={() => handleReviewSaveClick(review.id)}
             onCancel={resetEditingState}
             updatedRating={editRating}
             onRatingChange={handleRatingChange}
@@ -94,7 +94,7 @@ const ReviewList = ({
           <ReviewActionButtons
             canEdit={review.user_id === user?.id && editingId !== review.id}
             onEdit={() =>
-              handleEditClick(review.id, review.comment, review.rating)
+              handleReviewEditClick(review.id, review.comment, review.rating)
             }
             onDelete={() => handleReviewDelete(review.id)}
           />
