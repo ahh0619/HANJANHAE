@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { FiCamera } from 'react-icons/fi';
 
 import useProfileEdit from '@/hooks/mypage/useProfileEdit';
 
@@ -43,12 +42,6 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               preview={preview}
               onFileChange={handleFileChange}
             />
-            <button
-              className="absolute -right-1 bottom-2 flex h-10 w-10 items-center justify-center rounded-full border border-gray-400 bg-pink-200 p-1"
-              type="button"
-            >
-              <FiCamera className="h-6 w-6 text-gray-500" />
-            </button>
           </div>
           <ProfileNicknameInput value={nickname} onChange={setNickname} />
         </div>
