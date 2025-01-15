@@ -32,6 +32,11 @@ export type User = {
   profile_image: string | null;
 };
 
+export type InfiniteQueryData<T> = {
+  pages: T[];
+  pageParams: unknown[];
+};
+
 export const useReviewActions = (drinkId: string, user: User | null) => {
   const queryClient = useQueryClient();
 
@@ -93,30 +98,42 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
   };
 
   const handleReviewUpdate = async (id: string, updatedComment: string) => {
-    let previousReviews: Review[] | undefined;
+    let previousData: InfiniteQueryData<Review[]> | undefined;
 
     try {
       if (!user?.id) throw new Error('로그인이 필요합니다.');
 
-      previousReviews = queryClient.getQueryData<Review[]>([
-        'reviews',
-        drinkId,
-      ]);
+      // React Query 캐시 데이터 가져오기
+      previousData = queryClient.getQueryData(['reviews', drinkId]);
 
-      queryClient.setQueryData<Review[]>(['reviews', drinkId], (oldReviews) =>
-        oldReviews?.map((review) =>
-          review.id === id ? { ...review, comment: updatedComment } : review,
-        ),
-      );
+      // 데이터가 무한 스크롤 구조인지 확인하고 안전하게 업데이트
+      queryClient.setQueryData(['reviews', drinkId], (oldData: any) => {
+        if (!oldData || !Array.isArray(oldData.pages)) {
+          return oldData;
+        }
 
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: Review[]) =>
+            page.map((review) =>
+              review.id === id
+                ? { ...review, comment: updatedComment }
+                : review,
+            ),
+          ),
+        };
+      });
+
+      // 서버에 업데이트 요청
       await updateMutation.mutateAsync({ id, updatedComment });
 
       console.log('리뷰가 성공적으로 수정되었습니다.');
     } catch (err) {
       console.error('리뷰 수정 실패:', err);
 
-      if (previousReviews) {
-        queryClient.setQueryData(['reviews', drinkId], previousReviews);
+      // 이전 데이터를 복원하여 에러 방지
+      if (previousData) {
+        queryClient.setQueryData(['reviews', drinkId], previousData);
       }
     }
   };
