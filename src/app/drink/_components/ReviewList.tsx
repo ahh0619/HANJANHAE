@@ -1,14 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { FiMessageCircle } from 'react-icons/fi';
 
+import Toast from '@/components/common/Toast';
+import { useReviewEditing } from '@/hooks/review/useReviewEditing';
+import { useToast } from '@/hooks/review/useToast';
 import { ReviewListProps } from '@/types/review';
-import {
-  adjustTextarea,
-  setCursorAndScrollToEnd,
-  validateComment,
-} from '@/utils/review/textarea';
 
 import ReviewActionButtons from './ReviewActionButtons';
 import ReviewContent from './ReviewContent';
@@ -28,60 +26,27 @@ const ReviewList = ({
   hasNextPage: boolean | undefined;
   isLoading: boolean;
 }) => {
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editComment, setEditComment] = useState<string>('');
-  const [editRating, setEditRating] = useState<number>(0);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const {
+    editingId,
+    editComment,
+    editRating,
+    errorMessage,
+    textareaRef,
+    handleReviewEditClick,
+    handleReviewSaveClick,
+    handleCommentChange,
+    handleRatingChange,
+    resetEditingState,
+  } = useReviewEditing(onUpdate);
+
+  const { showToast, toastMessage, triggerToast } = useToast(3000);
+
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const handleReviewEditClick = (
-    id: string,
-    currentComment: string,
-    currentRating: number,
-  ) => {
-    setEditingId(id);
-    setEditComment(currentComment);
-    setEditRating(currentRating);
-    setErrorMessage(null);
+  const handleReviewDelete = (id: string) => {
+    onDelete(id);
+    triggerToast('리뷰가 삭제되었습니다.');
   };
-
-  const handleReviewSaveClick = (id: string) => {
-    const error = validateComment(editComment, editRating);
-    if (error) {
-      setErrorMessage(error);
-      return;
-    }
-
-    onUpdate(id, editComment, editRating);
-    resetEditingState();
-  };
-
-  const handleCommentChange = (value: string) => {
-    setEditComment(value);
-    const error = validateComment(value, editRating);
-    setErrorMessage(error);
-  };
-
-  const handleRatingChange = (rating: number) => {
-    setEditRating(rating);
-    const error = validateComment(editComment, rating);
-    setErrorMessage(error);
-  };
-
-  const resetEditingState = () => {
-    setEditingId(null);
-    setEditComment('');
-    setEditRating(0);
-    setErrorMessage(null);
-  };
-
-  useEffect(() => {
-    if (editingId && textareaRef.current) {
-      adjustTextarea(textareaRef.current);
-      setCursorAndScrollToEnd(textareaRef.current);
-    }
-  }, [editingId]);
 
   const lastReviewRef = useCallback(
     (node: HTMLDivElement) => {
@@ -131,7 +96,7 @@ const ReviewList = ({
             onEdit={() =>
               handleReviewEditClick(review.id, review.comment, review.rating)
             }
-            onDelete={() => onDelete(review.id)}
+            onDelete={() => handleReviewDelete(review.id)}
           />
         </div>
       ))}
@@ -142,6 +107,13 @@ const ReviewList = ({
         </div>
       )}
       {isLoading ? <ReviewSkeleton /> : null}
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          duration={3000}
+          onClose={() => triggerToast('')}
+        />
+      )}
     </div>
   );
 };
