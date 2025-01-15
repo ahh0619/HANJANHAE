@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUp } from 'lucide-react'; // 아이콘 라이브러리
+import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function ScrollTop() {
