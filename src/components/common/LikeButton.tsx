@@ -55,7 +55,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
         isOpen={isModalOpen}
         onClose={closeModal}
         title="좋아요를 하시겠어요?"
-        content={`좋아요 기능을 사용하려면 로그인을 해야 해요.`}
+        content={`좋아요 기능을 사용하려면 \n 로그인을 해야 해요.`}
         secondaryAction={{
           text: '돌아가기',
           onClick: closeModal,
