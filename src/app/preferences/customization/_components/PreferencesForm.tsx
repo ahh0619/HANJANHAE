@@ -5,6 +5,7 @@ import usePreferences from '@/hooks/preference/usePreferences';
 import AlcoholLevelSelector from './AlcoholLevelSelector';
 import AlcoholTypeSelector from './AlcoholTypeSelector';
 import FavoriteFoodInput from './FavoriteFoodInput';
+import PreferencesFormSkeleton from './PreferencesFormSkeleton';
 import TasteSelector from './TasteSelector';
 
 const PreferencesForm = () => {
@@ -20,7 +21,7 @@ const PreferencesForm = () => {
     error,
   } = usePreferences();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <PreferencesFormSkeleton />;
   if (error) return <p>Error: {error}</p>;
 
   return (
