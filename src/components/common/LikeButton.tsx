@@ -2,9 +2,12 @@
 
 import { HeartIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useLikeStatus } from '@/hooks/like/useLikeStatus';
 import { useToggleLike } from '@/hooks/like/useToggleLike';
+
+import Modal from './Modal';
 
 type LikeButtonProps = {
   drinkId: string;
@@ -13,33 +16,59 @@ type LikeButtonProps = {
 
 const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data } = useLikeStatus(drinkId, userId); // 좋아요 상태 가져오기
-  const toggleLikeMutation = useToggleLike({ drinkId, userId: userId }); // 좋아요 토글 훅
+  const { data } = useLikeStatus(drinkId, userId);
+  const toggleLikeMutation = useToggleLike({ drinkId, userId: userId });
 
   const handleLikeButtonClick = () => {
     if (!userId) {
-      // 로그인 페이지로 이동
-      alert('로그인이 필요한 서비스 입니다.');
-      router.push('/signin');
+      setIsModalOpen(true);
       return;
     }
-    // 좋아요 토글 실행
+
     toggleLikeMutation.mutate();
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <button
-      onClick={handleLikeButtonClick}
-      className="flex items-center justify-center rounded-full p-2 transition-colors"
-      aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
-    >
-      <HeartIcon
-        className={`transition-colors ${
-          data?.liked && userId ? 'fill-red-500 text-red-500' : 'text-black-400'
-        } h-5 w-5 sm:h-6 sm:w-6`}
+    <>
+      <button
+        onClick={handleLikeButtonClick}
+        className="flex items-center justify-center rounded-full p-2 transition-colors"
+        aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
+      >
+        <HeartIcon
+          className={`transition-colors ${
+            data?.liked && userId
+              ? 'fill-red-500 text-red-500'
+              : 'text-black-400'
+          } h-5 w-5 sm:h-6 sm:w-6`}
+        />
+      </button>
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="좋아요를 하시겠어요?"
+        content={`좋아요 기능을 사용하려면 로그인을 해야 해요.`}
+        secondaryAction={{
+          text: '돌아가기',
+          onClick: closeModal,
+        }}
+        primaryAction={{
+          text: '로그인하기',
+          onClick: () => {
+            router.push('/signin');
+            closeModal();
+          },
+        }}
       />
-    </button>
+    </>
   );
 };
 
