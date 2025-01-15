@@ -28,11 +28,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className="flex flex-col"
       >
         {/* 이미지 */}
-        <div className="aspect-[1/1] w-full overflow-hidden">
+        <div className="aspect-[4/5] w-full overflow-hidden bg-gray-100 bg-opacity-50">
           <img
             src={imageUrl}
             alt={name}
-            className="h-full w-full rounded-md object-cover"
+            className="h-full w-full object-contain"
           />
         </div>
         {/* 이름 */}
