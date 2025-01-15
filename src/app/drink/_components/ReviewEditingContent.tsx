@@ -6,17 +6,23 @@ import { ReviewEditingContentProps } from '@/types/review';
 import {
   adjustTextarea,
   setCursorAndScrollToEnd,
-  validateComment,
 } from '@/utils/review/textarea';
+
+import ReviewStarRating from './ReviewStarRating';
 
 const ReviewEditingContent = ({
   editComment,
   errorMessage,
   textareaRef,
+  updatedRating,
   onEditCommentChange,
+  onRatingChange,
   onSave,
   onCancel,
-}: ReviewEditingContentProps) => {
+}: ReviewEditingContentProps & {
+  updatedRating: number;
+  onRatingChange: (rating: number) => void;
+}) => {
   useEffect(() => {
     if (textareaRef?.current) {
       setCursorAndScrollToEnd(textareaRef.current);
@@ -26,20 +32,22 @@ const ReviewEditingContent = ({
   const handleCommentChange = (value: string) => {
     onEditCommentChange(value);
     if (textareaRef.current) {
-      validateComment(textareaRef.current, value);
       adjustTextarea(textareaRef.current);
     }
   };
 
   return (
     <div className="relative z-10 rounded-lg bg-white p-4 shadow-md">
+      <div className="mb-4">
+        <ReviewStarRating rating={updatedRating} onClick={onRatingChange} />
+      </div>
       <textarea
         ref={textareaRef}
         value={editComment}
         onChange={(e) => handleCommentChange(e.target.value)}
         className="w-full resize-none rounded-lg border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
-        style={{ maxHeight: '120px', overflowY: 'auto' }}
         maxLength={101}
+        placeholder="최소 2자, 최대 100자"
       ></textarea>
       {errorMessage && (
         <p className="mt-1 text-xs text-red-500">{errorMessage}</p>

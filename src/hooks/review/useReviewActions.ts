@@ -97,7 +97,11 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
     }
   };
 
-  const handleReviewUpdate = async (id: string, updatedComment: string) => {
+  const handleReviewUpdate = async (
+    id: string,
+    updatedComment: string,
+    updatedRating: number,
+  ) => {
     let previousData: InfiniteQueryData<Review[]> | undefined;
 
     try {
@@ -117,7 +121,7 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
           pages: oldData.pages.map((page: Review[]) =>
             page.map((review) =>
               review.id === id
-                ? { ...review, comment: updatedComment }
+                ? { ...review, comment: updatedComment, rating: updatedRating }
                 : review,
             ),
           ),
@@ -125,7 +129,7 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
       });
 
       // 서버에 업데이트 요청
-      await updateMutation.mutateAsync({ id, updatedComment });
+      await updateMutation.mutateAsync({ id, updatedComment, updatedRating });
 
       console.log('리뷰가 성공적으로 수정되었습니다.');
     } catch (err) {

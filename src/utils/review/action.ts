@@ -143,17 +143,19 @@ export const submitReview = async ({
 export const updateReview = async ({
   id,
   updatedComment,
+  updatedRating,
 }: {
   id: string;
   updatedComment: string;
+  updatedRating: number;
 }) => {
-  if (!id || !updatedComment) {
+  if (!id || !updatedComment || typeof updatedRating !== 'number') {
     throw new Error('Invalid input data');
   }
 
   const supabase = createClient();
 
-  // 댓글 내용 업데이트
+  // 댓글 및 평점 데이터 업데이트
   const { error } = await supabase
     .from('comments')
     .update({ content: updatedComment })
@@ -161,6 +163,15 @@ export const updateReview = async ({
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  const { error: ratingError } = await supabase
+    .from('ratings')
+    .update({ rating: updatedRating })
+    .eq('comment_id', id);
+
+  if (ratingError) {
+    throw new Error(ratingError.message);
   }
 
   return { message: 'Review updated successfully' };
