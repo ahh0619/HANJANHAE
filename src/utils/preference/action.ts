@@ -18,6 +18,8 @@ export const recommendDrinks = async ({
   surveyData: Partial<Tables<'survey'>>;
   userId?: string;
 }): Promise<Tables<'reco_results'>[] | null> => {
+  const supabase = await createClient();
+
   const content = `
     1. 어떤 종류의 술을 선호하시나요? 답변: ${surveyData.type}
     2. 어느 정도 도수의 술을 선호하시나요? 답변: ${surveyData.level}
@@ -43,20 +45,22 @@ export const recommendDrinks = async ({
     const messages = await openai.beta.threads.messages.list(run.thread_id);
     const data = (messages.data[0].content[0] as { text: { value: string } })
       .text.value;
-    console.log('ai data: ', data);
 
     // 1. 백틱과 ```json 제거
     const replaceddata = data.replace(/```json|```/g, '').trim();
-
-    // 2. JSON.parse를 이용해 JSON으로 변환
     const jsonData = JSON.parse(replaceddata);
     console.log('ai jsonData: ', jsonData);
 
+    // drinks 데이터 확인 및 최종 결과 생성
+    const finalResults = await fetchDrinksWithReason(jsonData);
+
+    console.log('Final Results:', finalResults);
+
     if (userId) {
-      await addRecoResult({ recoData: jsonData, userId });
+      await addRecoResult({ recoData: finalResults, userId });
     }
 
-    return jsonData;
+    return finalResults;
   } else {
     return null;
   }
@@ -168,6 +172,37 @@ export const deleteRecoResult = async (userId: string) => {
   if (error) {
     throw new Error(`전통주 추천결과 삭제에 실패했습니다: ${error!.message}`);
   }
+};
+
+const fetchDrinksWithReason = async (
+  jsonData: { name: string; reason: string }[],
+): Promise<Tables<'reco_results'>[]> => {
+  const supabase = await createClient();
+  const results: Tables<'reco_results'>[] = [];
+
+  for (const item of jsonData) {
+    const { name, reason } = item;
+
+    const { data: drinkData, error } = await supabase
+      .from('drinks')
+      .select('*')
+      .eq('name', name)
+      .single();
+
+    if (error) {
+      console.error(`Supabase error for name "${name}":`, error);
+      continue; // 에러 발생 시 스킵
+    }
+
+    if (drinkData) {
+      results.push({
+        ...drinkData,
+        reason,
+      });
+    }
+  }
+
+  return results;
 };
 
 export const fetchSurveyData = async (
