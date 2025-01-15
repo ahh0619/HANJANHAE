@@ -16,10 +16,8 @@ const DrinkList = ({ drinks, title }: DrinkListProps) => {
       </p>
       <div className="space-y-6">
         {drinks.map((drink) => {
-          const drinkUrlName = decodeURIComponent(drink.name);
-
           return (
-            <Link href={`drink/${drinkUrlName}`} key={drink.id}>
+            <Link href={`/drink/${drink.name}`} key={drink.name}>
               <div className="flex items-start border-b border-gray-200 py-6">
                 {/* 음료 이미지 */}
                 <div className="h-30 w-24 flex-shrink-0">

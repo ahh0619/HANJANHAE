@@ -43,7 +43,14 @@ export const recommendDrinks = async ({
     const messages = await openai.beta.threads.messages.list(run.thread_id);
     const data = (messages.data[0].content[0] as { text: { value: string } })
       .text.value;
-    const jsonData = JSON.parse(data);
+    console.log('ai data: ', data);
+
+    // 1. 백틱과 ```json 제거
+    const replaceddata = data.replace(/```json|```/g, '').trim();
+
+    // 2. JSON.parse를 이용해 JSON으로 변환
+    const jsonData = JSON.parse(replaceddata);
+    console.log('ai jsonData: ', jsonData);
 
     if (userId) {
       await addRecoResult({ recoData: jsonData, userId });
@@ -115,16 +122,51 @@ export const addRecoResult = async ({
   const insertData = recoData.map((item) => ({
     type: item.type,
     name: item.name,
-    drink_id: item.id,
     reason: item.reason,
     user_id: userId,
     image: item.image,
   }));
 
+  console.log('insertdata: ', insertData);
   const { error } = await supabase.from('reco_results').insert(insertData);
 
   if (error) {
     throw new Error(`전통주 추천 결과 추가에 실패했습니다: ${error!.message}`);
+  }
+};
+
+export const updateSurvey = async ({
+  surveyData,
+  userId,
+}: {
+  surveyData: Partial<Tables<'survey'>>;
+  userId: string;
+}) => {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from('survey')
+    .update(surveyData)
+    .eq('user_id', userId);
+
+  if (error) {
+    throw new Error(`설문조사 갱신에 실패했습니다: ${error!.message}`);
+  }
+
+  await deleteRecoResult(userId);
+};
+
+export const deleteRecoResult = async (userId: string) => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('reco_results')
+    .delete()
+    .eq('user_id', userId)
+    .select();
+
+  if (error) {
+    throw new Error(`전통주 추천결과 삭제에 실패했습니다: ${error!.message}`);
   }
 };
 
