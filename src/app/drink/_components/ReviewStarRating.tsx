@@ -1,4 +1,4 @@
-import { FaStar } from 'react-icons/fa';
+import { Star } from 'lucide-react';
 
 type ReviewStarRatingProps = {
   rating: number;
@@ -17,16 +17,17 @@ const ReviewStarRating = ({
 }: ReviewStarRatingProps) => (
   <div className="flex items-center space-x-1">
     {[1, 2, 3, 4, 5].map((star) => (
-      <FaStar
+      <Star
         key={star}
-        className={`h-6 w-6 cursor-pointer ${
-          star <= (hoverRating || rating) ? 'text-yellow-500' : 'text-gray-300'
-        }`}
         onClick={() => onClick(star)}
         onMouseEnter={() => onHover?.(star)}
-        onMouseLeave={() => {
-          if (!rating) onHoverEnd?.(); // 클릭되지 않은 상태에서만 hover 초기화
-        }}
+        onMouseLeave={() => onHoverEnd?.()}
+        className={`h-8 w-8 cursor-pointer ${
+          star <= (hoverRating || rating)
+            ? 'fill-yellow-500 text-yellow-500'
+            : 'fill-none text-yellow-500'
+        }`}
+        fill={star <= (hoverRating || rating) ? 'currentColor' : 'none'}
       />
     ))}
   </div>

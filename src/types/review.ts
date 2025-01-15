@@ -1,17 +1,19 @@
 import { RefObject } from 'react';
 
-export type ReviewContentProps = {
+export interface ReviewContentProps {
   editing: boolean;
   comment: string;
   editComment: string;
-  errorMessage: string | null;
-  textareaRef: RefObject<HTMLTextAreaElement>;
+  errorMessage: string;
+  textareaRef: React.MutableRefObject<HTMLTextAreaElement>;
   onEditCommentChange: (value: string) => void;
-  onSave: () => void;
-  onCancel: () => void;
   updatedRating: number;
-  onRatingChange: (rating: number) => void;
-};
+  onRatingChange: (newRating: number) => void;
+  nickname: string;
+  createdAt: string;
+  profileImage: string;
+  canEdit: boolean;
+}
 
 export type ReviewEditingContentProps = {
   editComment: string;
