@@ -30,6 +30,10 @@ const RootLayout = ({
           src="https://developers.kakao.com/sdk/js/kakao.min.js"
           strategy="lazyOnload"
         />
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+          strategy="beforeInteractive"
+        />
       </head>
       <body className={inter.className}>
         <Providers>

@@ -1,25 +1,29 @@
-import React from 'react';
+import Link from 'next/link';
 
-type DiningBarCardProps = {
+type PlaceCardProps = {
+  id: string;
   name: string;
-  imageUrl: string;
+  image: string;
 };
 
-const DiningBarCard: React.FC<DiningBarCardProps> = ({ name, imageUrl }) => {
+const PlaceCard = ({ id, name, image }: PlaceCardProps) => {
   return (
-    <div className="relative flex w-72 flex-col rounded-lg border p-2">
+    <Link
+      className="relative flex w-72 flex-col rounded-lg border p-2"
+      href={`/place/${id}`}
+    >
       {/* 이미지 */}
       <div className="aspect-[4/3] w-full overflow-hidden">
         <img
-          src={imageUrl}
+          src={image}
           alt={name}
           className="h-full w-full rounded-md object-cover"
         />
       </div>
       {/* 이름 */}
       <div className="mt-2 w-full text-left text-xs">{name}</div>
-    </div>
+    </Link>
   );
 };
 
-export default DiningBarCard;
+export default PlaceCard;

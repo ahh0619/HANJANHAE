@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -53,6 +53,14 @@ const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
   ];
 
   const { user } = useAuthStore();
+
+  const [isBrowser, setIsBrowser] = useState(false);
+
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  if (!isBrowser) return null;
 
   return (
     <div className="space-y-6 p-4">

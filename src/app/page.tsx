@@ -1,7 +1,11 @@
 import { Metadata } from 'next';
 
 import UserInitializer from '@/components/auth/UserInitializer';
+import PlaceSection from '@/components/home/PlaceSection';
+import PopularDrinkSection from '@/components/home/PopularDrinkSection';
 import ThematicRecommender from '@/components/recommend/ThematicRecommender';
+import { fetchPopularDrinks } from '@/utils/drink/action';
+import { fetchPlaces } from '@/utils/place/action';
 import { getRecommendations } from '@/utils/recommend/recommendationService';
 
 // ISR 설정
@@ -13,11 +17,17 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const recommendations = await getRecommendations();
+  const [recommendations, popularDrinks, places] = await Promise.all([
+    getRecommendations(),
+    fetchPopularDrinks(),
+    fetchPlaces(),
+  ]);
 
   return (
     <>
       <ThematicRecommender recommendations={recommendations} />
+      <PopularDrinkSection drinks={popularDrinks} />
+      <PlaceSection places={places} />
       <UserInitializer />
     </>
   );

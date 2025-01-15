@@ -1,11 +1,11 @@
 'use server';
 
-import { Database } from '@/types/supabase';
+import { createServerClient } from '@supabase/ssr';
+
+import { DrinkType, PopularDrinkType } from '@/types/drink';
 import { createClient } from '@/utils/supabase/client';
 
-type Drink = Database['public']['Tables']['drinks']['Row'];
-
-export const fetchDrinks = async (id: string): Promise<Drink | null> => {
+export const fetchDrinks = async (id: string): Promise<DrinkType | null> => {
   const supabase = createClient();
   const { data, error } = await supabase
     .from('drinks')
@@ -21,7 +21,9 @@ export const fetchDrinks = async (id: string): Promise<Drink | null> => {
   return data;
 };
 
-export const fetchDrinksByNames = async (names: string[]): Promise<Drink[]> => {
+export const fetchDrinksByNames = async (
+  names: string[],
+): Promise<DrinkType[]> => {
   const supabase = createClient();
 
   if (!names || names.length === 0) {
@@ -39,4 +41,22 @@ export const fetchDrinksByNames = async (names: string[]): Promise<Drink[]> => {
   }
 
   return data || [];
+};
+
+/* 인기 전통주 목록 가져오기 */
+export const fetchPopularDrinks = async (): Promise<PopularDrinkType[]> => {
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => [],
+        setAll: () => {},
+      },
+    },
+  );
+
+  const { data, error } = await supabase.rpc('fetch_popular_drinks');
+
+  return error || !data ? [] : data;
 };
