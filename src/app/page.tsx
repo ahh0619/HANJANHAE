@@ -1,12 +1,34 @@
-import UserInitializer from '@/components/auth/UserInitializer';
-import MockSection from '@/components/common/MockSection';
+import { Metadata } from 'next';
 
-const Home = () => {
+import UserInitializer from '@/components/auth/UserInitializer';
+import PlaceSection from '@/components/home/PlaceSection';
+import PopularDrinkSection from '@/components/home/PopularDrinkSection';
+import ThematicRecommender from '@/components/recommend/ThematicRecommender';
+import { fetchPopularDrinks } from '@/utils/drink/action';
+import { fetchPlaces } from '@/utils/place/action';
+import { getRecommendations } from '@/utils/recommend/recommendationService';
+
+// ISR 설정
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  title: '메인 페이지',
+  description: 'AI 추천 기반 전통주를 만나보세요!',
+};
+
+const Home = async () => {
+  const [recommendations, popularDrinks, places] = await Promise.all([
+    getRecommendations(),
+    fetchPopularDrinks(),
+    fetchPlaces(),
+  ]);
+
   return (
     <>
-      <MockSection />
+      <ThematicRecommender recommendations={recommendations} />
+      <PopularDrinkSection drinks={popularDrinks} />
+      <PlaceSection places={places} />
       <UserInitializer />
-      <div className="flex items-center bg-red-500 p-4 text-center hover:bg-blue-500"></div>
     </>
   );
 };

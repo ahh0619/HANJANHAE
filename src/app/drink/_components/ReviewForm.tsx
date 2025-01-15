@@ -1,8 +1,8 @@
 'use client';
 
-import { FaStar } from 'react-icons/fa';
-
 import { useReviewForm } from '@/hooks/review/useReviewForm';
+
+import ReviewStarRating from './ReviewStarRating';
 
 export type ReviewFormProps = {
   onSubmit: (data: { rating: number; comment: string }) => void;
@@ -13,37 +13,26 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
     rating,
     hoverRating,
     comment,
-    errorMessage,
+    errors,
     setRating,
     setHoverRating,
     setComment,
     handleReviewSubmit,
   } = useReviewForm(onSubmit);
 
-  const renderStars = () => (
-    <div className="flex items-center space-x-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <FaStar
-          key={star}
-          className={`h-6 w-6 cursor-pointer ${
-            star <= (hoverRating || rating)
-              ? 'text-yellow-500'
-              : 'text-gray-300'
-          }`}
-          onClick={() => setRating(star)}
-          onMouseEnter={() => setHoverRating(star)}
-          onMouseLeave={() => setHoverRating(0)}
-        />
-      ))}
-    </div>
-  );
-
   return (
     <form onSubmit={handleReviewSubmit} className="mt-4 space-y-6">
       <div className="flex items-center space-x-4">
         <label className="text-sm font-medium text-gray-700">별점</label>
-        {renderStars()}
+        <ReviewStarRating
+          rating={rating}
+          hoverRating={hoverRating || undefined}
+          onClick={(star) => setRating(star)}
+          onHover={setHoverRating}
+          onHoverEnd={() => setHoverRating(null)}
+        />
       </div>
+      {errors.rating && <p className="text-xs text-red-500">{errors.rating}</p>}
       <div>
         <label
           htmlFor="comment"
@@ -59,10 +48,9 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           maxLength={101}
-          required
         ></textarea>
-        {errorMessage && (
-          <p className="mt-1 text-xs text-red-500">{errorMessage}</p>
+        {errors.comment && (
+          <p className="mt-1 text-xs text-red-500">{errors.comment}</p>
         )}
       </div>
       <button

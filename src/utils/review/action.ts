@@ -2,20 +2,52 @@
 
 import { createClient } from '@/utils/supabase/server';
 
+type CommentWithUser = {
+  id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  users: {
+    nickname: string | null;
+    profile_image: string | null;
+  } | null;
+};
+
 // 특정 주류에 대한 리뷰 목록 가져오기
-export const fetchReviews = async (drinkId: string) => {
+export const fetchReviews = async (
+  drinkId: string,
+  page?: number,
+  limit?: number,
+) => {
   if (!drinkId) {
     throw new Error('drink_id is required');
   }
 
   const supabase = createClient();
 
-  // 댓글 데이터 조회
-  const { data: comments, error: commentsError } = await supabase
+  const offset = page && limit ? (page - 1) * limit : 0; // 기본값 0
+  const rangeEnd = limit ? offset + limit - 1 : undefined;
+
+  const { data: comments, error: commentsError } = (await supabase
     .from('comments')
-    .select('id, user_id, nickname, content, created_at')
+    .select(
+      `
+      id,
+      user_id,
+      content,
+      created_at,
+      users (
+        nickname,
+        profile_image
+      )
+    `,
+    )
     .eq('drink_id', drinkId)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .range(offset, rangeEnd)) as {
+    data: CommentWithUser[];
+    error: any;
+  };
 
   if (commentsError) {
     throw new Error(commentsError.message);
@@ -42,10 +74,11 @@ export const fetchReviews = async (drinkId: string) => {
     return {
       id: comment.id,
       user_id: comment.user_id,
-      nickname: comment.nickname,
+      nickname: comment.users?.nickname,
       comment: comment.content,
       rating: matchingRating ? matchingRating.rating : 0,
       created_at: comment.created_at,
+      profile_image: comment.users?.profile_image,
     };
   });
 
@@ -58,21 +91,13 @@ export const submitReview = async ({
   userId,
   content,
   rating,
-  nickname,
 }: {
   drinkId: string;
   userId: string;
   content: string;
   rating: number;
-  nickname: string;
 }) => {
-  if (
-    !drinkId ||
-    !userId ||
-    !content ||
-    typeof rating !== 'number' ||
-    !nickname
-  ) {
+  if (!drinkId || !userId || !content || typeof rating !== 'number') {
     throw new Error('Invalid input data');
   }
 
@@ -85,7 +110,6 @@ export const submitReview = async ({
       {
         drink_id: drinkId,
         user_id: userId,
-        nickname,
         content,
         created_at: new Date().toISOString(),
       },
@@ -119,17 +143,19 @@ export const submitReview = async ({
 export const updateReview = async ({
   id,
   updatedComment,
+  updatedRating,
 }: {
   id: string;
   updatedComment: string;
+  updatedRating: number;
 }) => {
-  if (!id || !updatedComment) {
+  if (!id || !updatedComment || typeof updatedRating !== 'number') {
     throw new Error('Invalid input data');
   }
 
   const supabase = createClient();
 
-  // 댓글 내용 업데이트
+  // 댓글 및 평점 데이터 업데이트
   const { error } = await supabase
     .from('comments')
     .update({ content: updatedComment })
@@ -137,6 +163,15 @@ export const updateReview = async ({
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  const { error: ratingError } = await supabase
+    .from('ratings')
+    .update({ rating: updatedRating })
+    .eq('comment_id', id);
+
+  if (ratingError) {
+    throw new Error(ratingError.message);
   }
 
   return { message: 'Review updated successfully' };

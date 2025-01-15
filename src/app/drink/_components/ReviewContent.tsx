@@ -12,6 +12,8 @@ const ReviewContent = ({
   onEditCommentChange,
   onSave,
   onCancel,
+  updatedRating,
+  onRatingChange,
 }: ReviewContentProps) => {
   return editing ? (
     <ReviewEditingContent
@@ -21,6 +23,8 @@ const ReviewContent = ({
       onEditCommentChange={onEditCommentChange}
       onSave={onSave}
       onCancel={onCancel}
+      updatedRating={updatedRating}
+      onRatingChange={onRatingChange}
     />
   ) : (
     <ReviewReadOnlyContent comment={comment} />

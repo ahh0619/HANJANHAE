@@ -1,13 +1,17 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useAuthStore } from '@/store/authStore';
 import { logout } from '@/utils/auth/action';
 
 const MyPageAccountOptions = () => {
+  const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
   const handleLogout = async () => {
     await logout();
+    queryClient.removeQueries({ queryKey: ['userProfile'] });
     removeUser();
   };
 
