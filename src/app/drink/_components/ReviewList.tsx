@@ -7,6 +7,7 @@ import { ReviewListProps } from '@/types/review';
 import {
   adjustTextarea,
   setCursorAndScrollToEnd,
+  validateComment,
 } from '@/utils/review/textarea';
 
 import ReviewActionButtons from './ReviewActionButtons';
@@ -29,19 +30,50 @@ const ReviewList = ({
 }) => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editComment, setEditComment] = useState<string>('');
+  const [editRating, setEditRating] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const handleEditClick = (id: string, currentComment: string) => {
+  const handleReviewEditClick = (
+    id: string,
+    currentComment: string,
+    currentRating: number,
+  ) => {
     setEditingId(id);
     setEditComment(currentComment);
+    setEditRating(currentRating);
+    setErrorMessage(null);
   };
 
-  const handleSaveClick = (id: string) => {
-    if (editComment.length > 100) return;
-    onUpdate(id, editComment);
+  const handleReviewSaveClick = (id: string) => {
+    const error = validateComment(editComment, editRating);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+
+    onUpdate(id, editComment, editRating);
+    resetEditingState();
+  };
+
+  const handleCommentChange = (value: string) => {
+    setEditComment(value);
+    const error = validateComment(value, editRating);
+    setErrorMessage(error);
+  };
+
+  const handleRatingChange = (rating: number) => {
+    setEditRating(rating);
+    const error = validateComment(editComment, rating);
+    setErrorMessage(error);
+  };
+
+  const resetEditingState = () => {
     setEditingId(null);
     setEditComment('');
+    setEditRating(0);
+    setErrorMessage(null);
   };
 
   useEffect(() => {
@@ -51,7 +83,6 @@ const ReviewList = ({
     }
   }, [editingId]);
 
-  // 마지막 리뷰 요소를 감지
   const lastReviewRef = useCallback(
     (node: HTMLDivElement) => {
       if (isLoading) return;
@@ -87,19 +118,19 @@ const ReviewList = ({
             editing={editingId === review.id}
             comment={review.comment}
             editComment={editComment}
-            errorMessage={
-              editComment.length > 100
-                ? '100글자까지만 작성할 수 있습니다.'
-                : null
-            }
+            errorMessage={errorMessage}
             textareaRef={textareaRef}
-            onEditCommentChange={setEditComment}
-            onSave={() => handleSaveClick(review.id)}
-            onCancel={() => setEditingId(null)}
+            onEditCommentChange={handleCommentChange}
+            onSave={() => handleReviewSaveClick(review.id)}
+            onCancel={resetEditingState}
+            updatedRating={editRating}
+            onRatingChange={handleRatingChange}
           />
           <ReviewActionButtons
             canEdit={review.user_id === user?.id && editingId !== review.id}
-            onEdit={() => handleEditClick(review.id, review.comment)}
+            onEdit={() =>
+              handleReviewEditClick(review.id, review.comment, review.rating)
+            }
             onDelete={() => onDelete(review.id)}
           />
         </div>
