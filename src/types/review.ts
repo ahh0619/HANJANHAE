@@ -9,6 +9,8 @@ export type ReviewContentProps = {
   onEditCommentChange: (value: string) => void;
   onSave: () => void;
   onCancel: () => void;
+  updatedRating: number;
+  onRatingChange: (rating: number) => void;
 };
 
 export type ReviewEditingContentProps = {
@@ -37,7 +39,7 @@ export type Review = {
 export type ReviewListProps = {
   reviews: Review[];
   user: { id?: string; nickname: string } | null;
-  onUpdate: (id: string, updatedComment: string) => void;
+  onUpdate: (id: string, updatedComment: string, updatedRating: number) => void;
   onDelete: (id: string) => void;
   fetchNextPage: () => void;
   hasNextPage: boolean | undefined;
