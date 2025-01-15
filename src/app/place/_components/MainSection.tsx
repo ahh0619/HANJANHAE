@@ -1,9 +1,9 @@
 import ShareButton from '@/app/drink/_components/ShareButton';
 import BackButton from '@/components/common/BackButton';
-import { PlaceType } from '@/types/place';
+import { PlaceWithMenusType } from '@/types/place';
 
 type MainSectionProps = {
-  place: PlaceType;
+  place: PlaceWithMenusType;
 };
 
 const MainSection = ({ place }: MainSectionProps) => {
