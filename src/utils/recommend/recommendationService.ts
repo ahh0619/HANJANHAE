@@ -48,10 +48,13 @@ const randomFoodCategory = (): string => {
 const randomMood = (): string =>
   Math.random() > 0.5 ? '기분이 좋을 때' : '우울할 때';
 
+let fixedFoodCategory = randomFoodCategory();
+let fixedMood = randomMood();
+
 export const getRecommendations = async () => {
   const season = getCurrentSeason();
-  const foodCategory = randomFoodCategory();
-  const mood = randomMood();
+  const foodCategory = fixedFoodCategory;
+  const mood = fixedMood;
 
   try {
     const [seasonRecommendations, foodRecommendations, moodRecommendations] =
