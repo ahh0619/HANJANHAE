@@ -11,7 +11,7 @@ export const fetchDrinks = async (id: string): Promise<Drink | null> => {
     .from('drinks')
     .select('*')
     .eq('name', id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error('Error fetching drink by ID:', error.message);
@@ -23,6 +23,10 @@ export const fetchDrinks = async (id: string): Promise<Drink | null> => {
 
 export const fetchDrinksByNames = async (names: string[]): Promise<Drink[]> => {
   const supabase = createClient();
+
+  if (!names || names.length === 0) {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from('drinks')

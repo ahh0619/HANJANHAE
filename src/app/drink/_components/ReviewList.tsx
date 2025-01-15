@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiMessageCircle } from 'react-icons/fi';
 
 import { ReviewListProps } from '@/types/review';
@@ -12,11 +12,25 @@ import {
 import ReviewActionButtons from './ReviewActionButtons';
 import ReviewContent from './ReviewContent';
 import ReviewInfo from './ReviewInfo';
+import ReviewSkeleton from './ReviewSkeleton';
 
-const ReviewList = ({ reviews, user, onUpdate, onDelete }: ReviewListProps) => {
+const ReviewList = ({
+  reviews,
+  user,
+  onUpdate,
+  onDelete,
+  fetchNextPage,
+  hasNextPage,
+  isLoading,
+}: ReviewListProps & {
+  fetchNextPage: () => void;
+  hasNextPage: boolean | undefined;
+  isLoading: boolean;
+}) => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editComment, setEditComment] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
 
   const handleEditClick = (id: string, currentComment: string) => {
     setEditingId(id);
@@ -37,10 +51,32 @@ const ReviewList = ({ reviews, user, onUpdate, onDelete }: ReviewListProps) => {
     }
   }, [editingId]);
 
+  // 마지막 리뷰 요소를 감지
+  const lastReviewRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage, fetchNextPage],
+  );
+
   return (
     <div className="mt-6 space-y-6">
-      {reviews.map((review) => (
-        <div key={review.id} className="rounded-lg border p-4 shadow-sm">
+      {reviews.map((review, index) => (
+        <div
+          key={review.id}
+          className="rounded-lg border p-4 shadow-sm"
+          ref={index === reviews.length - 1 ? lastReviewRef : null}
+        >
           <ReviewInfo
             nickname={review.nickname}
             createdAt={review.created_at}
@@ -74,6 +110,7 @@ const ReviewList = ({ reviews, user, onUpdate, onDelete }: ReviewListProps) => {
           <p className="text-sm text-gray-500">등록된 리뷰가 없습니다.</p>
         </div>
       )}
+      {isLoading ? <ReviewSkeleton /> : null}
     </div>
   );
 };
