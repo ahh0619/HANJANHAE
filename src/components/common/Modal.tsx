@@ -62,7 +62,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Secondary Action */}
             {secondaryAction && (
               <button
-                className="w-[136px] rounded-lg border border-secondary bg-white p-2 font-medium text-primary hover:bg-secondary-hover"
+                className="w-[136px] rounded-lg border border-secondary bg-white p-3 font-medium text-primary hover:bg-secondary-hover"
                 onClick={secondaryAction.onClick}
               >
                 {secondaryAction.text}
@@ -71,7 +71,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Primary Action */}
             {primaryAction && (
               <button
-                className="w-[136px] rounded-lg bg-primary p-2 font-semibold text-white hover:bg-primary-hover"
+                className="w-[136px] rounded-lg bg-primary p-3 font-semibold text-white hover:bg-primary-hover"
                 onClick={primaryAction.onClick}
               >
                 {primaryAction.text}
@@ -82,7 +82,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="mt-4 p-2 text-sm text-gray-500 underline hover:text-gray-700"
+              className="mb-2 mt-3 p-4 text-sm text-gray-500 underline hover:text-gray-700"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}

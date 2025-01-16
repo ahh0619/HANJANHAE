@@ -1,8 +1,4 @@
-import {
-  recommendByMood,
-  recommendBySeason,
-  recommendTraditionalLiquor,
-} from './action';
+import { recommendByFood, recommendByMood, recommendBySeason } from './action';
 
 const getCurrentSeason = (): string => {
   const month = new Date().getMonth() + 1;
@@ -60,7 +56,7 @@ export const getRecommendations = async () => {
     const [seasonRecommendations, foodRecommendations, moodRecommendations] =
       await Promise.all([
         recommendBySeason(season),
-        recommendTraditionalLiquor(foodCategory),
+        recommendByFood(foodCategory),
         recommendByMood(mood),
       ]);
 

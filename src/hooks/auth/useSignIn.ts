@@ -2,12 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { useAuth } from '@/providers/AuthProvider';
 import { SignInDataType } from '@/types/Auth';
-import { signin } from '@/utils/auth/action';
-
-type UseSignInProps = {
-  handleSuccess: () => void;
-};
+import { manageSignInError } from '@/utils/auth/manageError';
 
 const signinSchema = z.object({
   email: z
@@ -25,7 +22,9 @@ const signinSchema = z.object({
     ),
 });
 
-const useSignIn = ({ handleSuccess }: UseSignInProps) => {
+const useSignIn = () => {
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -41,12 +40,9 @@ const useSignIn = ({ handleSuccess }: UseSignInProps) => {
 
   const onSubmit = async (values: SignInDataType) => {
     try {
-      await signin(values);
-
-      window.alert('로그인 성공');
-      handleSuccess();
+      await login(values);
     } catch (error: any) {
-      window.alert(error);
+      window.alert(manageSignInError(error.message));
     }
   };
 

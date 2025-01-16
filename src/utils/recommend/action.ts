@@ -46,7 +46,7 @@ const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
   }
 };
 
-export const recommendTraditionalLiquor = async (foodCategory: string) => {
+export const recommendByFood = async (foodCategory: string) => {
   const content = `${foodCategory}에 어울리는 전통주를 추천해주세요.`;
   return await fetchRecommendedDrinks(content, process.env.FOOD_ASSISTANT_ID!);
 };

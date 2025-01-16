@@ -8,6 +8,7 @@ import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Providers from '@/providers/Provider';
 
+import { AuthProvider } from '@/providers/AuthProvider';
 import '@/styles/globals.css';
 import KakaoInit from './drink/_components/KakaoInit';
 
@@ -36,14 +37,16 @@ const RootLayout = ({
         />
       </head>
       <body className={inter.className}>
-        <Providers>
-          <Header />
-          <KakaoInit />
-          {children}
-          <ScrollTop />
-          <BottomNavBar />
-          <Footer />
-        </Providers>
+        <AuthProvider>
+          <Providers>
+            <Header />
+            <KakaoInit />
+            <main className="mb-20">{children}</main>
+            <ScrollTop />
+            <BottomNavBar />
+            <Footer />
+          </Providers>
+        </AuthProvider>
       </body>
     </html>
   );

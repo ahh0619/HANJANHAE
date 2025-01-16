@@ -7,9 +7,7 @@ import useSignIn from '@/hooks/auth/useSignIn';
 const SignInForm = () => {
   const router = useRouter();
 
-  const { handleSubmit, register, onSubmit, errors } = useSignIn({
-    handleSuccess: () => router.push('/'),
-  });
+  const { handleSubmit, register, onSubmit, errors } = useSignIn();
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -43,7 +41,12 @@ const SignInForm = () => {
       </button>
 
       <div className="flex justify-center gap-2">
-        <p className="cursor-pointer text-sm text-gray-500">비밀번호 찾기</p>
+        <p
+          className="cursor-pointer text-sm text-gray-500"
+          onClick={() => router.push('/password/check')}
+        >
+          비밀번호 찾기
+        </p>
         <p className="cursor-pointer text-sm text-gray-500">|</p>
         <p
           className="cursor-pointer text-sm text-gray-500"

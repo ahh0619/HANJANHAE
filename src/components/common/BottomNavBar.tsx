@@ -1,9 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import { FaHeart, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 
 const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
@@ -13,29 +13,38 @@ const BottomNavBar: React.FC = () => {
   }
 
   const navItems = [
-    { name: '홈', href: '/', icon: <FaHome />, activeColor: 'text-red-500' },
+    {
+      name: '홈',
+      href: '/',
+      icon: '/assets/icons/home.svg',
+      activeIcon: '/assets/icons/home_pressed.svg',
+      activeColor: 'text-primary',
+    },
     {
       name: '검색',
       href: '/search',
-      icon: <FaSearch />,
-      activeColor: 'text-red-500',
+      icon: '/assets/icons/search.svg',
+      activeIcon: '/assets/icons/search_pressed.svg',
+      activeColor: 'text-primary',
     },
     {
       name: '좋아요',
       href: '/like',
-      icon: <FaHeart />,
-      activeColor: 'text-red-500',
+      icon: '/assets/icons/heart.svg',
+      activeIcon: '/assets/icons/heart_pressed.svg',
+      activeColor: 'text-primary',
     },
     {
       name: '마이페이지',
       href: '/mypage',
-      icon: <FaUser />,
-      activeColor: 'text-red-500',
+      icon: '/assets/icons/user.svg',
+      activeIcon: '/assets/icons/user_pressed.svg',
+      activeColor: 'text-primary',
     },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-white shadow-md">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl border-t bg-white shadow-md">
       <ul className="flex items-center justify-between py-2">
         {navItems.map((item) => (
           <li
@@ -48,8 +57,20 @@ const BottomNavBar: React.FC = () => {
                 pathname === item.href ? item.activeColor : 'text-gray-500'
               }`}
             >
-              <span className="text-xl">{item.icon}</span>
-              <span>{item.name}</span>
+              <Image
+                src={pathname === item.href ? item.activeIcon : item.icon}
+                alt={item.name}
+                width={24}
+                height={24}
+                className="transition-all"
+              />
+              <span
+                className={`mt-1 font-semibold ${
+                  pathname === item.href ? item.activeColor : ''
+                }`}
+              >
+                {item.name}
+              </span>
             </Link>
           </li>
         ))}
