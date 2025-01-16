@@ -27,7 +27,7 @@ const ReviewLoginPrompt = ({ onLoginClick }: ReviewLoginPromptProps) => {
       <div className="flex justify-end">
         <button
           onClick={onLoginClick}
-          className="text-semibold flex items-center space-x-2 rounded-lg bg-[var(--primary-color)] px-4 py-2 text-sm text-white hover:bg-[var(--primary-hover-color)]"
+          className="text-semibold flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 text-sm text-white hover:bg-primary-hover"
         >
           <LogIn className="h-5 w-5" />
           <span>로그인하러 가기</span>

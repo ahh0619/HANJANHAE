@@ -54,7 +54,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
       <div className="flex justify-end">
         <button
           type="submit"
-          className="flex items-center space-x-2 rounded-lg bg-[var(--primary-color)] px-4 py-2 text-sm text-white hover:bg-[var(--primary-hover-color)]"
+          className="flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 text-sm text-white hover:bg-primary-hover"
         >
           등록
         </button>
