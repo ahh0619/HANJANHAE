@@ -70,7 +70,7 @@ export const fetchUser = async (): Promise<UserType | null> => {
   } = await supabase.auth.getUser();
 
   if (authError || !user) {
-    throw new Error(authError.message || '유저 정보를 가져올 수 없습니다.');
+    return null;
   }
 
   const { data: userData, error: userError } = await supabase

@@ -78,3 +78,23 @@ export const toggleLike = async ({
     return { success: true, liked: true };
   }
 };
+
+export const fetchLikesByUser = async (userId: string) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('likes')
+    .select(
+      `
+      *,
+      drinks(*)
+    `,
+    )
+    .eq('user_id', userId);
+
+  if (error) {
+    throw new Error(`유저기반으로 좋아요 가져오기 실패: ${error!.message}`);
+  }
+
+  return data;
+};
