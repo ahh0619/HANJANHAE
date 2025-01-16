@@ -2,7 +2,7 @@ import { X } from 'lucide-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-interface ModalProps {
+type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -20,7 +20,7 @@ interface ModalProps {
     onClick: () => void;
   };
   showCloseButton?: boolean;
-}
+};
 
 const Modal: React.FC<ModalProps> = ({
   isOpen,
