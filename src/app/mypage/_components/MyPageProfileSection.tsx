@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type MyPageProfileSectionProps = {
   userData: {
     nickname: string;
@@ -12,21 +14,30 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
 }) => (
   <div className="mt-6 w-full px-4">
     <div className="flex items-center rounded-lg bg-white px-4 py-4">
-      <div className="flex h-16 w-16 items-center rounded-full">
-        <img
-          src={userData.profile_image || '/default-avatar.png'}
+      {/* 프로필 이미지 */}
+      <div className="flex h-16 w-16 items-center overflow-hidden rounded-full">
+        <Image
+          src={
+            userData.profile_image || '/assets/icons/default_profile_image.svg'
+          }
           alt="프로필 이미지"
-          className="h-full w-full rounded-full object-cover"
+          width={64}
+          height={64}
+          className="rounded-full object-cover"
         />
       </div>
+
+      {/* 닉네임 */}
       <div className="ml-4 flex flex-col justify-center">
         <p className="text-lg font-semibold">{userData.nickname}</p>
       </div>
+
+      {/* 프로필 수정 버튼 */}
       <button
         onClick={onEditClick}
-        className="ml-auto rounded bg-gray-200 px-4 py-1 text-sm"
+        className="ml-auto rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary transition hover:bg-primary hover:text-white"
       >
-        수정
+        프로필 수정
       </button>
     </div>
   </div>

@@ -97,7 +97,7 @@ const ReviewList = ({
       {reviews.length === 0 && (
         <div className="mt-16 flex flex-col items-center justify-center space-y-2 rounded-lg">
           <Image
-            src="/assets/no-reviews.svg"
+            src="/assets/icons/no-reviews.svg"
             alt="등록된 리뷰가 없습니다."
             width={168}
             height={208}

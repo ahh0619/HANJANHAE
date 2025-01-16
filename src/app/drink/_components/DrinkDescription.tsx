@@ -20,7 +20,7 @@ const DrinkDescription = ({
 }: DrinkDescriptionProps) => {
   const { user } = useAuthStore();
   return (
-    <section className="border-b p-4">
+    <section className="p-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">{name}</h2>
         <div className="flex">

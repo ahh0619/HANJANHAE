@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import Image from 'next/image';
 
 type ReviewInfoProps = {
   nickname: string | null;
@@ -26,16 +27,19 @@ const ReviewInfo = ({
   return (
     <div className="flex items-start space-x-4">
       {/* 프로필 이미지 */}
-      <img
-        src={profile_image || '/default-avatar.png'}
-        alt={`${nickname || '유저'}의 프로필 이미지`}
-        className="h-14 w-14 rounded-full border border-gray-300 object-cover"
-      />
+      <div className="relative h-14 w-14 overflow-hidden rounded-full border border-gray-300">
+        <Image
+          src={profile_image || '/assets/icons/default_profile_image.svg'}
+          alt={`${nickname || '유저'}의 프로필 이미지`}
+          fill
+          className="object-cover"
+        />
+      </div>
 
       {/* 닉네임, 별점, 날짜 */}
       <div className="flex-1">
         {/* 닉네임 */}
-        <p className="text-sm font-bold text-gray-800">{nickname}</p>
+        <p className="text-sm font-bold text-gray-800">{nickname || '익명'}</p>
 
         {/* 별점 */}
         <div className="mt-1 flex items-center space-x-1">
@@ -56,11 +60,13 @@ const ReviewInfo = ({
         {/* 날짜 */}
         <div className="mt-1">
           <p className="text-xs text-gray-500">
-            {new Date(createdAt || '').toLocaleDateString('ko-KR', {
-              year: '2-digit',
-              month: '2-digit',
-              day: '2-digit',
-            })}
+            {createdAt
+              ? new Date(createdAt).toLocaleDateString('ko-KR', {
+                  year: '2-digit',
+                  month: '2-digit',
+                  day: '2-digit',
+                })
+              : ''}
           </p>
         </div>
       </div>

@@ -39,7 +39,7 @@ const RootLayout = ({
         <Providers>
           <Header />
           <KakaoInit />
-          {children}
+          <main className="mb-20">{children}</main>
           <ScrollTop />
           <BottomNavBar />
           <Footer />

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import BackButton from '@/components/common/BackButton';
 
 const DrinkImage = ({
@@ -8,13 +10,20 @@ const DrinkImage = ({
   name: string;
 }) => (
   <div className="relative">
-    <BackButton className="absolute left-2 top-2" />
-    <div className="flex h-64 w-full items-center justify-center rounded-lg">
+    {/* Back Button */}
+    <div className="absolute left-2 top-2 z-10">
+      <BackButton />
+    </div>
+
+    {/* Image */}
+    <div className="relative h-64 w-full overflow-hidden rounded-2xl">
       {image ? (
-        <img
+        <Image
           src={image}
           alt={name}
-          className="h-auto max-h-full w-auto max-w-full rounded-lg object-contain"
+          layout="fill"
+          objectFit="contain"
+          className="rounded-2xl"
         />
       ) : (
         <p className="text-lg font-semibold">대표이미지</p>
