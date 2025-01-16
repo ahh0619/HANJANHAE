@@ -8,6 +8,16 @@
   --secondary-color: #a02a3f;
   --secondary-hover-color: #f8e9ec;
   --foreground-rgb: 33, 33, 33;
+  --primary-100m: #bf324b;
+  --primary-200: #8c2537;
+  --primary-300: #591723;
+  --secondary-100: #fcd9df;
+  --secondary-200: #f99faf;
+  --secondary-300m: #f6798f;
+
+  /* 추가 색상 등록 */
+  --grayscale-500: #949494;
+  --grayscale-900m: #2e2e2e;
 }
 
 body {

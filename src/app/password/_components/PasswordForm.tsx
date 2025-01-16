@@ -1,19 +1,15 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import InputField from '@/components/auth/InputField';
 import useResetPassword from '@/hooks/auth/useResetPassword';
 
 const PasswordForm = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('code');
 
-  const { handleSubmit, register, onSubmit, errors } = useResetPassword({
-    token,
-    handleSuccess: () => router.push('/mypage'),
-  });
+  const { handleSubmit, register, onSubmit, errors } = useResetPassword(token);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>

@@ -5,25 +5,14 @@ import { useEffect } from 'react';
 
 import useSocial from '@/hooks/auth/useSocial';
 import { useAuthStore } from '@/store/authStore';
-import { checkUser, fetchUser } from '@/utils/auth/action';
 
 const UserInitializer = () => {
   const router = useRouter();
 
-  const { user, isAgree, setUser } = useAuthStore();
+  const { user, isAgree } = useAuthStore();
   const { handleAgree } = useSocial();
 
   console.log('user => ', user);
-
-  useEffect(() => {
-    const setUserData = async () => {
-      if (await checkUser()) {
-        setUser(await fetchUser());
-      }
-    };
-
-    setUserData();
-  }, []);
 
   useEffect(() => {
     const setAgreeTerms = async () => {

@@ -5,11 +5,6 @@ import { z } from 'zod';
 import { ResetPasswordType } from '@/types/Auth';
 import { resetPassword } from '@/utils/auth/action';
 
-type UseResetPasswordProps = {
-  token: string;
-  handleSuccess: () => void;
-};
-
 const resetPasswordSchema = z
   .object({
     password: z
@@ -36,7 +31,7 @@ const resetPasswordSchema = z
     path: ['passwordConfirm'],
   });
 
-const useResetPassword = ({ token, handleSuccess }: UseResetPasswordProps) => {
+const useResetPassword = (token: string) => {
   const {
     register,
     handleSubmit,
@@ -52,13 +47,9 @@ const useResetPassword = ({ token, handleSuccess }: UseResetPasswordProps) => {
 
   const onSubmit = async (values: ResetPasswordType) => {
     try {
-      const user = await resetPassword({ token, password: values.password });
-
-      window.alert('비밀번호 변경 성공');
-      console.log('use => ', user);
-      handleSuccess();
+      await resetPassword({ token, password: values.password });
     } catch (error: any) {
-      window.alert(error);
+      window.alert('비밀번호 변경에 실패하였습니다.');
     }
   };
 

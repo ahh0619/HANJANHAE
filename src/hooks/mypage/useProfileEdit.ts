@@ -18,7 +18,9 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
   useEffect(() => {
     if (user) {
       setNickname(user.nickname);
-      setPreview(user.profile_image || '/default-avatar.png');
+      setPreview(
+        user.profile_image || '/assets/icons/default_profile_image.svg',
+      );
     }
   }, [user]);
 
