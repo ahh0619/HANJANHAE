@@ -79,22 +79,38 @@ export const toggleLike = async ({
   }
 };
 
-export const fetchLikesByUser = async (userId: string) => {
-  const supabase = createClient();
+export const fetchLikesByUser = async ({
+  userId,
+  pageParam = 1,
+  limit = 10,
+}: {
+  userId: string;
+  pageParam: number;
+  limit?: number;
+}) => {
+  const supabase = await createClient();
 
-  const { data, error } = await supabase
+  const start = (pageParam - 1) * limit;
+  const end = start + limit - 1;
+
+  const { data, error, count } = await supabase
     .from('likes')
     .select(
       `
       *,
       drinks(*)
     `,
+      { count: 'exact' },
     )
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .range(start, end);
 
   if (error) {
-    throw new Error(`유저기반으로 좋아요 가져오기 실패: ${error!.message}`);
+    throw new Error(`유저 기반으로 좋아요 가져오기 실패: ${error.message}`);
   }
 
-  return data;
+  return {
+    data,
+    nextPage: end + 1 < count ? pageParam + 1 : undefined,
+  };
 };

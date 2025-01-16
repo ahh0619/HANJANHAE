@@ -1,6 +1,7 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
 import ProductCard from '@/components/common/ProductCard';
 import { useAuthStore } from '@/store/authStore';
@@ -11,14 +12,36 @@ const Page = () => {
 
   const {
     data: likesData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isPending,
+    isError,
     error,
-  } = useQuery({
-    queryKey: ['likes'],
-    queryFn: () => fetchLikesByUser(user.id),
+  } = useInfiniteQuery({
+    queryKey: ['likes', user?.id],
+    queryFn: ({ pageParam = 1 }) =>
+      fetchLikesByUser({ userId: user.id, pageParam }),
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    initialPageParam: undefined,
     enabled: !!user,
   });
-  console.log('data: ', likesData);
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1.0 },
+    );
+
+    if (observerRef.current) observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage]);
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -28,19 +51,32 @@ const Page = () => {
   }
 
   return (
-    <div>
+    <div className="p-4">
       <h1 className="py-4 text-center text-2xl font-bold">좋아요</h1>
 
-      <div className="mt-5 grid grid-cols-2 gap-4">
-        {likesData.map((like) => (
-          <ProductCard
-            key={like.id}
-            id={like.id}
-            name={like.drinks.name}
-            imageUrl={like.drinks.image}
-            userId={like.user_id}
-          />
-        ))}
+      <div className="grid grid-cols-2 justify-items-center gap-4">
+        {likesData.pages
+          .flatMap((page) => page.data)
+          .map((like) => (
+            <ProductCard
+              key={like.id}
+              id={like.drink_id}
+              name={like.drinks.name}
+              imageUrl={like.drinks.image}
+              userId={like.user_id}
+            />
+          ))}
+      </div>
+
+      <div
+        ref={observerRef}
+        className="mb-5 mt-4 flex h-12 items-center justify-center bg-gray-200"
+      >
+        {isFetchingNextPage ? (
+          <p className="text-gray-700">Loading more...</p>
+        ) : (
+          <p className="text-gray-700">Scroll down</p>
+        )}
       </div>
     </div>
   );
