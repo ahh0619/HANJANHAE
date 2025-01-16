@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react'; // 루시드 아이콘 사용
+import { X } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
