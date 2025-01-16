@@ -18,14 +18,7 @@ html {
   /* Primary Colors */
   --primary-color: #bf324b;
   --primary-hover-color: #a22b40;
-<<<<<<< HEAD
-  --secondary-color: #a02a3f;
-  --secondary-hover-color: #f8e9ec;
-  --foreground-rgb: 33, 33, 33;
-  --primary-100m: #bf324b;
-=======
   --primary-100: #bf324b;
->>>>>>> 76a2140f7c3eb05a5f8cf3e66e4dfe92a1d77f15
   --primary-200: #8c2537;
   --primary-300: #591723;
 
