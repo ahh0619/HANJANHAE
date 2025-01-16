@@ -3,25 +3,35 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
+import { useAuth } from '@/providers/AuthProvider';
 import { useAuthStore } from '@/store/authStore';
-import { deleteUser, logout } from '@/utils/auth/action';
+import { deleteUser } from '@/utils/auth/action';
 
 const MyPageAccountOptions = () => {
   const router = useRouter();
+
+  const { logout } = useAuth();
 
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
   const handleLogout = async () => {
-    await logout();
-    queryClient.removeQueries({ queryKey: ['userProfile'] });
-    removeUser();
+    try {
+      await logout();
+      queryClient.removeQueries({ queryKey: ['userProfile'] });
+    } catch (error: any) {
+      window.alert('회원가입에 실패하였습니다.');
+    }
   };
 
   const handleDeleteUser = async () => {
     if (window.confirm('회원 탈퇴를 하시겠어요?')) {
-      await deleteUser();
-      removeUser();
+      try {
+        await deleteUser();
+        removeUser();
+      } catch (error: any) {
+        window.alert('회원 탈퇴에 실패하였습니다.');
+      }
     }
   };
 

@@ -1,16 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import InputField from '@/components/auth/InputField';
 import useSignUp from '@/hooks/auth/useSignUp';
 
 const Information = () => {
-  const router = useRouter();
-
-  const { handleSubmit, register, onSubmit, errors } = useSignUp({
-    handleSuccess: () => router.push('/signin'),
-  });
+  const { handleSubmit, register, onSubmit, errors } = useSignUp();
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>

@@ -7,9 +7,7 @@ import useSignIn from '@/hooks/auth/useSignIn';
 const SignInForm = () => {
   const router = useRouter();
 
-  const { handleSubmit, register, onSubmit, errors } = useSignIn({
-    handleSuccess: () => router.push('/'),
-  });
+  const { handleSubmit, register, onSubmit, errors } = useSignIn();
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
