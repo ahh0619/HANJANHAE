@@ -25,7 +25,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en">
+    <html lang="en" className="font-sans">
       <head>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"

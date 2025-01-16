@@ -45,7 +45,7 @@ const ReviewContent = ({
 
         {/* 수정/삭제 버튼 */}
         {canEdit && (
-          <div className="absolute -bottom-11 right-0 top-0 flex space-x-2 text-sm text-gray-500">
+          <div className="text-label-sm absolute -bottom-11 right-0 top-0 flex space-x-2 text-grayscale-500">
             <ReviewEditDeleteButtons
               isEditing={editing}
               onEdit={onEdit}
