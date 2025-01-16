@@ -8,6 +8,7 @@ import { useLikeStatus } from '@/hooks/like/useLikeStatus';
 import { useToggleLike } from '@/hooks/like/useToggleLike';
 
 import Modal from './Modal';
+import Toast from './Toast';
 
 type LikeButtonProps = {
   drinkId: string;
@@ -19,7 +20,10 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data } = useLikeStatus(drinkId, userId);
-  const toggleLikeMutation = useToggleLike({ drinkId, userId: userId });
+  const { mutate, toastMessage, clearToast } = useToggleLike({
+    drinkId,
+    userId: userId || '',
+  });
 
   const handleLikeButtonClick = () => {
     if (!userId) {
@@ -27,7 +31,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
       return;
     }
 
-    toggleLikeMutation.mutate();
+    mutate();
   };
 
   const closeModal = () => {
@@ -66,6 +70,9 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
           },
         }}
       />
+
+      {/* Toast */}
+      {toastMessage && <Toast message={toastMessage} onClose={clearToast} />}
     </>
   );
 };

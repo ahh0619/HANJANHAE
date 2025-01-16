@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 import { toggleLike } from '@/utils/like/action';
 
@@ -11,6 +12,7 @@ type UseToggleLikeParams = {
 
 export const useToggleLike = ({ drinkId, userId }: UseToggleLikeParams) => {
   const queryClient = useQueryClient();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const mutation = useMutation<
     LikeStatus,
@@ -54,7 +56,12 @@ export const useToggleLike = ({ drinkId, userId }: UseToggleLikeParams) => {
         queryKey: ['likeStatus', drinkId, userId],
       });
     },
+    onSuccess: (data) => {
+      if (!data.liked) {
+        setToastMessage('좋아요가 해제되었어요');
+      }
+    },
   });
 
-  return mutation;
+  return { ...mutation, toastMessage, clearToast: () => setToastMessage(null) };
 };
