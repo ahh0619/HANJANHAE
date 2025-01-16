@@ -7,6 +7,8 @@ import ProductCard from '@/components/common/ProductCard';
 import { useAuthStore } from '@/store/authStore';
 import { fetchLikesByUser } from '@/utils/like/action';
 
+import SkeletonPage from './_components/SkeletonPage';
+
 const Page = () => {
   const { user } = useAuthStore();
 
@@ -44,7 +46,7 @@ const Page = () => {
   }, [fetchNextPage, hasNextPage]);
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <SkeletonPage />;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
