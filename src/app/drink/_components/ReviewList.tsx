@@ -65,7 +65,7 @@ const ReviewList = ({
         return (
           <div
             key={review.id}
-            className="flex flex-col rounded-lg bg-white"
+            className="bg-etc-white flex flex-col rounded-lg"
             ref={index === reviews.length - 1 ? lastReviewRef : null}
           >
             {/* 리뷰 내용 */}
@@ -99,10 +99,10 @@ const ReviewList = ({
           <Image
             src="/assets/icons/no-reviews.svg"
             alt="등록된 리뷰가 없습니다."
-            width={168}
-            height={208}
+            width={131}
+            height={20}
           />
-          <p className="!mt-8 text-xl font-medium text-gray-500">
+          <p className="title-mb !mt-8 text-grayscale-500">
             등록된 리뷰가 없습니다.
           </p>
         </div>

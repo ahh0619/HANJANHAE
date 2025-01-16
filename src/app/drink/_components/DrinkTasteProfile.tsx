@@ -15,8 +15,8 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
   const renderBar = (value: number | null | undefined, index: number) => {
     const colors = [
       'bg-secondary-200',
-      'bg-secondary-300m',
-      'bg-primary-100m',
+      'bg-secondary-300',
+      'bg-primary-100',
       'bg-primary-200',
       'bg-primary-300',
     ];
@@ -25,7 +25,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
       <div
         key={index}
         className={`h-4 w-9 ${
-          value && index < value ? colors[index] : 'bg-white'
+          value && index < value ? colors[index] : 'bg-etc-white'
         }`}
       />
     );
@@ -38,13 +38,13 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
     <div className="flex w-full items-center justify-between">
       {/* Label */}
       <div>
-        <span className="w-16 text-sm font-bold text-gray-800">{label}</span>
+        <span className="text-grayscale-900 text-body-mm w-16">{label}</span>
       </div>
 
       {/* 약함과 Bars */}
       <div className="flex flex-1 items-center justify-end space-x-2">
         {/* 약함 */}
-        <span className="text-sm text-gray-500">약함</span>
+        <span className="text-caption-mm text-grayscale-500">약함</span>
 
         {/* Bars */}
         <div className="flex w-full max-w-52 space-x-1">
@@ -52,14 +52,14 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
         </div>
 
         {/* 강함 */}
-        <span className="text-sm text-gray-500">강함</span>
+        <span className="text-caption-mm text-grayscale-500">강함</span>
       </div>
     </div>
   );
 
   return (
     <section className="p-4">
-      <h3 className="mb-4 text-lg font-bold text-gray-900">맛 프로필</h3>
+      <h3 className="text-title-lm mb-4 text-grayscale-500">맛 프로필</h3>
       <div className="space-y-4">
         {renderProfileRow('단맛', drink.sweetness)}
         {renderProfileRow('신맛', drink.acidity)}

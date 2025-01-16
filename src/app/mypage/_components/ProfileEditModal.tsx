@@ -34,7 +34,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative w-11/12 max-w-sm rounded-lg bg-white p-6">
+      <div className="bg-etc-white relative w-11/12 max-w-sm rounded-lg p-6">
         <h2 className="mb-4 text-center text-lg font-bold">프로필 수정</h2>
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
@@ -48,13 +48,13 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         <div className="mt-4 flex justify-between">
           <ProfileActionButton
             onClick={onClose}
-            className="border-primary text-primary hover:bg-secondary-hover mr-2 w-1/2 border"
+            className="mr-2 w-1/2 border border-primary text-primary hover:bg-secondary-hover"
           >
             취소하기
           </ProfileActionButton>
           <ProfileActionButton
             onClick={handleUpdateProfile}
-            className="bg-primary hover:bg-primary-hover ml-2 w-1/2 text-white"
+            className="ml-2 w-1/2 bg-primary text-white hover:bg-primary-hover"
           >
             완료하기
           </ProfileActionButton>

@@ -36,7 +36,7 @@ const ReviewSection = ({ drinkId }: ReviewSectionProps) => {
 
   return (
     <section className="p-4">
-      <h3 className="text-lg font-bold">리뷰</h3>
+      <h3 className="title-lm">리뷰</h3>
       {user ? (
         <ReviewForm onSubmit={handleReviewSubmit} />
       ) : (

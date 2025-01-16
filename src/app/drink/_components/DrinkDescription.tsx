@@ -22,13 +22,15 @@ const DrinkDescription = ({
   return (
     <section className="p-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">{name}</h2>
+        <h2 className="text-grayscale-900 text-title-lm">{name}</h2>
         <div className="flex">
           <LikeButton userId={user?.id} drinkId={drinkId} />
           <ShareButton title={name} text={description!} imageUrl={imageUrl} />
         </div>
       </div>
-      <p className="mt-2 text-sm text-gray-500">{description || '설명 없음'}</p>
+      <p className="text-grayscale-900 text-body-mm mt-2">
+        {description || '설명 없음'}
+      </p>
     </section>
   );
 };

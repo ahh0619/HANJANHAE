@@ -13,7 +13,7 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
   onEditClick,
 }) => (
   <div className="mt-6 w-full">
-    <div className="flex items-center rounded-lg bg-white px-4 py-4">
+    <div className="bg-etc-white flex items-center rounded-lg px-4 py-4">
       {/* 프로필 이미지 */}
       <div className="flex h-16 w-16 items-center overflow-hidden rounded-full">
         <Image

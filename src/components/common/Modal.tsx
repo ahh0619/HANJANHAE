@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-white p-5 text-center shadow-lg">
+      <div className="bg-etc-white relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl p-5 text-center shadow-lg">
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
@@ -62,7 +62,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Secondary Action */}
             {secondaryAction && (
               <button
-                className="w-[136px] rounded-lg border border-secondary bg-white p-3 font-medium text-primary hover:bg-secondary-hover"
+                className="bg-etc-white w-[136px] rounded-lg border border-secondary p-3 font-medium text-primary hover:bg-secondary-hover"
                 onClick={secondaryAction.onClick}
               >
                 {secondaryAction.text}
