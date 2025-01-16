@@ -1,29 +1,29 @@
 type ReviewActionButtonsProps = {
   canEdit: boolean;
-  onEdit: () => void;
-  onDelete: () => void;
+  onSave: () => void;
+  onCancel: () => void;
 };
 
 const ReviewActionButtons = ({
   canEdit,
-  onEdit,
-  onDelete,
+  onSave,
+  onCancel,
 }: ReviewActionButtonsProps) => {
   if (!canEdit) return null;
 
   return (
-    <div className="mt-2 flex justify-end space-x-4">
+    <div className="mt-2 flex justify-end space-x-2">
       <button
-        className="text-sm text-blue-500 hover:underline"
-        onClick={onEdit}
+        className="rounded-lg border border-primary px-4 py-1 text-sm text-primary hover:bg-secondary-hover"
+        onClick={onCancel}
       >
-        수정
+        취소
       </button>
       <button
-        className="text-sm text-red-500 hover:underline"
-        onClick={onDelete}
+        className="rounded-lg bg-primary px-4 py-1 text-sm text-white hover:bg-primary-hover"
+        onClick={onSave}
       >
-        삭제
+        완료
       </button>
     </div>
   );

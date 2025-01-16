@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export default function ScrollTop() {
@@ -32,12 +33,12 @@ export default function ScrollTop() {
     visible && (
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-5 right-5 h-10 w-10 transform rounded-full border border-gray-600 bg-white shadow-lg transition-opacity duration-300 ${
-          visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+        className={`fixed bottom-5 right-5 flex h-12 w-12 items-center justify-center rounded-full bg-pink-200 shadow-lg transition-opacity duration-300 ${
+          visible ? 'opacity-100' : 'opacity-0'
         }`}
         aria-label="위로가기"
       >
-        ↑
+        <ArrowUp className="h-6 w-6 text-gray-800" />
       </button>
     )
   );
