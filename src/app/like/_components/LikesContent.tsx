@@ -70,12 +70,10 @@ const LikesContent = () => {
 
       <div
         ref={observerRef}
-        className="mb-5 mt-4 flex h-12 items-center justify-center bg-gray-200"
+        className="mb-5 mt-4 flex h-12 items-center justify-center"
       >
-        {isFetchingNextPage ? (
-          <p className="text-gray-700">Loading more...</p>
-        ) : (
-          <p className="text-gray-700">Scroll down</p>
+        {isFetchingNextPage && (
+          <div className="h-6 w-6 animate-spin rounded-full border-4 border-gray-300 border-t-gray-600"></div>
         )}
       </div>
     </div>
