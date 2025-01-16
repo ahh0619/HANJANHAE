@@ -15,6 +15,7 @@ const config: Config = {
         'secondary-hover': 'var(--secondary-hover-color)',
         'primary-100m': 'var(--primary-100m)',
         'primary-200': 'var(--primary-200)',
+        'primary-300': 'var(--primary-300)',
         'secondary-100': 'var(--secondary-100)',
         'secondary-200': 'var(--secondary-200)',
         'secondary-300m': 'var(--secondary-300m)',

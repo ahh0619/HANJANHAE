@@ -14,11 +14,11 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
 
   const renderBar = (value: number | null | undefined, index: number) => {
     const colors = [
-      'bg-secondary-100',
       'bg-secondary-200',
       'bg-secondary-300m',
       'bg-primary-100m',
       'bg-primary-200',
+      'bg-primary-300',
     ];
 
     return (
