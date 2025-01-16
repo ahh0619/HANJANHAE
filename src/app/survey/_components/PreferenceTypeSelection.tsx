@@ -2,8 +2,19 @@ import { useState } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
+import Popup from './Popup';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
+
+const options = [
+  '탁주',
+  '증류주',
+  '청주',
+  '약주',
+  '리큐르',
+  '과실주',
+  '기타 주류',
+];
 
 const PreferenceTypeSelection = ({
   onNext,
@@ -13,6 +24,10 @@ const PreferenceTypeSelection = ({
   const [selectedTypes, setSelectedTypes] = useState<string>(
     Array.isArray(surveyData.type) ? surveyData.type.join(',') : '',
   );
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
 
   const toggleSelection = (type: string) => {
     const typesArray = selectedTypes ? selectedTypes.split(',') : [];
@@ -31,16 +46,6 @@ const PreferenceTypeSelection = ({
     onNext({ type: typesString });
   };
 
-  const options = [
-    '탁주',
-    '증류주',
-    '청주',
-    '약주',
-    '리큐르',
-    '과실주',
-    '기타 주류',
-  ];
-
   return (
     <div className="flex flex-col items-center space-y-6 p-6">
       {/* 제목 */}
@@ -51,7 +56,6 @@ const PreferenceTypeSelection = ({
         <h1 className="text-center text-xl font-bold">내 취향 조사</h1>
       </div>
 
-      {/* 진행바 */}
       <ProgressBar currentStep={1} />
 
       {/* 질문 */}
@@ -78,16 +82,23 @@ const PreferenceTypeSelection = ({
         ))}
       </div>
 
-      <span className="ml-5 w-full text-sm text-gray-500">
-        술종류 <span className="underline">?</span>
+      <span className="ml-5 flex w-full items-center text-sm text-gray-500">
+        주류용어설명
+        <img
+          src="/fi_alert-circle.svg"
+          alt="설명 아이콘"
+          className="ml-1 h-4 w-4 cursor-pointer"
+          onClick={openPopup}
+        />
       </span>
 
-      {/* 버튼 */}
       <StepButton
         content={'다음'}
         onClick={handleNext}
         disabled={!selectedTypes.trim()}
       />
+
+      <Popup isOpen={isPopupOpen} onClose={closePopup} />
     </div>
   );
 };
