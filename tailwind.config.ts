@@ -72,9 +72,10 @@ const config: Config = {
         'caption-mm': ['12px', '150%'],
         'caption-sm': ['10px', '150%'],
       },
-      fontWeight: {
-        bold: '700',
-        medium: '500',
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },
