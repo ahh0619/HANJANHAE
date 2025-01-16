@@ -48,7 +48,7 @@ const KakaoShareButton = ({
   return (
     <button
       onClick={handleKakaoShare}
-      className="rounded bg-yellow-400 p-2 text-white hover:bg-yellow-500"
+      className="text-etc-white rounded bg-yellow-400 p-2 hover:bg-yellow-500"
     >
       카카오톡 공유하기
     </button>

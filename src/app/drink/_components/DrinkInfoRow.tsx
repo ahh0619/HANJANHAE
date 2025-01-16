@@ -9,8 +9,8 @@ const DrinkInfoRow = ({ label, value }: InfoRowProps) => {
 
   return (
     <div className="grid grid-cols-[60px,1fr] gap-x-4">
-      <p className="font-semibold text-gray-600">{label}</p>
-      <p className="text-gray-700">{formattedValue}</p>
+      <p className="text-body-mm text-grayscale-700">{label}</p>
+      <p className="text-body-mm text-grayscale-900">{formattedValue}</p>
     </div>
   );
 };

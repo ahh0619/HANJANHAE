@@ -6,9 +6,9 @@ import BottomNavBar from '@/components/common/BottomNavBar';
 import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
+import { AuthProvider } from '@/providers/AuthProvider';
 import Providers from '@/providers/Provider';
 
-import { AuthProvider } from '@/providers/AuthProvider';
 import '@/styles/globals.css';
 import KakaoInit from './drink/_components/KakaoInit';
 
@@ -25,7 +25,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en">
+    <html lang="en" className="font-sans">
       <head>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"

@@ -2,7 +2,7 @@ import { ReviewReadOnlyContentProps } from '@/types/review';
 
 const ReviewReadOnlyContent = ({ comment }: ReviewReadOnlyContentProps) => (
   <div
-    className="rounded-lg bg-gray-100 p-3 text-sm text-gray-800"
+    className="grayscale-100 body-mm text-grayscale-900 rounded-lg p-3"
     style={{ whiteSpace: 'pre-wrap' }}
   >
     <p>{comment}</p>
