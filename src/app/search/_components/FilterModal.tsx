@@ -7,9 +7,19 @@ import HomeScreenButton from './HomeScreenButton';
 
 const FilterModal = () => {
   const { isModalOpen, closeModal } = useModalStore();
-  const { isFiltered, setIsFiltered, setTriggerFetch } = useFilterStore();
+  const {
+    alcoholStrength,
+    setAlcoholStrength,
+    isFiltered,
+    setIsFiltered,
+    setTriggerFetch,
+  } = useFilterStore();
 
   const handleApplyfilters = () => {
+    // 초기화 시 Strength가 null 이여서 자동으로 입력
+    if (alcoholStrength === null) {
+      setAlcoholStrength([0, 100]);
+    }
     closeModal();
     setIsFiltered(true); // 필터 UI 변경 상태관리
     setTriggerFetch(true);
@@ -40,7 +50,7 @@ const FilterModal = () => {
             {/* Scrollable Content */}
             <FilterType />
             {/* 적용하기 */}(
-            <div className="fixed bottom-0 left-0 w-full border-t border-gray-300 bg-white p-4">
+            <div className="fixed bottom-[70px] left-0 w-full border-t border-gray-300 bg-white p-4">
               <button
                 onClick={handleApplyfilters}
                 className="w-full rounded-lg bg-gray-800 py-3 text-white hover:bg-gray-900"

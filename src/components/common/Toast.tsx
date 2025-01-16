@@ -8,9 +8,11 @@ type ToastProps = {
 };
 
 const Toast: React.FC<ToastProps> = ({ message, duration = 5000, onClose }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    setIsVisible(true);
+
     const timer = setTimeout(() => {
       setIsVisible(false);
       setTimeout(() => {
@@ -21,11 +23,11 @@ const Toast: React.FC<ToastProps> = ({ message, duration = 5000, onClose }) => {
     return () => clearTimeout(timer);
   }, [duration, onClose]);
 
-  if (!isVisible) return null;
+  if (!isVisible && !message) return null;
 
   const toastContent = (
     <div
-      className={`fixed bottom-[150px] left-1/2 z-50 max-w-64 -translate-x-1/2 transform rounded-lg bg-gray-800 px-4 py-2 text-sm text-white shadow-lg transition-all duration-500 ${
+      className={`fixed bottom-[106px] left-1/2 z-50 max-w-64 -translate-x-1/2 transform rounded-lg bg-gray-800 px-4 py-2 text-sm text-white shadow-lg transition-opacity duration-500 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >

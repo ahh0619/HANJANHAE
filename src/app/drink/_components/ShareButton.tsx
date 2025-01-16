@@ -62,7 +62,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center rounded-full hover:bg-gray-50"
+        className="hover:bg-grayscale-50 flex items-center justify-center rounded-full"
       >
         <Share2 className="text-black-400 ml-2 h-5 w-5 transition-colors sm:h-6 sm:w-6" />
       </button>

@@ -73,36 +73,17 @@ type Drink = Database['public']['Tables']['drinks']['Row'];
 //   return data as Drink[];
 // }
 
-type Beverage = {
-  id: number;
-  name: string;
-  type: string;
-  alcohol_content: number;
-  image: string;
-  sweetness: number;
-  acidity: number;
-  carbonation: number;
-  body: number;
-};
-
-type BeverageResponse = {
-  results: Beverage[];
-  nextPage: number | null;
-};
-
-type FilterInfiniteParams = {
-  types: string[];
-  alcoholStrength?: [number, number];
-  tastePreferences?: Record<string, number>;
-  page: number;
-  size: number;
-};
-
 export async function filterDrinks({
   types,
   alcoholStrength,
   tastePreferences,
-}: FilterParams): Promise<Drink[]> {
+  page = 1,
+  pageSize = 10,
+}: FilterParams & { page?: number; pageSize?: number }): Promise<{
+  drinks: Drink[];
+  nextPage: number | null;
+  hasNextPage: boolean;
+}> {
   const supabase = createClient();
   // 전체 말고 필요한 필드만 선택해서 가져오기
   // let query = supabase.from('drinks').select('*');
@@ -110,8 +91,7 @@ export async function filterDrinks({
     .from('drinks')
     .select(
       'id, name, type, alcohol_content,image,sweetness, acidity, carbonation, body',
-    )
-
+    );
 
   // 술 타입 필터링
   if (types.length > 0) {
@@ -135,6 +115,11 @@ export async function filterDrinks({
       query = query.eq(category, value);
     });
   }
+  // 페이지네이션 적용
+
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize - 1;
+  query = query.range(offset, offset + limit);
 
   const { data, error } = await query;
 
@@ -142,20 +127,62 @@ export async function filterDrinks({
     throw new Error('Error fetching filtered data');
   }
 
-  return data as Drink[];
+  // 다음 페이지 존재유무 확인
+  const hasNextPage = data.length === pageSize;
+  const nextPage = hasNextPage ? page + 1 : null;
+
+  return {
+    drinks: data as Drink[],
+    nextPage,
+    hasNextPage,
+  };
 }
 
-export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
+// export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
+//   const supabase = createClient();
+//   const { data, error } = await supabase
+//     .from('drinks')
+//     .select('id, name,image')
+//     .ilike('name', `%${keyword}%`); // name 컬럼에서 keyword를 포함하는 데이터 검색
+//   if (error) {
+//     throw new Error('Error fetching data by keyword');
+//   }
+
+//   return (data as Drink[]) || [];
+// }
+
+export async function filterDrinksByKeyword({
+  keyword,
+  page = 1,
+  pageSize = 20,
+}: {
+  keyword: string;
+  page?: number;
+  pageSize?: number;
+}): Promise<{
+  drinks: Drink[];
+  nextPage: number | null;
+  hasNextPage: boolean;
+}> {
   const supabase = createClient();
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize;
+
   const { data, error } = await supabase
     .from('drinks')
     .select('id, name,image')
-    .ilike('name', `%${keyword}%`); // name 컬럼에서 keyword를 포함하는 데이터 검색
+    .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
+    .range(offset, offset + limit - 1);
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
-
-  return (data as Drink[]) || [];
+  const hasNextPage = data.length === pageSize;
+  const nextPage = hasNextPage ? page + 1 : null;
+  return {
+    drinks: (data as Drink[]) || [],
+    nextPage,
+    hasNextPage,
+  };
 }
 
 export const getPopularDrinks = async () => {

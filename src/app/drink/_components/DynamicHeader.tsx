@@ -36,14 +36,14 @@ const DynamicHeader = ({
   return (
     <div
       className={`fixed left-0 top-0 z-50 w-full p-4 transition-all ${
-        scrolled ? 'bg-white text-gray-900 shadow-md' : 'hidden'
+        scrolled ? 'text-grayscale-900 bg-etc-white shadow-md' : 'hidden'
       }`}
     >
       <div className="relative flex items-center justify-between">
         {/* 뒤로가기 버튼과 주류 이름 */}
         <div className="flex items-center space-x-2">
           <BackButton />
-          <p className="text-base font-bold">{name}</p>
+          <p className="text-title-xl text-grayscale-900">{name}</p>
         </div>
 
         {/* 좋아요 및 공유 버튼 */}

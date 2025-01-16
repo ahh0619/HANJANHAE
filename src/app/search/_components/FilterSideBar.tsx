@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useFilterStore from '@/store/filterStore';
@@ -17,6 +18,7 @@ type FilterItem = {
 };
 
 const FilterSideBar = () => {
+  const queryClient = useQueryClient();
   const { openModal } = useModalStore();
   const {
     selectedTypes,
@@ -25,6 +27,8 @@ const FilterSideBar = () => {
     removeSelectedType,
     removeAlcoholStrength,
     removeTastePreference,
+    triggerFetch,
+    setTriggerFetch,
     setValues,
   } = useFilterStore();
   console.log(selectedTypes, alcoholStrength, tastePreferences);
@@ -90,15 +94,18 @@ const FilterSideBar = () => {
   console.log(filters);
   const handleRemoveType = (original: string) => {
     removeSelectedType(original); // selectedTypes에서 해당 타입을 삭제
+    setTriggerFetch(true);
   };
 
   const handleRemoveStrength = () => {
     setValues([1, 3]);
     removeAlcoholStrength(); // alcoholStrength를 초기화
+    setTriggerFetch(true);
   };
 
   const handleRemoveTastePreference = (value: string) => {
     removeTastePreference(value); // tastePreferences에서 해당 맛 항목을 삭제
+    setTriggerFetch(true);
   };
 
   return (

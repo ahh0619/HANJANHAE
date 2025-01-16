@@ -2,51 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 100 900; /* Variable font weights */
+  font-display: swap;
+  src: url('/assets/fonts/PretendardVariable.woff2') format('woff2');
+}
+
+html {
+  font-family: 'Pretendard', sans-serif;
+}
+
 :root {
+  /* Primary Colors */
   --primary-color: #bf324b;
   --primary-hover-color: #a22b40;
+<<<<<<< HEAD
   --secondary-color: #a02a3f;
   --secondary-hover-color: #f8e9ec;
   --foreground-rgb: 33, 33, 33;
   --primary-100m: #bf324b;
+=======
+  --primary-100: #bf324b;
+>>>>>>> 76a2140f7c3eb05a5f8cf3e66e4dfe92a1d77f15
   --primary-200: #8c2537;
   --primary-300: #591723;
+
+  /* Secondary Colors */
+  --secondary-color: #a02a3f;
+  --secondary-hover-color: #f8e9ec;
   --secondary-100: #fcd9df;
   --secondary-200: #f99faf;
-  --secondary-300m: #f6798f;
+  --secondary-300: #f6798f;
 
-  /* 추가 색상 등록 */
-  --grayscale-500: #949494;
-  --grayscale-900m: #2e2e2e;
+  /* Grayscale */
+  --gray-900: #2e2e2e;
+  --gray-800: #474747;
+  --gray-700: #616161;
+  --gray-600: #7a7a7a;
+  --gray-500: #949494;
+  --gray-400: #adadad;
+  --gray-300: #c7c7c7;
+  --gray-200: #e0e0e0;
+  --gray-100: #f5f5f5;
+  --gray-50: #fafafa;
+
+  /* Additional Colors */
+  --white: #ffffff;
+  --red: #ff0a0a;
+  --cream: #fffcef;
+  --blue: #e0f4ff;
+  --yellow: #ffcf00;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: white;
+  color: rgb(var(--gray-900));
+  background: var(--white);
   overflow-y: scroll;
   -webkit-overflow-scrolling: auto;
 }
 
-/* 스크롤바 전체 */
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
-/* 스크롤바 트랙 (뒷 배경) */
 ::-webkit-scrollbar-track {
-  background: #ffe5e5;
+  background: var(--secondary-100);
   border-radius: 10px;
 }
 
-/* 스크롤바 손잡이 */
 ::-webkit-scrollbar-thumb {
-  background-color: #e63946;
+  background-color: var(--primary-100);
   border-radius: 10px;
-  border: 2px solid #ffe5e5;
+  border: 2px solid var(--secondary-100);
 }
 
-/* 스크롤바 손잡이 hover 시 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #d62828;
+  background-color: var(--primary-200);
+}
+
+/* Typography Styles */
+:root {
+  /* Title */
+  --font-title-xl: 24px bold 135%;
+  --font-title-lb: 20px bold 135%;
+  --font-title-lm: 20px medium 135%;
+  --font-title-mb: 16px bold 135%;
+  --font-title-mm: 16px medium 135%;
+  --font-title-sb: 12px bold 135%;
+
+  /* Body */
+  --font-body-lm: 24px medium 150%;
+  --font-body-mm: 16px medium 150%;
+  --font-body-sm: 12px medium 150%;
+
+  /* Label */
+  --font-label-xlm: 20px medium 150%;
+  --font-label-lm: 16px medium 150%;
+  --font-label-mb: 12px bold 150%;
+  --font-label-mm: 12px medium 150%;
+  --font-label-sb: 10px bold 150%;
+  --font-label-sm: 10px medium 150%;
+
+  /* Caption */
+  --font-caption-lm: 16px medium 150%;
+  --font-caption-mm: 12px medium 150%;
+  --font-caption-sm: 10px medium 150%;
 }

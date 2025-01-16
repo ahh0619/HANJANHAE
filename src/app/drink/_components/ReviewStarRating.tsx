@@ -24,8 +24,8 @@ const ReviewStarRating = ({
         onMouseLeave={() => onHoverEnd?.()}
         className={`h-8 w-8 cursor-pointer ${
           star <= (hoverRating || rating)
-            ? 'fill-yellow-500 text-yellow-500'
-            : 'fill-none text-yellow-500'
+            ? 'fill-etc-yellow text-etc-yellow'
+            : 'text-etc-yellow fill-none'
         }`}
         fill={star <= (hoverRating || rating) ? 'currentColor' : 'none'}
       />

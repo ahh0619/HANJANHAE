@@ -24,7 +24,6 @@ const SearchBar = () => {
     setIsFiltered(false); // 필터 상태정보
     resetSearchStore(); // keyword 지우기
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
