@@ -27,33 +27,52 @@ const MyPageAccountOptions = () => {
 
   return (
     <div className="mt-6 w-full px-4">
-      <div className="divide-y rounded-lg bg-white">
-        <div className="flex items-center p-4">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-300">
-            <span className="text-sm">👤</span>
+      {/* Account options section */}
+      <div className="space-y-6">
+        {/* Password Reset */}
+        <div
+          className="flex cursor-pointer items-center"
+          onClick={() => router.push('/password/check')}
+        >
+          <div className="flex h-12 w-12 items-center justify-center">
+            <img
+              src="/assets/icons/key.svg"
+              alt="Key Icon"
+              className="h-6 w-6"
+            />
           </div>
-          <span
-            className="ml-4 cursor-pointer text-sm"
-            onClick={() => router.push('/password/check')}
-          >
+          <span className="ml-4 text-base font-medium text-gray-800">
             비밀번호 재설정
           </span>
         </div>
-        <div className="flex items-center p-4">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-300">
-            <span className="text-sm">👤</span>
+
+        {/* Logout */}
+        <div
+          className="flex cursor-pointer items-center"
+          onClick={handleLogout}
+        >
+          <div className="flex h-12 w-12 items-center justify-center">
+            <img
+              src="/assets/icons/logout.svg"
+              alt="Logout Icon"
+              className="h-6 w-6"
+            />
           </div>
-          <span className="ml-4 cursor-pointer text-sm" onClick={handleLogout}>
+          <span className="ml-4 text-base font-medium text-gray-800">
             로그아웃
           </span>
         </div>
       </div>
-      <button
-        className="mt-4 w-full text-center text-sm text-gray-500 underline"
-        onClick={handleDeleteUser}
-      >
-        회원 탈퇴
-      </button>
+
+      {/* Delete account section */}
+      <div className="mt-16 text-center">
+        <button
+          className="cursor-pointer text-sm font-medium text-gray-600 underline"
+          onClick={handleDeleteUser}
+        >
+          회원 탈퇴
+        </button>
+      </div>
     </div>
   );
 };

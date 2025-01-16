@@ -4,7 +4,7 @@ type FoodPairingProps = {
 
 const FoodPairing = ({ pairings }: FoodPairingProps) => {
   return (
-    <section className="border-b p-4">
+    <section className="mx-auto w-full">
       <h3 className="text-lg font-bold">추천 페어링 음식</h3>
       <div className="mt-4 grid grid-cols-3 justify-items-center gap-6">
         {pairings.map((food, index) => (
@@ -12,7 +12,8 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
             key={index}
             className="flex flex-col items-center justify-center space-y-2"
           >
-            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-gray-300">
+            {/* 음식 이미지 */}
+            <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-gray-300">
               {food.food_image ? (
                 <img
                   src={food.food_image}
@@ -20,9 +21,12 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <span className="text-sm text-gray-500">이미지 없음</span>
+                <span className="text-sm font-semibold text-gray-500">
+                  이미지 없음
+                </span>
               )}
             </div>
+            {/* 음식 이름 */}
             <p className="text-center text-sm text-gray-700">
               {food.food_name}
             </p>

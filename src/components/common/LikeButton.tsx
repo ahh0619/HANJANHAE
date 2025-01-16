@@ -8,6 +8,7 @@ import { useLikeStatus } from '@/hooks/like/useLikeStatus';
 import { useToggleLike } from '@/hooks/like/useToggleLike';
 
 import Modal from './Modal';
+import Toast from './Toast';
 
 type LikeButtonProps = {
   drinkId: string;
@@ -19,7 +20,10 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data } = useLikeStatus(drinkId, userId);
-  const toggleLikeMutation = useToggleLike({ drinkId, userId: userId });
+  const { mutate, toastMessage, clearToast } = useToggleLike({
+    drinkId,
+    userId: userId || '',
+  });
 
   const handleLikeButtonClick = () => {
     if (!userId) {
@@ -27,7 +31,7 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
       return;
     }
 
-    toggleLikeMutation.mutate();
+    mutate();
   };
 
   const closeModal = () => {
@@ -38,14 +42,12 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
     <>
       <button
         onClick={handleLikeButtonClick}
-        className="flex items-center justify-center rounded-full p-2 transition-colors"
+        className={`flex items-center justify-center rounded-full p-2 transition-colors`}
         aria-label={data?.liked ? '좋아요 취소' : '좋아요'}
       >
         <HeartIcon
           className={`transition-colors ${
-            data?.liked && userId
-              ? 'fill-red-500 text-red-500'
-              : 'text-black-400'
+            data?.liked && userId ? 'fill-primary text-primary' : 'text-black'
           } h-5 w-5 sm:h-6 sm:w-6`}
         />
       </button>
@@ -68,6 +70,9 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
           },
         }}
       />
+
+      {/* Toast */}
+      {toastMessage && <Toast message={toastMessage} onClose={clearToast} />}
     </>
   );
 };

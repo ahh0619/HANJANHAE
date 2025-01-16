@@ -317,7 +317,7 @@ export type Database = {
       }
       reco_results: {
         Row: {
-          drink_id: string
+          drink_id: string | null
           id: string
           image: string | null
           name: string
@@ -326,7 +326,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          drink_id: string
+          drink_id?: string | null
           id?: string
           image?: string | null
           name: string
@@ -335,7 +335,7 @@ export type Database = {
           user_id: string
         }
         Update: {
-          drink_id?: string
+          drink_id?: string | null
           id?: string
           image?: string | null
           name?: string
@@ -433,7 +433,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      fetch_popular_drinks: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+        }[]
+      }
+      get_liked_drinks: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

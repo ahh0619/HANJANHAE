@@ -3,6 +3,7 @@ import { Database } from '@/types/supabase';
 import DrinkBasicInfo from './DrinkBasicInfo';
 import DrinkDescription from './DrinkDescription';
 import DrinkImage from './DrinkImage';
+import DrinkTasteProfile from './DrinkTasteProfile';
 import DynamicHeader from './DynamicHeader';
 import FoodPairing from './FoodPairing';
 import ReviewSection from './ReviewSection';
@@ -33,6 +34,9 @@ const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
           drinkId={drink.id}
         />
         <DrinkBasicInfo drink={drink} />
+
+        {/* Taste Profile */}
+        <DrinkTasteProfile drink={drink} />
 
         {/* Food Pairings */}
         <section className="border-b p-4">

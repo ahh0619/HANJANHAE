@@ -8,8 +8,8 @@ const DrinkInfoRow = ({ label, value }: InfoRowProps) => {
     typeof value === 'number' ? `${value}%` : value || '정보 없음';
 
   return (
-    <div className="flex justify-between">
-      <p className="font-semibold">{label}</p>
+    <div className="grid grid-cols-[60px,1fr] gap-x-4">
+      <p className="font-semibold text-gray-600">{label}</p>
       <p className="text-gray-700">{formattedValue}</p>
     </div>
   );
