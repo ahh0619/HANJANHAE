@@ -4,7 +4,6 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useResults from '@/store/resultStore';
-import useSearchResults from '@/store/searchResultStore';
 
 const SearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,18 +14,15 @@ const SearchBar = () => {
     setIsFiltered,
     setTriggerFetch,
   } = useFilterStore();
-  const { keyword, setKeyword, setSearchTriggerFetch } = useSearchStore();
+  const { keyword, setKeyword, setSearchTriggerFetch, resetSearchStore } =
+    useSearchStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
   const { clearResults } = useResults();
-  const { clearSearchResults } = useSearchResults();
-
   const handleReset = () => {
     resetStates(); // 저장된 정보 삭제
     resetFilters(); // 필터값 리셋
     setIsFiltered(false); // 필터 상태정보
-    setSearchTriggerFetch(false); // 검색트리거 상태
-    clearResults(); // 필터 결과 지우기
-    clearSearchResults(); // 검색결과 지우기
+    resetSearchStore(); // keyword 지우기
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

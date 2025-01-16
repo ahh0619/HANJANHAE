@@ -1,39 +1,36 @@
 'use client';
-import { useEffect } from 'react';
 
-import useSearchStore from '@/store/keywordStore';
-import useSearchResults from '@/store/searchResultStore';
-import { filterDrinksByKeyword } from '@/utils/filter/action';
+import useFilterResults from '@/hooks/search/useFilterResults';
+import useSearchResults from '@/hooks/search/useSearchResults';
 
-import { SelectSorted } from './SelectSorted';
+import Skeleton from './Skeleton';
 
 const SearchResults = () => {
-  const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
-    useSearchStore();
-  const { results, setResults } = useSearchResults();
+  const { SearchData, isLoading, isError } = useSearchResults();
+  const {
+    filterData,
+    isLoading: isLoading2,
+    isError: isError2,
+    fetchNextPage,
+    hasNextPage,
+  } = useFilterResults();
 
-  useEffect(() => {
-    if (!searchTriggerFetch) return;
-    const fetchFilteredResults = async () => {
-      const filteredResults = await filterDrinksByKeyword(keyword); // 서버 액션 호출
-      setResults(filteredResults);
-    };
+  // const results = filterData.length > 0 ? filterData : SearchData;
+  const results = filterData?.pages?.flatMap((page) => page.items) || [];
 
-    fetchFilteredResults();
-    setSearchTriggerFetch(false);
-  }, [searchTriggerFetch]);
-  console.log(results);
   return (
     <div className="p-4">
-      {results.length > 0 && (
+      {isLoading || (isLoading2 && <Skeleton />)}
+      {/* 로딩 중일 때 Skeleton 표시 */}
+      {isError || (isError2 && <div className="text-red-500">{isError}</div>)}
+      {/* {results.length > 0 && (
         <div className="flex w-full items-center justify-between">
-          <span>{results.length}개의 검색결과가 있습니다.</span>{' '}
+          <span>{results.length}개의 검색결과가 있습니다.</span>
           <SelectSorted />
         </div>
       )}
       <div className="grid grid-cols-2 gap-4">
-        {Array.isArray(results) &&
-          results.length > 0 &&
+        {results.length > 0 &&
           results.map((result) => (
             <div
               key={result.id}
@@ -64,8 +61,8 @@ const SearchResults = () => {
                 </svg>
               </button>
             </div>
-          ))}
-      </div>
+          ))} */}
+      {/* </div> */}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Search = () => {
       >
         {/* Search Bar */}
         <FocusInput />
-        <FilterResults />
+        {/* <FilterResults /> */}
         <SearchResults />
       </div>
     </div>

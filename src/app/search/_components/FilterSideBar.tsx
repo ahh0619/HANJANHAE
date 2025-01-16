@@ -28,8 +28,10 @@ const FilterSideBar = () => {
     setValues,
   } = useFilterStore();
   console.log(selectedTypes, alcoholStrength, tastePreferences);
-  const getStrengthLabel = (strength: [number, number]): string => {
-    const [min, max] = strength;
+  const getStrengthLabel = (
+    strength: [number, number] | null | undefined,
+  ): string => {
+    const [min, max] = strength ?? [0, 100];
 
     if (min === 0 && max === 100) return '전체 도수';
     if (max <= 15) return '15도 이하';

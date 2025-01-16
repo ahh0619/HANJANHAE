@@ -9,6 +9,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        draw: 'draw 1.5s ease-in-out infinite',
+      },
+      keyframes: {
+        draw: {
+          '0%': { width: '0%' },
+          '50%': { width: '50%' },
+          '100%': { width: '100%' },
+        },
+      },
       colors: {
         primary: 'var(--primary-color)',
         'primary-hover': 'var(--primary-hover-color)',
@@ -20,7 +30,7 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-  
+
       borderRadius: {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,

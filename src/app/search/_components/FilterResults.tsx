@@ -1,41 +1,27 @@
 'use client';
-import { useEffect } from 'react';
 
-import useFilterStore from '@/store/filterStore';
-import useResults from '@/store/resultStore';
-import { filterDrinks, FilterParams } from '@/utils/filter/action';
+import useFilterResults from '@/hooks/search/useFilterResults';
+
+import { FilterSorted } from './FilterSorted';
+import Skeleton from './Skeleton';
 
 const SearchResults = () => {
-  const {
-    selectedTypes,
-    alcoholStrength,
-    tastePreferences,
-    triggerFetch,
-    setTriggerFetch,
-  } = useFilterStore();
-  const { results, setResults } = useResults();
-
-  useEffect(() => {
-    if (!triggerFetch) return;
-    const fetchFilteredResults = async () => {
-      const filterParams: FilterParams = {
-        types: selectedTypes,
-        alcoholStrength,
-        tastePreferences,
-      };
-      const filteredResults = await filterDrinks(filterParams); // 서버 액션 호출
-      setResults(filteredResults);
-    };
-
-    fetchFilteredResults();
-    setTriggerFetch(false);
-  }, [triggerFetch]);
-
+  const { filterData, isLoading, isError } = useFilterResults();
   return (
     <div className="p-4">
+      {isLoading && <Skeleton />} {/* 로딩 중일 때 Skeleton 표시 */}
+      {isError && <div className="text-red-500">{isError}</div>}{' '}
+      {/* 에러 메시지 */}
+      {filterData.length > 0 && (
+        <div className="flex w-full items-center justify-between">
+          <span>{filterData.length}개의 검색결과가 있습니다.</span>{' '}
+          <FilterSorted />
+        </div>
+      )}
       <div className="grid grid-cols-2 gap-4">
-        {Array.isArray(results) && results.length > 0 &&
-          results.map((result) => (
+        {filterData &&
+          filterData.length > 0 &&
+          filterData.map((result) => (
             <div
               key={result.id}
               className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-md"
