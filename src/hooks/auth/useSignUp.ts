@@ -4,10 +4,7 @@ import { z } from 'zod';
 
 import { SignUpDataType } from '@/types/Auth';
 import { signup } from '@/utils/auth/action';
-
-type UseSignUpProps = {
-  handleSuccess: () => void;
-};
+import { manageSignUpError } from '@/utils/auth/manageError';
 
 const signupSchema = z
   .object({
@@ -40,7 +37,7 @@ const signupSchema = z
     path: ['passwordConfirm'],
   });
 
-const useSignUp = ({ handleSuccess }: UseSignUpProps) => {
+const useSignUp = () => {
   const {
     register,
     handleSubmit,
@@ -59,11 +56,8 @@ const useSignUp = ({ handleSuccess }: UseSignUpProps) => {
   const onSubmit = async (values: SignUpDataType) => {
     try {
       await signup(values);
-
-      window.alert('회원가입 성공');
-      handleSuccess();
-    } catch (error: any) {
-      window.alert(error);
+    } catch (error) {
+      window.alert(manageSignUpError(error.message));
     }
   };
 

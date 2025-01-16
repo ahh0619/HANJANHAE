@@ -28,9 +28,9 @@ const useCheckEmail = () => {
   const onSubmit = async (values: CheckEmailType) => {
     try {
       await sendEmailForResetPassword(values);
-      window.alert('메일이 전송되었습니다.');
+      window.alert('비밀번호 재설정을 위한 메일이 전송되었습니다.');
     } catch (error: any) {
-      window.alert(error);
+      window.alert('메일 전송에 실패하였습니다.');
     }
   };
 

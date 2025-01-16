@@ -29,7 +29,9 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
 
   if (error) throw new Error(error.message);
 
-  await logout();
+  await signout();
+
+  redirect('/signin');
 };
 
 /* 로그인 */
@@ -44,13 +46,17 @@ export const signin = async (data: SignInDataType): Promise<void> => {
   });
 
   if (error) throw new Error(error.message);
+
+  redirect('/');
 };
 
 /* 로그아웃 */
-export const logout = async (): Promise<void> => {
+export const signout = async (): Promise<void> => {
   const supabase = createClient();
 
-  await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) throw new Error(error.message);
 
   redirect('/signin');
 };
@@ -128,6 +134,8 @@ export const resetPassword = async (
   });
 
   if (error) throw new Error(error.message);
+
+  redirect('/mypage');
 };
 
 /* 회원 탈퇴 */
@@ -136,9 +144,14 @@ export const deleteUser = async (): Promise<void> => {
 
   const {
     data: { session },
+    error: sessionError,
   } = await supabase.auth.getSession();
 
-  await adminClient.deleteUser(session.user.id);
+  if (sessionError) throw new Error(sessionError.message);
+
+  const { error } = await adminClient.deleteUser(session.user.id);
+
+  if (error) throw new Error(error.message);
 
   redirect('/');
 };
