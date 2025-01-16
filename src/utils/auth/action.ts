@@ -2,8 +2,15 @@
 import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
-import { SignInDataType, SignUpDataType, UserType } from '@/types/Auth';
+import {
+  CheckEmailType,
+  ResetPasswordType,
+  SignInDataType,
+  SignUpDataType,
+  UserType,
+} from '@/types/Auth';
 
+import { adminClient } from '../supabase/admin';
 import { createClient } from '../supabase/server';
 
 /* 회원가입 */
@@ -89,4 +96,49 @@ export const fetchUser = async (): Promise<UserType | null> => {
     profile_image: userData.profile_image || null,
     agree_terms: userData.agree_terms,
   };
+};
+
+/* 비밀번호 재설정을 위한 이메일 전송 */
+export const sendEmailForResetPassword = async (
+  values: CheckEmailType,
+): Promise<void> => {
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_URL}/password/reset`,
+  });
+
+  if (error) throw new Error(error.message);
+};
+
+/* 비밀번호 재설정 */
+export const resetPassword = async (
+  values: ResetPasswordType & { token: string },
+): Promise<void> => {
+  const supabase = createClient();
+
+  const { error: sessionError } = await supabase.auth.exchangeCodeForSession(
+    values.token,
+  );
+
+  if (sessionError) throw new Error(sessionError.message);
+
+  const { error } = await supabase.auth.updateUser({
+    password: values.password,
+  });
+
+  if (error) throw new Error(error.message);
+};
+
+/* 회원 탈퇴 */
+export const deleteUser = async (): Promise<void> => {
+  const supabase = createClient();
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  await adminClient.deleteUser(session.user.id);
+
+  redirect('/');
 };
