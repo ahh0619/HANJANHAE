@@ -1,5 +1,5 @@
 declare global {
-  type Window = {
+  interface Window {
     Kakao: {
       init: (appKey: string) => void;
       isInitialized: () => boolean;
@@ -25,7 +25,7 @@ declare global {
         }) => void;
       };
     };
-  };
+  }
 }
 
 export {};
