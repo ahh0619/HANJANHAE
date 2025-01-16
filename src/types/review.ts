@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-export interface ReviewContentProps {
+export type ReviewContentProps = {
   editing: boolean;
   comment: string;
   editComment: string;
@@ -13,7 +13,7 @@ export interface ReviewContentProps {
   createdAt: string;
   profileImage: string;
   canEdit: boolean;
-}
+};
 
 export type ReviewEditingContentProps = {
   editComment: string;
