@@ -95,14 +95,14 @@ const ReviewList = ({
 
       {/* 리뷰 없음 */}
       {reviews.length === 0 && (
-        <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-50 p-6 shadow-sm">
+        <div className="mt-16 flex flex-col items-center justify-center space-y-2 rounded-lg">
           <Image
             src="/assets/no-reviews.svg"
             alt="등록된 리뷰가 없습니다."
-            width={120}
-            height={120}
+            width={168}
+            height={208}
           />
-          <p className="mt-4 text-sm font-medium text-gray-500">
+          <p className="!mt-8 text-xl font-medium text-gray-500">
             등록된 리뷰가 없습니다.
           </p>
         </div>
