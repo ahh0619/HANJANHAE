@@ -38,7 +38,7 @@ const MyPageAccountOptions = () => {
             <img
               src="/assets/icons/key.svg"
               alt="Key Icon"
-              className="h-6 w-6" // 24px x 24px
+              className="h-6 w-6"
             />
           </div>
           <span className="ml-4 text-base font-medium text-gray-800">
@@ -55,7 +55,7 @@ const MyPageAccountOptions = () => {
             <img
               src="/assets/icons/logout.svg"
               alt="Logout Icon"
-              className="h-6 w-6" // 24px x 24px
+              className="h-6 w-6"
             />
           </div>
           <span className="ml-4 text-base font-medium text-gray-800">
