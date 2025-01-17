@@ -38,7 +38,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
     <div className="flex w-full items-center justify-between">
       {/* Label */}
       <div>
-        <span className="text-grayscale-900 text-body-mm w-16">{label}</span>
+        <span className="w-16 text-body-mm text-grayscale-900">{label}</span>
       </div>
 
       {/* 약함과 Bars */}
@@ -59,7 +59,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
 
   return (
     <section className="p-4">
-      <h3 className="text-title-lm mb-4 text-grayscale-500">맛 프로필</h3>
+      <h3 className="mb-4 text-title-lm text-grayscale-900">맛 프로필</h3>
       <div className="space-y-4">
         {renderProfileRow('단맛', drink.sweetness)}
         {renderProfileRow('신맛', drink.acidity)}

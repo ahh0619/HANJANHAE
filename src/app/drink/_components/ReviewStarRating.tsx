@@ -25,7 +25,7 @@ const ReviewStarRating = ({
         className={`h-8 w-8 cursor-pointer ${
           star <= (hoverRating || rating)
             ? 'fill-etc-yellow text-etc-yellow'
-            : 'text-etc-yellow fill-none'
+            : 'fill-none text-etc-yellow'
         }`}
         fill={star <= (hoverRating || rating) ? 'currentColor' : 'none'}
       />

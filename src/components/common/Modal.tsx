@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-etc-white relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl p-5 text-center shadow-lg">
+      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white p-5 text-center shadow-lg">
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
@@ -49,12 +49,10 @@ const Modal: React.FC<ModalProps> = ({
         )}
 
         {/* Header */}
-        <h2 className="text-lg font-semibold">{title}</h2>
+        <h2 className="text-title-lb">{title}</h2>
 
         {/* Content */}
-        <p className="mt-2 whitespace-pre-line text-sm font-medium">
-          {content}
-        </p>
+        <p className="mt-2 whitespace-pre-line text-label-lm">{content}</p>
 
         {/* Footer */}
         <div className="mt-4 flex flex-col items-center space-y-2">
@@ -62,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Secondary Action */}
             {secondaryAction && (
               <button
-                className="bg-etc-white w-[136px] rounded-lg border border-secondary p-3 font-medium text-primary hover:bg-secondary-hover"
+                className="w-[136px] rounded-lg border border-secondary bg-etc-white p-3 text-title-mb text-primary hover:bg-secondary-hover"
                 onClick={secondaryAction.onClick}
               >
                 {secondaryAction.text}
@@ -71,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Primary Action */}
             {primaryAction && (
               <button
-                className="w-[136px] rounded-lg bg-primary p-3 font-semibold text-white hover:bg-primary-hover"
+                className="w-[136px] rounded-lg bg-primary p-3 text-title-mb text-white hover:bg-primary-hover"
                 onClick={primaryAction.onClick}
               >
                 {primaryAction.text}
@@ -82,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="mb-2 mt-3 p-4 text-sm text-gray-500 underline hover:text-gray-700"
+              className="mb-2 mt-3 p-4 text-label-mm text-grayscale-500 underline hover:text-gray-700"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}
