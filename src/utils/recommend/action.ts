@@ -10,6 +10,8 @@ const openai = new OpenAI({
   project: process.env.PROJECT_ID,
 });
 
+type DrinkRecommendation = { name: string };
+
 const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
   try {
     const thread = await openai.beta.threads.create();
@@ -24,16 +26,30 @@ const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
 
     if (run.status === 'completed') {
       const messages = await openai.beta.threads.messages.list(run.thread_id);
-      const jsonData = (
+      const rawData = (
         messages.data[0].content[0] as { text: { value: string } }
       ).text.value;
 
-      // 추천 결과를 JSON으로 파싱하여 이름 배열 생성
-      const namesArray = JSON.parse(jsonData).map(
-        (item: { name: string }) => item.name,
-      );
+      const cleanedData = rawData.replace(/```json|```/g, '').trim();
 
-      // Supabase에서 이름 배열로 데이터를 가져오기
+      let jsonData: DrinkRecommendation[];
+
+      try {
+        jsonData = JSON.parse(cleanedData);
+
+        if (!Array.isArray(jsonData)) {
+          throw new Error('데이터 형식 오류: 배열이 아닙니다.');
+        }
+        if (!jsonData.every((item) => typeof item.name === 'string')) {
+          throw new Error('데이터 형식 오류: name 속성이 없습니다.');
+        }
+      } catch (error) {
+        console.error('JSON 파싱 실패:', error);
+        throw new Error('데이터 형식이 올바르지 않습니다.');
+      }
+
+      const namesArray = jsonData.map((item) => item.name);
+
       const drinks = await fetchDrinksByNames(namesArray);
       return drinks;
     } else {
