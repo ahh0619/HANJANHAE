@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 
 import BottomNavBar from '@/components/common/BottomNavBar';
@@ -12,7 +12,12 @@ import Providers from '@/providers/Provider';
 import '@/styles/globals.css';
 import KakaoInit from './drink/_components/KakaoInit';
 
-const inter = Inter({ subsets: ['latin'] });
+const pretendard = localFont({
+  src: '../../public/assets/fonts/PretendardVariable.woff2',
+  display: 'swap',
+  weight: '100 900',
+  variable: '--font-pretendard',
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,7 +30,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en" className="font-sans">
+    <html lang="en" className={`${pretendard.variable} font-sans`}>
       <head>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"
@@ -36,7 +41,7 @@ const RootLayout = ({
           strategy="beforeInteractive"
         />
       </head>
-      <body className={inter.className}>
+      <body className="antialiased">
         <AuthProvider>
           <Providers>
             <Header />

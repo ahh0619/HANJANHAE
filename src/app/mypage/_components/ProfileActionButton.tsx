@@ -11,7 +11,10 @@ const ProfileActionButton: React.FC<ProfileActionButtonProps> = ({
   className,
   children,
 }) => (
-  <button onClick={onClick} className={`title-mb rounded-lg py-2 ${className}`}>
+  <button
+    onClick={onClick}
+    className={`rounded-lg py-2 text-title-mb ${className}`}
+  >
     {children}
   </button>
 );

@@ -75,7 +75,7 @@ const MyPageAccountOptions = () => {
       </div>
 
       {/* Delete account section */}
-      <div className="mt-16 text-center">
+      <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
         <button
           className="cursor-pointer text-label-mm text-grayscale-800 underline"
           onClick={handleDeleteUser}

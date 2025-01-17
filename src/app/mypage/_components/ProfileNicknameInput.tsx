@@ -1,3 +1,4 @@
+import { X } from 'lucide-react';
 import React from 'react';
 
 type ProfileNicknameInputProps = {
@@ -9,10 +10,10 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
   value,
   onChange,
 }) => (
-  <div className="mb-6 w-full">
+  <div className="relative w-full">
     <label
       htmlFor="nickname"
-      className="mb-2 self-start text-title-mm text-grayscale-900"
+      className="self-start text-title-mm text-grayscale-900"
     >
       닉네임
     </label>
@@ -21,8 +22,17 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-lg border p-2 text-caption-lm"
+      className="!mt-1 w-full rounded-lg border p-2 text-caption-lm"
     />
+    {value.length > 0 && (
+      <button
+        type="button"
+        onClick={() => onChange('')}
+        className="absolute bottom-16 right-3 top-1/2 -translate-y-1/2 transform text-grayscale-500"
+      >
+        <X size={20} />
+      </button>
+    )}
   </div>
 );
 

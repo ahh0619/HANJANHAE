@@ -47,3 +47,21 @@ export const updateUserProfile = async (
     throw new Error(updateError.message);
   }
 };
+
+/* 닉네임 중복 확인 */
+export const checkNickname = async (nickname: string): Promise<boolean> => {
+  const supabase = createClient();
+
+  // 닉네임이 존재하는지 확인
+  const { data, error } = await supabase
+    .from('users')
+    .select('id') // 최소 필드만 선택
+    .eq('nickname', nickname)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    throw new Error(error.message);
+  }
+
+  return Boolean(data);
+};
