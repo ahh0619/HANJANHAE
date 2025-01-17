@@ -1,4 +1,3 @@
-import { Star } from 'lucide-react';
 import Image from 'next/image';
 
 type ReviewInfoProps = {
@@ -27,7 +26,7 @@ const ReviewInfo = ({
   return (
     <div className="flex items-start space-x-4">
       {/* 프로필 이미지 */}
-      <div className="relative h-14 w-14 overflow-hidden rounded-full">
+      <div className="relative top-4 h-14 w-14 overflow-hidden rounded-full">
         <Image
           src={profile_image || '/assets/icons/default_profile_image.svg'}
           alt={`${nickname || '유저'}의 프로필 이미지`}
@@ -42,18 +41,24 @@ const ReviewInfo = ({
         <p className="text-title-mm text-grayscale-900">{nickname || '익명'}</p>
 
         {/* 별점 */}
-        <div className="mt-1 flex items-center space-x-1">
+        <div className="mt-1 flex items-center space-x-4 p-2">
           {[...Array(5)].map((_, index) => (
-            <Star
+            <div
               key={index}
-              className={`h-5 w-5 ${
-                editable ? 'cursor-pointer hover:scale-110' : ''
-              }`}
-              fill={index < rating ? '#FBBF24' : 'none'}
-              stroke="#FBBF24"
-              strokeWidth={1.5}
-              onClick={() => handleStarClick(index)}
-            />
+              className={`h-6 w-6 ${editable ? 'cursor-pointer' : ''}`}
+              onClick={() => editable && handleStarClick(index)}
+            >
+              <Image
+                src={
+                  index < rating
+                    ? '/assets/icons/star_pressed.svg'
+                    : '/assets/icons/star.svg'
+                }
+                alt={index < rating ? '채워진 별' : '빈 별'}
+                width={24}
+                height={24}
+              />
+            </div>
           ))}
         </div>
 

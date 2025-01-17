@@ -80,6 +80,8 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-banner':
+          'linear-gradient(90deg, var(--primary-100) 0%, var(--secondary-300) 100%)',
       },
     },
   },
