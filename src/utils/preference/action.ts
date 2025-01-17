@@ -46,8 +46,8 @@ export const recommendDrinks = async ({
     const data = (messages.data[0].content[0] as { text: { value: string } })
       .text.value;
 
-    // 1. 백틱과 ```json 제거
-    const replaceddata = data.replace(/```json|```/g, '').trim();
+    const replaceddata = data.replace(/```json|```/g, '').trim(); // 1. 백틱과 ```json 제거
+
     const jsonData = JSON.parse(replaceddata);
     console.log('ai jsonData: ', jsonData);
 

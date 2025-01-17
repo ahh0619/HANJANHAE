@@ -14,13 +14,13 @@ const ReviewActionButtons = ({
   return (
     <div className="mt-2 flex justify-end space-x-2">
       <button
-        className="rounded-lg border border-primary px-4 py-1 text-label-mb text-primary hover:bg-secondary-hover"
+        className="rounded-lg border border-primary px-4 py-2 text-label-mb text-primary hover:bg-secondary-hover"
         onClick={onCancel}
       >
         취소
       </button>
       <button
-        className="rounded-lg bg-primary px-4 py-1 text-label-mb text-etc-white hover:bg-primary-hover"
+        className="rounded-lg bg-primary px-4 py-2 text-label-mb text-etc-white hover:bg-primary-hover"
         onClick={onSave}
       >
         완료

@@ -7,6 +7,7 @@ type CommentWithUser = {
   user_id: string;
   content: string;
   created_at: string;
+  updated_at: string;
   users: {
     nickname: string | null;
     profile_image: string | null;
@@ -25,7 +26,7 @@ export const fetchReviews = async (
 
   const supabase = createClient();
 
-  const offset = page && limit ? (page - 1) * limit : 0; // 기본값 0
+  const offset = page && limit ? (page - 1) * limit : 0;
   const rangeEnd = limit ? offset + limit - 1 : undefined;
 
   const { data: comments, error: commentsError } = (await supabase
@@ -36,6 +37,7 @@ export const fetchReviews = async (
       user_id,
       content,
       created_at,
+      updated_at,
       users (
         nickname,
         profile_image
@@ -71,6 +73,9 @@ export const fetchReviews = async (
     const matchingRating = ratings?.find(
       (rating) => rating.comment_id === comment.id,
     );
+    const isEdited =
+      comment.updated_at && comment.updated_at !== comment.created_at;
+
     return {
       id: comment.id,
       user_id: comment.user_id,
@@ -78,7 +83,9 @@ export const fetchReviews = async (
       comment: comment.content,
       rating: matchingRating ? matchingRating.rating : 0,
       created_at: comment.created_at,
+      updated_at: comment.updated_at,
       profile_image: comment.users?.profile_image,
+      is_edited: isEdited,
     };
   });
 
@@ -112,6 +119,7 @@ export const submitReview = async ({
         user_id: userId,
         content,
         created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       },
     ])
     .select('id')
@@ -156,10 +164,15 @@ export const updateReview = async ({
   const supabase = createClient();
 
   // 댓글 및 평점 데이터 업데이트
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('comments')
-    .update({ content: updatedComment })
-    .eq('id', id);
+    .update({
+      content: updatedComment,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id)
+    .select('*')
+    .single();
 
   if (error) {
     throw new Error(error.message);
@@ -174,7 +187,7 @@ export const updateReview = async ({
     throw new Error(ratingError.message);
   }
 
-  return { message: 'Review updated successfully' };
+  return data;
 };
 
 // 리뷰 삭제

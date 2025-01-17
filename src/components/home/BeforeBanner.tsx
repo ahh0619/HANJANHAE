@@ -29,13 +29,7 @@ const BeforeBanner = () => {
   return (
     <>
       <section
-        className="relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-lg px-[20px]"
-        style={{
-          borderRadius: '16px',
-          background:
-            'linear-gradient(124deg, #BF324B 29.95%, #F495A6 119.58%)',
-          boxShadow: '0px 5px 15px 0px rgba(249, 159, 175, 0.40)',
-        }}
+        className="bg-gradient-main-banner shadow-main-banner relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-2xl px-[20px]"
         onClick={handleClick}
       >
         {/* 텍스트 영역 */}
@@ -44,8 +38,8 @@ const BeforeBanner = () => {
         </p>
 
         <div className="mb-[76px] text-[20px] font-bold">
-          <p className="leading-[1.35] text-white">AI가 맞춤 전통주를</p>
-          <p className="leading-[1.35]] text-white">추천해드려요</p>
+          <p className="leading-[27px] text-white">AI가 맞춤 전통주를</p>
+          <p className="leading-[27px] text-white">추천해드려요</p>
         </div>
 
         {/* 이미지 영역 */}
