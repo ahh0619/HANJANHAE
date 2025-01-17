@@ -1,9 +1,13 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const MyPagePreferences = () => (
   <div className="mt-4 flex w-full justify-center px-4">
     {/* 배너 전체 */}
-    <div className="bg-gradient-banner relative flex h-[72px] w-full items-center rounded-lg px-2 hover:opacity-90">
+    <Link
+      href="/preferences/customization"
+      className="bg-gradient-banner relative flex h-[72px] w-full items-center rounded-lg px-2 hover:opacity-90"
+    >
       {/* 왼쪽 아이콘 및 텍스트 */}
       <div className="flex items-center">
         <Image
@@ -26,7 +30,7 @@ const MyPagePreferences = () => (
           height={72}
         />
       </div>
-    </div>
+    </Link>
   </div>
 );
 

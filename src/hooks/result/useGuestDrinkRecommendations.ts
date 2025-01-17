@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { useSurveyStore } from '@/store/surveyStore';
 import { Tables } from '@/types/supabase';
 import { recommendDrinks } from '@/utils/preference/action';
 
 const useGuestDrinkRecommendations = () => {
   const [drinks, setDrinks] = useState<Tables<'reco_results'>[] | null>(null);
+  const { setIsSurveyCompleted } = useSurveyStore();
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -29,6 +31,7 @@ const useGuestDrinkRecommendations = () => {
 
       setDrinks(updatedRecoData);
       localStorage.setItem('recoData', JSON.stringify(updatedRecoData));
+      setIsSurveyCompleted(true);
     };
 
     fetchRecommendations();

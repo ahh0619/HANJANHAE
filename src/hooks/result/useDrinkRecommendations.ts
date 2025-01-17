@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useSurveyStore } from '@/store/surveyStore';
 import {
   fetchRecoData,
   fetchSurveyData,
@@ -8,6 +9,7 @@ import {
 
 const useDrinkRecommendations = (userId: string) => {
   const [drinks, setDrinks] = useState(null);
+  const { setIsSurveyCompleted } = useSurveyStore();
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -41,6 +43,7 @@ const useDrinkRecommendations = (userId: string) => {
 
         // Step 4: 전통주 추천 결과를 state에 넣어주고
         setDrinks(updatedRecoData);
+        setIsSurveyCompleted(true);
       } catch (error) {
         console.error('전통주 추천 결과 가져오기 or 생성 실패:', error);
         setDrinks([]);

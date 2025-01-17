@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useFunnel from '@/hooks/survey/useFunnel';
-import { useAuthStore } from '@/store/authStore';
 import { Tables } from '@/types/supabase';
+import { fetchUser } from '@/utils/auth/action';
 import { addSurvey } from '@/utils/preference/action';
 
 import PreferenceAcidity from './_components/PreferenceAcidity';
@@ -28,7 +28,6 @@ const Page = () => {
     food: null,
   });
 
-  const { user } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -37,6 +36,8 @@ const Page = () => {
         console.log('data: ', surveyData);
 
         try {
+          const user = await fetchUser();
+
           // 로그인 유저 - 슈퍼베이스 테이블에 저장
           if (user) {
             await addSurvey({ surveyData, userId: user.id });
@@ -54,7 +55,7 @@ const Page = () => {
     };
 
     saveSurveyData();
-  }, [currentStep, router, surveyData, user]);
+  }, [currentStep, router, surveyData]);
 
   const handleNext = (data: Partial<Tables<'survey'>>, nextStep: string) => {
     setSurveyData((prev) => ({ ...prev, ...data }));
