@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Modal from '@/components/common/Modal';
 import { ReviewContentProps } from '@/types/review';
 
-import ReviewActionButtons from './ReviewActionButtons';
 import ReviewEditDeleteButtons from './ReviewEditDeleteButtons';
 import ReviewEditingContent from './ReviewEditingContent';
 import ReviewInfo from './ReviewInfo';
@@ -22,80 +21,60 @@ const ReviewContent = ({
   onRatingChange,
   nickname,
   createdAt,
+  updatedAt,
   profileImage,
   canEdit,
   onEdit,
   onDelete,
-}: ReviewContentProps & {
-  onSave: () => void;
-  onCancel: () => void;
-  canEdit: boolean;
-  onEdit: () => void;
-  onDelete: () => void;
-}) => {
+}: ReviewContentProps & {}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 삭제 버튼 클릭 시 모달 열기
   const handleDeleteClick = () => {
     setIsModalOpen(true);
   };
 
-  // 모달에서 삭제 확인
   const handleConfirmDelete = () => {
     setIsModalOpen(false);
     onDelete();
   };
 
-  // 모달에서 취소
   const handleCancelDelete = () => {
     setIsModalOpen(false);
   };
 
+  // "편집됨"
+  const isEdited = updatedAt && updatedAt !== createdAt;
+
   return (
     <div className="flex flex-col space-y-2">
       {/* 상단: 닉네임, 프로필 이미지, 별점, 날짜 */}
-      <div className="relative">
-        <ReviewInfo
-          nickname={nickname}
-          createdAt={createdAt}
-          rating={updatedRating}
-          profile_image={profileImage}
-          editable={editing}
+      {editing ? (
+        <ReviewEditingContent
+          editComment={editComment}
+          errorMessage={errorMessage}
+          textareaRef={textareaRef}
+          onEditCommentChange={onEditCommentChange}
+          editRating={updatedRating}
           onRatingChange={onRatingChange}
+          onSave={onSave}
+          onCancel={onCancel}
           canEdit={canEdit}
         />
-      </div>
-
-      {/* 댓글 영역 */}
-      <div className="mt-2">
-        {editing ? (
-          <>
-            {/* 댓글 수정 영역 */}
-            <ReviewEditingContent
-              editComment={editComment}
-              errorMessage={errorMessage}
-              textareaRef={textareaRef}
-              onEditCommentChange={onEditCommentChange}
-            />
-            {errorMessage && (
-              <p className="mt-1 text-left text-label-sm text-etc-red">
-                {errorMessage}
-              </p>
-            )}
-            {/* 저장 및 취소 버튼 */}
-            <ReviewActionButtons
-              canEdit={canEdit}
-              onSave={onSave}
-              onCancel={onCancel}
-            />
-          </>
-        ) : (
-          <>
-            {/* 읽기 모드에서의 댓글 표시 */}
-            <ReviewReadOnlyContent comment={comment} />
-          </>
-        )}
-      </div>
+      ) : (
+        <div>
+          {/* 로그인 정보 */}
+          <ReviewInfo
+            nickname={nickname}
+            createdAt={createdAt}
+            rating={updatedRating}
+            profile_image={profileImage}
+            editable={false}
+            canEdit={canEdit}
+          />
+          {/* 댓글 내용 */}
+          <ReviewReadOnlyContent comment={comment} isEdited={isEdited} />
+        </div>
+      )}
 
       {/* 수정/삭제 버튼 */}
       {!editing && canEdit && (

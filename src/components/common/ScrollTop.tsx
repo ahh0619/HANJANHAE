@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUp } from 'lucide-react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -40,12 +40,18 @@ export default function ScrollTop() {
     visible && (
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-[68px] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-pink-200 shadow-lg transition-opacity duration-300 ${
+        className={`fixed bottom-[68px] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-primary bg-etc-white shadow-lg transition-opacity duration-300 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
         aria-label="위로가기"
       >
-        <ArrowUp className="h-6 w-6 text-gray-800" />
+        <Image
+          src="/assets/icons/arrow-up.svg"
+          alt="위로가기"
+          width={24}
+          height={24}
+          className="text-primary"
+        />
       </button>
     )
   );
