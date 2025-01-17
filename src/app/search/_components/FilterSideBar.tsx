@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useFilterStore from '@/store/filterStore';
@@ -18,7 +17,6 @@ type FilterItem = {
 };
 
 const FilterSideBar = () => {
-  const queryClient = useQueryClient();
   const { openModal } = useModalStore();
   const {
     selectedTypes,
@@ -27,7 +25,6 @@ const FilterSideBar = () => {
     removeSelectedType,
     removeAlcoholStrength,
     removeTastePreference,
-    triggerFetch,
     setTriggerFetch,
     setValues,
   } = useFilterStore();

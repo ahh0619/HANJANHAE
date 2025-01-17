@@ -3,11 +3,15 @@
 import useFilterResults from '@/hooks/search/useFilterResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useSearchResults from '@/hooks/search/useSearchResults';
+import useFilterStore from '@/store/filterStore';
+import useFocusStore from '@/store/focusStore';
 
 import { SelectSorted } from './SelectSorted';
 import Skeleton from './Skeleton';
 
 const SearchResults = () => {
+  const { isFiltered, setIsFiltered } = useFilterStore();
+  const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const {
     SearchData,
     isLoading,
@@ -41,9 +45,12 @@ const SearchResults = () => {
     fetchNextPage: activeFetchNextPage,
   });
 
+  // 스켈레톤 깜박이는 문제 발생 -> 해결을 length가 0 일 때 작동안되게
+  // 반대로 검색 결과가 없음 뜨고 데이터가 뜸.
+
   return (
     <div className="p-4">
-      {isLoading || (isLoading2 && <Skeleton />)}
+      {(isLoading || isLoading2) && <Skeleton />}
       {/* 로딩 중일 때 Skeleton 표시 */}
       {isError || (isError2 && <div className="text-red-500">{isError}</div>)}
       {activeData.length > 0 && (
@@ -52,12 +59,12 @@ const SearchResults = () => {
           <SelectSorted />
         </div>
       )}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="mx-auto grid max-w-screen-lg grid-cols-2 gap-4 px-4">
         {activeData.length > 0 &&
           activeData.map((result) => (
             <div
               key={result.id}
-              className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-md"
+              className="relative w-[160px] rounded-lg border border-gray-200 bg-white p-4 shadow-md"
             >
               <img
                 src={result.image || '/placeholder.png'} // 이미지 URL
@@ -85,8 +92,14 @@ const SearchResults = () => {
               </button>
             </div>
           ))}
+
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
+      {!isLoading && !isLoading2 && activeData.length === 0 && (
+        <div className="mt-8 text-center text-gray-500">
+          검색 결과가 존재하지 않습니다.
+        </div>
+      )}
     </div>
   );
 };

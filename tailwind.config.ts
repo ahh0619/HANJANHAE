@@ -9,20 +9,8 @@ const config: Config = {
   ],
   theme: {
     extend: {
-<<<<<<< HEAD
-      animation: {
-        draw: 'draw 1.5s ease-in-out infinite',
-      },
-      keyframes: {
-        draw: {
-          '0%': { width: '0%' },
-          '50%': { width: '50%' },
-          '100%': { width: '100%' },
-        },
-=======
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
->>>>>>> 76a2140f7c3eb05a5f8cf3e66e4dfe92a1d77f15
       },
       colors: {
         // Primary Colors

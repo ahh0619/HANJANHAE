@@ -13,6 +13,7 @@ const SearchBar = () => {
     resetFilters,
     setIsFiltered,
     setTriggerFetch,
+    setValues,
   } = useFilterStore();
   const { keyword, setKeyword, setSearchTriggerFetch, resetSearchStore } =
     useSearchStore();
@@ -22,7 +23,9 @@ const SearchBar = () => {
     resetStates(); // 저장된 정보 삭제
     resetFilters(); // 필터값 리셋
     setIsFiltered(false); // 필터 상태정보
+    setIsSearchFocuse(false);
     resetSearchStore(); // keyword 지우기
+    setValues([1, 3]);
   };
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {

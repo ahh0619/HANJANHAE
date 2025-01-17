@@ -2,16 +2,16 @@
 
 const Skeleton = () => {
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
+    <div className="mx-auto grid max-w-screen-lg grid-cols-2 gap-4 px-4">
       {[...Array(6)].map((_, index) => (
         <div
           key={index}
-          className="relative rounded-lg border border-gray-200 bg-white p-4 shadow-md"
+          className="relative w-full rounded-lg border border-gray-200 bg-white p-4 shadow-md"
         >
           {/* 이미지 스켈레톤 */}
           <div
             className="mb-2 w-full rounded-lg bg-gray-300"
-            style={{ height: '160px', width: '100%' }} // 고정된 높이 설정
+            style={{ height: '160px', width: '128px' }} // 고정된 높이 설정
           ></div>
 
           {/* 텍스트 스켈레톤 */}
