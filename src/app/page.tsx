@@ -13,7 +13,7 @@ import { getRecommendations } from '@/utils/recommend/recommendationService';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: '메인 페이지',
+  title: '어서와 한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',
 };
 

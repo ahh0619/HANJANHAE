@@ -7,7 +7,7 @@ type ToastProps = {
   onClose?: () => void;
 };
 
-const Toast: React.FC<ToastProps> = ({ message, duration = 5000, onClose }) => {
+const Toast: React.FC<ToastProps> = ({ message, duration = 3000, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
