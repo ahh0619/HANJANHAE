@@ -48,30 +48,34 @@ const config: Config = {
       },
       fontSize: {
         // Title
-        'title-xl': ['24px', '135%'],
-        'title-lb': ['20px', '135%'],
-        'title-lm': ['20px', '135%'],
-        'title-mb': ['16px', '135%'],
-        'title-mm': ['16px', '135%'],
-        'title-sb': ['12px', '135%'],
+        'title-xl': ['24px', { lineHeight: '135%', fontWeight: '700' }],
+        'title-lb': ['20px', { lineHeight: '135%', fontWeight: '700' }],
+        'title-lm': ['20px', { lineHeight: '135%', fontWeight: '500' }],
+        'title-mb': ['16px', { lineHeight: '135%', fontWeight: '700' }],
+        'title-mm': ['16px', { lineHeight: '135%', fontWeight: '500' }],
+        'title-sb': ['12px', { lineHeight: '135%', fontWeight: '700' }],
 
         // Body
-        'body-lm': ['24px', '150%'],
-        'body-mm': ['16px', '150%'],
-        'body-sm': ['12px', '150%'],
+        'body-lm': ['24px', { lineHeight: '150%', fontWeight: '500' }],
+        'body-mm': ['16px', { lineHeight: '150%', fontWeight: '500' }],
+        'body-sm': ['12px', { lineHeight: '150%', fontWeight: '500' }],
 
         // Label
-        'label-xlm': ['20px', '150%'],
-        'label-lm': ['16px', '150%'],
-        'label-mb': ['12px', '150%'],
-        'label-mm': ['12px', '150%'],
-        'label-sb': ['10px', '150%'],
-        'label-sm': ['10px', '150%'],
+        'label-xlm': ['20px', { lineHeight: '150%', fontWeight: '500' }],
+        'label-lm': ['16px', { lineHeight: '150%', fontWeight: '500' }],
+        'label-mb': ['12px', { lineHeight: '150%', fontWeight: '700' }],
+        'label-mm': ['12px', { lineHeight: '150%', fontWeight: '500' }],
+        'label-sb': ['10px', { lineHeight: '150%', fontWeight: '700' }],
+        'label-sm': ['10px', { lineHeight: '150%', fontWeight: '500' }],
 
         // Caption
-        'caption-lm': ['16px', '150%'],
-        'caption-mm': ['12px', '150%'],
-        'caption-sm': ['10px', '150%'],
+        'caption-lm': ['16px', { lineHeight: '150%', fontWeight: '500' }],
+        'caption-mm': ['12px', { lineHeight: '150%', fontWeight: '500' }],
+        'caption-sm': ['10px', { lineHeight: '150%', fontWeight: '500' }],
+      },
+      fontWeight: {
+        bold: '700',
+        medium: '500',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
