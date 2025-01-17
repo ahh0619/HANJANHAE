@@ -9,7 +9,7 @@ type PlaceCardProps = {
 const PlaceCard = ({ id, name, image }: PlaceCardProps) => {
   return (
     <Link
-      className="relative flex w-72 flex-col rounded-lg border p-2"
+      className="relative flex w-60 flex-col rounded-lg"
       href={`/place/${id}`}
     >
       {/* 이미지 */}
@@ -17,7 +17,7 @@ const PlaceCard = ({ id, name, image }: PlaceCardProps) => {
         <img
           src={image}
           alt={name}
-          className="h-full w-full rounded-md object-cover"
+          className="h-full w-full rounded-lg object-cover"
         />
       </div>
       {/* 이름 */}
