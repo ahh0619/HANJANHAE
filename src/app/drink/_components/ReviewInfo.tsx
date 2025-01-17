@@ -7,6 +7,7 @@ type ReviewInfoProps = {
   profile_image: string | null;
   editable?: boolean;
   onRatingChange?: (newRating: number) => void;
+  canEdit?: boolean;
 };
 
 const ReviewInfo = ({
@@ -16,6 +17,7 @@ const ReviewInfo = ({
   profile_image,
   editable = false,
   onRatingChange,
+  canEdit = false,
 }: ReviewInfoProps) => {
   const handleStarClick = (index: number) => {
     if (editable && onRatingChange) {
@@ -38,7 +40,10 @@ const ReviewInfo = ({
       {/* 닉네임, 별점, 날짜 */}
       <div className="flex-1">
         {/* 닉네임 */}
-        <p className="text-title-mm text-grayscale-900">{nickname || '익명'}</p>
+        <p className="text-title-mm text-grayscale-900">
+          {nickname || '익명'}
+          {canEdit && ' (나)'}
+        </p>
 
         {/* 별점 */}
         <div className="mt-1 flex items-center space-x-4 p-2">

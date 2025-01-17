@@ -62,6 +62,7 @@ const ReviewContent = ({
           profile_image={profileImage}
           editable={editing}
           onRatingChange={onRatingChange}
+          canEdit={canEdit}
         />
       </div>
 
@@ -69,7 +70,6 @@ const ReviewContent = ({
       <div className="mt-2">
         {editing ? (
           <>
-            {/* 댓글 수정 영역 */}
             {/* 댓글 수정 영역 */}
             <ReviewEditingContent
               editComment={editComment}
