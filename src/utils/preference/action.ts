@@ -241,3 +241,20 @@ export const fetchRecoData = async (
 
   return data;
 };
+
+export const hasSurveyRecord = async (userId: string): Promise<boolean> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('survey')
+    .select('id')
+    .eq('user_id', userId)
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching survey record:', error);
+    return false;
+  }
+
+  return data.length > 0;
+};
