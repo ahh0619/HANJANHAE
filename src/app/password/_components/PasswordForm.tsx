@@ -17,7 +17,6 @@ const PasswordForm = () => {
         id="password"
         label="비밀번호를 변경해 주세요."
         type="password"
-        placeholder="새 비밀번호를 입력해 주세요."
         register={register}
         error={errors.password?.message}
       />
@@ -26,7 +25,6 @@ const PasswordForm = () => {
         id="passwordConfirm"
         label="새 비밀번호를 확인해주세요."
         type="password"
-        placeholder="새 비밀번호를 한 번 더 입력해 주세요."
         register={register}
         error={errors.passwordConfirm?.message}
       />
