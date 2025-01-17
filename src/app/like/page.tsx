@@ -2,8 +2,10 @@ import LikesContent from './_components/LikesContent';
 
 const Page = () => {
   return (
-    <div className="p-4">
-      <h1 className="py-4 text-center text-2xl font-bold">좋아요</h1>
+    <div>
+      <div className="mb-[32px] flex h-[44px] w-full items-center justify-center px-2">
+        <h1 className="h-[32px] text-center text-title-xl">좋아요</h1>
+      </div>
       <LikesContent />
     </div>
   );

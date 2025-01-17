@@ -9,6 +9,10 @@ type ProductCardProps = {
   name: string;
   imageUrl: string;
   userId: string | null;
+  width?: string;
+  height?: string;
+  marginBottom?: string;
+  imgHeight?: string | number;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -16,11 +20,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
   name,
   imageUrl,
   userId,
+  width = '124px',
+  height = '186px',
+  marginBottom = '0px',
+  imgHeight = '152px',
 }) => {
   return (
-    <div className="relative flex w-32 flex-col">
+    <div
+      className="relative flex flex-col"
+      style={{
+        width,
+        height,
+        marginBottom,
+      }}
+    >
       {/* 좋아요 버튼 */}
-      <div className="absolute bottom-6 right-0 z-10">
+      <div className="absolute bottom-[30px] right-0 z-10">
         <LikeButton drinkId={id} userId={userId} />
       </div>
 
@@ -29,17 +44,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className="flex flex-col"
       >
         {/* 이미지 */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-100 bg-opacity-50">
-          <Image
-            src={imageUrl}
-            alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
-          />
+        <div
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50"
+          style={{ height: imgHeight }}
+        >
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-100 bg-opacity-50">
+            <Image
+              src={imageUrl}
+              alt={name}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
         </div>
         {/* 이름 */}
-        <div className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
+        <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
           {name}
         </div>
       </Link>
