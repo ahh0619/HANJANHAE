@@ -52,30 +52,45 @@ const LikesContent = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  return (
-    <div>
-      <div className="grid grid-cols-2 justify-items-center gap-4">
-        {likesData.pages
-          .flatMap((page) => page.data)
-          .map((like) => (
-            <ProductCard
-              key={like.id}
-              id={like.drink_id}
-              name={like.drinks.name}
-              imageUrl={like.drinks.image}
-              userId={like.user_id}
-            />
-          ))}
-      </div>
+  console.log('lieksdata: ', likesData);
 
-      <div
-        ref={observerRef}
-        className="mb-5 mt-4 flex h-12 items-center justify-center"
-      >
-        {isFetchingNextPage && (
-          <div className="h-6 w-6 animate-spin rounded-full border-4 border-gray-300 border-t-gray-600"></div>
-        )}
-      </div>
+  return (
+    <div className="px-[20px]">
+      {likesData.pages[0].data.length > 0 ? (
+        <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
+          {likesData.pages
+            .flatMap((page) => page.data)
+            .map((like) => (
+              <ProductCard
+                key={like.id}
+                id={like.drink_id}
+                name={like.drinks.name}
+                imageUrl={like.drinks.image}
+                userId={like.user_id}
+                width={'163px'}
+                height={'241px'}
+                marginBottom={'20px'}
+                imgHeight={'207px'}
+              />
+            ))}
+
+          <div
+            ref={observerRef}
+            className="col-span-2 flex h-6 items-center justify-center"
+          >
+            {isFetchingNextPage && (
+              <div className="h-6 w-6 animate-spin rounded-full border-4 border-grayscale-300 border-t-grayscale-600"></div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-[160px] flex w-full flex-col items-center">
+          <img src="/Character.svg" />
+          <p className="mt-[36px] h-[22px] text-title-mb text-grayscale-500">
+            좋아요 한 전통주가 없습니다
+          </p>
+        </div>
+      )}
     </div>
   );
 };

@@ -76,12 +76,17 @@ const config: Config = {
         bold: '700',
         medium: '500',
       },
+      boxShadow: {
+        'main-banner': '0px 5px 15px 0px rgba(249, 159, 175, 0.40)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-banner':
           'linear-gradient(90deg, var(--primary-100) 0%, var(--secondary-300) 100%)',
+        'gradient-main-banner':
+          'linear-gradient(124deg, var(--primary-color) 29.95%, var(--secondary-250) 119.58%)',
       },
     },
   },
