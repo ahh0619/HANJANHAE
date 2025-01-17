@@ -1,7 +1,9 @@
+import Link from 'next/link';
+
 const AfterBanner = () => {
   return (
     <section
-      className="relative mx-[20px] flex flex-col items-start rounded-lg px-[20px]"
+      className="relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-lg px-[20px]"
       style={{
         borderRadius: '16px',
         background: 'linear-gradient(124deg, #BF324B 29.95%, #F495A6 119.58%)',
@@ -16,14 +18,16 @@ const AfterBanner = () => {
           <p className="leading-[1.35]">생성되었어요</p>
         </div>
         {/* 버튼 영역 */}
-        <button
-          className="mb-[29px] flex h-[26px] w-[58px] items-center justify-center rounded-full bg-white px-[8px] py-[4px] text-xs"
-          style={{
-            color: '#BF324B',
-          }}
-        >
-          보러가기
-        </button>
+        <Link href="/preferences/result">
+          <button
+            className="mb-[29px] flex h-[26px] w-[58px] items-center justify-center rounded-full bg-white px-[8px] py-[4px] text-xs"
+            style={{
+              color: '#BF324B',
+            }}
+          >
+            보러가기
+          </button>
+        </Link>
       </div>
       {/* 이미지 영역 */}
       <img
