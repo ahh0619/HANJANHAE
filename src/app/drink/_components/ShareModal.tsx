@@ -25,17 +25,17 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-etc-white relative w-80 rounded-lg p-6 shadow-lg">
+      <div className="relative w-80 rounded-lg bg-etc-white p-6 shadow-lg">
         {/* 닫기 아이콘 (오른쪽 상단) */}
         <button
           onClick={onClose}
-          className="text-grayscale-900 absolute right-2 top-2 hover:text-grayscale-500"
+          className="absolute right-2 top-2 text-grayscale-900 hover:text-grayscale-500"
         >
           <X className="h-6 w-6" />
         </button>
 
         {/* 모달 제목 */}
-        <h2 className="title-lb text-grayscale-900 text-center">
+        <h2 className="text-center text-title-lb text-grayscale-900">
           공유를 하시겠어요?
         </h2>
 
@@ -55,7 +55,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
                   height={48}
                   className="rounded"
                 />
-                <span className="label-mm w-20 truncate text-center text-black">
+                <span className="w-20 truncate text-center text-label-mm text-black">
                   {option.label}
                 </span>
               </button>

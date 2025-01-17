@@ -27,7 +27,7 @@ const ReviewInfo = ({
   return (
     <div className="flex items-start space-x-4">
       {/* 프로필 이미지 */}
-      <div className="rounded-ful relative h-14 w-14 overflow-hidden">
+      <div className="relative h-14 w-14 overflow-hidden rounded-full">
         <Image
           src={profile_image || '/assets/icons/default_profile_image.svg'}
           alt={`${nickname || '유저'}의 프로필 이미지`}

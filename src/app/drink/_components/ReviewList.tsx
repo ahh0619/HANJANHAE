@@ -36,7 +36,7 @@ const ReviewList = ({
 
   const handleReviewDelete = (id: string) => {
     onDelete(id);
-    triggerToast('리뷰가 삭제되었습니다.');
+    triggerToast('리뷰가 삭제되었어요');
   };
 
   const lastReviewRef = useCallback(
@@ -65,7 +65,7 @@ const ReviewList = ({
         return (
           <div
             key={review.id}
-            className="bg-etc-white flex flex-col rounded-lg"
+            className="flex flex-col rounded-lg bg-etc-white"
             ref={index === reviews.length - 1 ? lastReviewRef : null}
           >
             {/* 리뷰 내용 */}

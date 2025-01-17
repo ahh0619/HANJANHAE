@@ -79,7 +79,7 @@ const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
       {/* 추천 섹션 */}
       {sections.map((section, index) => (
         <section key={index}>
-          <h2 className="mb-4 text-lg font-bold">{section.title}</h2>
+          <h2 className="mb-4 text-title-lb">{section.title}</h2>
           {section.items.length > 0 ? (
             <Swiper spaceBetween={16} slidesPerView="auto">
               {section.items.map((item: any) => (

@@ -30,7 +30,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
       label: '링크 복사',
       onClick: () => {
         copyLinkToClipboard(url || window.location.href);
-        setToastMessage('클립보드에 복사되었습니다.');
+        setToastMessage('클립보드에 복사되었어요');
       },
     },
     {
@@ -62,7 +62,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="hover:bg-grayscale-50 flex items-center justify-center rounded-full"
+        className="flex items-center justify-center rounded-full hover:bg-grayscale-50"
       >
         <Share2 className="text-black-400 ml-2 h-5 w-5 transition-colors sm:h-6 sm:w-6" />
       </button>

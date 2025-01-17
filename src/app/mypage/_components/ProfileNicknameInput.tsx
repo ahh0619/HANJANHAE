@@ -12,7 +12,7 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
   <div className="mb-6 w-full">
     <label
       htmlFor="nickname"
-      className="mb-2 self-start text-sm font-medium text-gray-700"
+      className="mb-2 self-start text-title-mm text-grayscale-900"
     >
       닉네임
     </label>
@@ -21,7 +21,7 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-lg border p-2 text-sm"
+      className="w-full rounded-lg border p-2 text-caption-lm"
     />
   </div>
 );

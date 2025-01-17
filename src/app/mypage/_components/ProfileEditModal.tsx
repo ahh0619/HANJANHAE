@@ -34,8 +34,8 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-etc-white relative w-11/12 max-w-sm rounded-lg p-6">
-        <h2 className="mb-4 text-center text-lg font-bold">프로필 수정</h2>
+      <div className="relative w-11/12 max-w-sm rounded-lg bg-etc-white p-6">
+        <h2 className="mb-4 text-center text-title-lb">프로필 수정</h2>
         <div className="flex flex-col items-center">
           <div className="relative mb-4">
             <ProfileImageUpload

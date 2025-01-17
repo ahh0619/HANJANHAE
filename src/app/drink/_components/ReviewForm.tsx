@@ -34,7 +34,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
       </div>
       <div className="h-3">
         {errors.rating && (
-          <p className="text-label-sm text-etc-red mt-1">{errors.rating}</p>
+          <p className="mt-1 text-label-sm text-etc-red">{errors.rating}</p>
         )}
       </div>
 
@@ -43,13 +43,13 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
         <textarea
           name="comment"
           id="comment"
-          className="bg-grayscale-100 text-body-mm mt-2 h-28 w-full resize-none rounded-2xl border p-3 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="mt-2 h-28 w-full resize-none rounded-2xl border bg-grayscale-100 p-3 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
           placeholder="최소 2자, 최대 100자"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           maxLength={101}
         ></textarea>
-        <span className="text-caption-mm text-grayscale-600 absolute bottom-9 right-5">
+        <span className="absolute bottom-9 right-5 text-caption-mm text-grayscale-600">
           {comment.length}/100
         </span>
         <div className="mt-1 h-3">
@@ -63,7 +63,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
       <div className="flex justify-end">
         <button
           type="submit"
-          className="text-label-mb text-etc-white flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 hover:bg-primary-hover"
+          className="flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 text-label-mb text-etc-white hover:bg-primary-hover"
         >
           등록
         </button>

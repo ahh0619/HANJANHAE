@@ -90,8 +90,6 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
         content: data.comment,
         rating: data.rating,
       });
-
-      console.log('리뷰가 성공적으로 등록되었습니다.');
     } catch (err) {
       console.error('리뷰 등록 실패:', err);
     }
@@ -130,8 +128,6 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
 
       // 서버에 업데이트 요청
       await updateMutation.mutateAsync({ id, updatedComment, updatedRating });
-
-      console.log('리뷰가 성공적으로 수정되었습니다.');
     } catch (err) {
       console.error('리뷰 수정 실패:', err);
 
@@ -147,7 +143,6 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
       if (!user?.id) throw new Error('로그인이 필요합니다.');
 
       await deleteMutation.mutateAsync(id);
-      console.log('리뷰가 성공적으로 삭제되었습니다.');
     } catch (err) {
       console.error('리뷰 삭제 실패:', err);
     }
