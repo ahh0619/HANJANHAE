@@ -1,35 +1,45 @@
 'use client';
-import { useState } from 'react';
 
-import Information from './Information';
-import Terms from './Terms';
-import TermsDetail from './TermsDetail';
+import Button from '@/components/auth/Button';
+import InputField from '@/components/auth/InputField';
+import useSignUp from '@/hooks/auth/useSignUp';
 
 const SignUpForm = () => {
-  const [step, setStep] = useState<number>(1);
-  const [terms, setTerms] = useState<number | null>(null);
-
-  /* 회원가입 단계 이동 */
-  const handleMoveStep = (value: number) => {
-    setStep(value);
-  };
-
-  /* 이용약관 선택 */
-  const handleSelectTerms = (value: number | null) => {
-    setTerms(value);
-  };
+  const { handleSubmit, register, onSubmit, errors } = useSignUp();
 
   return (
-    <>
-      {step === 1 && !terms && (
-        <Terms
-          handleMoveStep={handleMoveStep}
-          handleSelectTerms={handleSelectTerms}
+    <form className="mb-10" onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-20 flex flex-col gap-6">
+        <InputField
+          id="email"
+          label="아이디"
+          register={register}
+          error={errors.email?.message}
         />
-      )}
-      {step === 2 && !terms && <Information />}
-      {terms && <TermsDetail terms={terms} handleClose={handleSelectTerms} />}
-    </>
+        <InputField
+          id="password"
+          label="비밀번호"
+          type="password"
+          register={register}
+          error={errors.password?.message}
+        />
+        <InputField
+          id="passwordConfirm"
+          label="비밀번호 확인"
+          type="password"
+          register={register}
+          error={errors.passwordConfirm?.message}
+        />
+        <InputField
+          id="nickname"
+          label="닉네임"
+          register={register}
+          error={errors.nickname?.message}
+        />
+      </div>
+
+      <Button label="회원가입" />
+    </form>
   );
 };
 
