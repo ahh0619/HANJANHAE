@@ -44,7 +44,7 @@ const BottomNavBar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl border-t bg-etc-white shadow-md">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-grayscale-200 bg-etc-white shadow-md">
       <ul className="flex items-center justify-between py-2">
         {navItems.map((item) => (
           <li

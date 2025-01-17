@@ -83,6 +83,7 @@ const ReviewList = ({
               nickname={review.nickname}
               createdAt={review.created_at}
               profileImage={review.profile_image}
+              updatedAt={review.updated_at}
               canEdit={canEdit}
               onEdit={() =>
                 handleReviewEditClick(review.id, review.comment, review.rating)

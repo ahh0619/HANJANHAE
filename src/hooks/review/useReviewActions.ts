@@ -18,6 +18,7 @@ export type Review = {
   comment: string;
   rating: number;
   created_at: string | null;
+  updated_at: string | null;
   profile_image: string | null;
 };
 
@@ -108,7 +109,14 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
       // React Query 캐시 데이터 가져오기
       previousData = queryClient.getQueryData(['reviews', drinkId]);
 
-      // 데이터가 무한 스크롤 구조인지 확인하고 안전하게 업데이트
+      // 서버에 업데이트 요청 및 updated_at 값 받아오기
+      const updatedReview = await updateMutation.mutateAsync({
+        id,
+        updatedComment,
+        updatedRating,
+      });
+
+      // React Query 캐시 업데이트
       queryClient.setQueryData(['reviews', drinkId], (oldData: any) => {
         if (!oldData || !Array.isArray(oldData.pages)) {
           return oldData;
@@ -119,15 +127,17 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
           pages: oldData.pages.map((page: Review[]) =>
             page.map((review) =>
               review.id === id
-                ? { ...review, comment: updatedComment, rating: updatedRating }
+                ? {
+                    ...review,
+                    comment: updatedComment,
+                    rating: updatedRating,
+                    updated_at: updatedReview.updated_at, // updated_at 반영
+                  }
                 : review,
             ),
           ),
         };
       });
-
-      // 서버에 업데이트 요청
-      await updateMutation.mutateAsync({ id, updatedComment, updatedRating });
     } catch (err) {
       console.error('리뷰 수정 실패:', err);
 

@@ -13,6 +13,11 @@ export type ReviewContentProps = {
   createdAt: string;
   profileImage: string;
   canEdit: boolean;
+  updatedAt: string;
+  onSave: () => void;
+  onCancel: () => void;
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
 export type ReviewEditingContentProps = {
@@ -26,6 +31,7 @@ export type ReviewEditingContentProps = {
 
 export type ReviewReadOnlyContentProps = {
   comment: string;
+  isEdited: boolean;
 };
 
 export type Review = {
