@@ -33,7 +33,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   if (!isOpen) return null;
 
   // 닫기 버튼 클릭 핸들러
-  const handleClose = () => {
+  const handleProfileEditModalClose = () => {
     resetNickname();
     onClose();
   };
@@ -61,7 +61,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         {/* 취소 및 완료 버튼 */}
         <div className="!mt-10 flex justify-between">
           <ProfileActionButton
-            onClick={handleClose}
+            onClick={handleProfileEditModalClose}
             className="mr-2 w-1/2 border border-primary text-primary hover:bg-secondary-hover"
           >
             취소하기

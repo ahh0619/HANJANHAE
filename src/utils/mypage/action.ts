@@ -55,7 +55,7 @@ export const checkNickname = async (nickname: string): Promise<boolean> => {
   // 닉네임이 존재하는지 확인
   const { data, error } = await supabase
     .from('users')
-    .select('id') // 최소 필드만 선택
+    .select('id')
     .eq('nickname', nickname)
     .single();
 

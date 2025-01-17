@@ -44,7 +44,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           name="comment"
           id="comment"
           className="mt-2 h-28 w-full resize-none rounded-2xl border bg-grayscale-100 p-3 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          placeholder="최소 2자, 최대 100자"
+          placeholder="리뷰를 남겨주세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           maxLength={101}
