@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useToast = (initialDuration = 3000) => {
+export const useToast = (initialDuration = 1500) => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [duration, setDuration] = useState(initialDuration);

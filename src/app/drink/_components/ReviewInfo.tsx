@@ -28,7 +28,7 @@ const ReviewInfo = ({
   return (
     <div className="flex items-start space-x-4">
       {/* 프로필 이미지 */}
-      <div className="relative top-4 h-14 w-14 overflow-hidden rounded-full">
+      <div className="relative top-[10px] h-12 w-12 overflow-hidden rounded-full">
         <Image
           src={profile_image || '/assets/icons/default_profile_image.svg'}
           alt={`${nickname || '유저'}의 프로필 이미지`}
@@ -37,7 +37,7 @@ const ReviewInfo = ({
         />
       </div>
 
-      {/* 닉네임, 별점, 날짜 */}
+      {/* 닉네임, 날짜, 별점 */}
       <div className="flex-1">
         {/* 닉네임 */}
         <p className="text-title-mm text-grayscale-900">
@@ -45,8 +45,19 @@ const ReviewInfo = ({
           {canEdit && ' (나)'}
         </p>
 
+        {/* 날짜 */}
+        <p className="caption-mm text-grayscale-900">
+          {createdAt
+            ? new Date(createdAt).toLocaleDateString('ko-KR', {
+                year: '2-digit',
+                month: '2-digit',
+                day: '2-digit',
+              })
+            : ''}
+        </p>
+
         {/* 별점 */}
-        <div className="mt-1 flex items-center space-x-4 p-2">
+        <div className="flex items-center space-x-1">
           {[...Array(5)].map((_, index) => (
             <div
               key={index}
@@ -65,19 +76,6 @@ const ReviewInfo = ({
               />
             </div>
           ))}
-        </div>
-
-        {/* 날짜 */}
-        <div className="mt-1">
-          <p className="caption-mm text-grayscale-900">
-            {createdAt
-              ? new Date(createdAt).toLocaleDateString('ko-KR', {
-                  year: '2-digit',
-                  month: '2-digit',
-                  day: '2-digit',
-                })
-              : ''}
-          </p>
         </div>
       </div>
     </div>
