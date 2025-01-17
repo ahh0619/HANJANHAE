@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -47,11 +48,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
-          <img
-            src={imageUrl}
-            alt={name}
-            className="h-full w-full rounded-lg object-contain"
-          />
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-100 bg-opacity-50">
+            <Image
+              src={imageUrl}
+              alt={name}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
         </div>
         {/* 이름 */}
         <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">

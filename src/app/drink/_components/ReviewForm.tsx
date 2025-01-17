@@ -43,7 +43,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
         <textarea
           name="comment"
           id="comment"
-          className="mt-2 h-28 w-full resize-none rounded-2xl border bg-grayscale-100 p-3 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="mt-2 h-[100px] w-full resize-none rounded-2xl border bg-grayscale-100 p-3 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
           placeholder="리뷰를 남겨주세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
