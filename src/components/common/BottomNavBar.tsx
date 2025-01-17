@@ -8,7 +8,11 @@ import React from 'react';
 const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/drink/') || pathname.startsWith('/place')) {
+  if (
+    ['/signup', '/signin'].includes(pathname) ||
+    pathname.startsWith('/drink') ||
+    pathname.startsWith('/place')
+  ) {
     return null;
   }
 

@@ -1,9 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function ScrollTop() {
+  const pathname = usePathname();
+
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -28,6 +31,10 @@ export default function ScrollTop() {
       behavior: 'smooth',
     });
   };
+
+  if (['/signup', '/signin'].includes(pathname)) {
+    return null;
+  }
 
   return (
     visible && (
