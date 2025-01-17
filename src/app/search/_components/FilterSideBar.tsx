@@ -87,8 +87,11 @@ const FilterSideBar = () => {
       value: value,
       original: key, // tastePreferences의 key를 original로 사용
     })),
-  ].filter((item) => item.label !== undefined);
-  console.log(filters);
+  ]
+    .filter((item) => item.label !== undefined)
+    .filter(
+      (item) => item.label !== '알 수 없음' && item.label !== '전체 도수',
+    );
   const handleRemoveType = (original: string) => {
     removeSelectedType(original); // selectedTypes에서 해당 타입을 삭제
     setTriggerFetch(true);

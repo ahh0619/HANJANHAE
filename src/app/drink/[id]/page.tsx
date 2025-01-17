@@ -1,3 +1,5 @@
+import { Metadata } from 'next';
+
 import DrinkDetail from '@/app/drink/_components/DrinkDetail';
 import { fetchDrinks } from '@/utils/drink/action';
 import { fetchFoodPairings } from '@/utils/foodpairing/action';
@@ -5,6 +7,28 @@ import { fetchFoodPairings } from '@/utils/foodpairing/action';
 type DrinkDetailPageProps = {
   params: { id: string };
 };
+
+export async function generateMetadata({
+  params,
+}: DrinkDetailPageProps): Promise<Metadata> {
+  const drinkUrlName = decodeURIComponent(params.id);
+  const drink = await fetchDrinks(drinkUrlName);
+
+  if (!drink) {
+    return {
+      title: '주류 정보를 찾을 수 없습니다',
+      description: '요청하신 주류 정보를 찾을 수 없습니다. 다시 확인해주세요.',
+    };
+  }
+
+  return {
+    title: `${drink.name} - 한잔해`,
+    description: `${drink.name}에 대한 상세 정보와 추천 페어링 음식을 확인하세요.`,
+    icons: {
+      icon: 'assets/icons/favicon.svg',
+    },
+  };
+}
 
 const DrinkDetailPage = async ({ params }: DrinkDetailPageProps) => {
   const drinkUrlName = decodeURIComponent(params.id);

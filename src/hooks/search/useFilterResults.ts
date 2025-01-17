@@ -21,7 +21,7 @@ const useFilterResults = () => {
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
-      queryKey: ['filterDrinks', filterParams],
+      queryKey: ['filterSortedDrinks', filterParams],
       queryFn: ({ pageParam = 1 }) =>
         filterDrinks({ ...filterParams, page: pageParam }),
       getNextPageParam: (lastPage) =>

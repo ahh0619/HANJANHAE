@@ -27,6 +27,7 @@ export type PopularDrinks = {
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
+// 삭제 예정 필터링 로직 
 // export async function filterDrinks({
 //   types,
 //   alcoholStrength,
@@ -138,6 +139,7 @@ export async function filterDrinks({
   };
 }
 
+// 기존의 안쓰는 로직 기록용으로 남겨둔 것 삭제 예정
 // export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
 //   const supabase = createClient();
 //   const { data, error } = await supabase
@@ -184,6 +186,84 @@ export async function filterDrinksByKeyword({
     hasNextPage,
   };
 }
+
+// 검색값 sort
+
+
+
+// 필터값 sort
+export async function filterSortedDrinks({
+  types,
+  alcoholStrength,
+  tastePreferences,
+  page = 1,
+  pageSize = 10,
+  sortBy = 'name',
+  sortOrder = 'asc',
+}: FilterParams & { page?: number; pageSize?: number;sortBy?:keyof Drink;sortOrder?:'asc' | 'desc' }): Promise<{
+  drinks: Drink[];
+  nextPage: number | null;
+  hasNextPage: boolean;
+}> {
+  const supabase = createClient();
+  // 전체 말고 필요한 필드만 선택해서 가져오기
+  // let query = supabase.from('drinks').select('*');
+  let query = supabase
+    .from('drinks')
+    .select(
+      'id, name, type, alcohol_content,image,sweetness, acidity, carbonation, body',
+    );
+
+  // 술 타입 필터링
+  if (types.length > 0) {
+    query = query.in('type', types);
+  }
+
+  // 도수 필터링
+  if (alcoholStrength) {
+    const [min, max] = alcoholStrength;
+
+    // alcohol_content는 numeric 필드이므로 범위로 필터링
+    query = query.gte('alcohol_content', min).lte('alcohol_content', max);
+  } else {
+    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
+    query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
+  }
+
+  // 맛 카테고리 필터링
+  if (tastePreferences) {
+    Object.entries(tastePreferences).forEach(([category, value]) => {
+      query = query.eq(category, value);
+    });
+  }
+  // 정렬 추가
+  query = query.order(sortBy,{ascending:sortOrder ===`asc`});
+
+  // 페이지네이션 적용
+
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize - 1;
+  query = query.range(offset, offset + limit);
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw new Error('Error fetching filtered data');
+  }
+
+  // 다음 페이지 존재유무 확인
+  const hasNextPage = data.length === pageSize;
+  const nextPage = hasNextPage ? page + 1 : null;
+
+  return {
+    drinks: data as Drink[],
+    nextPage,
+    hasNextPage,
+  };
+}
+
+
+// 좋아요 sort
 
 export const getPopularDrinks = async () => {
   const supabase = createClient();

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import useFilterStore from '@/store/filterStore';
 import { filterDrinks, FilterParams } from '@/utils/filter/action';
 
-const useFilterSortedResults = () => {
+const useFilterLikedResults = () => {
   const {
     selectedTypes,
     alcoholStrength,
@@ -48,4 +48,4 @@ const useFilterSortedResults = () => {
   };
 };
 
-export default useFilterSortedResults;
+export default useFilterLikedResults;
