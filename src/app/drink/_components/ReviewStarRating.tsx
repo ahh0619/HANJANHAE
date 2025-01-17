@@ -1,5 +1,3 @@
-import { Star } from 'lucide-react';
-
 type ReviewStarRatingProps = {
   rating: number;
   hoverRating?: number;
@@ -15,19 +13,20 @@ const ReviewStarRating = ({
   onHover,
   onHoverEnd,
 }: ReviewStarRatingProps) => (
-  <div className="flex items-center space-x-1">
+  <div className="flex items-center space-x-4 p-2">
     {[1, 2, 3, 4, 5].map((star) => (
-      <Star
+      <img
         key={star}
+        src={
+          star <= (hoverRating || rating)
+            ? '/assets/icons/star_pressed.svg'
+            : '/assets/icons/star.svg'
+        }
+        alt={`${star} Star`}
         onClick={() => onClick(star)}
         onMouseEnter={() => onHover?.(star)}
         onMouseLeave={() => onHoverEnd?.()}
-        className={`h-8 w-8 cursor-pointer ${
-          star <= (hoverRating || rating)
-            ? 'fill-etc-yellow text-etc-yellow'
-            : 'text-etc-yellow fill-none'
-        }`}
-        fill={star <= (hoverRating || rating) ? 'currentColor' : 'none'}
+        className="h-6 w-6 cursor-pointer"
       />
     ))}
   </div>

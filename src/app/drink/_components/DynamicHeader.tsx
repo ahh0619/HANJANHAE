@@ -36,7 +36,7 @@ const DynamicHeader = ({
   return (
     <div
       className={`fixed left-0 top-0 z-50 w-full p-4 transition-all ${
-        scrolled ? 'text-grayscale-900 bg-etc-white shadow-md' : 'hidden'
+        scrolled ? 'bg-etc-white text-grayscale-900 shadow-md' : 'hidden'
       }`}
     >
       <div className="relative flex items-center justify-between">

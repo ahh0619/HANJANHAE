@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
         </div>
         {/* 이름 */}
-        <div className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-xs">
+        <div className="mt-2 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
           {name}
         </div>
       </Link>

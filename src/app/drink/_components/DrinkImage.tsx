@@ -11,7 +11,7 @@ const DrinkImage = ({
 }) => (
   <div className="relative">
     {/* Back Button */}
-    <div className="absolute left-2 top-2 z-10">
+    <div className="absolute -top-3 left-2 z-10 p-2">
       <BackButton />
     </div>
 

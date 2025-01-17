@@ -13,7 +13,7 @@ const ProfileActionButton: React.FC<ProfileActionButtonProps> = ({
 }) => (
   <button
     onClick={onClick}
-    className={`rounded-lg py-2 text-sm font-medium ${className}`}
+    className={`rounded-lg py-2 text-title-mb ${className}`}
   >
     {children}
   </button>

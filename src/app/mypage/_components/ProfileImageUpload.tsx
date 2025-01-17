@@ -46,7 +46,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
       {/* Camera Icon Button */}
       <button
         type="button"
-        className="absolute -bottom-2 -right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-gray-400 bg-pink-200 p-1 shadow-md"
+        className="absolute -bottom-2 -right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-grayscale-500 bg-secondary-100 p-1 shadow-md"
         onClick={handleButtonClick}
       >
         <FiCamera className="h-5 w-5 text-gray-500" />

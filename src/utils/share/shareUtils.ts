@@ -18,8 +18,7 @@ export const initializeKakao = (): boolean => {
 export const copyLinkToClipboard = (url: string) => {
   navigator.clipboard
     .writeText(url)
-    .then(() => console.log('링크가 복사되었습니다!'))
-    .catch(() => console.log('링크 복사에 실패했습니다.'));
+    .catch(() => console.error('링크 복사에 실패했습니다.'));
 };
 
 export const shareViaKakao = ({
@@ -42,7 +41,7 @@ export const shareViaKakao = ({
     content: {
       title,
       description: description || '',
-      imageUrl, // 이미지 URL 추가
+      imageUrl,
       link: {
         webUrl: url,
         mobileWebUrl: url,

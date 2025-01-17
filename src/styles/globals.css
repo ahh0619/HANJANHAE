@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 100 900; /* Variable font weights */
-  font-display: swap;
-  src: url('/assets/fonts/PretendardVariable.woff2') format('woff2');
-}
-
-html {
-  font-family: 'Pretendard', sans-serif;
-}
-
 :root {
   /* Primary Colors */
   --primary-color: #bf324b;
