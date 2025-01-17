@@ -1,5 +1,6 @@
 'use client';
 
+import Button from '@/components/auth/Button';
 import useSocial from '@/hooks/auth/useSocial';
 
 const Social = () => {
@@ -16,21 +17,18 @@ const Social = () => {
 
   return (
     <>
-      <p className="mt-10 text-center text-xl font-bold">SNS 로그인</p>
-
-      <div className="flex justify-center gap-4">
-        <div
-          className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
-          onClick={() => handleSubmit('google')}
-        >
-          구글
-        </div>
-        <div
-          className="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-sm"
-          onClick={() => handleSubmit('kakao')}
-        >
-          카카오
-        </div>
+      <p className="mb-5 text-center text-title-lm">SNS 로그인</p>
+      <div className="mb-10 flex flex-col gap-3">
+        <Button
+          category="google"
+          label="구글로 로그인하기"
+          handleClick={() => handleSubmit('google')}
+        />
+        <Button
+          category="kakao"
+          label="카카오로 로그인하기"
+          handleClick={() => handleSubmit('kakao')}
+        />
       </div>
     </>
   );
