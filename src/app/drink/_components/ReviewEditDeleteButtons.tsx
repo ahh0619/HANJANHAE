@@ -10,7 +10,7 @@ const ReviewEditDeleteButtons = ({
   isEditing,
 }: EditDeleteButtonsProps) => {
   return (
-    <div className="text-label-sm flex space-x-2 hover:text-grayscale-500">
+    <div className="flex space-x-2 text-label-mm hover:text-grayscale-500">
       {!isEditing && (
         <button onClick={onEdit} className="hover:text-grayscale-800">
           수정

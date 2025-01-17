@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
-import { updateUserProfile } from '@/utils/mypage/action';
+import { checkNickname, updateUserProfile } from '@/utils/mypage/action';
 import { createClient } from '@/utils/supabase/client';
 
 type User = {
@@ -11,12 +11,15 @@ type User = {
 
 const useProfileEdit = (user: User | null, onClose: () => void) => {
   const queryClient = useQueryClient();
+  const [originalNickname, setOriginalNickname] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     if (user) {
+      setOriginalNickname(user.nickname);
       setNickname(user.nickname);
       setPreview(
         user.profile_image || '/assets/icons/default_profile_image.svg',
@@ -26,6 +29,18 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
 
   const mutation = useMutation<void, Error, void>({
     mutationFn: async () => {
+      if (!nickname.trim()) {
+        throw new Error('닉네임을 입력해주세요.');
+      }
+
+      // 닉네임 중복 확인
+      if (nickname !== originalNickname) {
+        const isDuplicate = await checkNickname(nickname);
+        if (isDuplicate) {
+          throw new Error('이미 존재하는 닉네임입니다.');
+        }
+      }
+
       let profileImageUrl: string | null = null;
 
       if (selectedFile) {
@@ -48,24 +63,20 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
       });
     },
     onSuccess: () => {
-      // 캐시 수동 업데이트
       queryClient.setQueryData(['userProfile'], (oldData: User | undefined) => {
         if (!oldData) return null;
         return {
           ...oldData,
           nickname,
-          profile_image: preview, // 로컬 상태의 미리보기 이미지로 갱신
+          profile_image: preview,
         };
       });
 
-      // 캐시 무효화로 서버에서 최신 데이터 가져오기
       queryClient.invalidateQueries({ queryKey: ['userProfile'] });
-      alert('프로필이 성공적으로 수정되었습니다!');
       onClose();
     },
-    onError: (error) => {
-      console.error('프로필 업데이트 실패:', error);
-      alert('프로필 수정 중 오류가 발생했습니다.');
+    onError: (error: Error) => {
+      setErrorMessage(error.message);
     },
   });
 
@@ -75,15 +86,28 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
   };
 
   const handleUpdateProfile = () => {
+    setErrorMessage('');
     mutation.mutate();
+  };
+
+  const handleNicknameChange = (value: string) => {
+    setNickname(value);
+    setErrorMessage('');
+  };
+
+  const resetNickname = () => {
+    setNickname(originalNickname);
+    setErrorMessage('');
   };
 
   return {
     nickname,
-    setNickname,
+    setNickname: handleNicknameChange,
     preview,
     handleFileChange,
     handleUpdateProfile,
+    errorMessage,
+    resetNickname,
   };
 };
 

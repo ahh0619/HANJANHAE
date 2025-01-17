@@ -21,7 +21,7 @@ const PlaceCard = ({ id, name, image }: PlaceCardProps) => {
         />
       </div>
       {/* 이름 */}
-      <div className="mt-2 w-full text-left text-xs">{name}</div>
+      <div className="mt-2 w-full text-left text-title-mm">{name}</div>
     </Link>
   );
 };

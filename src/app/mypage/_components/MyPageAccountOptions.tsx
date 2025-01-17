@@ -51,7 +51,7 @@ const MyPageAccountOptions = () => {
               className="h-6 w-6"
             />
           </div>
-          <span className="ml-4 text-base font-medium text-gray-800">
+          <span className="ml-4 text-label-lm text-grayscale-900">
             비밀번호 재설정
           </span>
         </div>
@@ -68,16 +68,16 @@ const MyPageAccountOptions = () => {
               className="h-6 w-6"
             />
           </div>
-          <span className="ml-4 text-base font-medium text-gray-800">
+          <span className="ml-4 text-label-lm text-grayscale-900">
             로그아웃
           </span>
         </div>
       </div>
 
       {/* Delete account section */}
-      <div className="mt-16 text-center">
+      <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
         <button
-          className="cursor-pointer text-sm font-medium text-gray-600 underline"
+          className="cursor-pointer text-label-mm text-grayscale-800 underline"
           onClick={handleDeleteUser}
         >
           회원 탈퇴
