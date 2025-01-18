@@ -60,3 +60,22 @@ export const fetchPopularDrinks = async (): Promise<PopularDrinkType[]> => {
 
   return error || !data ? [] : data;
 };
+
+export const fetchRandomDrinks = async (
+  limit: number = 10,
+): Promise<DrinkType[]> => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('drinks')
+    .select('*')
+    .order('random()', { ascending: true })
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching random drinks:', error.message);
+    return [];
+  }
+
+  return data || [];
+};
