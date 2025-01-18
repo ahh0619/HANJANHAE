@@ -16,14 +16,14 @@ const DrinkImage = ({
     </div>
 
     {/* Image */}
-    <div className="relative h-64 w-full overflow-hidden rounded-2xl">
+    <div className="relative h-[420px] w-full overflow-hidden rounded-b-2xl border-b border-grayscale-200">
       {image ? (
         <Image
           src={image}
           alt={name}
           layout="fill"
           objectFit="contain"
-          className="rounded-2xl"
+          className="rounded-b-2xl"
         />
       ) : (
         <p className="text-lg font-semibold">대표이미지</p>

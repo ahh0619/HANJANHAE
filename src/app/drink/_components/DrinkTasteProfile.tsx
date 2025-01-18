@@ -10,8 +10,6 @@ type DrinkTasteProfileProps = {
 };
 
 const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
-  const levels = ['약함', '약간 약함', '중간', '약간 강함', '강함'];
-
   const renderBar = (value: number | null | undefined, index: number) => {
     const colors = [
       'bg-secondary-200',
@@ -58,7 +56,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
   );
 
   return (
-    <section className="p-4">
+    <section className="mt-8 px-5">
       <h3 className="mb-4 text-title-lm text-grayscale-900">맛 프로필</h3>
       <div className="space-y-4">
         {renderProfileRow('단맛', drink.sweetness)}

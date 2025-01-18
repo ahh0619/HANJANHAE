@@ -1,6 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useAuth } from '@/providers/AuthProvider';
@@ -36,18 +37,20 @@ const MyPageAccountOptions = () => {
   };
 
   return (
-    <div className="mt-6 w-full px-4">
+    <div className="mt-6 w-full px-5">
       {/* Account options section */}
-      <div className="space-y-6">
+      <div>
         {/* Password Reset */}
         <div
-          className="flex cursor-pointer items-center"
+          className="flex max-w-[182px] cursor-pointer items-center"
           onClick={() => router.push('/password/check')}
         >
-          <div className="flex h-12 w-12 items-center justify-center">
-            <img
+          <div className="flex h-12 w-12 items-center justify-center p-3">
+            <Image
               src="/assets/icons/key.svg"
               alt="Key Icon"
+              width={24}
+              height={24}
               className="h-6 w-6"
             />
           </div>
@@ -58,13 +61,15 @@ const MyPageAccountOptions = () => {
 
         {/* Logout */}
         <div
-          className="flex cursor-pointer items-center"
+          className="mt-6 flex cursor-pointer items-center"
           onClick={handleLogout}
         >
           <div className="flex h-12 w-12 items-center justify-center">
-            <img
+            <Image
               src="/assets/icons/logout.svg"
               alt="Logout Icon"
+              width={24}
+              height={24}
               className="h-6 w-6"
             />
           </div>
@@ -77,7 +82,7 @@ const MyPageAccountOptions = () => {
       {/* Delete account section */}
       <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
         <button
-          className="cursor-pointer text-label-mm text-grayscale-800 underline"
+          className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
           onClick={handleDeleteUser}
         >
           회원 탈퇴

@@ -5,38 +5,17 @@ import {
 } from '@tanstack/react-query';
 
 import {
+  InfiniteQueryData,
+  Review,
+  ReviewSubmitData,
+  User,
+} from '@/types/review';
+import {
   deleteReview,
   fetchReviews,
   submitReview,
   updateReview,
 } from '@/utils/review/action';
-
-export type Review = {
-  id: string;
-  user_id: string | null;
-  nickname: string | null;
-  comment: string;
-  rating: number;
-  created_at: string | null;
-  updated_at: string | null;
-  profile_image: string | null;
-};
-
-export type ReviewSubmitData = {
-  rating: number;
-  comment: string;
-};
-
-export type User = {
-  id: string;
-  nickname: string;
-  profile_image: string | null;
-};
-
-export type InfiniteQueryData<T> = {
-  pages: T[];
-  pageParams: unknown[];
-};
 
 export const useReviewActions = (drinkId: string, user: User | null) => {
   const queryClient = useQueryClient();
@@ -131,7 +110,7 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
                     ...review,
                     comment: updatedComment,
                     rating: updatedRating,
-                    updated_at: updatedReview.updated_at, // updated_at 반영
+                    updated_at: updatedReview.updated_at,
                   }
                 : review,
             ),

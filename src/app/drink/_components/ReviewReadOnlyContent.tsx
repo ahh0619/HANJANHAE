@@ -11,7 +11,7 @@ const ReviewReadOnlyContent = ({
     <p className="text-body-mm text-grayscale-900">
       {comment}
       {isEdited && (
-        <span className="ml-2 text-caption-mm text-grayscale-500">
+        <span className="ml-1 text-caption-mm text-grayscale-500">
           {`(편집됨)`}
         </span>
       )}
