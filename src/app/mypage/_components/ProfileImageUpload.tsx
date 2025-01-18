@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import React, { useRef } from 'react';
-import { FiCamera } from 'react-icons/fi';
 
 type ProfileImageUploadProps = {
   preview: string | null;
@@ -24,14 +23,14 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
   };
 
   return (
-    <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full">
+    <div className="relative mb-5 flex h-[100px] w-[100px] items-center justify-center rounded-full">
       {/* Profile Image */}
       <label className="relative flex h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-full">
         <Image
           src={preview || '/assets/icons/default_profile_image.svg'}
           alt="프로필 이미지"
-          width={80}
-          height={80}
+          width={100}
+          height={100}
           className="rounded-full object-cover"
         />
         <input
@@ -46,10 +45,15 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
       {/* Camera Icon Button */}
       <button
         type="button"
-        className="absolute -bottom-2 -right-2 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-grayscale-500 bg-secondary-100 p-1 shadow-md"
+        className="absolute -bottom-2 -right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-grayscale-500 bg-secondary-100 p-1 shadow-md"
         onClick={handleButtonClick}
       >
-        <FiCamera className="h-5 w-5 text-gray-500" />
+        <Image
+          src="/assets/icons/camera.svg"
+          alt="카메라 아이콘"
+          width={24}
+          height={24}
+        />
       </button>
     </div>
   );

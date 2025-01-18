@@ -40,8 +40,8 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative w-11/12 max-w-sm rounded-lg bg-etc-white p-6">
-        <h2 className="mb-4 text-center text-title-lb">프로필 수정</h2>
+      <div className="relative w-11/12 max-w-sm rounded-lg bg-etc-white p-5">
+        <h2 className="mb-5 text-center text-title-lb">프로필 수정</h2>
         <div className="flex flex-col items-center">
           {/* 프로필 이미지 업로드 */}
           <ProfileImageUpload
@@ -59,16 +59,16 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         </div>
 
         {/* 취소 및 완료 버튼 */}
-        <div className="!mt-10 flex justify-between">
+        <div className="mt-10 flex w-full justify-between gap-2">
           <ProfileActionButton
             onClick={handleProfileEditModalClose}
-            className="mr-2 w-1/2 border border-primary text-primary hover:bg-secondary-hover"
+            className="border border-primary text-primary hover:bg-secondary-hover"
           >
             취소하기
           </ProfileActionButton>
           <ProfileActionButton
             onClick={handleUpdateProfile}
-            className="ml-2 w-1/2 bg-primary text-white hover:bg-primary-hover"
+            className="bg-primary text-white hover:bg-primary-hover"
           >
             완료하기
           </ProfileActionButton>

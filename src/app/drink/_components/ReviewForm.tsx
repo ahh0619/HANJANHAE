@@ -21,7 +21,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
   } = useReviewForm(onSubmit);
 
   return (
-    <form onSubmit={handleReviewSubmit} className="mt-4">
+    <form onSubmit={handleReviewSubmit} className="mt-6">
       {/* 별점 섹션 */}
       <div className="flex items-center space-x-2">
         <ReviewStarRating
@@ -32,9 +32,9 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           onHoverEnd={() => setHoverRating(null)}
         />
       </div>
-      <div className="h-3">
+      <div className="h-4">
         {errors.rating && (
-          <p className="mt-1 text-label-sm text-etc-red">{errors.rating}</p>
+          <p className="text-label-sm text-etc-red">{errors.rating}</p>
         )}
       </div>
 
@@ -43,16 +43,16 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
         <textarea
           name="comment"
           id="comment"
-          className="mt-2 h-[100px] w-full resize-none rounded-2xl border bg-grayscale-100 p-3 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="mt-1 h-[100px] w-full resize-none rounded-2xl border bg-grayscale-100 p-4 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
           placeholder="리뷰를 남겨주세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           maxLength={101}
         ></textarea>
-        <span className="absolute bottom-9 right-5 text-caption-mm text-grayscale-600">
+        <span className="absolute bottom-7 right-4 text-caption-mm text-grayscale-600">
           {comment.length}/100
         </span>
-        <div className="mt-1 h-3">
+        <div className="h-2">
           {errors.comment && (
             <p className="text-label-sm text-etc-red">{errors.comment}</p>
           )}

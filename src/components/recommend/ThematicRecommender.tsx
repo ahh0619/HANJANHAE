@@ -63,11 +63,11 @@ const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
   if (!isBrowser) return null;
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="mt-9 space-y-6 px-5">
       {/* 추천 섹션 */}
       {sections.map((section, index) => (
         <section key={index}>
-          <h2 className="mb-4 text-title-lb">{section.title}</h2>
+          <h2 className="mb-3 text-title-lb">{section.title}</h2>
           {section.items.length > 0 ? (
             <Swiper spaceBetween={16} slidesPerView="auto">
               {section.items.map((item: any) => (

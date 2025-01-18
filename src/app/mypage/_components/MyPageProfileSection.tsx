@@ -12,10 +12,10 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
   userData,
   onEditClick,
 }) => (
-  <div className="mt-6 w-full">
-    <div className="flex items-center rounded-lg bg-etc-white px-4 py-4">
+  <div className="mt-8 w-full">
+    <div className="flex items-center rounded-lg bg-etc-white px-5">
       {/* 프로필 이미지 */}
-      <div className="flex h-16 w-16 items-center overflow-hidden rounded-full">
+      <div className="flex h-20 w-20 items-center overflow-hidden rounded-full">
         <Image
           src={
             userData.profile_image || '/assets/icons/default_profile_image.svg'
@@ -28,8 +28,10 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
       </div>
 
       {/* 닉네임 */}
-      <div className="ml-4 flex flex-col justify-center">
-        <p className="text-title-lb text-grayscale-900">{userData.nickname}</p>
+      <div className="ml-6 flex flex-col justify-center">
+        <p className="max-w-[142px] truncate text-title-lb text-grayscale-900">
+          {userData.nickname}
+        </p>
       </div>
 
       {/* 프로필 수정 버튼 */}
