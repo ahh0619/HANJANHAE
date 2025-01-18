@@ -6,7 +6,7 @@ import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
 import { useAuthStore } from '@/store/authStore';
 
-import ShareButton from './ShareButton';
+import ShareButton from '../../../components/common/ShareButton';
 
 type DynamicHeaderProps = {
   name: string;
