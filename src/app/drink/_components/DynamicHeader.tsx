@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 
 import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
+import ShareButton from '@/components/common/ShareButton';
 import { useAuthStore } from '@/store/authStore';
-
-import ShareButton from '../../../components/common/ShareButton';
 
 type DynamicHeaderProps = {
   name: string;
@@ -43,7 +42,9 @@ const DynamicHeader = ({
         {/* 뒤로가기 버튼과 주류 이름 */}
         <div className="flex items-center space-x-2">
           <BackButton />
-          <p className="text-title-xl text-grayscale-900">{name}</p>
+          <p className="max-w-[150px] truncate text-title-xl text-grayscale-900">
+            {name}
+          </p>
         </div>
 
         {/* 좋아요 및 공유 버튼 */}

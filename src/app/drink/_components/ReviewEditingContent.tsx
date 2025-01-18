@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 
 import ReviewActionButtons from './ReviewActionButtons';
@@ -23,17 +25,12 @@ const ReviewEditingContent = ({
   return (
     <div className="relative">
       {/* 별점 수정 */}
-      <ReviewStarRating
-        rating={editRating}
-        onClick={onRatingChange}
-        onHover={(rating) => console.log(`Hover: ${rating}`)}
-        onHoverEnd={() => console.log('Hover end')}
-      />
+      <ReviewStarRating rating={editRating} onClick={onRatingChange} />
 
       {/* 댓글 수정 영역 */}
       <textarea
         ref={textareaRef}
-        value={editComment}
+        value={editComment || ''}
         onChange={(e) => onEditCommentChange(e.target.value)}
         className="mt-2 h-32 min-h-[100px] w-full resize-none overflow-auto rounded-2xl border !bg-grayscale-200 p-4 !text-body-mm !text-grayscale-600 focus:border-grayscale-600"
         maxLength={101}

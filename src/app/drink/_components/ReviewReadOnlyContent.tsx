@@ -1,9 +1,6 @@
-import { ReviewReadOnlyContentProps } from '@/types/review';
+import { ReviewReadOnlyProps } from '@/types/review';
 
-const ReviewReadOnlyContent = ({
-  comment,
-  isEdited,
-}: ReviewReadOnlyContentProps) => (
+const ReviewReadOnlyContent = ({ comment, isEdited }: ReviewReadOnlyProps) => (
   <div
     className="!mt-4 min-h-14 rounded-2xl bg-grayscale-100 p-3 text-body-mm text-grayscale-900"
     style={{ whiteSpace: 'pre-wrap' }}

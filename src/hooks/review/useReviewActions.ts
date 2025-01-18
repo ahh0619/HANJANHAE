@@ -108,7 +108,7 @@ export const useReviewActions = (drinkId: string, user: User | null) => {
               review.id === id
                 ? {
                     ...review,
-                    comment: updatedComment,
+                    content: updatedComment,
                     rating: updatedRating,
                     updated_at: updatedReview.updated_at,
                   }

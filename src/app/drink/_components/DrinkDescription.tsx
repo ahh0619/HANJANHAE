@@ -1,9 +1,8 @@
 'use client';
 
 import LikeButton from '@/components/common/LikeButton';
+import ShareButton from '@/components/common/ShareButton';
 import { useAuthStore } from '@/store/authStore';
-
-import ShareButton from '../../../components/common/ShareButton';
 
 type DrinkDescriptionProps = {
   name: string;

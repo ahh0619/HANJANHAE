@@ -3,13 +3,13 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 
 import BottomNavBar from '@/components/common/BottomNavBar';
+import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
 import Footer from '@/components/layout/Footer';
 import { AuthProvider } from '@/providers/AuthProvider';
 import Providers from '@/providers/Provider';
 
 import '@/styles/globals.css';
-import KakaoInit from './drink/_components/KakaoInit';
 
 const pretendard = localFont({
   src: '../../public/assets/fonts/PretendardVariable.woff2',
