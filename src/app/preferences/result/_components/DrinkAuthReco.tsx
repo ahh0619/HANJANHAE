@@ -22,7 +22,11 @@ const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
   }
 
   return (
-    <DrinkList drinks={drinks} title={`${nickname}님을 위한 전통주 추천`} />
+    <DrinkList
+      drinks={drinks}
+      title={`${nickname}님을 위한 전통주 추천`}
+      userId={userId}
+    />
   );
 };
 
