@@ -13,7 +13,7 @@ const ReviewStarRating = ({
   onHover,
   onHoverEnd,
 }: ReviewStarRatingProps) => (
-  <div className="flex items-center space-x-4 p-2">
+  <div className="flex items-center space-x-5 p-2">
     {[1, 2, 3, 4, 5].map((star) => (
       <img
         key={star}

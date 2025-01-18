@@ -78,7 +78,7 @@ const ReviewContent = ({
 
       {/* 수정/삭제 버튼 */}
       {!editing && canEdit && (
-        <div className="!mr-3 !mt-4 flex justify-end space-x-4 text-label-sm text-grayscale-500">
+        <div className="!mt-1 flex justify-end space-x-4 text-label-sm text-grayscale-500">
           <ReviewEditDeleteButtons
             onEdit={onEdit}
             onDelete={handleDeleteClick}

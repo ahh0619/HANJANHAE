@@ -52,15 +52,15 @@ const Modal: React.FC<ModalProps> = ({
         <h2 className="text-title-lb">{title}</h2>
 
         {/* Content */}
-        <p className="mt-2 whitespace-pre-line text-label-lm">{content}</p>
+        <p className="mt-4 whitespace-pre-line text-label-lm">{content}</p>
 
         {/* Footer */}
         <div className="mt-4 flex flex-col items-center space-y-2">
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-2">
             {/* Secondary Action */}
             {secondaryAction && (
               <button
-                className="w-[136px] rounded-lg border border-secondary bg-etc-white p-3 text-title-mb text-primary hover:bg-secondary-hover"
+                className="w-[136px] rounded-lg border border-secondary bg-etc-white px-4 py-3 text-title-mb text-primary hover:bg-secondary-hover"
                 onClick={secondaryAction.onClick}
               >
                 {secondaryAction.text}
@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Primary Action */}
             {primaryAction && (
               <button
-                className="w-[136px] rounded-lg bg-primary p-3 text-title-mb text-white hover:bg-primary-hover"
+                className="w-[136px] rounded-lg bg-primary px-4 py-3 text-title-mb text-white hover:bg-primary-hover"
                 onClick={primaryAction.onClick}
               >
                 {primaryAction.text}
@@ -80,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="mb-2 mt-3 p-4 text-label-mm text-grayscale-500 underline hover:text-gray-700"
+              className="mt-6 text-label-mm text-grayscale-500 underline hover:text-grayscale-700"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}

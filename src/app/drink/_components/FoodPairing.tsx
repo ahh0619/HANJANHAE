@@ -6,11 +6,11 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
   return (
     <section className="mx-auto w-full">
       <h3 className="text-title-lm text-grayscale-900">추천 페어링 음식</h3>
-      <div className="mt-4 grid grid-cols-3 justify-items-center gap-6">
+      <div className="mt-4 grid grid-cols-3 justify-items-center gap-8">
         {pairings.map((food, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-center space-y-2"
+            className="flex flex-col items-center justify-center"
           >
             {/* 음식 이미지 */}
             <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-grayscale-300">
@@ -27,7 +27,7 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
               )}
             </div>
             {/* 음식 이름 */}
-            <p className="text-center text-body-mm text-grayscale-900">
+            <p className="mb-8 mt-2 text-center text-body-mm text-grayscale-900">
               {food.food_name}
             </p>
           </div>

@@ -39,7 +39,7 @@ const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
         <DrinkTasteProfile drink={drink} />
 
         {/* Food Pairings */}
-        <section className="border-b p-4">
+        <section className="mt-10 border-b px-5">
           <FoodPairing pairings={foodPairings} />
         </section>
 

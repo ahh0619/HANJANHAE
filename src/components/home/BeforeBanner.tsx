@@ -29,7 +29,7 @@ const BeforeBanner = () => {
   return (
     <>
       <section
-        className="bg-gradient-main-banner shadow-main-banner relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-2xl px-[20px]"
+        className="relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-2xl bg-gradient-main-banner px-[20px] shadow-main-banner"
         onClick={handleClick}
       >
         {/* 텍스트 영역 */}

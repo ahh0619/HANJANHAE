@@ -26,9 +26,9 @@ const ReviewInfo = ({
   };
 
   return (
-    <div className="flex items-start space-x-4">
+    <div className="flex items-start space-x-3">
       {/* 프로필 이미지 */}
-      <div className="relative h-12 w-12 overflow-hidden rounded-full">
+      <div className="relative h-14 w-14 overflow-hidden rounded-full">
         <Image
           src={profile_image || '/assets/icons/default_profile_image.svg'}
           alt={`${nickname || '유저'}의 프로필 이미지`}
@@ -40,12 +40,12 @@ const ReviewInfo = ({
       {/* 닉네임, 날짜, 별점 */}
       <div className="flex-1">
         {/* 닉네임과 날짜 */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-end justify-between">
           <p className="text-title-mm text-grayscale-900">
             {nickname || '익명'}
             {canEdit && ' (나)'}
           </p>
-          <p className="caption-mm text-grayscale-900">
+          <p className="text-caption-mm text-grayscale-900">
             {createdAt
               ? new Date(createdAt).toLocaleDateString('ko-KR', {
                   year: '2-digit',

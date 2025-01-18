@@ -12,7 +12,7 @@ const ReviewActionButtons = ({
   if (!canEdit) return null;
 
   return (
-    <div className="mt-2 flex justify-end space-x-2">
+    <div className="flex justify-end space-x-2">
       <button
         className="rounded-lg border border-primary px-4 py-2 text-label-mb text-primary hover:bg-secondary-hover"
         onClick={onCancel}

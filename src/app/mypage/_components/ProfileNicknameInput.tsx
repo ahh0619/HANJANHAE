@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import Image from 'next/image';
 import React from 'react';
 
 type ProfileNicknameInputProps = {
@@ -22,15 +22,20 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="!mt-1 w-full rounded-lg border p-2 text-caption-lm"
+      className="!mt-1 h-12 w-full rounded-lg border border-grayscale-300 p-3 text-caption-lm"
     />
     {value.length > 0 && (
       <button
         type="button"
         onClick={() => onChange('')}
-        className="absolute bottom-16 right-3 top-1/2 -translate-y-1/2 transform text-grayscale-500"
+        className="absolute bottom-16 right-3 top-1/2 top-10 -translate-y-1/2 transform p-2 text-grayscale-500"
       >
-        <X size={20} />
+        <Image
+          src="/assets/icons/cancel.svg"
+          alt="입력 지우기 버튼"
+          width={24}
+          height={24}
+        />
       </button>
     )}
   </div>
