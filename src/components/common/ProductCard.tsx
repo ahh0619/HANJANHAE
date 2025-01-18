@@ -47,11 +47,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       >
         {/* 이미지 */}
         <div
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50"
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
           <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-100 bg-opacity-50"
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] bg-gray-100 bg-opacity-50"
             style={{ height: imgHeight }}
           >
             <Image
