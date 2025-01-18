@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import Modal from '@/components/common/Modal';
@@ -9,8 +11,10 @@ import ReviewInfo from './ReviewInfo';
 import ReviewReadOnlyContent from './ReviewReadOnlyContent';
 
 const ReviewContent = ({
+  review,
+  nickname,
+  profile_image,
   editing,
-  comment,
   editComment,
   errorMessage,
   textareaRef,
@@ -19,14 +23,10 @@ const ReviewContent = ({
   onCancel,
   updatedRating,
   onRatingChange,
-  nickname,
-  createdAt,
-  updatedAt,
-  profileImage,
   canEdit,
   onEdit,
   onDelete,
-}: ReviewContentProps & {}) => {
+}: ReviewContentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -43,7 +43,7 @@ const ReviewContent = ({
   };
 
   // "편집됨"
-  const isEdited = updatedAt && updatedAt !== createdAt;
+  const isEdited = review.updated_at && review.updated_at !== review.created_at;
 
   return (
     <div className="flex flex-col space-y-2">
@@ -62,23 +62,23 @@ const ReviewContent = ({
         />
       ) : (
         <div>
-          {/* 로그인 정보 */}
+          {/* 리뷰 정보 */}
           <ReviewInfo
-            nickname={nickname}
-            createdAt={createdAt}
+            nickname={nickname || ''}
+            profile_image={profile_image || ''}
+            createdAt={review.created_at || ''}
             rating={updatedRating}
-            profile_image={profileImage}
             editable={false}
             canEdit={canEdit}
           />
           {/* 댓글 내용 */}
-          <ReviewReadOnlyContent comment={comment} isEdited={isEdited} />
+          <ReviewReadOnlyContent comment={review.content} isEdited={isEdited} />
         </div>
       )}
 
       {/* 수정/삭제 버튼 */}
       {!editing && canEdit && (
-        <div className="!mr-3 !mt-4 flex justify-end space-x-4 text-label-sm text-grayscale-500">
+        <div className="!mt-1 flex justify-end space-x-4 text-label-sm text-grayscale-500">
           <ReviewEditDeleteButtons
             onEdit={onEdit}
             onDelete={handleDeleteClick}

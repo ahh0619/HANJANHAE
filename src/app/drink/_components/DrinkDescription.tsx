@@ -1,9 +1,8 @@
 'use client';
 
 import LikeButton from '@/components/common/LikeButton';
+import ShareButton from '@/components/common/ShareButton';
 import { useAuthStore } from '@/store/authStore';
-
-import ShareButton from './ShareButton';
 
 type DrinkDescriptionProps = {
   name: string;
@@ -20,7 +19,7 @@ const DrinkDescription = ({
 }: DrinkDescriptionProps) => {
   const { user } = useAuthStore();
   return (
-    <section className="p-4">
+    <section className="mt-3 px-5">
       <div className="flex items-center justify-between">
         <h2 className="text-title-xl text-grayscale-900">{name}</h2>
         <div className="flex">

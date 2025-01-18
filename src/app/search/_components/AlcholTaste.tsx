@@ -23,7 +23,7 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     바디감: 'body',
   };
 
-  const handleClick = (value: number) => {
+  const handleCategoryClick = (value: number) => {
     const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
     setTastePreferences(mappedCategory, value); // 선택된 값 저장
   };
@@ -36,18 +36,20 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     <div className="mb-6">
       <h3 className="mb-2 text-sm font-semibold">{category}으로 찾기</h3>
       <div className="flex items-center justify-between">
-        {levels.map(({ label, value }) => (
+        {levels.map(({ label, value }, index) => (
           <div
             key={value}
-            onClick={() => handleClick(value)}
-            className="flex cursor-pointer flex-col items-center"
+            onClick={() => handleCategoryClick(value)}
+            className={`flex cursor-pointer flex-col ${
+              index === levels.length - 1 ? 'items-end' : ''
+            }`}
           >
             <div
               className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
                 selectedValue === value
                   ? 'border-black bg-black'
                   : 'border-gray-400 bg-gray-200'
-              }`}
+              }`} // 마지막 요소 스타일링
             >
               {selectedValue === value && (
                 <svg

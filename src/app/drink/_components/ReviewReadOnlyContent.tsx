@@ -1,9 +1,6 @@
-import { ReviewReadOnlyContentProps } from '@/types/review';
+import { ReviewReadOnlyProps } from '@/types/review';
 
-const ReviewReadOnlyContent = ({
-  comment,
-  isEdited,
-}: ReviewReadOnlyContentProps) => (
+const ReviewReadOnlyContent = ({ comment, isEdited }: ReviewReadOnlyProps) => (
   <div
     className="!mt-4 min-h-14 rounded-2xl bg-grayscale-100 p-3 text-body-mm text-grayscale-900"
     style={{ whiteSpace: 'pre-wrap' }}
@@ -11,7 +8,7 @@ const ReviewReadOnlyContent = ({
     <p className="text-body-mm text-grayscale-900">
       {comment}
       {isEdited && (
-        <span className="ml-2 text-caption-mm text-grayscale-500">
+        <span className="ml-1 text-caption-mm text-grayscale-500">
           {`(편집됨)`}
         </span>
       )}

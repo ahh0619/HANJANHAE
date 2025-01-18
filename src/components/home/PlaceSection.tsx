@@ -23,8 +23,10 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
   if (!isBrowser) return null;
 
   return (
-    <section className="space-y-6 p-4">
-      <h2 className="mb-4 text-lg font-bold">전통주 다이닝바 추천</h2>
+    <section className="mt-9 space-y-6 px-5">
+      <h2 className="mb-3 text-title-lb text-grayscale-900">
+        전통주 다이닝바 추천
+      </h2>
       {!places || places.length === 0 ? (
         <p>데이터가 존재하지 않습니다.</p>
       ) : (
