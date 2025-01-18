@@ -10,8 +10,6 @@ type DrinkTasteProfileProps = {
 };
 
 const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
-  const levels = ['약함', '약간 약함', '중간', '약간 강함', '강함'];
-
   const renderBar = (value: number | null | undefined, index: number) => {
     const colors = [
       'bg-secondary-200',
