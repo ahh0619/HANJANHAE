@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useCallback, useRef } from 'react';
 
@@ -71,8 +73,8 @@ const ReviewList = ({
             {/* 리뷰 내용 */}
             <ReviewContent
               review={review}
-              nickname={user.nickname}
-              profile_image={user.profile_image}
+              nickname={review.nickname}
+              profile_image={review.profile_image}
               editing={isEditing}
               editComment={editComment}
               errorMessage={errorMessage}
@@ -84,7 +86,7 @@ const ReviewList = ({
               onRatingChange={handleRatingChange}
               canEdit={canEdit}
               onEdit={() =>
-                handleReviewEditClick(review.id, review.comment, review.rating)
+                handleReviewEditClick(review.id, review.content, review.rating)
               }
               onDelete={() => handleReviewDelete(review.id)}
             />

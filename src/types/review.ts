@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 import { Database } from './supabase';
 
 export type Review = Database['public']['Tables']['comments']['Row'];
@@ -9,7 +11,7 @@ export type User = {
 };
 
 export type EditableFieldProps = {
-  textareaRef: React.MutableRefObject<HTMLTextAreaElement>;
+  textareaRef: RefObject<HTMLTextAreaElement>;
   onEditCommentChange: (value: string) => void;
 };
 
@@ -32,7 +34,7 @@ export type ReviewContentProps = {
   editing: boolean;
   editComment: string;
   errorMessage: string;
-  textareaRef: React.MutableRefObject<HTMLTextAreaElement>;
+  textareaRef: RefObject<HTMLTextAreaElement>;
   onEditCommentChange: (value: string) => void;
   onSave: () => void;
   onCancel: () => void;

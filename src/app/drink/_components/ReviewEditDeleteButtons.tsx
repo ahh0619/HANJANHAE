@@ -1,3 +1,5 @@
+'use client';
+
 type EditDeleteButtonsProps = {
   onEdit: () => void;
   onDelete: () => void;

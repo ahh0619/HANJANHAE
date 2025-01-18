@@ -80,7 +80,7 @@ export const fetchReviews = async (
       id: comment.id,
       user_id: comment.user_id,
       nickname: comment.users?.nickname,
-      comment: comment.content,
+      content: comment.content,
       rating: matchingRating ? matchingRating.rating : 0,
       created_at: comment.created_at,
       updated_at: comment.updated_at,
