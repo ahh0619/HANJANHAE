@@ -2,6 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import useFilterStore from '@/store/filterStore';
+import useSortStore from '@/store/selectStore';
 import { filterDrinks, FilterParams } from '@/utils/filter/action';
 
 const useFilterSortedResults = () => {
@@ -12,6 +13,7 @@ const useFilterSortedResults = () => {
     triggerFetch,
     setTriggerFetch,
   } = useFilterStore();
+  const { selectedSort } = useSortStore();
 
   const filterParams: FilterParams = {
     types: selectedTypes,
@@ -19,9 +21,14 @@ const useFilterSortedResults = () => {
     tastePreferences,
   };
 
-  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
+  const { data, isPending, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
-      queryKey: ['filterDrinks', filterParams],
+      // filterSortedDrinks
+      queryKey: [
+        'filterSortedDrinks',
+        filterParams,
+        selectedSort === 'alphabetical',
+      ],
       queryFn: ({ pageParam = 1 }) =>
         filterDrinks({ ...filterParams, page: pageParam }),
       getNextPageParam: (lastPage) =>
@@ -39,9 +46,13 @@ const useFilterSortedResults = () => {
     }
   }, [triggerFetch]);
 
+  // 전체 데이터 개수 계산
+  const totalCount = data?.pages[0]?.totalCount || 0;
+
   return {
-    filterData: data?.pages.flatMap((page) => page.drinks) || [],
-    isLoading,
+    filterSortData: data?.pages.flatMap((page) => page.drinks) || [],
+    isPending,
+    totalCount,
     isError,
     fetchNextPage,
     hasNextPage,

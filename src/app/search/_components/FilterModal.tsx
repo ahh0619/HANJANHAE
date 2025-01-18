@@ -1,5 +1,6 @@
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
+import useSortStore from '@/store/selectStore';
 
 import FilterSideBar from './FilterSideBar';
 import FilterType from './FilterTypes';
@@ -14,6 +15,7 @@ const FilterModal = () => {
     setIsFiltered,
     setTriggerFetch,
   } = useFilterStore();
+  const { setSelectedSort } = useSortStore();
 
   const handleApplyfilters = () => {
     // 초기화 시 Strength가 null 이여서 자동으로 입력
@@ -23,6 +25,7 @@ const FilterModal = () => {
     closeModal();
     setIsFiltered(true); // 필터 UI 변경 상태관리
     setTriggerFetch(true);
+    setSelectedSort('alphabetical');
     // api 요청을 여기서 보내는게 맞는데
     // zustand로 저장해놓고 다른데 쓰기만 하면 된다.
   };

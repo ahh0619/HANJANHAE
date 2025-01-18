@@ -1,15 +1,14 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-type SelectSort =  {
-  filters: string[];
-  sort: string | null;
-  setFilters: (filters: string[]) => void;
-  setSort: (sort: string | null) => void;
-}
+type SortStore = {
+  selectedSort: string;
+  setSelectedSort: (sort: string) => void;
+};
 
-const useSelectStore = create<SelectSort>((set) => ({
-  filters: [],
-  sort: null,
-  setFilters: (filters) => set({ filters }),
-  setSort: (sort) => set({ sort }),
+// 변하는 값 alphabetical , liked
+const useSortStore = create<SortStore>((set) => ({
+  selectedSort: 'alphabetical',
+  setSelectedSort: (sort) => set({ selectedSort: sort }),
 }));
+
+export default useSortStore;

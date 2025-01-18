@@ -2,21 +2,23 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import useSearchStore from '@/store/keywordStore';
+import useSortStore from '@/store/selectStore';
 import { filterDrinksByKeyword } from '@/utils/filter/action';
 
-const useSearchResults = () => {
+const useSearchSortedResults = () => {
   const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
     useSearchStore();
+  const { selectedSort } = useSortStore();
 
   const {
     data: SearchData,
-    isLoading,
+    isPending,
     isError,
     fetchNextPage,
     hasNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ['SearchDrinks', keyword],
+    queryKey: ['SearchSortedDrinks', keyword, selectedSort === 'alphabetical'],
     queryFn: ({ pageParam = 1 }) =>
       filterDrinksByKeyword({ keyword, page: pageParam }),
     getNextPageParam: (lastPage) =>
@@ -39,8 +41,8 @@ const useSearchResults = () => {
   const totalCount = SearchData?.pages[0]?.totalCount || 0;
 
   return {
-    SearchData: SearchData?.pages.flatMap((page) => page.drinks) || [],
-    isLoading,
+    SearchSortData: SearchData?.pages.flatMap((page) => page.drinks) || [],
+    isPending,
     isError,
     totalCount,
     fetchNextPage,
@@ -48,23 +50,4 @@ const useSearchResults = () => {
   };
 };
 
-export default useSearchResults;
-
-// const {
-//   data: SearchData,
-//   isLoading,
-//   isError,
-//   refetch,
-// } = useQuery({
-//   queryKey: ['SearchDrinks', keyword],
-//   queryFn: async () => {
-//     if (keyword === '') {
-//       return [];
-//     }
-//     const filtered = await filterDrinksByKeyword(keyword);
-//     return filtered;
-//   },
-//   enabled: false,
-//   staleTime: 1000 * 60 * 5,
-//   retry: 1,
-// });
+export default useSearchSortedResults;

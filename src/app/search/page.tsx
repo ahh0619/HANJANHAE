@@ -1,6 +1,5 @@
-import FilterResults from './_components/FilterResults';
+import FilterSearchResults from './_components/FilterSearchResults';
 import FocusInput from './_components/FocusInput';
-import SearchResults from './_components/SearchResults';
 
 const Search = () => {
   return (
@@ -12,7 +11,7 @@ const Search = () => {
         {/* Search Bar */}
         <FocusInput />
         {/* <FilterResults /> */}
-        <SearchResults />
+        <FilterSearchResults />
       </div>
     </div>
   );

@@ -55,6 +55,9 @@ export const useToggleLike = ({ drinkId, userId }: UseToggleLikeParams) => {
       queryClient.invalidateQueries({
         queryKey: ['likeStatus', drinkId, userId],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['likes', userId],
+      });
     },
     onSuccess: (data) => {
       if (!data.liked) {

@@ -1,29 +1,21 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import useFilterStore from '@/store/filterStore';
-import { filterDrinks, FilterParams } from '@/utils/filter/action';
+import useSearchStore from '@/store/keywordStore';
+import useSortStore from '@/store/selectStore';
+import { getPopularDrinks } from '@/utils/filter/action';
 
 const useFilterLikedResults = () => {
-  const {
-    selectedTypes,
-    alcoholStrength,
-    tastePreferences,
-    triggerFetch,
-    setTriggerFetch,
-  } = useFilterStore();
+  const { resetFilters, setTriggerFetch, setIsFiltered } = useFilterStore();
+  const { resetSearchStore, setSearchTriggerFetch } = useSearchStore();
+  const { selectedSort } = useSortStore();
+  const queryClient = useQueryClient();
 
-  const filterParams: FilterParams = {
-    types: selectedTypes,
-    alcoholStrength,
-    tastePreferences,
-  };
-
-  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
+  const { data, isPending, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
-      queryKey: ['filterDrinks', filterParams],
-      queryFn: ({ pageParam = 1 }) =>
-        filterDrinks({ ...filterParams, page: pageParam }),
+      queryKey: ['LikedDrinks', selectedSort === 'liked'],
+      queryFn: ({ pageParam = 1 }) => getPopularDrinks({ page: pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage.hasNextPage ? lastPage.nextPage : null,
       initialPageParam: 1,
@@ -33,16 +25,20 @@ const useFilterLikedResults = () => {
     });
   // triggerFetch true일 때 refetch 호출
   useEffect(() => {
-    if (triggerFetch) {
+    if (selectedSort === 'liked') {
       refetch(); // enabled false를 이용한 트리거
       setTriggerFetch(false);
+      setSearchTriggerFetch(false);
     }
-  }, [triggerFetch]);
+  }, [selectedSort]);
+
+  const totalCount = data?.pages[0]?.totalCount || 0;
 
   return {
-    filterData: data?.pages.flatMap((page) => page.drinks) || [],
-    isLoading,
+    likedData: data?.pages.flatMap((page) => page.likedDrinks) || [],
+    isPending,
     isError,
+    totalCount,
     fetchNextPage,
     hasNextPage,
   };
