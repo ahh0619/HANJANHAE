@@ -9,8 +9,10 @@ import ReviewInfo from './ReviewInfo';
 import ReviewReadOnlyContent from './ReviewReadOnlyContent';
 
 const ReviewContent = ({
+  review,
+  nickname,
+  profile_image,
   editing,
-  comment,
   editComment,
   errorMessage,
   textareaRef,
@@ -19,14 +21,10 @@ const ReviewContent = ({
   onCancel,
   updatedRating,
   onRatingChange,
-  nickname,
-  createdAt,
-  updatedAt,
-  profileImage,
   canEdit,
   onEdit,
   onDelete,
-}: ReviewContentProps & {}) => {
+}: ReviewContentProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDeleteClick = () => {
@@ -42,8 +40,8 @@ const ReviewContent = ({
     setIsModalOpen(false);
   };
 
-  // "편집됨"
-  const isEdited = updatedAt && updatedAt !== createdAt;
+  // "편집됨" 여부
+  const isEdited = review.updated_at && review.updated_at !== review.created_at;
 
   return (
     <div className="flex flex-col space-y-2">
@@ -62,17 +60,17 @@ const ReviewContent = ({
         />
       ) : (
         <div>
-          {/* 로그인 정보 */}
+          {/* 리뷰 정보 */}
           <ReviewInfo
-            nickname={nickname}
-            createdAt={createdAt}
+            nickname={nickname || ''}
+            profile_image={profile_image || ''}
+            createdAt={review.created_at || ''}
             rating={updatedRating}
-            profile_image={profileImage}
             editable={false}
             canEdit={canEdit}
           />
           {/* 댓글 내용 */}
-          <ReviewReadOnlyContent comment={comment} isEdited={isEdited} />
+          <ReviewReadOnlyContent comment={review.content} isEdited={isEdited} />
         </div>
       )}
 

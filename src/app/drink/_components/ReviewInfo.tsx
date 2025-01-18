@@ -1,14 +1,6 @@
 import Image from 'next/image';
 
-type ReviewInfoProps = {
-  nickname: string | null;
-  createdAt: string | null;
-  rating: number;
-  profile_image: string | null;
-  editable?: boolean;
-  onRatingChange?: (newRating: number) => void;
-  canEdit?: boolean;
-};
+import { ReviewInfoProps } from '@/types/review';
 
 const ReviewInfo = ({
   nickname,

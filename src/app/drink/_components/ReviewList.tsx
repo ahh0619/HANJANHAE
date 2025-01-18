@@ -70,8 +70,10 @@ const ReviewList = ({
           >
             {/* 리뷰 내용 */}
             <ReviewContent
+              review={review}
+              nickname={user.nickname}
+              profile_image={user.profile_image}
               editing={isEditing}
-              comment={review.comment}
               editComment={editComment}
               errorMessage={errorMessage}
               textareaRef={textareaRef}
@@ -80,10 +82,6 @@ const ReviewList = ({
               onCancel={resetEditingState}
               updatedRating={isEditing ? editRating : review.rating}
               onRatingChange={handleRatingChange}
-              nickname={review.nickname}
-              createdAt={review.created_at}
-              profileImage={review.profile_image}
-              updatedAt={review.updated_at}
               canEdit={canEdit}
               onEdit={() =>
                 handleReviewEditClick(review.id, review.comment, review.rating)
