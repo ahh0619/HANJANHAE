@@ -40,7 +40,7 @@ const ReviewContent = ({
     setIsModalOpen(false);
   };
 
-  // "편집됨" 여부
+  // "편집됨"
   const isEdited = review.updated_at && review.updated_at !== review.created_at;
 
   return (
