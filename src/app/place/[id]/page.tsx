@@ -13,7 +13,7 @@ const PlaceDetail = async ({ params }: PlaceDetailProps) => {
   const place = await fetchPlace(params.id);
 
   return (
-    <div className="mx-auto flex w-full max-w-96 flex-col gap-4">
+    <div className="relative mx-auto max-w-96">
       <MainSection place={place} />
       <DetailSection place={place} />
     </div>

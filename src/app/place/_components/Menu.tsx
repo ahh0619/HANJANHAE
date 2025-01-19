@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { MenuType } from '@/types/place';
 
 type MenuProps = {
@@ -6,18 +8,18 @@ type MenuProps = {
 
 const Menu = ({ menus }: MenuProps) => {
   return (
-    <div className="flex flex-col gap-4 px-2">
+    <div className="flex flex-col gap-5">
       {menus.map((menu: MenuType) => (
-        <div className="flex items-center gap-8" key={menu.id}>
-          <div className="flex h-24 w-32 items-center justify-center overflow-hidden bg-gray-200">
-            {menu.image && (
-              <img
-                className="h-full w-full object-cover"
-                src={menu.image}
-                alt={menu.name}
-              />
-            )}
-          </div>
+        <div className="flex items-center gap-5" key={menu.id}>
+          {menu.image && (
+            <Image
+              className="h-24 w-[136px] object-cover"
+              width={136}
+              height={96}
+              src={menu.image}
+              alt={menu.name}
+            />
+          )}
           <p>{menu.name}</p>
         </div>
       ))}

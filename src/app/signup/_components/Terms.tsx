@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import Button from '@/components/auth/Button';
 import CheckField from '@/components/auth/CheckField';
+import Modal from '@/components/auth/Modal';
 import useSocial from '@/hooks/auth/useSocial';
 import { useAuthStore } from '@/store/authStore';
 
@@ -14,6 +15,8 @@ type TermsProps = {
 
 const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   const router = useRouter();
+
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { isSocial, setIsAgree } = useAuthStore();
   const { handleGoogle, handleKakao } = useSocial();
@@ -44,7 +47,7 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   /* 다음 단계로 이동 */
   const handleMoveNext = (provider: string) => {
     if (!terms.adult || !terms.use || !terms.personal) {
-      window.alert('모든 항목에 동의해 주세요.');
+      setIsOpenModal(true);
     } else {
       setIsAgree(true);
       provider === 'email' && handleMoveStep(2);
@@ -56,7 +59,7 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   /* 소셜 로그인 완료 */
   const handleFinishSocial = () => {
     if (!terms.adult || !terms.use || !terms.personal) {
-      window.alert('모든 항목에 동의해 주세요.');
+      setIsOpenModal(true);
     } else {
       setIsAgree(true);
       router.push('/');
@@ -146,6 +149,14 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
             />
           </div>
         </>
+      )}
+
+      {isOpenModal && (
+        <Modal
+          title="약관 동의는 필수입니다."
+          content="모든 항목에 동의해주세요."
+          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+        />
       )}
     </div>
   );

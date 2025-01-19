@@ -8,11 +8,11 @@ type CategoryProps = {
 
 const Category = ({ items, handleChange }: CategoryProps) => {
   return (
-    <div className="flex px-2">
+    <div className="mb-8 flex">
       {items.map((item) => (
         <div
           key={item.name}
-          className={`w-1/3 border-b-2 ${item.isSelected ? 'border-black font-bold' : 'border-gray-300'} mb-4 cursor-pointer pb-2 text-center`}
+          className={`w-1/3 border-b text-label-lm ${item.isSelected ? 'border-primary text-primary' : 'border-grayscale-300 text-grayscale-300'} cursor-pointer pb-3 pt-2 text-center`}
           onClick={() => handleChange(item.name)}
         >
           {item.name}
