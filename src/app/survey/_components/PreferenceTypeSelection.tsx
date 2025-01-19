@@ -62,21 +62,21 @@ const PreferenceTypeSelection = ({
       <ProgressBar currentStep={1} />
 
       {/* 질문 */}
-      <div className="mt-[56px] w-full px-[20px]">
-        <h3 className="text-lg font-semibold">
+      <div className="mb-[32px] mt-[56px] w-full px-[20px]">
+        <h3 className="text-title-lb text-grayscale-900">
           어떤 종류의 술을 선호하시나요?
         </h3>
-        <p className="text-lg">(중복 선택 가능)</p>
+        <p className="text-title-lb text-grayscale-900">(중복 선택 가능)</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="flex w-full flex-wrap content-start items-start gap-x-[16px] gap-y-[12px] px-[20px]">
         {options.map((option) => (
           <button
             key={option}
-            className={`rounded-full border px-4 py-2 ${
+            className={`h-[40px] rounded-[16px] border-[1px] px-[12px] py-[8px] text-label-lm ${
               selectedTypes.split(',').includes(option)
-                ? 'border-black bg-black text-white'
-                : 'border-gray-300 bg-gray-100 text-gray-700'
+                ? 'border-primary bg-primary text-grayscale-100'
+                : 'border-grayscale-500 bg-white text-grayscale-900'
             } transition`}
             onClick={() => toggleSelection(option)}
           >
@@ -85,15 +85,19 @@ const PreferenceTypeSelection = ({
         ))}
       </div>
 
-      <span className="ml-5 flex w-full items-center text-sm text-gray-500">
-        주류용어설명
-        <img
-          src="/fi_alert-circle.svg"
-          alt="설명 아이콘"
-          className="ml-1 h-4 w-4 cursor-pointer"
+      <div className="mt-[48px] w-full px-[20px]">
+        <p
+          className="flex w-[147px] items-center p-[12px] text-label-lm text-grayscale-500"
           onClick={openPopup}
-        />
-      </span>
+        >
+          주류용어설명
+          <img
+            src="/fi_alert-circle.svg"
+            alt="설명 아이콘"
+            className="ml-[8px] h-[24px] w-[24px] cursor-pointer"
+          />
+        </p>
+      </div>
 
       <StepButton
         content={'다음'}
