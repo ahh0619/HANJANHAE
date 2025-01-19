@@ -5,14 +5,18 @@ import { z } from 'zod';
 import { CheckEmailType } from '@/types/Auth';
 import { sendEmailForResetPassword } from '@/utils/auth/action';
 
+type CheckEmailProps = {
+  handleMessage: (message: string[]) => void;
+};
+
 const checkEmailSchema = z.object({
   email: z
     .string()
     .nonempty('아이디를 입력해 주세요.')
-    .email('유효한 이메일 형식이 아닙니다.'),
+    .email('이메일 형식으로 입력해주세요.'),
 });
 
-const useCheckEmail = () => {
+const useCheckEmail = ({ handleMessage }: CheckEmailProps) => {
   const {
     register,
     handleSubmit,
@@ -28,9 +32,9 @@ const useCheckEmail = () => {
   const onSubmit = async (values: CheckEmailType) => {
     try {
       await sendEmailForResetPassword(values);
-      window.alert('비밀번호 재설정을 위한 메일이 전송되었습니다.');
+      handleMessage(['메일이 전송되었습니다.', '메일함을 확인해주세요.']);
     } catch (error: any) {
-      window.alert('메일 전송에 실패하였습니다.');
+      handleMessage(['메일 전송에 실패했습니다.', '다시 시도해주세요.']);
     }
   };
 
