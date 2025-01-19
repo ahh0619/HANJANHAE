@@ -12,9 +12,9 @@ const KakaoMap = ({ location_x, location_y }: PlaceMapProps) => {
   };
 
   return (
-    <div className="px-2">
+    <div>
       <Map
-        className="h-48 w-full bg-gray-200"
+        className="h-[200px] w-full bg-gray-200"
         center={{ lat: location_x, lng: location_y }}
         level={3}
       >

@@ -87,7 +87,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
         </div>
       )}
 
-      {category === 'back' && (
+      {category.includes('back') && (
         <button
           type="button"
           className="absolute left-2 top-[2px] flex items-center justify-center"
@@ -96,7 +96,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
           <Image
             width={40}
             height={40}
-            src="/assets/icons/back.svg"
+            src={`/assets/icons/${category === 'back' ? 'back' : 'back_gray'}.svg`}
             alt="back"
           />
         </button>

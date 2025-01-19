@@ -32,7 +32,10 @@ export default function ScrollTop() {
     });
   };
 
-  if (['/signup', '/signin'].includes(pathname)) {
+  if (
+    ['/signup', '/signin'].includes(pathname) ||
+    pathname.startsWith('/place')
+  ) {
     return null;
   }
 

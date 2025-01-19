@@ -7,7 +7,8 @@ const Footer = () => {
 
   if (
     ['/signup', '/signin', '/survey'].includes(pathname) ||
-    pathname.startsWith('/password')
+    pathname.startsWith('/password') ||
+    pathname.startsWith('/place')
   ) {
     return null;
   }
