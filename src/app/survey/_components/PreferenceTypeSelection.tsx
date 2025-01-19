@@ -27,12 +27,10 @@ const PreferenceTypeSelection = ({
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => {
-    document.body.style.overflow = 'hidden'; // 외부 스크롤 차단
     setIsPopupOpen(true);
   };
 
   const closePopup = () => {
-    document.body.style.overflow = ''; // 외부 스크롤 복원
     setIsPopupOpen(false);
   };
 
@@ -54,7 +52,12 @@ const PreferenceTypeSelection = ({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div
+      className={`flex flex-col items-center ${
+        isPopupOpen ? 'overflow-hidden' : ''
+      }`}
+      style={{ maxHeight: '100vh' }}
+    >
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-full items-center">
         <div className="absolute left-[12px]">
@@ -91,9 +94,9 @@ const PreferenceTypeSelection = ({
         ))}
       </div>
 
-      <div className="mt-[48px] w-full px-[20px]">
+      <div className="mt-[48px] flex h-[48px] w-full items-center px-[20px]">
         <p
-          className="flex w-[147px] items-center p-[12px] text-label-lm text-grayscale-500"
+          className="my-auto flex h-[24px] w-[147px] items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
           onClick={openPopup}
         >
           주류용어설명
@@ -111,6 +114,7 @@ const PreferenceTypeSelection = ({
         disabled={!selectedTypes.trim()}
       />
 
+      {/* 팝업 */}
       <Popup isOpen={isPopupOpen} onClose={closePopup} />
     </div>
   );

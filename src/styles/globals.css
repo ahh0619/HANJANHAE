@@ -75,6 +75,10 @@ body {
   display: none;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 /* Typography Styles */
 :root {
   /* Title */
