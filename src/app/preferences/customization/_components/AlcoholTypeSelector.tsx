@@ -10,20 +10,21 @@ const alcoholTypes = [
 
 const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
   return (
-    <div className="mb-6">
-      <label className="mb-3 flex items-center text-lg font-medium">
-        어떤 종류의 술을 선호하시나요?{' '}
-        <span className="ml-1 text-sm">(중복 선택 가능)</span>
+    <div className="mb-10 h-[130px] w-[311px]">
+      {/* 제목 */}
+      <label className="mb-[16px] flex items-center text-title-mb">
+        술 종류로 찾기 (중복선택 가능)
       </label>
-      <div className="flex flex-wrap gap-2">
+      {/* 버튼 목록 */}
+      <div className="flex h-[92px] flex-wrap gap-x-[16px] gap-y-[12px]">
         {alcoholTypes.map((type) => (
           <button
             key={type.key}
             onClick={() => handleTypeChange(type.key)}
-            className={`rounded-full border px-4 py-2 ${
+            className={`flex items-center justify-center rounded-full border px-[12px] py-[8px] text-label-lm leading-5 ${
               preferences.type.includes(type.key)
-                ? 'bg-black text-white'
-                : 'border-gray-300 bg-white text-black'
+                ? 'border-transparent bg-primary-100 text-grayscale-50'
+                : 'border-grayscale-500 bg-white text-grayscale-900'
             }`}
           >
             {type.label}

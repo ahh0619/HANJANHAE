@@ -4,7 +4,7 @@ const tasteAttributes = [
   { key: 'sweetness', label: '단맛' },
   { key: 'acidity', label: '신맛' },
   { key: 'carbonation', label: '청량감' },
-  { key: 'body', label: '무게감' },
+  { key: 'body', label: '무게감(바디감)' },
 ];
 
 const intensityOptions = [
@@ -19,9 +19,9 @@ const TasteSelector = ({ preferences, handleSelect }) => {
   return (
     <>
       {tasteAttributes.map((attr) => (
-        <div className="mb-6" key={attr.key}>
-          <label className="mb-3 block text-lg font-medium">
-            어느 정도의 {attr.label} 을 선호하시나요?
+        <div className="mb-10" key={attr.key}>
+          <label className="mb-[16px] block text-title-mb text-grayscale-900">
+            {attr.label}으로 찾기
           </label>
           <div className="flex w-full justify-between space-x-8">
             {intensityOptions.map((option) => (

@@ -1,67 +1,52 @@
 type OptionItemProps = {
   value: string; // 옵션 값
   label?: string; // 라벨 텍스트
-  range?: string; // 추가 텍스트
-  isSelected: boolean;
-  onSelect: (value: string) => void;
+  isSelected: boolean; // 선택 여부
+  range?: string;
+  onSelect: (value: string) => void; // 선택 시 실행 함수
   showLabel?: boolean;
 };
 
 const OptionItem = ({
   value,
   label,
-  range,
   isSelected,
+  range,
   onSelect,
-  showLabel = true,
+  showLabel,
 }: OptionItemProps) => {
   return (
-    <div
-      className="flex cursor-pointer flex-col items-center"
-      onClick={() => onSelect(value)}
-    >
+    <label className="flex cursor-pointer flex-col items-center">
+      <input
+        type="radio"
+        value={value}
+        checked={isSelected}
+        onChange={() => onSelect(value)}
+        className="peer hidden h-[40px] w-[40px]"
+      />
+      {/* 라디오 버튼 */}
       <div
-        className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${
-          isSelected
-            ? 'border-black bg-black text-white'
-            : 'border-gray-300 bg-white text-transparent'
+        className={`flex h-[32px] w-[32px] items-center justify-center rounded-full peer-checked:border-primary ${
+          isSelected ? 'border-4' : 'border-2'
         }`}
       >
-        {isSelected && (
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-        )}
-      </div>
-      {showLabel && label && (
-        <span
-          className={`mt-2 text-xs ${
-            isSelected ? 'font-bold text-black' : 'text-gray-400'
+        <div
+          className={`h-[18px] w-[18px] rounded-full ${
+            isSelected ? 'bg-primary' : 'bg-transparent'
           }`}
-        >
+        ></div>
+      </div>
+      {/* 라벨 텍스트 */}
+      {label && (
+        <span className={`mt-2 text-caption-mm text-grayscale-900`}>
           {label}
         </span>
       )}
+
       {range && (
-        <span
-          className={`text-xs ${
-            isSelected ? 'font-bold text-black' : 'text-gray-400'
-          }`}
-        >
-          {range}
-        </span>
+        <span className={`text-caption-mm text-grayscale-900`}>{range}</span>
       )}
-    </div>
+    </label>
   );
 };
 
