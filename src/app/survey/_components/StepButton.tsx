@@ -10,9 +10,9 @@ const StepButton = ({
   disabled = false,
 }: StepButtonProps) => {
   return (
-    <div className="fixed bottom-[60px] left-0 flex w-full flex-col items-center bg-white px-[20px]">
+    <div className="fixed bottom-[60px] left-0 flex w-full flex-col items-center px-[20px]">
       <button
-        className={`w-full rounded-[8px] px-[16px] py-[12px] text-label-xlm ${
+        className={`w-[335px] rounded-[8px] px-[16px] py-[12px] text-label-xlm ${
           disabled
             ? 'cursor-not-allowed bg-grayscale-200 text-grayscale-500'
             : 'bg-primary text-grayscale-100'

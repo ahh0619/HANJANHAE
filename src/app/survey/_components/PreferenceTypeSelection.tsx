@@ -19,16 +19,22 @@ const options = [
 
 const PreferenceTypeSelection = ({
   onNext,
-  onPrev,
   surveyData,
 }: PreferenceTypeProps) => {
   const [selectedTypes, setSelectedTypes] = useState<string>(
-    Array.isArray(surveyData.type) ? surveyData.type.join(',') : '',
+    surveyData.type || '',
   );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
+  const openPopup = () => {
+    document.body.style.overflow = 'hidden'; // 외부 스크롤 차단
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    document.body.style.overflow = ''; // 외부 스크롤 복원
+    setIsPopupOpen(false);
+  };
 
   const toggleSelection = (type: string) => {
     const typesArray = selectedTypes ? selectedTypes.split(',') : [];

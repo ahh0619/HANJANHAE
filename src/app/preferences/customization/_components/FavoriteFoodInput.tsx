@@ -12,8 +12,9 @@ const FavoriteFoodInput = ({ preferences, handleFoodChange }) => {
         value={preferences.food}
         onChange={handleFoodChange}
         placeholder="예) 골뱅이무침"
-        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 placeholder-grayscale-300"
+        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-gray-500"
       />
+
       {/* 힌트 텍스트 */}
       <p className="mt-[4px] text-caption-sm text-grayscale-600">
         예) 해물파전, 김치전
