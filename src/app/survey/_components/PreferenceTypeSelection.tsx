@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import BackButton from '@/components/common/BackButton';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import Popup from './Popup';
@@ -47,23 +48,25 @@ const PreferenceTypeSelection = ({
   };
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-6">
+    <div className="flex flex-col items-center">
       {/* 제목 */}
-      <div className="relative w-full">
-        <p className="absolute left-0" onClick={onPrev}>
-          &lt;
-        </p>
-        <h1 className="text-center text-xl font-bold">내 취향 조사</h1>
+      <div className="relative mb-[32px] flex h-[44px] w-full items-center">
+        <div className="absolute left-[12px]">
+          <BackButton />
+        </div>
+        <h1 className="mx-auto text-title-xl text-grayscale-900">
+          내 취향 조사
+        </h1>
       </div>
 
       <ProgressBar currentStep={1} />
 
       {/* 질문 */}
-      <div className="text-center">
+      <div className="mt-[56px] w-full px-[20px]">
         <h3 className="text-lg font-semibold">
           어떤 종류의 술을 선호하시나요?
         </h3>
-        <p className="text-sm text-gray-500">(중복 선택 가능)</p>
+        <p className="text-lg">(중복 선택 가능)</p>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
