@@ -9,6 +9,11 @@ import Modal from '@/components/auth/Modal';
 import useSignIn from '@/hooks/auth/useSignIn';
 
 const SignInForm = () => {
+  const [options, setOptions] = useState({
+    save: false,
+    remember: false,
+  });
+
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
@@ -18,6 +23,11 @@ const SignInForm = () => {
       setIsOpenModal(true);
     },
   });
+
+  /* 체크 여부 토글 */
+  const handleToggleItem = ({ name }: { name: keyof typeof options }) => {
+    setOptions({ ...options, [name]: !options[name] });
+  };
 
   return (
     <>
@@ -39,11 +49,17 @@ const SignInForm = () => {
         </div>
 
         <div className="mb-9 flex gap-8">
-          <CheckField category="signin" id="save" label="아이디 저장" />
           <CheckField
-            category="signin"
+            id="save"
+            label="아이디 저장"
+            checked={options.save}
+            handleChange={() => handleToggleItem({ name: 'save' })}
+          />
+          <CheckField
             id="remember"
             label="로그인 정보 저장"
+            checked={options.remember}
+            handleChange={() => handleToggleItem({ name: 'remember' })}
           />
         </div>
 
