@@ -21,7 +21,7 @@ const InputField = <T extends FieldValues>({
         {label}
       </label>
       <input
-        className="rounded-lg border border-grayscale-300 p-3 text-caption-lm"
+        className="rounded-[8px] border border-grayscale-300 p-3 text-caption-lm"
         type={type}
         id={id as string}
         autoComplete="off"

@@ -6,11 +6,15 @@ import { useAuth } from '@/providers/AuthProvider';
 import { SignInDataType } from '@/types/Auth';
 import { manageSignInError } from '@/utils/auth/manageError';
 
+type SignInProps = {
+  handleError: (message: string) => void;
+};
+
 const signinSchema = z.object({
   email: z
     .string()
     .nonempty('아이디를 입력해 주세요.')
-    .email('유효한 이메일 형식이 아닙니다.'),
+    .email('이메일 형식으로 입력해주세요.'),
   password: z
     .string()
     .nonempty('비밀번호를 입력해 주세요.')
@@ -22,7 +26,7 @@ const signinSchema = z.object({
     ),
 });
 
-const useSignIn = () => {
+const useSignIn = ({ handleError }: SignInProps) => {
   const { login } = useAuth();
 
   const {
@@ -42,7 +46,7 @@ const useSignIn = () => {
     try {
       await login(values);
     } catch (error: any) {
-      window.alert(manageSignInError(error.message));
+      handleError(manageSignInError(error.message));
     }
   };
 
