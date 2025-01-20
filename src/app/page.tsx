@@ -12,7 +12,7 @@ import { fetchPlaces } from '@/utils/place/action';
 import { getRecommendations } from '@/utils/recommend/recommendationService';
 
 // ISR 설정
-export const revalidate = 3600;
+export const revalidate = 5;
 
 export const metadata: Metadata = {
   title: '어서와 한잔해',
