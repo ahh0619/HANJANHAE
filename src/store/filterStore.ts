@@ -14,7 +14,7 @@ type FilterStore = {
   setIsFiltered: (value: boolean) => void; // 트리거 상태 변경
 
   // range 범위 타입
-  values: number[];
+  values: number[] | null;
   setValues: (values: number[]) => void;
 
   // 삭제 타입

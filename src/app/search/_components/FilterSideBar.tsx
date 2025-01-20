@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useFilterStore from '@/store/filterStore';
@@ -109,9 +110,9 @@ const FilterSideBar = () => {
   };
 
   return (
-    <div className="flex items-center space-x-2 rounded-lg px-4 py-2">
+    <div className="mt-[16px] flex items-center justify-between gap-2 rounded-lg">
       {/* 각 필터 버튼 */}
-      <div className="w-full overflow-hidden">
+      <div className="w-[287px] overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
         <Swiper
           spaceBetween={10} // 슬라이드 간 간격
@@ -122,7 +123,7 @@ const FilterSideBar = () => {
         >
           {filters.map((filter, index) => (
             <SwiperSlide key={index} className="flex-none">
-              <div className="float-left mr-2 flex items-center space-x-2 rounded-full bg-gray-200 px-3 py-1 text-sm text-gray-700">
+              <div className="flex items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-1 py-2 text-sm text-gray-700">
                 <span>{filter.label}</span>
                 <button
                   className="text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -144,7 +145,13 @@ const FilterSideBar = () => {
                     }
                   }}
                 >
-                  ✕
+                  <Image
+                    src="/assets/icons/cancelGray.svg"
+                    alt="Cancel_button"
+                    width={16}
+                    height={16}
+                    className="cursor-pointer"
+                  />
                 </button>
               </div>
             </SwiperSlide>
@@ -154,27 +161,17 @@ const FilterSideBar = () => {
 
       {/* 설정 아이콘 */}
       <button
-        className="ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
+        className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 focus:outline-none"
         aria-label="필터 설정"
         onClick={openModal}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          width="24"
-          height="24"
-        >
-          <line x1="8" y1="4" x2="8" y2="20"></line>
-          <circle cx="8" cy="10" r="2"></circle>
-
-          <line x1="16" y1="4" x2="16" y2="20"></line>
-          <circle cx="16" cy="14" r="2"></circle>
-        </svg>
+        <Image
+          src="/assets/icons/sliders-v-alt-white.svg"
+          alt="Slider_button"
+          width={20}
+          height={20}
+          className="cursor-pointer"
+        />
       </button>
     </div>
   );

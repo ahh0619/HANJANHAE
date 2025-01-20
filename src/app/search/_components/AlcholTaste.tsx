@@ -25,7 +25,12 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
 
   const handleCategoryClick = (value: number) => {
     const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
-    setTastePreferences(mappedCategory, value); // 선택된 값 저장
+
+    if (tastePreferences[mappedCategory] === value) {
+      setTastePreferences(mappedCategory, null); // 선택 해제
+    } else {
+      setTastePreferences(mappedCategory, value); // 선택된 값 저장
+    }
   };
 
   const selectedValue = tastePreferences[categoryMapping[category]] || null;
@@ -33,48 +38,55 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
   console.log(tastePreferences);
 
   return (
-    <div className="mb-6">
-      <h3 className="mb-2 text-sm font-semibold">{category}으로 찾기</h3>
+    <div className="mt-10 h-[100px]">
+      <h3 className="mb-[22px] text-title-mb font-bold leading-[135%] text-grayscale-900">
+        {category}으로 찾기
+      </h3>
       <div className="flex items-center justify-between">
         {levels.map(({ label, value }, index) => (
           <div
             key={value}
             onClick={() => handleCategoryClick(value)}
-            className={`flex cursor-pointer flex-col ${
+            className={`flex cursor-pointer flex-col items-center ${
               index === levels.length - 1 ? 'items-end' : ''
             }`}
           >
             <div
-              className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
-                selectedValue === value
-                  ? 'border-black bg-black'
-                  : 'border-gray-400 bg-gray-200'
-              }`} // 마지막 요소 스타일링
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center`}
             >
-              {selectedValue === value && (
+              {selectedValue === value ? (
+                // 클릭된 상태의 SVG
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-white"
+                  width="45"
+                  height="40"
+                  viewBox="0 0 45 40"
                   fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
+                  <circle cx="23" cy="20" r="16" fill="#BF324B" />
+                  <circle cx="23" cy="20" r="13" fill="white" />
+                  <circle cx="23" cy="20" r="9" fill="#BF324B" />
+                </svg>
+              ) : (
+                // 기본 상태의 SVG
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="45"
+                  height="40"
+                  viewBox="0 0 45 40"
+                  fill="none"
+                >
+                  <circle
+                    cx="23"
+                    cy="20"
+                    r="15.5"
+                    fill="white"
+                    stroke="#ADADAD"
                   />
                 </svg>
               )}
             </div>
-            <span
-              className={`mt-1 text-sm transition-colors ${
-                selectedValue === value
-                  ? 'font-semibold text-black'
-                  : 'text-gray-500'
-              }`}
-            >
+            <span className="color-grayscale-900 mt-1 text-caption-mm font-medium leading-[150%]">
               {label}
             </span>
           </div>
