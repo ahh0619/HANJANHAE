@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/auth/callback/route.ts": {
+    "src/app/auth/callback/route.ts": {
       "maxDuration": 50
     }
   }
