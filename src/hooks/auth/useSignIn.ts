@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -28,6 +29,7 @@ const signinSchema = z.object({
 
 const useSignIn = ({ handleError }: SignInProps) => {
   const { login } = useAuth();
+  const router = useRouter();
 
   const {
     register,
@@ -45,6 +47,7 @@ const useSignIn = ({ handleError }: SignInProps) => {
   const onSubmit = async (values: SignInDataType) => {
     try {
       await login(values);
+      router.push('/');
     } catch (error: any) {
       handleError(manageSignInError(error.message));
     }
