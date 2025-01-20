@@ -1,77 +1,98 @@
+'use client';
+
 import useFilterStore from '@/store/filterStore';
-import useModalStore from '@/store/modalStore';
+import useFocusStore from '@/store/focusStore';
+import useModalStore, { useBodyLock } from '@/store/modalStore';
 import useSortStore from '@/store/selectStore';
 
-import FilterSideBar from './FilterSideBar';
 import FilterType from './FilterTypes';
-import HomeScreenButton from './HomeScreenButton';
 
 const FilterModal = () => {
   const { isModalOpen, closeModal } = useModalStore();
+  useBodyLock();
+
   const {
     alcoholStrength,
     setAlcoholStrength,
-    isFiltered,
     setIsFiltered,
+    resetFilters,
     setTriggerFetch,
+    setValues,
   } = useFilterStore();
   const { setSelectedSort } = useSortStore();
+  const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
 
   const handleApplyfilters = () => {
-    // 초기화 시 Strength가 null 이여서 자동으로 입력
     if (alcoholStrength === null) {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
-    setIsFiltered(true); // 필터 UI 변경 상태관리
+    setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');
-    // api 요청을 여기서 보내는게 맞는데
-    // zustand로 저장해놓고 다른데 쓰기만 하면 된다.
+  };
+  const handleFilterReset = () => {
+    resetFilters(); // 필터값 리셋
+    setIsSearchFocuse(false);
+    setValues([1, 3]);
+    setSelectedSort('alphabetical'); // 초기값 세팅
   };
 
   return (
     <>
-      {!isFiltered ? <HomeScreenButton /> : <FilterSideBar />}
-
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[51] flex items-end bg-black bg-opacity-30">
-          {/* Modal */}
+      <div>
+        {/* Background Overlay */}
+        {isModalOpen && (
           <div
-            className="relative w-full transform rounded-t-lg bg-white transition-transform duration-300 ease-in-out"
-            style={{
-              transform: isModalOpen ? 'translateY(0)' : 'translateY(100%)',
-              height: '90%', // 높이 설정
-            }}
-          >
+            className="fixed inset-0 z-[100] bg-black bg-opacity-30"
+            onClick={closeModal}
+          />
+        )}
+
+        {/* Modal Content */}
+        <div
+          className={`fixed inset-0 z-[101] flex h-full flex-col justify-end transition-transform duration-300 ${
+            isModalOpen ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
+          {/* Modal Box */}
+          <div className="relative flex h-[95%] w-full flex-col rounded-t-[32px] bg-white shadow-lg">
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-gray-300 p-4">
+            <div className="mt-[12px] flex h-[56px] items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]">
               <button
                 onClick={closeModal}
                 className="text-lg font-semibold text-gray-500"
               >
                 ✕
               </button>
-              <h2 className="text-lg font-semibold">필터</h2>
-              <button className="text-sm text-blue-500">초기화</button>
+              <h2 className="text-title-xl font-bold leading-[135%] text-[var(--Grayscale-900M)]">
+                필터
+              </h2>
+              <button
+                onClick={handleFilterReset}
+                className="text-label-lm font-medium leading-[150%] text-gray-900"
+              >
+                초기화
+              </button>
             </div>
 
             {/* Scrollable Content */}
-            <div className="h-full overflow-y-scroll p-4">
+            <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
               <FilterType />
             </div>
           </div>
+
           {/* Apply Button */}
-          <div className="fixed bottom-0 left-0 w-full border-t border-gray-300 bg-white p-4 shadow-md">
+          <div className="fixed bottom-[0] left-1/2 z-[102] w-[375px] -translate-x-1/2 transform bg-white p-[12px_20px] pb-[33px]">
             <button
               onClick={handleApplyfilters}
-              className="w-full rounded-lg bg-gray-800 py-3 text-white hover:bg-gray-900"
+              className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
             >
               적용하기
             </button>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };

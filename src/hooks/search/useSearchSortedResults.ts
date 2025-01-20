@@ -12,7 +12,7 @@ const useSearchSortedResults = () => {
 
   const {
     data: SearchData,
-    isPending,
+    isLoading,
     isError,
     fetchNextPage,
     hasNextPage,
@@ -42,7 +42,7 @@ const useSearchSortedResults = () => {
 
   return {
     SearchSortData: SearchData?.pages.flatMap((page) => page.drinks) || [],
-    isPending,
+    isLoading,
     isError,
     totalCount,
     fetchNextPage,

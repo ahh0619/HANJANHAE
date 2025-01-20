@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRef } from 'react';
 
 import useFilterStore from '@/store/filterStore';
@@ -22,11 +23,18 @@ const SearchBar = ({
     setTriggerFetch,
     setValues,
   } = useFilterStore();
-  const { keyword, setKeyword, setSearchTriggerFetch, resetSearchStore } =
-    useSearchStore();
+  const {
+    searchTriggerFetch,
+    keyword,
+    setKeyword,
+    setSearchTriggerFetch,
+    resetSearchStore,
+  } = useSearchStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
   const { clearResults } = useResults();
   const { selectedSort, setSelectedSort } = useSortStore();
+  console.log(triggerFetch);
+  console.log(searchTriggerFetch);
   const handleReset = () => {
     resetStates(); // 저장된 정보 삭제
     resetFilters(); // 필터값 리셋
@@ -36,6 +44,7 @@ const SearchBar = ({
     setValues([1, 3]);
     setSelectedSort('alphabetical'); // 초기값 세팅
   };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
@@ -45,11 +54,9 @@ const SearchBar = ({
       setIsSearchFocuse(true);
       setSearchTriggerFetch(true);
       setSelectedSort('alphabetical');
-      // 여기서 검색결과 저장 api 요청을 여기서 보내면 되는데
-      // setIsSearchFocuse로 true 보내야지만 useEffect에서 그제서야 확인하고
-      // 요청을 하는 것이라 -> 여기서 요청을 바로 진행하면 된다.
     }
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -57,50 +64,46 @@ const SearchBar = ({
   return (
     <div
       className={`${
-        isSearchFocus || isFiltered ? 'mt-0' : 'mt-40'
-      } mx-auto flex max-w-md items-center bg-white px-4 py-2 transition-all duration-300`}
+        isSearchFocus || isFiltered ? 'mt-0' : 'mt-0'
+      } m-0 mx-auto flex w-[335px] items-center bg-white transition-all duration-300`}
     >
       <div
-        className={`flex flex-1 items-center rounded-full px-4 py-2 shadow-sm transition ${
+        className={`flex h-[48px] w-[335px] items-center justify-between gap-2 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
           isSearchFocus || isFiltered
-            ? 'border-2 border-green-500 bg-white'
+            ? 'border border-grayscale-900 bg-white'
             : 'bg-gray-100'
         }`}
       >
-        <svg
-          className={`h-5 w-5 ${
-            triggerFetch ? 'text-green-500' : 'text-gray-500'
-          }`}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M8 16l4-4-4-4m5 4h7"
-          />
-        </svg>
-        <input
-          type="text"
-          name="search"
-          value={value}
-          onChange={handleInputChange}
-          placeholder="무엇을 찾으시나요?"
-          className="w-full bg-transparent pl-2 text-sm text-gray-700 outline-none"
-          // onFocus={handleFocus}
-          // onBlur={handleBlur}
-          ref={inputRef}
-          onKeyDown={handleKeyDown}
+        <Image
+          src="/assets/icons/search.svg"
+          alt="Search_Icon"
+          width={24}
+          height={24}
+          className="m-2 h-6 w-6"
         />
+        <div className="flex h-[40px] w-full items-center text-left">
+          <input
+            type="text"
+            name="search"
+            value={value}
+            onChange={handleInputChange}
+            placeholder="무엇을 찾으시나요?"
+            className="--font-caption-lm h-[24px] w-[223px] flex-shrink-0 bg-transparent leading-normal"
+            ref={inputRef}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        {(isSearchFocus || isFiltered) && (
+          <Image
+            src="/assets/icons/cancelDark.svg"
+            alt="Cancel"
+            width={24}
+            height={24}
+            className="cursor-pointer"
+            onClick={handleReset}
+          />
+        )}
       </div>
-      {isSearchFocus || isFiltered ? (
-        <button className="ml-2 text-sm text-green-500" onClick={handleReset}>
-          취소
-        </button>
-      ) : null}
     </div>
   );
 };

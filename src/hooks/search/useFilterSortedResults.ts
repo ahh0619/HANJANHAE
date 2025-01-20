@@ -21,7 +21,7 @@ const useFilterSortedResults = () => {
     tastePreferences,
   };
 
-  const { data, isPending, isError, fetchNextPage, hasNextPage, refetch } =
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       // filterSortedDrinks
       queryKey: [
@@ -51,7 +51,7 @@ const useFilterSortedResults = () => {
 
   return {
     filterSortData: data?.pages.flatMap((page) => page.drinks) || [],
-    isPending,
+    isLoading,
     totalCount,
     isError,
     fetchNextPage,
