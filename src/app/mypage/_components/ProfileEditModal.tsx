@@ -53,7 +53,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           <ProfileNicknameInput value={nickname} onChange={setNickname} />
           <div className="mt-1 min-h-[1rem] self-start text-left">
             {errorMessage && (
-              <p className="text-label-sm text-etc-red">{errorMessage}</p>
+              <p className="text-label-sm text-grayscale-600">{errorMessage}</p>
             )}
           </div>
         </div>
