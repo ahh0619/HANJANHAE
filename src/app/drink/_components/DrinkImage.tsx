@@ -16,7 +16,7 @@ const DrinkImage = ({
     </div>
 
     {/* Image */}
-    <div className="relative h-[420px] w-full overflow-hidden rounded-b-2xl border-b border-grayscale-200">
+    <div className="relative h-[420px] w-full overflow-hidden rounded-b-2xl border-b border-grayscale-200 bg-etc-white">
       {image ? (
         <Image
           src={image}

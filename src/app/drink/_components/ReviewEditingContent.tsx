@@ -7,14 +7,13 @@ import ReviewStarRating from './ReviewStarRating';
 
 const ReviewEditingContent = ({
   editComment,
-  errorMessage,
+  editRating,
   textareaRef,
   onEditCommentChange,
-  editRating,
   onRatingChange,
   onSave,
   onCancel,
-  canEdit,
+  isEditValid,
 }) => {
   useEffect(() => {
     if (textareaRef?.current) {
@@ -24,7 +23,7 @@ const ReviewEditingContent = ({
 
   return (
     <div className="relative">
-      {/* 별점 수정 */}
+      {/* 별점 수정 (필수 항목 아니면 자유롭게) */}
       <ReviewStarRating rating={editRating} onClick={onRatingChange} />
 
       {/* 댓글 수정 영역 */}
@@ -32,26 +31,20 @@ const ReviewEditingContent = ({
         ref={textareaRef}
         value={editComment || ''}
         onChange={(e) => onEditCommentChange(e.target.value)}
-        className="mt-2 h-32 min-h-[100px] w-full resize-none overflow-auto rounded-2xl border !bg-grayscale-200 p-4 !text-body-mm !text-grayscale-600 focus:border-grayscale-600"
-        maxLength={101}
+        className="mb-1 mt-2 h-32 min-h-[100px] w-full resize-none overflow-auto rounded-2xl border bg-grayscale-200 p-4 text-body-mm text-grayscale-600 focus:border-grayscale-600"
+        maxLength={100}
         placeholder="리뷰를 작성하세요."
       />
       {/* 글자 수 표시 */}
-      <span className="absolute bottom-16 right-4 text-caption-mm text-grayscale-600">
+      <span className="absolute bottom-[60px] right-4 text-caption-mm text-grayscale-600">
         {editComment.length}/100
       </span>
-      {/* 에러 메시지 */}
-      <div className="h-2">
-        {errorMessage && (
-          <p className="text-label-sm text-etc-red">{errorMessage}</p>
-        )}
-      </div>
 
       {/* 저장 및 취소 버튼 */}
       <ReviewActionButtons
-        canEdit={canEdit}
         onSave={onSave}
         onCancel={onCancel}
+        isEditValid={isEditValid}
       />
     </div>
   );

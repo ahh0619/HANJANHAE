@@ -13,7 +13,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
     rating,
     hoverRating,
     comment,
-    errors,
+    isFormValid,
     setRating,
     setHoverRating,
     setComment,
@@ -32,38 +32,33 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           onHoverEnd={() => setHoverRating(null)}
         />
       </div>
-      <div className="h-4">
-        {errors.rating && (
-          <p className="text-label-sm text-etc-red">{errors.rating}</p>
-        )}
-      </div>
 
       {/* 리뷰 내용 섹션 */}
-      <div className="relative">
+      <div className="relative mt-2">
         <textarea
           name="comment"
           id="comment"
-          className="mt-1 h-[100px] w-full resize-none rounded-2xl border bg-grayscale-100 p-4 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="h-[100px] w-full resize-none rounded-2xl border bg-grayscale-100 p-4 text-body-mm text-grayscale-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
           placeholder="리뷰를 남겨주세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          maxLength={101}
+          maxLength={100}
         ></textarea>
-        <span className="absolute bottom-7 right-4 text-caption-mm text-grayscale-600">
+        <span className="absolute bottom-5 right-4 text-caption-mm text-grayscale-600">
           {comment.length}/100
         </span>
-        <div className="h-2">
-          {errors.comment && (
-            <p className="text-label-sm text-etc-red">{errors.comment}</p>
-          )}
-        </div>
       </div>
 
-      {/* 버튼 섹션 */}
-      <div className="flex justify-end">
+      {/* 등록 버튼 */}
+      <div className="mt-1 flex justify-end">
         <button
           type="submit"
-          className="flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 text-label-mb text-etc-white hover:bg-primary-hover"
+          disabled={!isFormValid}
+          className={
+            !isFormValid
+              ? 'flex items-center space-x-2 rounded-lg bg-grayscale-200 px-4 py-2 text-label-mb text-etc-white'
+              : 'flex items-center space-x-2 rounded-lg bg-primary px-4 py-2 text-label-mb text-etc-white hover:bg-primary-hover'
+          }
         >
           등록
         </button>

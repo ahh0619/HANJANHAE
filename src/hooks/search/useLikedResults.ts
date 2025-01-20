@@ -12,7 +12,7 @@ const useFilterLikedResults = () => {
   const { selectedSort } = useSortStore();
   const queryClient = useQueryClient();
 
-  const { data, isPending, isError, fetchNextPage, hasNextPage, refetch } =
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       queryKey: ['LikedDrinks', selectedSort === 'liked'],
       queryFn: ({ pageParam = 1 }) => getPopularDrinks({ page: pageParam }),
@@ -36,7 +36,7 @@ const useFilterLikedResults = () => {
 
   return {
     likedData: data?.pages.flatMap((page) => page.likedDrinks) || [],
-    isPending,
+    isLoading,
     isError,
     totalCount,
     fetchNextPage,

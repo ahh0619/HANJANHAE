@@ -50,18 +50,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
-          <div
-            className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] bg-gray-100 bg-opacity-50"
-            style={{ height: imgHeight }}
-          >
-            <Image
-              src={imageUrl}
-              alt={name}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
-            />
-          </div>
+          <Image
+            src={imageUrl}
+            alt={name}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
+          />
         </div>
         {/* 이름 */}
         {isNameVisible && (

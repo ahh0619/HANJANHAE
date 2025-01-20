@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import {
-  adjustTextarea,
-  setCursorAndScrollToEnd,
-  validateComment,
-} from '@/utils/review/textarea';
+import { adjustTextarea, setCursorAndScrollToEnd } from '@/utils/review/textarea';
 
 export const useReviewEditing = (
   onUpdate: (id: string, comment: string, rating: number) => void,
@@ -12,7 +8,7 @@ export const useReviewEditing = (
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editComment, setEditComment] = useState<string>('');
   const [editRating, setEditRating] = useState<number>(0);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const handleReviewEditClick = (
@@ -23,36 +19,30 @@ export const useReviewEditing = (
     setEditingId(id);
     setEditComment(currentComment);
     setEditRating(currentRating);
-    setErrorMessage(null);
   };
 
+  const isEditValid = editComment.trim().length >= 2;
+
+  // 수정 완료 클릭 시
   const handleReviewSaveClick = (id: string) => {
-    const error = validateComment(editComment, editRating);
-    if (error) {
-      setErrorMessage(error);
-      return;
-    }
+    if (!isEditValid) return;
+
     onUpdate(id, editComment, editRating);
     resetEditingState();
   };
 
   const handleCommentChange = (value: string) => {
     setEditComment(value);
-    const error = validateComment(value, editRating);
-    setErrorMessage(error);
   };
 
   const handleRatingChange = (rating: number) => {
     setEditRating(rating);
-    const error = validateComment(editComment, rating);
-    setErrorMessage(error);
   };
 
   const resetEditingState = () => {
     setEditingId(null);
     setEditComment('');
     setEditRating(0);
-    setErrorMessage(null);
   };
 
   useEffect(() => {
@@ -66,8 +56,8 @@ export const useReviewEditing = (
     editingId,
     editComment,
     editRating,
-    errorMessage,
     textareaRef,
+    isEditValid,
     handleReviewEditClick,
     handleReviewSaveClick,
     handleCommentChange,

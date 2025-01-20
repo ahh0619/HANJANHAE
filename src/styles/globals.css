@@ -103,3 +103,23 @@ body {
   --font-caption-mm: 12px medium 150%;
   --font-caption-sm: 10px medium 150%;
 }
+
+/* 모달 시 html, body 스크롤 제어*/
+.html-overflow-hidden {
+  overflow: hidden;
+}
+
+/* 모달 시 스크롤 숨기기 */
+.scroll-hidden {
+  /* 기본 스크롤 동작 유지 */
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}

@@ -1,18 +1,24 @@
 'use client';
 
+
 import ProductCard from '@/components/common/ProductCard';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
 import useSearchSortedResults from '@/hooks/search/useSearchSortedResults';
+import useFilterStore from '@/store/filterStore';
+import useFocusStore from '@/store/focusStore';
 
 import { SelectSorted } from './SelectSorted';
+import Skeleton from './Skeleton';
 
 const ResultList = ({ user }) => {
+  const { isFiltered } = useFilterStore();
+  const { isSearchFocus } = useFocusStore();
   const {
     SearchSortData,
     totalCount: searchSortTotal,
-    isPending: sortSearchIsLoading,
+    isLoading: sortSearchIsLoading,
     isError: sortSearchIsError,
     fetchNextPage: fetchNextSearchSortPage,
     hasNextPage: hasNextSearchSortPage,
@@ -21,7 +27,7 @@ const ResultList = ({ user }) => {
   const {
     filterSortData,
     totalCount: filterSortTotal,
-    isPending: sortFilterIsLoading,
+    isLoading: sortFilterIsLoading,
     isError: sortFilterIsError,
     fetchNextPage: fetchNextFilterSortPage,
     hasNextPage: hasNextFilterSortPage,
@@ -30,14 +36,11 @@ const ResultList = ({ user }) => {
   const {
     likedData,
     totalCount: likedTotal,
-    isPending: likeIsLoading,
+    isLoading: likeIsLoading,
     isError: likeIsError,
     fetchNextPage: fetchNextLikePage,
     hasNextPage: hasNextLikePage,
   } = useFilterLikedResults();
-  console.log('liked', likedTotal);
-  console.log('filterSortData', filterSortData);
-  console.log('searchSortData', SearchSortData);
 
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
@@ -72,27 +75,22 @@ const ResultList = ({ user }) => {
     hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
     fetchNextPage: activeFetchNextPage,
   });
-
   return (
     <>
-      {/* {(sortSearchIsLoading || sortFilterIsLoading) && <Skeleton />} */}
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {sortSearchIsLoading ||
-        (sortFilterIsLoading && (
-          <div className="text-red-500">
-            {sortSearchIsLoading || sortFilterIsLoading}
-          </div>
-        ))}
+      {(sortSearchIsLoading || sortFilterIsLoading || likeIsLoading) && (
+        <Skeleton />
+      )}
       {activeData.length > 0 && (
-        <div className="flex w-full items-center justify-between">
-          <span>
+        <div className="mt-[16px] flex w-full items-center justify-between">
+          <span className="text-xs font-medium not-italic leading-[1.5] text-grayscale-900">
             {filterSortTotal || searchSortTotal || likedTotal}개의 검색결과가
             있습니다.
           </span>
           <SelectSorted />
         </div>
       )}
-      <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
+      <div className="mt-[12px] grid w-full grid-cols-2 justify-items-center gap-[8px]">
         {activeData.length > 0 &&
           activeData.map((result) => (
             <ProductCard
@@ -110,13 +108,12 @@ const ResultList = ({ user }) => {
 
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
-      {!sortSearchIsLoading &&
-        !sortFilterIsLoading &&
-        activeData.length === 0 && (
-          <div className="mt-8 text-center text-gray-500">
-            검색 결과가 존재하지 않습니다.
-          </div>
-        )}
+
+      {(isFiltered || isSearchFocus) && activeData.length === 0 && (
+        <div className="mt-8 text-center text-gray-500">
+          검색 결과가 존재하지 않습니다.
+        </div>
+      )}
     </>
   );
 };
