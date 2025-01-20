@@ -1,5 +1,3 @@
-import React from 'react';
-
 type ProgressBarProps = {
   currentStep: number;
 };
@@ -8,24 +6,31 @@ const ProgressBar = ({ currentStep }: ProgressBarProps) => {
   const steps = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="mt-[0px] flex h-[20px] w-full px-[20px]">
       {steps.map((step, index) => (
-        <React.Fragment key={step}>
-          <span
-            className={`flex h-5 w-5 items-center justify-center rounded-full text-sm ${
+        <div key={step} className="flex items-center">
+          {/* 동그라미 */}
+          <p
+            className={`flex items-center justify-center rounded-full border-2 text-[16.335px] font-bold leading-normal ${
               step === currentStep
-                ? 'bg-black text-white' // 현재 단계 스타일
-                : 'bg-gray-300 text-gray-500' // 기본 스타일
+                ? 'h-[20px] w-[20px] border-primary-200 bg-primary-200 text-white' // 현재 단계
+                : step < currentStep
+                  ? 'h-[10px] w-[10px] border-gray-300 bg-gray-300' // 이전 단계
+                  : 'h-[10px] w-[10px] border-gray-300 bg-white' // 이후 단계
             }`}
           >
-            {step}
-          </span>
+            {step === currentStep ? step : ''}
+          </p>
 
-          {/* 마지막 원 뒤에는 선이 필요 없으므로*/}
+          {/* 선 */}
           {index < steps.length - 1 && (
-            <span className="h-[2px] w-5 bg-gray-300"></span>
+            <div
+              className={`h-[2px] w-[40px] ${
+                step < currentStep ? 'bg-gray-300' : 'bg-gray-200'
+              }`}
+            ></div>
           )}
-        </React.Fragment>
+        </div>
       ))}
     </div>
   );

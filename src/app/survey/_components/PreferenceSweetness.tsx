@@ -34,26 +34,28 @@ const PreferenceSweetness = ({
   ];
 
   return (
-    <div className="flex flex-col items-center space-y-8 p-6">
+    <div className="flex flex-col items-center">
       {/* 제목 */}
-      <div className="relative w-full">
-        <p className="absolute left-0" onClick={onPrev}>
-          &lt;
-        </p>
-        <h1 className="text-center text-xl font-bold">내 취향 조사</h1>
+      <div className="relative mb-[32px] flex h-[44px] w-full items-center">
+        <div className="absolute left-[12px]">
+          <img src={'/assets/icons/chevron-left.svg'} onClick={onPrev} />
+        </div>
+        <h1 className="mx-auto text-title-xl text-grayscale-900">
+          내 취향 조사
+        </h1>
       </div>
 
       {/* 진행바 */}
       <ProgressBar currentStep={3} />
 
       {/* 질문 */}
-      <div className="text-center">
-        <h3 className="text-lg font-semibold">
+      <div className="my-[56px] w-full px-[20px]">
+        <h3 className="text-title-lb text-grayscale-900">
           어느 정도의 단맛을 선호하시나요?
         </h3>
       </div>
 
-      <div className="flex w-full justify-between space-x-8">
+      <div className="flex w-full justify-between px-[20px]">
         {options.map((option, index) => (
           <OptionItem
             key={option.value}

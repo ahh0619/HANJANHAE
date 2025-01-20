@@ -8,9 +8,9 @@ const alcoholOptions = [
 
 const AlcoholLevelSelector = ({ preferences, handleSelect }) => {
   return (
-    <div className="mb-6">
-      <label className="mb-3 block text-lg font-medium">
-        어느 정도 도수의 술을 선호하시나요?
+    <div className="mb-10">
+      <label className="mb-[16px] block text-title-mb text-grayscale-900">
+        도수로 찾기
       </label>
       <div className="flex w-full justify-between space-x-8">
         {alcoholOptions.map((option) => (
