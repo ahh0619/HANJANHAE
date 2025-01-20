@@ -41,9 +41,6 @@ const ResultList = ({ user }) => {
     fetchNextPage: fetchNextLikePage,
     hasNextPage: hasNextLikePage,
   } = useFilterLikedResults();
-  console.log('liked', likedTotal);
-  console.log('filterSortData', filterSortData);
-  console.log('searchSortData', SearchSortData);
 
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
