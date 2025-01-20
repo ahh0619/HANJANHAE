@@ -11,6 +11,7 @@ import ProfileEditModal from './ProfileEditModal';
 type UserProfile = {
   nickname: string;
   profile_image: string | null;
+  id: string;
 };
 
 type MyPageComponentProps = {
@@ -49,7 +50,7 @@ const MyPageComponent: React.FC<MyPageComponentProps> = ({
     <>
       <MyPageHeader />
       <MyPageProfileSection userData={userData} onEditClick={handleModalOpen} />
-      <MyPagePreferences />
+      <MyPagePreferences userId={userData.id} />
       <MyPageAccountOptions />
       <ProfileEditModal
         isOpen={isModalOpen}
