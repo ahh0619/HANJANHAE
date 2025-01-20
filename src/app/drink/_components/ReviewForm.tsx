@@ -34,7 +34,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
       </div>
 
       {/* 리뷰 내용 섹션 */}
-      <div className="relative mt-4">
+      <div className="relative mt-2">
         <textarea
           name="comment"
           id="comment"
@@ -44,13 +44,13 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           onChange={(e) => setComment(e.target.value)}
           maxLength={101}
         ></textarea>
-        <span className="absolute bottom-7 right-4 text-caption-mm text-grayscale-600">
+        <span className="absolute bottom-5 right-4 text-caption-mm text-grayscale-600">
           {comment.length}/100
         </span>
       </div>
 
       {/* 등록 버튼 */}
-      <div className="flex justify-end mt-4">
+      <div className="mt-1 flex justify-end">
         <button
           type="submit"
           disabled={!isFormValid}

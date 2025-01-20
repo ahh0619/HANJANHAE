@@ -16,7 +16,6 @@ const ReviewContent = ({
   profile_image,
   editing,
   editComment,
-  errorMessage,
   textareaRef,
   onEditCommentChange,
   onSave,
@@ -24,6 +23,7 @@ const ReviewContent = ({
   updatedRating,
   onRatingChange,
   canEdit,
+  isEditValid,
   onEdit,
   onDelete,
 }: ReviewContentProps) => {
@@ -51,14 +51,13 @@ const ReviewContent = ({
       {editing ? (
         <ReviewEditingContent
           editComment={editComment}
-          errorMessage={errorMessage}
           textareaRef={textareaRef}
           onEditCommentChange={onEditCommentChange}
           editRating={updatedRating}
           onRatingChange={onRatingChange}
           onSave={onSave}
           onCancel={onCancel}
-          canEdit={canEdit}
+          isEditValid={isEditValid}
         />
       ) : (
         <div>

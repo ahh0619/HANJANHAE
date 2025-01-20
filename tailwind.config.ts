@@ -89,12 +89,6 @@ const config: Config = {
         'gradient-main-banner':
           'linear-gradient(124deg, var(--primary-color) 29.95%, var(--secondary-250) 119.58%)',
       },
-
-      borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: 'calc(var(--radius) - 4px)',
-      },
     },
   },
   plugins: [require('tailwindcss-animate')],

@@ -23,7 +23,7 @@ const ReviewList = ({
     editingId,
     editComment,
     editRating,
-    errorMessage,
+    isEditValid,
     textareaRef,
     handleReviewEditClick,
     handleReviewSaveClick,
@@ -77,7 +77,6 @@ const ReviewList = ({
               profile_image={review.profile_image}
               editing={isEditing}
               editComment={editComment}
-              errorMessage={errorMessage}
               textareaRef={textareaRef}
               onEditCommentChange={handleCommentChange}
               onSave={() => handleReviewSaveClick(review.id)}
@@ -89,6 +88,7 @@ const ReviewList = ({
                 handleReviewEditClick(review.id, review.content, review.rating)
               }
               onDelete={() => handleReviewDelete(review.id)}
+              isEditValid={isEditValid}
             />
           </div>
         );
