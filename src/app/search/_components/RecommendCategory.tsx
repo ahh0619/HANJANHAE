@@ -1,11 +1,44 @@
+'use client';
+
+import useFilterStore from "@/store/filterStore";
+import useFocusStore from "@/store/focusStore";
+import useSearchStore from "@/store/keywordStore";
+import useResults from "@/store/resultStore";
+import useSortStore from "@/store/selectStore";
+
 const RecommendCategory = ({
   setSearchValue,
 }: {
   setSearchValue: (val: string) => void;
 }) => {
   const categories = ['증류주', '모주', '막걸리'];
+  const {
+    searchTriggerFetch,
+    keyword,
+    setKeyword,
+    setSearchTriggerFetch,
+    resetSearchStore,
+  } = useSearchStore();
+  const {
+    triggerFetch,
+    isFiltered,
+    resetFilters,
+    setIsFiltered,
+    setTriggerFetch,
+    setValues,
+  } = useFilterStore();
+  const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
+  const { clearResults } = useResults();
+  const { selectedSort, setSelectedSort } = useSortStore()
+
   const handleCategoryClick = (category: string) => {
-    setSearchValue(category); // 검색어 상태 업데이트
+    setSearchValue(category);
+    setKeyword(category);
+    clearResults();
+    setTriggerFetch(false);
+    setIsSearchFocuse(true);
+    setSearchTriggerFetch(true);
+    setSelectedSort('alphabetical');
   };
 
   return (

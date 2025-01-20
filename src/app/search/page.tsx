@@ -1,5 +1,3 @@
-import Logo from '@/components/layout/Logo';
-
 import SearchWrap from './_components/SearchWrap';
 
 const Search = () => {
