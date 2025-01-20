@@ -108,6 +108,10 @@ body {
   overflow-y: hidden; /* 세로 스크롤 비활성화 */
 }
 
+.html-overflow-hidden {
+  overflow-y:hidden;
+}
+
 /* 모달 시 스크롤 숨기기 */
 .scroll-hidden {
   /* 기본 스크롤 동작 유지 */
