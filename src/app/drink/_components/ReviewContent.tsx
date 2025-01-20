@@ -88,7 +88,6 @@ const ReviewContent = ({
       {/* 삭제 확인 모달 */}
       <Modal
         isOpen={isModalOpen}
-        onClose={handleCancelDelete}
         title="리뷰 삭제를 하시겠어요?"
         content="삭제한 리뷰는 복구할 수 없습니다."
         primaryAction={{
@@ -99,7 +98,6 @@ const ReviewContent = ({
           text: '취소하기',
           onClick: handleCancelDelete,
         }}
-        showCloseButton
       />
     </div>
   );

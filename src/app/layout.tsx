@@ -18,7 +18,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '어서와 한잔해',
+  title: '한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',
   icons: {
     icon: 'assets/icons/favicon.svg',
@@ -46,7 +46,7 @@ const RootLayout = ({
         <AuthProvider>
           <Providers>
             <KakaoInit />
-            <main className="m-auto mb-20 max-w-[375px]">{children}</main>
+            <main className="m-auto mb-20">{children}</main>
             <ScrollTop />
             <BottomNavBar />
           </Providers>

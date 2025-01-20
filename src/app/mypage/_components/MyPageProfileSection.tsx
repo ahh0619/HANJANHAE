@@ -37,7 +37,7 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
       {/* 프로필 수정 버튼 */}
       <button
         onClick={onEditClick}
-        className="ml-auto rounded-lg border border-primary px-4 py-2 text-label-mm text-primary transition hover:bg-primary hover:text-white"
+        className="ml-auto rounded-lg border border-primary px-4 py-2 text-label-mm text-primary"
       >
         프로필 수정
       </button>

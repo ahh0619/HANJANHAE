@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 type ModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   title: string;
   content: string;
   primaryAction?: {
