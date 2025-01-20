@@ -81,15 +81,15 @@ const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
         return drinks;
       } catch (error) {
         console.error('추천 데이터 파싱 실패:', error);
-        return await fetchRandomDrinks(10);
+        return await fetchRandomDrinks(5);
       }
     } else {
       console.error('OpenAI 실행 실패:', run);
-      return await fetchRandomDrinks(10);
+      return await fetchRandomDrinks(5);
     }
   } catch (error) {
     console.error('fetchRecommendedDrinks 함수 에러:', error);
-    return await fetchRandomDrinks(10);
+    return await fetchRandomDrinks(5);
   }
 };
 export const recommendByFood = async (foodCategory: string) => {

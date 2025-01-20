@@ -43,7 +43,7 @@ export default function ScrollTop() {
     visible && (
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-[68px] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-primary bg-etc-white shadow-lg transition-opacity duration-300 ${
+        className={`fixed bottom-[68px] right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-primary bg-etc-white transition-opacity duration-300 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
         aria-label="위로가기"

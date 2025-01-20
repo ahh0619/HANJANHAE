@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       }}
     >
       {/* 좋아요 버튼 */}
-      <div className="absolute bottom-[30px] right-0 z-10">
+      <div className="absolute bottom-[34px] right-0 z-10">
         <LikeButton drinkId={id} userId={userId} />
       </div>
 
