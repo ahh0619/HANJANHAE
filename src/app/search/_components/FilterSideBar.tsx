@@ -112,18 +112,19 @@ const FilterSideBar = () => {
   return (
     <div className="mt-[16px] flex items-center justify-between gap-2 rounded-lg">
       {/* 각 필터 버튼 */}
-      <div className="w-[287px] overflow-hidden">
+      <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
         <Swiper
           spaceBetween={10} // 슬라이드 간 간격
-          slidesPerView="auto" // 각 슬라이드 크기를 자동으로 조정
-          slidesPerGroup={1}
+          slidesPerView="auto"
           loop={false} // 처음과 끝에서 반복되지 않도록 설정
-          wrapperClass="w-full flex" // swiper-wrapper class명 추가
+          wrapperClass="w-fit flex" // swiper-wrapper class명 추가
+          onInit={(swiper) => swiper.update()}
+          onResize={(swiper) => swiper.update()}
         >
           {filters.map((filter, index) => (
-            <SwiperSlide key={index} className="flex-none">
-              <div className="flex items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-1 py-2 text-sm text-gray-700">
+            <SwiperSlide key={index} className="flex-none shrink-0">
+              <div className="flex w-fit items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-1 py-2 text-sm text-gray-700">
                 <span>{filter.label}</span>
                 <button
                   className="text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -160,19 +161,21 @@ const FilterSideBar = () => {
       </div>
 
       {/* 설정 아이콘 */}
-      <button
-        className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 focus:outline-none"
-        aria-label="필터 설정"
-        onClick={openModal}
-      >
-        <Image
-          src="/assets/icons/sliders-v-alt-white.svg"
-          alt="Slider_button"
-          width={20}
-          height={20}
-          className="cursor-pointer"
-        />
-      </button>
+      <div className="w-[full]">
+        <button
+          className="inline-block flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 focus:outline-none"
+          aria-label="필터 설정"
+          onClick={openModal}
+        >
+          <Image
+            src="/assets/icons/sliders-v-alt-white.svg"
+            alt="Slider_button"
+            width={20}
+            height={20}
+            className="cursor-pointer"
+          />
+        </button>
+      </div>
     </div>
   );
 };
