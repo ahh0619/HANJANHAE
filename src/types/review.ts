@@ -33,13 +33,13 @@ export type ReviewContentProps = {
   profile_image: string;
   editing: boolean;
   editComment: string;
-  errorMessage: string;
   textareaRef: RefObject<HTMLTextAreaElement>;
   onEditCommentChange: (value: string) => void;
   onSave: () => void;
   onCancel: () => void;
   updatedRating: number;
   onRatingChange: (newRating: number) => void;
+  isEditValid: boolean;
   canEdit: boolean;
   onEdit: () => void;
   onDelete: () => void;
