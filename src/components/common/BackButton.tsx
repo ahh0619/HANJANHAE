@@ -12,7 +12,7 @@ const BackButton = ({ className }: BackButtonProps) => {
 
   return (
     <button
-      className={`flex items-center py-2 ${className}`}
+      className={`flex items-center p-2 ${className}`}
       onClick={() => router.back()}
     >
       <Image
