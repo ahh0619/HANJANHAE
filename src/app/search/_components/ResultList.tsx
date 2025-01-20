@@ -13,6 +13,7 @@ import { SelectSorted } from './SelectSorted';
 import Skeleton from './Skeleton';
 
 const ResultList = ({ user }) => {
+
   const { isFiltered } = useFilterStore();
   const { isSearchFocus } = useFocusStore();
   const {
