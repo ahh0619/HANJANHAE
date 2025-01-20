@@ -26,11 +26,11 @@ const StepButton = ({
   };
 
   return (
-    <div className="fixed bottom-[60px] left-0 flex w-full flex-col items-center px-[20px]">
+    <div className="fixed bottom-[0px] left-0 flex w-full flex-col items-center px-[20px]">
       <button
         className={`w-[335px] rounded-[8px] px-[16px] py-[12px] text-label-xlm ${
           disabled
-            ? 'cursor-not-allowed bg-grayscale-200 text-grayscale-500'
+            ? 'cursor-not-allowed bg-grayscale-200 text-grayscale-50'
             : 'bg-primary text-grayscale-100'
         }`}
         onClick={onClick}

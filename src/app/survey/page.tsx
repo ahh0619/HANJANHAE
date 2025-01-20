@@ -67,57 +67,59 @@ const Page = () => {
   };
 
   return (
-    <Funnel>
-      <Step name="주종">
-        <PreferenceTypeSelection
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '도수')}
-          onPrev={() => router.push('/')}
-        />
-      </Step>
-      <Step name="도수">
-        <PreferenceAlcoholLevel
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '단맛')}
-          onPrev={() => handlePrev('주종')}
-        />
-      </Step>
-      <Step name="단맛">
-        <PreferenceSweetness
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '신맛')}
-          onPrev={() => handlePrev('도수')}
-        />
-      </Step>
-      <Step name="신맛">
-        <PreferenceAcidity
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '청량감')}
-          onPrev={() => handlePrev('단맛')}
-        />
-      </Step>
-      <Step name="청량감">
-        <PreferenceCarbonation
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '바디감')}
-          onPrev={() => handlePrev('신맛')}
-        />
-      </Step>
-      <Step name="바디감">
-        <PreferenceBody
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '안주')}
-          onPrev={() => handlePrev('청량감')}
-        />
-      </Step>
-      <Step name="안주">
-        <PreferenceFood
-          surveyData={surveyData}
-          onNext={(data) => handleNext(data, '완료')}
-          onPrev={() => handlePrev('바디감')}
-        />
-      </Step>
-    </Funnel>
+    <div className="flex justify-center">
+      <Funnel>
+        <Step name="주종">
+          <PreferenceTypeSelection
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '도수')}
+            onPrev={() => router.push('/')}
+          />
+        </Step>
+        <Step name="도수">
+          <PreferenceAlcoholLevel
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '단맛')}
+            onPrev={() => handlePrev('주종')}
+          />
+        </Step>
+        <Step name="단맛">
+          <PreferenceSweetness
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '신맛')}
+            onPrev={() => handlePrev('도수')}
+          />
+        </Step>
+        <Step name="신맛">
+          <PreferenceAcidity
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '청량감')}
+            onPrev={() => handlePrev('단맛')}
+          />
+        </Step>
+        <Step name="청량감">
+          <PreferenceCarbonation
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '바디감')}
+            onPrev={() => handlePrev('신맛')}
+          />
+        </Step>
+        <Step name="바디감">
+          <PreferenceBody
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '안주')}
+            onPrev={() => handlePrev('청량감')}
+          />
+        </Step>
+        <Step name="안주">
+          <PreferenceFood
+            surveyData={surveyData}
+            onNext={(data) => handleNext(data, '완료')}
+            onPrev={() => handlePrev('바디감')}
+          />
+        </Step>
+      </Funnel>
+    </div>
   );
 };
 

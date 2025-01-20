@@ -9,7 +9,9 @@ const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
 
   if (
-    ['/signup', '/signin', '/preferences/result'].includes(pathname) ||
+    ['/signup', '/signin', '/preferences/result', '/survey'].includes(
+      pathname,
+    ) ||
     pathname.startsWith('/drink') ||
     pathname.startsWith('/place') ||
     pathname.startsWith('/password')

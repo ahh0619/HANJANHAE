@@ -15,7 +15,7 @@ const Banner = () => {
   }, [fetchSurveyStatus]);
 
   return (
-    <div className="flex justify-center">
+    <div className="justify-cente flex w-full px-[20px]">
       {isSurveyCompleted ? <AfterBanner /> : <BeforeBanner />}
     </div>
   );

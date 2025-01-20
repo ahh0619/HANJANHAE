@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const AfterBanner = () => {
   return (
-    <section className="relative mx-[20px] flex h-[184px] w-[335px] flex-col items-start rounded-2xl bg-gradient-main-banner px-[20px] shadow-main-banner">
+    <section className="relative flex h-[184px] w-full flex-col items-start rounded-2xl bg-gradient-main-banner px-[20px] shadow-main-banner">
       <div className="flex flex-col gap-4">
         {/* 텍스트 영역 */}
         <div className="mt-[28px] text-lg font-bold text-white">
