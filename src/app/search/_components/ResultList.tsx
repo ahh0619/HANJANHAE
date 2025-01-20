@@ -78,8 +78,6 @@ const ResultList = ({ user }) => {
     hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
     fetchNextPage: activeFetchNextPage,
   });
-  console.log('sort', isFiltered);
-  console.log('filter', isSearchFocus);
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}

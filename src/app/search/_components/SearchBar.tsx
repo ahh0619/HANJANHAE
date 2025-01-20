@@ -33,8 +33,6 @@ const SearchBar = ({
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
   const { clearResults } = useResults();
   const { selectedSort, setSelectedSort } = useSortStore();
-  console.log(triggerFetch);
-  console.log(searchTriggerFetch);
   const handleReset = () => {
     resetStates(); // 저장된 정보 삭제
     resetFilters(); // 필터값 리셋
