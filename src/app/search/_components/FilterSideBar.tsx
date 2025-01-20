@@ -118,6 +118,8 @@ const FilterSideBar = () => {
           spaceBetween={10} // 슬라이드 간 간격
           slidesPerView="auto"
           loop={false} // 처음과 끝에서 반복되지 않도록 설정
+          observer={true} // DOM 변화 감지
+          observeParents={true} // 부모 크기 변화 감지
           wrapperClass="w-fit flex" // swiper-wrapper class명 추가
           onInit={(swiper) => swiper.update()}
           onResize={(swiper) => swiper.update()}
