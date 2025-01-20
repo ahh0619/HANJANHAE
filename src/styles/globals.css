@@ -104,9 +104,8 @@ body {
   --font-caption-sm: 10px medium 150%;
 }
 
-/* 모달 시 html, body 스크롤 제어*/
-.html-overflow-hidden {
-  overflow: hidden;
+.body-overflow-hidden {
+  overflow-y: hidden; /* 세로 스크롤 비활성화 */
 }
 
 /* 모달 시 스크롤 숨기기 */
