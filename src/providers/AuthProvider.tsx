@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
-import { checkUser, fetchUser, signin, signout } from '@/utils/auth/action';
+import { checkUser, fetchUser, signout } from '@/utils/auth/action';
 
 const AuthContext = createContext(null);
 
@@ -32,7 +32,20 @@ export const AuthProvider = ({ children }) => {
   /* 로그인 */
   const login = async (values: SignInDataType) => {
     try {
-      await signin(values);
+      const response = await fetch('/api/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (data.errorMessage) {
+        throw data.errorMessage;
+      }
+
       setIsAuthenticated(true);
     } catch (error) {
       throw error;
