@@ -92,7 +92,7 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="body-overflow-hidden scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
+          <div className="body-overflow-hidden html-overflow-hidden scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
             <FilterType />
           </div>
         </div>

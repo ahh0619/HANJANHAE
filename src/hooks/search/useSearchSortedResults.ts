@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
-import { filterDrinksByKeyword } from '@/utils/filter/action';
+import { filterKeywordSortedDrinks } from '@/utils/filter/action';
 
 const useSearchSortedResults = () => {
   const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
@@ -20,7 +20,7 @@ const useSearchSortedResults = () => {
   } = useInfiniteQuery({
     queryKey: ['SearchSortedDrinks', keyword, selectedSort === 'alphabetical'],
     queryFn: ({ pageParam = 1 }) =>
-      filterDrinksByKeyword({ keyword, page: pageParam }),
+      filterKeywordSortedDrinks({ keyword, page: pageParam }),
     getNextPageParam: (lastPage) =>
       lastPage.hasNextPage ? lastPage.nextPage : null,
     enabled: false,
