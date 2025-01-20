@@ -4,7 +4,7 @@ const Page = () => {
   return (
     <div>
       <div className="mb-[32px] flex h-[44px] w-full items-center justify-center px-2">
-        <h1 className="h-[32px] text-center text-title-xl">좋아요</h1>
+        <h1 className="text-title-xl leading-[44px]">좋아요</h1>
       </div>
       <LikesContent />
     </div>

@@ -25,7 +25,7 @@ const PreferencesForm = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <>
+    <div className="px-[19px]">
       <AlcoholTypeSelector
         preferences={preferences}
         handleTypeChange={handleTypeChange}
@@ -46,15 +46,15 @@ const PreferencesForm = () => {
       <button
         onClick={handleSubmit}
         disabled={!isFormComplete || !hasPreferencesChanged}
-        className={`mb-10 w-full rounded-md py-3 text-lg font-bold ${
+        className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm ${
           isFormComplete && hasPreferencesChanged
-            ? 'bg-black text-white'
-            : 'cursor-not-allowed bg-gray-300 text-gray-500'
+            ? 'bg-primary text-grayscale-100'
+            : 'cursor-not-allowed bg-grayscale-200 text-grayscale-500'
         }`}
       >
-        저장하기
+        수정하기
       </button>
-    </>
+    </div>
   );
 };
 
