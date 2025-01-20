@@ -6,7 +6,7 @@ const ProgressBar = ({ currentStep }: ProgressBarProps) => {
   const steps = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <div className="mt-[0px] flex h-[20px] w-full px-[20px]">
+    <div className="mt-[0px] flex h-[20px] w-full justify-center px-[20px]">
       {steps.map((step, index) => (
         <div key={step} className="flex items-center">
           {/* 동그라미 */}
