@@ -1,40 +1,74 @@
 import Link from 'next/link';
 
+import ProductCard from '@/components/common/ProductCard';
 import { Tables } from '@/types/supabase';
 
 type DrinkListProps = {
   drinks: Tables<'reco_results'>[];
   title: string;
+  userId: string | null;
 };
 
-const DrinkList = ({ drinks, title }: DrinkListProps) => {
+const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   return (
-    <div className="mx-auto max-w-2xl p-4">
-      <h1 className="mb-2 text-xl font-bold">{title}</h1>
-      <p className="mb-3 text-gray-600">
-        오늘은 추천 전통주를 드셔보시는 건 어떤가요?
-      </p>
-      <div className="space-y-6">
+    <div>
+      <Link href={'/'}>
+        <div className="flex h-[44px] w-full items-center">
+          <img
+            src="/assets/icons/chevron-left.svg"
+            alt="뒤로가기 아이콘"
+            width="24px"
+            height="24px"
+            className="m-[8px]"
+          />
+        </div>
+      </Link>
+      <div className="px-[20px]">
+        <div className="my-[36px]">
+          <h1 className="mb-2 text-title-lm">{title}</h1>
+          <p className="text-body-mm">
+            오늘은 추천 전통주를 드셔보시는 건 어떤가요?
+          </p>
+        </div>
         {drinks.map((drink) => {
           return (
-            <Link href={`/drink/${drink.name}`} key={drink.name}>
-              <div className="flex items-start border-b border-gray-200 py-6">
-                {/* 음료 이미지 */}
-                <div className="h-30 w-24 flex-shrink-0">
-                  <img
-                    src={drink.image}
-                    alt={drink.name}
-                    className="h-full w-full rounded-md object-cover"
-                  />
+            <div key={drink.name} className="mb-[20px] flex h-[190px]">
+              <ProductCard
+                id={drink.drink_id}
+                name={drink.name}
+                imageUrl={drink.image}
+                userId={userId}
+                height={'220px'}
+                imgHeight={'190px'}
+                isNameVisible={false}
+              />
+
+              <div className="ml-[20px]">
+                {/* 주종 */}
+                <div className="flex text-grayscale-900">
+                  <p className="w-[45px] text-title-sb">주종</p>
+                  <p className="] ml-[12px] w-[133px] text-body-sm">
+                    {drink.type}
+                  </p>
                 </div>
-                {/* 음료 정보 */}
-                <div className="ml-4">
-                  <h2 className="text-lg font-semibold">{drink.name}</h2>
-                  <p className="text-gray-600">{drink.type}</p>
-                  <p className="mt-2 text-sm text-gray-800">{drink.reason}</p>
+
+                {/* 술 이름 */}
+                <div className="mt-[12px] flex text-grayscale-900">
+                  <span className="w-[45px] text-title-sb">술 이름</span>
+                  <span className="ml-[12px] w-[133px] text-body-sm">
+                    {drink.name}
+                  </span>
+                </div>
+
+                {/* 추천 이유 */}
+                <div className="mt-[12px] flex text-grayscale-900">
+                  <p className="w-[45px] text-title-sb">추천 이유</p>
+                  <span className="ml-[12px] w-[133px] text-body-sm">
+                    {drink.reason}
+                  </span>
                 </div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

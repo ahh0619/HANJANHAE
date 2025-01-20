@@ -13,6 +13,7 @@ type ProductCardProps = {
   height?: string;
   marginBottom?: string;
   imgHeight?: string | number;
+  isNameVisible?: boolean;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -24,6 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   height = '186px',
   marginBottom = '0px',
   imgHeight = '152px',
+  isNameVisible = true,
 }) => {
   return (
     <div
@@ -45,10 +47,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       >
         {/* 이미지 */}
         <div
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50"
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gray-100 bg-opacity-50">
+          <div
+            className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] bg-gray-100 bg-opacity-50"
+            style={{ height: imgHeight }}
+          >
             <Image
               src={imageUrl}
               alt={name}
@@ -59,9 +64,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         </div>
         {/* 이름 */}
-        <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
-          {name}
-        </div>
+        {isNameVisible && (
+          <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
+            {name}
+          </div>
+        )}
       </Link>
     </div>
   );

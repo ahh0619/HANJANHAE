@@ -129,6 +129,7 @@ export const addRecoResult = async ({
     reason: item.reason,
     user_id: userId,
     image: item.image,
+    drink_id: item.drink_id,
   }));
 
   console.log('insertdata: ', insertData);
@@ -194,9 +195,13 @@ const fetchDrinksWithReason = async (
       continue; // 에러 발생 시 스킵
     }
 
+    console.log('drinkdata: ', drinkData);
+
     if (drinkData) {
+      const { id, ...rest } = drinkData;
       results.push({
-        ...drinkData,
+        ...rest,
+        drink_id: id,
         reason,
       });
     }
