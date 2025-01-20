@@ -64,10 +64,10 @@ const SearchBar = ({
     <div
       className={`${
         isSearchFocus || isFiltered ? 'mt-0' : 'mt-0'
-      } m-0 mx-auto flex w-[335px] items-center bg-white transition-all duration-300`}
+      } m-0 mx-auto flex w-full items-center bg-white transition-all duration-300`}
     >
       <div
-        className={`flex h-[48px] w-[335px] items-center justify-between gap-2 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
+        className={`flex h-[48px] w-full items-center justify-between gap-2 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
           isSearchFocus || isFiltered
             ? 'border border-grayscale-900 bg-white'
             : 'bg-gray-100'
