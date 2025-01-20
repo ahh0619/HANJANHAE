@@ -33,11 +33,11 @@ const AlcholeStrength = () => {
     setAlcoholStrength([strengthRanges.min, strengthRanges.max]);
   };
 
-  console.log(alcoholStrength);
-  console.log(values);
   return (
-    <div className="mb-6">
-      <h3 className="mb-2 text-sm font-semibold">도수로 찾기</h3>
+    <div className="my-10 h-[102px]">
+      <h3 className="mb-[22px] text-title-mb font-bold leading-[135%] text-grayscale-900">
+        도수로 찾기
+      </h3>
       <DualRangeSlider
         label={(value) => value}
         value={values}

@@ -15,7 +15,10 @@ import {
 export function SelectSorted() {
   const { selectedSort, setSelectedSort } = useSortStore();
   return (
-    <Select value={selectedSort} onValueChange={setSelectedSort}>
+    <Select
+      value={selectedSort}
+      onValueChange={setSelectedSort}
+    >
       <SelectTrigger className="w-[100px]">
         <SelectValue placeholder={selectedSort} />
       </SelectTrigger>
