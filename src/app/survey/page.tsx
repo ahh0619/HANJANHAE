@@ -55,7 +55,7 @@ const Page = () => {
     };
 
     saveSurveyData();
-  }, [currentStep, router, surveyData]);
+  }, [currentStep]);
 
   const handleNext = (data: Partial<Tables<'survey'>>, nextStep: string) => {
     setSurveyData((prev) => ({ ...prev, ...data }));
