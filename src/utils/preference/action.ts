@@ -175,7 +175,7 @@ export const deleteRecoResult = async (userId: string) => {
   }
 };
 
-const fetchDrinksWithReason = async (
+export const fetchDrinksWithReason = async (
   jsonData: { name: string; reason: string }[],
 ): Promise<Tables<'reco_results'>[]> => {
   const supabase = await createClient();
