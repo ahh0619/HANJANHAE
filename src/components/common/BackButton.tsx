@@ -12,14 +12,14 @@ const BackButton = ({ className }: BackButtonProps) => {
 
   return (
     <button
-      className={`flex items-center ${className}`}
+      className={`flex items-center py-2 ${className}`}
       onClick={() => router.back()}
     >
       <Image
         src="/assets/icons/chevron-left.svg"
         alt="Back"
-        width={40}
-        height={40}
+        width={24}
+        height={24}
       />
     </button>
   );
