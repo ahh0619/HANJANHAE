@@ -12,8 +12,6 @@ const UserInitializer = () => {
   const { user, isAgree } = useAuthStore();
   const { handleAgree } = useSocial();
 
-  console.log('user => ', user);
-
   useEffect(() => {
     const setAgreeTerms = async () => {
       if (user && !user.agree_terms) {
