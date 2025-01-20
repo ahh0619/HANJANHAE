@@ -40,6 +40,7 @@ const SearchBar = ({
     resetFilters(); // 필터값 리셋
     setIsFiltered(false); // 필터 상태정보
     setIsSearchFocuse(false);
+    onChange(''); // value 값  지우기
     resetSearchStore(); // keyword 지우기
     setValues([1, 3]);
     setSelectedSort('alphabetical'); // 초기값 세팅
@@ -88,7 +89,7 @@ const SearchBar = ({
             value={value}
             onChange={handleInputChange}
             placeholder="무엇을 찾으시나요?"
-            className="--font-caption-lm h-[24px] w-[223px] flex-shrink-0 bg-transparent leading-normal"
+            className="h-[24px] w-[223px] flex-shrink-0 bg-transparent text-caption-lm leading-normal focus:outline-none"
             ref={inputRef}
             onKeyDown={handleKeyDown}
           />

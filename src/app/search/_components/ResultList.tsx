@@ -6,11 +6,15 @@ import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
 import useSearchSortedResults from '@/hooks/search/useSearchSortedResults';
+import useFilterStore from '@/store/filterStore';
+import useFocusStore from '@/store/focusStore';
 
 import { SelectSorted } from './SelectSorted';
 import Skeleton from './Skeleton';
 
 const ResultList = ({ user }) => {
+  const { isFiltered } = useFilterStore();
+  const { isSearchFocus } = useFocusStore();
   const {
     SearchSortData,
     totalCount: searchSortTotal,
@@ -74,8 +78,8 @@ const ResultList = ({ user }) => {
     hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
     fetchNextPage: activeFetchNextPage,
   });
-  console.log('sort', sortSearchIsLoading);
-  console.log('filter', sortFilterIsLoading);
+  console.log('sort', isFiltered);
+  console.log('filter', isSearchFocus);
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
@@ -110,7 +114,7 @@ const ResultList = ({ user }) => {
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
 
-      {activeData.length === 0 && (
+      {(isFiltered || isSearchFocus) && activeData.length === 0 && (
         <div className="mt-8 text-center text-gray-500">
           검색 결과가 존재하지 않습니다.
         </div>
