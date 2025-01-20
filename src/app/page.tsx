@@ -12,10 +12,10 @@ import { fetchPlaces } from '@/utils/place/action';
 // import { getRecommendations } from '@/utils/recommend/recommendationService';
 
 // ISR 설정
-export const revalidate = 3600;
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
-  title: '어서와 한잔해',
+  title: '한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',
 };
 

@@ -21,7 +21,7 @@ export function SelectSorted() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="alphabetical">기본 순</SelectItem>
+          <SelectItem value="alphabetical">가나다 순</SelectItem>
           <SelectItem value="liked">좋아요 순</SelectItem>
         </SelectGroup>
       </SelectContent>

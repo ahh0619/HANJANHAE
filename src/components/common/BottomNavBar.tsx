@@ -61,7 +61,7 @@ const BottomNavBar: React.FC = () => {
             <Link
               href={item.href}
               className={`flex flex-col items-center text-sm ${
-                pathname === item.href ? item.activeColor : 'text-gray-500'
+                pathname === item.href ? item.activeColor : 'text-grayscale-900'
               }`}
             >
               <Image
@@ -73,7 +73,7 @@ const BottomNavBar: React.FC = () => {
               />
               <span
                 className={`mt-1 text-label-sm ${
-                  pathname === item.href ? item.activeColor : ''
+                  pathname === item.href ? `${item.activeColor} font-bold` : ''
                 }`}
               >
                 {item.name}

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import useFilterStore from '@/store/filterStore';
 import useSortStore from '@/store/selectStore';
-import { filterDrinks, FilterParams } from '@/utils/filter/action';
+import { FilterParams, filterSortedDrinks } from '@/utils/filter/action';
 
 const useFilterSortedResults = () => {
   const {
@@ -30,7 +30,7 @@ const useFilterSortedResults = () => {
         selectedSort === 'alphabetical',
       ],
       queryFn: ({ pageParam = 1 }) =>
-        filterDrinks({ ...filterParams, page: pageParam }),
+        filterSortedDrinks({ ...filterParams, page: pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage.hasNextPage ? lastPage.nextPage : null,
       initialPageParam: 1,
