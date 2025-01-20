@@ -35,6 +35,13 @@ const Container = () => {
       <h1 className="mb-12 py-[6px] text-center text-title-xl text-grayscale-900">
         회원가입
       </h1>
+      {step === 2 && (
+        <Button
+          category="cancel"
+          label="취소"
+          handleClick={() => router.push('/signin')}
+        />
+      )}
 
       {step === 1 && (
         <Terms

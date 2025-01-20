@@ -6,12 +6,16 @@ import { SignUpDataType } from '@/types/Auth';
 import { signup } from '@/utils/auth/action';
 import { manageSignUpError } from '@/utils/auth/manageError';
 
+type SignUpProps = {
+  handleError: (message: string) => void;
+};
+
 const signupSchema = z
   .object({
     email: z
       .string()
       .nonempty('아이디를 입력해 주세요.')
-      .email('유효한 이메일 형식이 아닙니다.'),
+      .email('이메일 형식으로 입력해주세요.'),
     password: z
       .string()
       .nonempty('비밀번호를 입력해 주세요.')
@@ -37,7 +41,7 @@ const signupSchema = z
     path: ['passwordConfirm'],
   });
 
-const useSignUp = () => {
+const useSignUp = ({ handleError }: SignUpProps) => {
   const {
     register,
     handleSubmit,
@@ -57,7 +61,7 @@ const useSignUp = () => {
     try {
       await signup(values);
     } catch (error) {
-      window.alert(manageSignUpError(error.message));
+      handleError(manageSignUpError(error.message));
     }
   };
 

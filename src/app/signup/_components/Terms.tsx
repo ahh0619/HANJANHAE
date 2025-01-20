@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import Button from '@/components/auth/Button';
 import CheckField from '@/components/auth/CheckField';
+import Modal from '@/components/auth/Modal';
 import useSocial from '@/hooks/auth/useSocial';
 import { useAuthStore } from '@/store/authStore';
 
@@ -14,6 +15,8 @@ type TermsProps = {
 
 const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   const router = useRouter();
+
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { isSocial, setIsAgree } = useAuthStore();
   const { handleGoogle, handleKakao } = useSocial();
@@ -44,7 +47,7 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   /* 다음 단계로 이동 */
   const handleMoveNext = (provider: string) => {
     if (!terms.adult || !terms.use || !terms.personal) {
-      window.alert('모든 항목에 동의해 주세요.');
+      setIsOpenModal(true);
     } else {
       setIsAgree(true);
       provider === 'email' && handleMoveStep(2);
@@ -56,7 +59,7 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
   /* 소셜 로그인 완료 */
   const handleFinishSocial = () => {
     if (!terms.adult || !terms.use || !terms.personal) {
-      window.alert('모든 항목에 동의해 주세요.');
+      setIsOpenModal(true);
     } else {
       setIsAgree(true);
       router.push('/');
@@ -75,7 +78,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
       <div className="mb-10 flex flex-col gap-1">
         <CheckField
-          category="signup"
           id="all"
           label="모두 동의하기"
           checked={terms.adult && terms.use && terms.personal}
@@ -85,7 +87,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
         <div className="my-2 h-[1px] bg-grayscale-200"></div>
 
         <CheckField
-          category="signup"
           id="adult"
           label="만 19세 이상 성인"
           checked={terms.adult}
@@ -94,7 +95,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
         <div className="flex justify-between">
           <CheckField
-            category="signup"
             id="use"
             label="홈페이지 이용약관"
             checked={terms.use}
@@ -109,7 +109,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
         <div className="flex justify-between">
           <CheckField
-            category="signup"
             id="personal"
             label="개인정보수집 및 이용동의"
             checked={terms.personal}
@@ -146,6 +145,14 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
             />
           </div>
         </>
+      )}
+
+      {isOpenModal && (
+        <Modal
+          title="약관 동의는 필수입니다."
+          content="모든 항목에 동의해주세요."
+          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+        />
       )}
     </div>
   );

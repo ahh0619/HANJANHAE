@@ -19,7 +19,7 @@ const DetailSection = ({ place }: DetailSectionProps) => {
   const [category, setCategory] = useState<string>(CATEGORY_DATA[0]);
 
   return (
-    <>
+    <div className="px-5">
       <Category
         items={CATEGORY_DATA.map((item) => ({
           name: item,
@@ -41,7 +41,7 @@ const DetailSection = ({ place }: DetailSectionProps) => {
       {category === CATEGORY_DATA[2] && (
         <KakaoMap location_x={place.location_x} location_y={place.location_y} />
       )}
-    </>
+    </div>
   );
 };
 

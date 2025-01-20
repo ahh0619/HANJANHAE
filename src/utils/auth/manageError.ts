@@ -4,7 +4,7 @@ export const manageSignUpError = (message: string) => {
     case 'User already registered':
       return '이미 존재하는 아이디입니다.';
     default:
-      return '회원가입에 실패하였습니다.';
+      return '회원가입에 실패했습니다.';
   }
 };
 
@@ -12,8 +12,8 @@ export const manageSignUpError = (message: string) => {
 export const manageSignInError = (message: string) => {
   switch (message) {
     case 'Invalid login credentials':
-      return '아이디와 비밀번호가 일치하지 않습니다.';
+      return '일치하는 계정 정보가 없습니다.';
     default:
-      return '로그인에 실패하였습니다.';
+      return '로그인에 실패했습니다.';
   }
 };

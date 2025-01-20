@@ -12,7 +12,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
       {category === 'main' && (
         <button
           type="submit"
-          className="w-full rounded-lg bg-primary p-3 text-label-xlm text-grayscale-100"
+          className="w-full rounded-[8px] bg-primary p-3 text-label-xlm text-grayscale-100"
           onClick={handleClick}
         >
           {label}
@@ -87,19 +87,28 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
         </div>
       )}
 
-      {category === 'back' && (
+      {category.includes('back') && (
         <button
           type="button"
-          className={`absolute left-2 top-[2px] flex items-center justify-center`}
+          className="absolute left-2 top-[2px] flex items-center justify-center"
           onClick={handleClick}
         >
           <Image
             width={40}
             height={40}
-            src="/assets/icons/back.svg"
+            src={`/assets/icons/${category === 'back' ? 'back' : 'back_gray'}.svg`}
             alt="back"
           />
         </button>
+      )}
+
+      {category === 'cancel' && (
+        <p
+          className="absolute right-2 top-[2px] flex h-10 w-10 cursor-pointer items-center justify-center text-label-lm text-grayscale-900"
+          onClick={handleClick}
+        >
+          {label}
+        </p>
       )}
     </>
   );

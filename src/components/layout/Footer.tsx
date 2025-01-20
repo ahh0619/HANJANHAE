@@ -5,9 +5,15 @@ import { usePathname } from 'next/navigation';
 const Footer = () => {
   const pathname = usePathname();
 
-  return (
-    !['/signup', '/signin', '/survey'].includes(pathname) && <div> Footer</div>
-  );
+  if (
+    ['/signup', '/signin', '/survey'].includes(pathname) ||
+    pathname.startsWith('/password') ||
+    pathname.startsWith('/place')
+  ) {
+    return null;
+  }
+
+  return <div> Footer</div>;
 };
 
 export default Footer;

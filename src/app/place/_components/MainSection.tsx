@@ -1,4 +1,9 @@
-import BackButton from '@/components/common/BackButton';
+'use client';
+
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
+import Button from '@/components/auth/Button';
 import ShareButton from '@/components/common/ShareButton';
 import { PlaceWithMenusType } from '@/types/place';
 
@@ -7,21 +12,23 @@ type MainSectionProps = {
 };
 
 const MainSection = ({ place }: MainSectionProps) => {
+  const router = useRouter();
+
   return (
     <>
       <div className="relative">
-        <BackButton className="absolute left-2 top-2" />
-        <div className="flex h-64 w-full items-center justify-center overflow-hidden bg-gray-200">
-          <img
-            className="h-full w-full object-cover"
-            src={place.image}
-            alt={place.name}
-          />
-        </div>
+        <Button category="back-place" label="" handleClick={() => router.back()} />
+        <Image
+          className="mb-3 h-[280px] w-full object-cover"
+          width={280}
+          height={280}
+          src={place.image}
+          alt={place.name}
+        />
       </div>
 
-      <div className="flex items-center justify-between px-2">
-        <p className="text-xl font-bold">{place.name}</p>
+      <div className="mb-3 flex items-center justify-between px-2 px-5">
+        <p className="text-title-xl text-grayscale-900">{place.name}</p>
         <ShareButton
           title={place.name}
           text={place.address}
