@@ -42,7 +42,7 @@ const ReviewForm = ({ onSubmit }: ReviewFormProps) => {
           placeholder="리뷰를 남겨주세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          maxLength={101}
+          maxLength={100}
         ></textarea>
         <span className="absolute bottom-5 right-4 text-caption-mm text-grayscale-600">
           {comment.length}/100
