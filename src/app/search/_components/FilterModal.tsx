@@ -80,7 +80,7 @@ const FilterModal = () => {
             >
               ✕
             </button>
-            <h2 className="text-title-xl font-bold leading-[135%] text-[var(--Grayscale-900M)]">
+            <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
             <button
@@ -92,7 +92,7 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
+          <div className="body-overflow-hidden scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
             <FilterType />
           </div>
         </div>
