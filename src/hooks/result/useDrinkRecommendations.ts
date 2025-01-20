@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useSurveyStore } from '@/store/surveyStore';
-import {
-  fetchRecoData,
-  fetchSurveyData,
-  recommendDrinks,
-} from '@/utils/preference/action';
+import { fetchRecoData, fetchSurveyData } from '@/utils/preference/action';
 
 const useDrinkRecommendations = (userId: string) => {
   const [drinks, setDrinks] = useState(null);
@@ -34,14 +30,22 @@ const useDrinkRecommendations = (userId: string) => {
           return;
         }
 
-        // Step 3: chat gpt로 전통주 추천받고 테이블에 추가
-        const updatedRecoData = await recommendDrinks({
-          surveyData,
-          userId,
+        // 라우트 핸들러로 추천 요청
+        const response = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ surveyData, userId }),
         });
+
+        if (!response.ok) {
+          throw new Error('추천 생성 실패');
+        }
+
+        const updatedRecoData = await response.json();
         console.log('updatedRecoData: ', updatedRecoData);
 
-        // Step 4: 전통주 추천 결과를 state에 넣어주고
         setDrinks(updatedRecoData);
         setIsSurveyCompleted(true);
       } catch (error) {
