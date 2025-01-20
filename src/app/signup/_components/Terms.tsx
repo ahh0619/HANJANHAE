@@ -78,7 +78,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
       <div className="mb-10 flex flex-col gap-1">
         <CheckField
-          category="signup"
           id="all"
           label="모두 동의하기"
           checked={terms.adult && terms.use && terms.personal}
@@ -88,7 +87,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
         <div className="my-2 h-[1px] bg-grayscale-200"></div>
 
         <CheckField
-          category="signup"
           id="adult"
           label="만 19세 이상 성인"
           checked={terms.adult}
@@ -97,7 +95,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
         <div className="flex justify-between">
           <CheckField
-            category="signup"
             id="use"
             label="홈페이지 이용약관"
             checked={terms.use}
@@ -112,7 +109,6 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
 
         <div className="flex justify-between">
           <CheckField
-            category="signup"
             id="personal"
             label="개인정보수집 및 이용동의"
             checked={terms.personal}
