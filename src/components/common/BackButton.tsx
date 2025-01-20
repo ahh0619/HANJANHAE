@@ -15,7 +15,12 @@ const BackButton = ({ className }: BackButtonProps) => {
       className={`flex items-center ${className}`}
       onClick={() => router.back()}
     >
-      <Image src="/assets/icons/back.svg" alt="Back" width={40} height={40} />
+      <Image
+        src="/assets/icons/chevron-left.svg"
+        alt="Back"
+        width={40}
+        height={40}
+      />
     </button>
   );
 };
