@@ -38,8 +38,8 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                 name={drink.name}
                 imageUrl={drink.image}
                 userId={userId}
-                height={'220px'}
-                imgHeight={'190px'}
+                height={'216px'}
+                imgHeight={'186px'}
                 isNameVisible={false}
               />
 
