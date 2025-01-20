@@ -5,7 +5,6 @@ import Script from 'next/script';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
-import Footer from '@/components/layout/Footer';
 import { AuthProvider } from '@/providers/AuthProvider';
 import Providers from '@/providers/Provider';
 
@@ -50,7 +49,6 @@ const RootLayout = ({
             <main className="m-auto mb-20 max-w-[375px]">{children}</main>
             <ScrollTop />
             <BottomNavBar />
-            <Footer />
           </Providers>
         </AuthProvider>
       </body>

@@ -66,16 +66,13 @@ export const fetchRandomDrinks = async (
 ): Promise<DrinkType[]> => {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from('drinks')
-    .select('*')
-    .order('random()', { ascending: true })
-    .limit(limit);
+  const { data, error } = await supabase.rpc('random_drinks', {
+    _limit: limit,
+  });
 
   if (error) {
     console.error('Error fetching random drinks:', error.message);
     return [];
   }
-
   return data || [];
 };
