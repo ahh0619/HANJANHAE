@@ -6,10 +6,9 @@ import PlaceSection from '@/components/home/PlaceSection';
 import PopularDrinkSection from '@/components/home/PopularDrinkSection';
 import Logo from '@/components/layout/Logo';
 import Welcome from '@/components/layout/Welcome';
-import ThematicRecommender from '@/components/recommend/ThematicRecommender';
+// import ThematicRecommender from '@/components/recommend/ThematicRecommender';
 import { fetchPopularDrinks } from '@/utils/drink/action';
 import { fetchPlaces } from '@/utils/place/action';
-import { getRecommendations } from '@/utils/recommend/recommendationService';
 
 // ISR 설정
 export const revalidate = 43200;
@@ -20,8 +19,8 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const [recommendations, popularDrinks, places] = await Promise.all([
-    getRecommendations(),
+  const [popularDrinks, places] = await Promise.all([
+    // getRecommendations(),
     fetchPopularDrinks(),
     fetchPlaces(),
   ]);
@@ -31,7 +30,7 @@ const Home = async () => {
       <Logo />
       <Welcome />
       <Banner />
-      <ThematicRecommender recommendations={recommendations} />
+      {/* <ThematicRecommender recommendations={recommendations} /> */}
       <PopularDrinkSection drinks={popularDrinks} />
       <PlaceSection places={places} />
       <UserInitializer />

@@ -13,9 +13,10 @@ import Toast from './Toast';
 type LikeButtonProps = {
   drinkId: string;
   userId: string | null;
+  likeStatus: boolean;
 };
 
-const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
+const LikeButton = ({ drinkId, userId, likeStatus }: LikeButtonProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,7 +48,9 @@ const LikeButton = ({ drinkId, userId }: LikeButtonProps) => {
       >
         <HeartIcon
           className={`h-6 w-6 transition-colors ${
-            data?.liked && userId ? 'fill-primary text-primary' : 'text-black'
+            likeStatus || (data?.liked && userId)
+              ? 'fill-primary text-primary'
+              : 'text-black'
           }`}
         />
       </button>

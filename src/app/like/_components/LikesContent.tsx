@@ -67,6 +67,7 @@ const LikesContent = () => {
                 name={like.drinks.name}
                 imageUrl={like.drinks.image}
                 userId={like.user_id}
+                likeStatus={true}
                 width={'163px'}
                 height={'241px'}
                 marginBottom={'20px'}

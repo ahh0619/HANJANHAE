@@ -14,6 +14,7 @@ type ProductCardProps = {
   marginBottom?: string;
   imgHeight?: string | number;
   isNameVisible?: boolean;
+  likeStatus?: boolean;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -26,6 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   marginBottom = '0px',
   imgHeight = '152px',
   isNameVisible = true,
+  likeStatus = false,
 }) => {
   return (
     <div
@@ -38,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* 좋아요 버튼 */}
       <div className="absolute bottom-[34px] right-0 z-10">
-        <LikeButton drinkId={id} userId={userId} />
+        <LikeButton drinkId={id} userId={userId} likeStatus={likeStatus} />
       </div>
 
       <Link
