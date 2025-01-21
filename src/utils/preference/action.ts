@@ -222,7 +222,10 @@ export const fetchSurveyData = async (
     .single();
 
   if (error) {
-    throw new Error(`설문조사 가져오기에 실패했습니다: ${error!.message}`);
+    // console.log('error.message', error);
+    // throw new Error(`설문조사 가져오기에 실패했습니다: ${error!.message}`);
+    // TODO: 나중에 수정
+    return null;
   }
 
   return data;

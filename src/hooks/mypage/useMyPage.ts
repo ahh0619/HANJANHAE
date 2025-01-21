@@ -6,6 +6,7 @@ import { fetchUser } from '@/utils/auth/action';
 type UserProfile = {
   nickname: string;
   profile_image: string | null;
+  id: string;
 };
 
 const useMyPage = (initialUserProfile: UserProfile) => {

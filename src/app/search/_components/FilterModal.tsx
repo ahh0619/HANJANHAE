@@ -98,7 +98,7 @@ const FilterModal = () => {
         </div>
 
         {/* Apply Button */}
-        <div className="fixed bottom-[0] left-1/2 z-[102] w-[375px] -translate-x-1/2 transform bg-white p-[12px_20px] pb-[33px]">
+        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-full -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
           <button
             onClick={handleApplyfilters}
             className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
