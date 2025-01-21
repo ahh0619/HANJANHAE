@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
@@ -114,52 +113,50 @@ const FilterSideBar = () => {
       {/* 각 필터 버튼 */}
       <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
-        <Swiper
-          spaceBetween={10} // 슬라이드 간 간격
-          slidesPerView="auto"
-          loop={false} // 처음과 끝에서 반복되지 않도록 설정
-          observer={true} // DOM 변화 감지
-          observeParents={true} // 부모 크기 변화 감지
-          wrapperClass="w-fit flex" // swiper-wrapper class명 추가
-          onInit={(swiper) => swiper.update()}
-          onResize={(swiper) => swiper.update()}
+        <div
+          className="scrollbar-hide flex w-full space-x-2 overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none', // Firefox
+            msOverflowStyle: 'none', // IE/Edge
+          }}
         >
           {filters.map((filter, index) => (
-            <SwiperSlide key={index} className="flex-none shrink-0">
-              <div className="flex w-fit items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-1 py-2 text-sm text-gray-700">
-                <span>{filter.label}</span>
-                <button
-                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                  aria-label={`${filter.label} 삭제`}
-                  onClick={() => {
-                    if (
-                      Array.isArray(filter.value) && // filter.value가 배열인지 확인
-                      Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
-                      filter.value.length === alcoholStrength.length && // 길이 비교
-                      filter.value.every(
-                        (val, index) => val === alcoholStrength[index],
-                      ) // 모든 요소 비교
-                    ) {
-                      handleRemoveStrength();
-                    } else if (filter.original in tastePreferences) {
-                      handleRemoveTastePreference(filter.original); // 맛 필터 삭제
-                    } else {
-                      handleRemoveType(filter.original); // 술 타입 필터 삭제
-                    }
-                  }}
-                >
-                  <Image
-                    src="/assets/icons/cancelGray.svg"
-                    alt="Cancel_button"
-                    width={16}
-                    height={16}
-                    className="cursor-pointer"
-                  />
-                </button>
-              </div>
-            </SwiperSlide>
+            <div
+              key={index}
+              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-2 text-sm text-gray-700"
+            >
+              <span>{filter.label}</span>
+              <button
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                aria-label={`${filter.label} 삭제`}
+                onClick={() => {
+                  if (
+                    Array.isArray(filter.value) && // filter.value가 배열인지 확인
+                    Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
+                    filter.value.length === alcoholStrength.length && // 길이 비교
+                    filter.value.every(
+                      (val, index) => val === alcoholStrength[index],
+                    ) // 모든 요소 비교
+                  ) {
+                    handleRemoveStrength();
+                  } else if (filter.original in tastePreferences) {
+                    handleRemoveTastePreference(filter.original); // 맛 필터 삭제
+                  } else {
+                    handleRemoveType(filter.original); // 술 타입 필터 삭제
+                  }
+                }}
+              >
+                <Image
+                  src="/assets/icons/cancelGray.svg"
+                  alt="Cancel_button"
+                  width={16}
+                  height={16}
+                  className="cursor-pointer"
+                />
+              </button>
+            </div>
           ))}
-        </Swiper>
+        </div>
       </div>
 
       {/* 설정 아이콘 */}
