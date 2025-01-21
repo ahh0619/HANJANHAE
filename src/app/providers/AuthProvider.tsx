@@ -4,7 +4,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
-import { checkUser, fetchUser, signout } from '@/utils/auth/action';
+
+import { checkUser, fetchUser, signout } from '../actions/auth';
 
 const AuthContext = createContext(null);
 

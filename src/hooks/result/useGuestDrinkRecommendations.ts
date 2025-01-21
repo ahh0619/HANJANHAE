@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
+import { recommendDrinks } from '@/app/actions/preference';
 import { useSurveyStore } from '@/store/surveyStore';
 import { Tables } from '@/types/supabase';
-import { recommendDrinks } from '@/utils/preference/action';
 
 const useGuestDrinkRecommendations = () => {
   const [drinks, setDrinks] = useState<Tables<'reco_results'>[] | null>(null);

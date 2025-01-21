@@ -9,9 +9,8 @@ import {
   SignUpDataType,
   UserType,
 } from '@/types/Auth';
-
-import { adminClient } from '../supabase/admin';
-import { createClient } from '../supabase/server';
+import { adminClient } from '@/utils/supabase/admin';
+import { createClient } from '@/utils/supabase/server';
 
 /* 회원가입 */
 export const signup = async (data: SignUpDataType): Promise<void> => {

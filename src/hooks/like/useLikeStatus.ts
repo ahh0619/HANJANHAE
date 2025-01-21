@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { checkLikeStatus } from '@/utils/like/action';
+import { checkLikeStatus } from '@/app/actions/like';
 
 export const useLikeStatus = (drinkId: string, userId: string) => {
   const fetchLikeStatus = async () => {

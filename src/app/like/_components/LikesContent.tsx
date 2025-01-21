@@ -3,9 +3,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
+import { fetchLikesByUser } from '@/app/actions/like';
 import ProductCard from '@/components/common/ProductCard';
 import { useAuthStore } from '@/store/authStore';
-import { fetchLikesByUser } from '@/utils/like/action';
 
 import SkeletonPage from './SkeletonPage';
 

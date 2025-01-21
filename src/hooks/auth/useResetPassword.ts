@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { resetPassword } from '@/app/actions/auth';
 import { ResetPasswordType } from '@/types/Auth';
-import { resetPassword } from '@/utils/auth/action';
 
 type ResetPasswordProps = {
   token: string;

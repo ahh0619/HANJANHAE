@@ -1,4 +1,4 @@
-import { fetchPlace } from '@/utils/place/action';
+import { fetchPlace } from '@/app/actions/place';
 
 import DetailSection from '../_components/DetailSection';
 import MainSection from '../_components/MainSection';

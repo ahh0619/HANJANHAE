@@ -4,12 +4,13 @@ import UserInitializer from '@/components/auth/UserInitializer';
 import Banner from '@/components/home/Banner';
 import PlaceSection from '@/components/home/PlaceSection';
 import PopularDrinkSection from '@/components/home/PopularDrinkSection';
+import ThematicRecommender from '@/components/home/ThematicRecommender';
 import Logo from '@/components/layout/Logo';
 import Welcome from '@/components/layout/Welcome';
-import ThematicRecommender from '@/components/recommend/ThematicRecommender';
-import { fetchPopularDrinks } from '@/utils/drink/action';
-import { fetchPlaces } from '@/utils/place/action';
 import { getRecommendations } from '@/utils/recommend/recommendationService';
+
+import { fetchPopularDrinks } from './actions/drink';
+import { fetchPlaces } from './actions/place';
 
 // ISR 설정
 export const revalidate = 43200;

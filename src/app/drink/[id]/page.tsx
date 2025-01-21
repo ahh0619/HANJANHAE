@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
+import { fetchDrinks } from '@/app/actions/drink';
+import { fetchFoodPairings } from '@/app/actions/foodpairing';
 import DrinkDetail from '@/app/drink/_components/DrinkDetail';
-import { fetchDrinks } from '@/utils/drink/action';
-import { fetchFoodPairings } from '@/utils/foodpairing/action';
 
 type DrinkDetailPageProps = {
   params: { id: string };

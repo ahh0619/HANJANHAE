@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 
 import useFunnel from '@/hooks/survey/useFunnel';
 import { Tables } from '@/types/supabase';
-import { fetchUser } from '@/utils/auth/action';
-import { addSurvey } from '@/utils/preference/action';
 
+import { fetchUser } from '../actions/auth';
+import { addSurvey } from '../actions/preference';
 import PreferenceAcidity from './_components/PreferenceAcidity';
 import PreferenceAlcoholLevel from './_components/PreferenceAlcoholLevel';
 import PreferenceBody from './_components/PreferenceBody';

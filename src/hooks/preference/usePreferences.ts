@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
 import { useAuthStore } from '@/store/authStore';
 import { Tables } from '@/types/supabase';
-import { fetchSurveyData, updateSurvey } from '@/utils/preference/action';
 
 const usePreferences = () => {
   const [preferences, setPreferences] = useState<Tables<'survey'> | null>(null);

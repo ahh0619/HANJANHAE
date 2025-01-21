@@ -1,4 +1,4 @@
-import { fetchUser } from '@/utils/auth/action';
+import { fetchUser } from '@/app/actions/auth';
 
 import DrinkAuthReco from './_components/DrinkAuthReco';
 import DrinkGuestReco from './_components/DrinkGuestReco';

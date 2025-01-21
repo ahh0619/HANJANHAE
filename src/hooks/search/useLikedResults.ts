@@ -1,10 +1,10 @@
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import { getPopularDrinks } from '@/app/actions/filter';
 import useFilterStore from '@/store/filterStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
-import { getPopularDrinks } from '@/utils/filter/action';
 
 const useFilterLikedResults = () => {
   const { resetFilters, setTriggerFetch, setIsFiltered } = useFilterStore();

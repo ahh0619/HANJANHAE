@@ -4,9 +4,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useAuth } from '@/providers/AuthProvider';
+import { deleteUser } from '@/app/actions/auth';
+import { useAuth } from '@/app/providers/AuthProvider';
 import { useAuthStore } from '@/store/authStore';
-import { deleteUser } from '@/utils/auth/action';
 
 const MyPageAccountOptions = () => {
   const router = useRouter();

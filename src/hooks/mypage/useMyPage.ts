@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-import { fetchUser } from '@/utils/auth/action';
+import { fetchUser } from '@/app/actions/auth';
 
 type UserProfile = {
   nickname: string;

@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 
+import { AuthProvider } from '@/app/providers/AuthProvider';
+import Provider from '@/app/providers/Provider';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
-import { AuthProvider } from '@/providers/AuthProvider';
-import Providers from '@/providers/Provider';
 
 import '@/styles/globals.css';
 
@@ -44,12 +44,12 @@ const RootLayout = ({
       </head>
       <body className="antialiased">
         <AuthProvider>
-          <Providers>
+          <Provider>
             <KakaoInit />
             <main className="m-auto mb-32">{children}</main>
             <ScrollTop />
             <BottomNavBar />
-          </Providers>
+          </Provider>
         </AuthProvider>
       </body>
     </html>

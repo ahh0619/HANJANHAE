@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import { FilterParams, filterSortedDrinks } from '@/app/actions/filter';
 import useFilterStore from '@/store/filterStore';
 import useSortStore from '@/store/selectStore';
-import { FilterParams, filterSortedDrinks } from '@/utils/filter/action';
 
 const useFilterSortedResults = () => {
   const {

@@ -13,7 +13,7 @@ import Toast from './Toast';
 type LikeButtonProps = {
   drinkId: string;
   userId: string | null;
-  likeStatus: boolean;
+  likeStatus?: boolean;
 };
 
 const LikeButton = ({ drinkId, userId, likeStatus }: LikeButtonProps) => {

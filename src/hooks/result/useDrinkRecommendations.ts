@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { fetchRecoData, fetchSurveyData } from '@/app/actions/preference';
 import { useSurveyStore } from '@/store/surveyStore';
-import { fetchRecoData, fetchSurveyData } from '@/utils/preference/action';
 
 const useDrinkRecommendations = (userId: string) => {
   const [drinks, setDrinks] = useState(null);

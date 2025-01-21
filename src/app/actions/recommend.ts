@@ -2,7 +2,7 @@
 
 import { OpenAI } from 'openai';
 
-import { fetchDrinksByNames, fetchRandomDrinks } from '@/utils/drink/action';
+import { fetchDrinksByNames, fetchRandomDrinks } from './drink';
 
 const openai = new OpenAI({
   organization: process.env.ORGANIZATION_ID,

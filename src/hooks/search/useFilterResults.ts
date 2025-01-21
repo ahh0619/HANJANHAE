@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import { filterDrinks, FilterParams } from '@/app/actions/filter';
 import useFilterStore from '@/store/filterStore';
-import { filterDrinks, FilterParams } from '@/utils/filter/action';
 
 const useFilterResults = () => {
   const {
@@ -55,20 +55,20 @@ const useFilterResults = () => {
 
 // useInfiniteQuery 페이지네이션 부분
 
-  // const {
-  //   data: filterData,
-  //   isLoading,
-  //   isError,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ['filterDrinks', filterParams],
-  //   queryFn: async () => {
-  //     const filtered = await filterDrinks(filterParams);
-  //     return filtered;
-  //   },
-  //   enabled: false,
-  //   staleTime: 1000 * 60 * 5,
-  //   retry: 1,
-  // });
+// const {
+//   data: filterData,
+//   isLoading,
+//   isError,
+//   refetch,
+// } = useQuery({
+//   queryKey: ['filterDrinks', filterParams],
+//   queryFn: async () => {
+//     const filtered = await filterDrinks(filterParams);
+//     return filtered;
+//   },
+//   enabled: false,
+//   staleTime: 1000 * 60 * 5,
+//   retry: 1,
+// });
 
 export default useFilterResults;

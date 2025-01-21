@@ -1,4 +1,8 @@
-import { recommendByFood, recommendByMood, recommendBySeason } from './action';
+import {
+  recommendByFood,
+  recommendByMood,
+  recommendBySeason,
+} from '@/app/actions/recommend';
 
 const getCurrentSeason = (): string => {
   const month = new Date().getMonth() + 1;

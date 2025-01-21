@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useAuth } from '@/providers/AuthProvider';
+import { useAuth } from '@/app/providers/AuthProvider';
 import { SignInDataType } from '@/types/Auth';
 import { manageSignInError } from '@/utils/auth/manageError';
 

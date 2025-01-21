@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
-import { fetchUser } from '@/utils/auth/action';
-
+import { fetchUser } from '../actions/auth';
 import MyPageComponent from './_components/MyPageComponent';
 
 export async function generateMetadata(): Promise<Metadata> {

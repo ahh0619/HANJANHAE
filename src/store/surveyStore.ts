@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { fetchUser } from '@/utils/auth/action';
-import { hasSurveyRecord } from '@/utils/preference/action';
+import { fetchUser } from '@/app/actions/auth';
+import { hasSurveyRecord } from '@/app/actions/preference';
 
 interface SurveyState {
   isSurveyCompleted: boolean;
