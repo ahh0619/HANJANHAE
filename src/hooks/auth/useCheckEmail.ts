@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { sendEmailForResetPassword } from '@/app/actions/auth';
 import { CheckEmailType } from '@/types/Auth';
-import { sendEmailForResetPassword } from '@/utils/auth/action';
 
 type CheckEmailProps = {
   handleMessage: (message: string[]) => void;

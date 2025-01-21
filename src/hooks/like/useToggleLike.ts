@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
-import { toggleLike } from '@/utils/like/action';
+import { toggleLike } from '@/app/actions/like';
 
 type LikeStatus = { liked: boolean };
 

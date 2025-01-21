@@ -3,8 +3,7 @@
 import { createServerClient } from '@supabase/ssr';
 
 import { PlaceType, PlaceWithMenusType } from '@/types/place';
-
-import { createClient } from '../supabase/server';
+import { createClient } from '@/utils/supabase/server';
 
 /* 다이닝바 목록 가져오기 */
 export const fetchPlaces = async (): Promise<PlaceType[]> => {

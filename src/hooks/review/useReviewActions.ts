@@ -5,17 +5,17 @@ import {
 } from '@tanstack/react-query';
 
 import {
+  deleteReview,
+  fetchReviews,
+  submitReview,
+  updateReview,
+} from '@/app/actions/review';
+import {
   InfiniteQueryData,
   Review,
   ReviewSubmitData,
   User,
 } from '@/types/review';
-import {
-  deleteReview,
-  fetchReviews,
-  submitReview,
-  updateReview,
-} from '@/utils/review/action';
 
 export const useReviewActions = (drinkId: string, user: User | null) => {
   const queryClient = useQueryClient();

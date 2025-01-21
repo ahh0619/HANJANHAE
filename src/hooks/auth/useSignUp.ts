@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { signup } from '@/app/actions/auth';
 import { SignUpDataType } from '@/types/Auth';
-import { signup } from '@/utils/auth/action';
 import { manageSignUpError } from '@/utils/auth/manageError';
 
 type SignUpProps = {

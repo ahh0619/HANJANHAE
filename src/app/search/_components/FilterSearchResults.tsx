@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { fetchUser } from '@/app/actions/auth';
 import { UserType } from '@/types/Auth';
-import { fetchUser } from '@/utils/auth/action';
 
 import ResultList from './ResultList';
 

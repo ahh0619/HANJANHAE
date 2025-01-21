@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-import {
-  addRecoResult,
-  fetchDrinksWithReason,
-} from '@/utils/preference/action';
+import { addRecoResult, fetchDrinksWithReason } from '@/app/actions/preference';
 
 const openai = new OpenAI({
   organization: process.env.ORGANIZATION_ID,

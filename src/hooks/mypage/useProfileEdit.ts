@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
-import { checkNickname, updateUserProfile } from '@/utils/mypage/action';
+import { checkNickname, updateUserProfile } from '@/app/actions/mypage';
 import { createClient } from '@/utils/supabase/client';
 
 type User = {

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { fetchUser } from '@/utils/auth/action';
+import { fetchUser } from '@/app/actions/auth';
 
 import Modal from '../common/Modal';
 
