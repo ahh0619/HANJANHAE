@@ -6,14 +6,14 @@ interface PopupProps {
 const Popup = ({ isOpen, onClose }: PopupProps) => {
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 flex items-end bg-black/50 transition-opacity duration-300 ${
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
     >
       <div
-        className={`w-full max-w-md rounded-t-[24px] bg-white transition-transform duration-300 ${
+        className={`w-full max-w-lg rounded-t-[24px] bg-white transition-transform duration-300 ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
-        } custom-scrollbar h-[92vh] max-h-[92vh] overflow-y-auto`} // 커스텀 스크롤바 클래스 추가
+        } custom-scrollbar h-[90vh] max-h-[90vh] overflow-y-auto`}
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫히지 않음
       >
         {/* 닫기 버튼 */}
