@@ -20,7 +20,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'bg-background ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 w-full items-center justify-between rounded-t-md px-3 py-2 text-label-mm text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+      'bg-background ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-10 w-full items-center justify-between px-3 py-2 text-label-mm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
     {...props}
@@ -62,13 +62,13 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex h-[65px] w-full cursor-default select-none items-center justify-between rounded-[8px] rounded-md bg-white px-3 py-2 text-label-mm shadow-md focus:border-none focus:bg-secondary-100 focus:outline-none focus:ring-0',
+      'relative flex h-[65px] w-[100px] cursor-default select-none items-center justify-center rounded-[8px] bg-white px-3 py-2 text-label-mm shadow-md focus:border-none focus:bg-secondary-100 focus:outline-none focus:ring-0',
       className,
     )}
     {...props}
   >
     {/* 항목 텍스트 및 체크 아이콘 */}
-    <div className="flex items-center gap-1">
+    <div className="flex w-full items-center justify-between">
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator>
         <Image
