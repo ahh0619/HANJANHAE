@@ -11,19 +11,20 @@ type DrinkListProps = {
 
 const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   return (
-    <div>
-      <Link href={'/'}>
-        <div className="flex h-[44px] w-full items-center">
+    <div className="mx-auto flex w-full max-w-md flex-col">
+      <Link href={'/'} className="flex w-full justify-center">
+        <div className="flex h-[44px] w-[367px] items-center">
           <img
             src="/assets/icons/chevron-left.svg"
             alt="뒤로가기 아이콘"
-            width="24px"
-            height="24px"
-            className="m-[8px]"
+            width="40px"
+            height="40px"
+            className="p-[8px]"
           />
         </div>
       </Link>
-      <div className="px-[20px]">
+
+      <div className="mx-auto">
         <div className="my-[36px]">
           <h1 className="mb-2 text-title-lm">{title}</h1>
           <p className="text-body-mm">
@@ -63,9 +64,9 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                 {/* 추천 이유 */}
                 <div className="mt-[12px] flex text-grayscale-900">
                   <p className="w-[45px] text-title-sb">추천 이유</p>
-                  <span className="ml-[12px] w-[133px] text-body-sm">
+                  <p className="ml-[12px] w-[133px] text-body-sm">
                     {drink.reason}
-                  </span>
+                  </p>
                 </div>
               </div>
             </div>

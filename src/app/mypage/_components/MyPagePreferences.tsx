@@ -1,29 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import { fetchSurveyData } from '@/utils/preference/action';
+import { useSurveyStore } from '@/store/surveyStore';
 
 const MyPagePreferences = ({ userId }: { userId: string }) => {
-  const [hasSurveyData, setHasSurveyData] = useState(false);
+  const { isSurveyCompleted, fetchSurveyStatus } = useSurveyStore();
 
   useEffect(() => {
-    const fetchSurvey = async () => {
-      const surveyData = await fetchSurveyData(userId);
-
-      if (surveyData) {
-        setHasSurveyData(true);
-      }
-    };
-
-    fetchSurvey();
-  }, []);
+    fetchSurveyStatus();
+  }, [fetchSurveyStatus]);
 
   return (
     <div className="mt-8 flex w-full justify-center px-5">
       {/* 배너 전체 */}
       <Link
-        href={hasSurveyData ? '/preferences/customization' : '/survey'}
+        href={isSurveyCompleted ? '/preferences/customization' : '/survey'}
         className="relative flex h-[72px] w-full items-center rounded-xl bg-gradient-banner hover:opacity-90"
       >
         {/* 왼쪽 아이콘 및 텍스트 */}
