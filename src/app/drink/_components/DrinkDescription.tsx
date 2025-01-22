@@ -3,13 +3,7 @@
 import LikeButton from '@/components/common/LikeButton';
 import ShareButton from '@/components/common/ShareButton';
 import { useAuthStore } from '@/store/authStore';
-
-type DrinkDescriptionProps = {
-  name: string;
-  imageUrl: string;
-  description: string | null;
-  drinkId: string;
-};
+import { DrinkDescriptionProps } from '@/types/drink';
 
 const DrinkDescription = ({
   name,

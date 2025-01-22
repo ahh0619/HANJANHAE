@@ -6,19 +6,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 import { useAuthStore } from '@/store/authStore';
-import { Database } from '@/types/supabase';
+import { DrinkType } from '@/types/drink';
 
 import ProductCard from '../common/ProductCard';
-
-type Drink = Database['public']['Tables']['drinks']['Row'];
 
 type Recommendations = {
   season: string;
   foodCategory: string;
   mood: string;
-  seasonRecommendations: Drink[];
-  foodRecommendations: Drink[];
-  moodRecommendations: Drink[];
+  seasonRecommendations: DrinkType[];
+  foodRecommendations: DrinkType[];
+  moodRecommendations: DrinkType[];
 };
 
 type ThematicRecommenderProps = {

@@ -1,4 +1,4 @@
-import { Database } from '@/types/supabase';
+import { DrinkDetailProps } from '@/types/drink';
 
 import DrinkBasicInfo from './DrinkBasicInfo';
 import DrinkDescription from './DrinkDescription';
@@ -7,13 +7,6 @@ import DrinkTasteProfile from './DrinkTasteProfile';
 import DynamicHeader from './DynamicHeader';
 import FoodPairing from './FoodPairing';
 import ReviewSection from './ReviewSection';
-
-type Drink = Database['public']['Tables']['drinks']['Row'];
-
-type DrinkDetailProps = {
-  drink: Drink;
-  foodPairings: { food_name: string; food_image: string | null }[];
-};
 
 const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
   return (
