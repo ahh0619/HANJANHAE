@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import OptimizedImage from './OptimizedImage';
+
 type PlaceCardProps = {
   id: string;
   name: string;
@@ -14,9 +16,10 @@ const PlaceCard = ({ id, name, image }: PlaceCardProps) => {
     >
       {/* 이미지 */}
       <div className="aspect-[4/3] w-full overflow-hidden">
-        <img
+        <OptimizedImage
           src={image}
           alt={name}
+          fill
           className="h-full w-full rounded-lg object-cover"
         />
       </div>

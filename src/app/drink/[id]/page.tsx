@@ -37,7 +37,7 @@ const DrinkDetailPage = async ({ params }: DrinkDetailPageProps) => {
 
   if (!drink) {
     return (
-      <div className="mx-auto max-w-md p-4 text-center text-gray-500">
+      <div className="mx-auto p-4 text-center text-gray-500">
         <h1 className="text-2xl font-bold">주류 정보를 찾을 수 없습니다.</h1>
         <p>올바른 ID를 입력했는지 확인해주세요.</p>
       </div>

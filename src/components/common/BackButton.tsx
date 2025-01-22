@@ -1,7 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+
+import OptimizedImage from './OptimizedImage';
 
 type BackButtonProps = {
   className?: string;
@@ -15,7 +16,7 @@ const BackButton = ({ className }: BackButtonProps) => {
       className={`flex items-center p-2 ${className}`}
       onClick={() => router.back()}
     >
-      <Image
+      <OptimizedImage
         src="/assets/icons/chevron-left.svg"
         alt="Back"
         width={24}
