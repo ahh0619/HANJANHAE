@@ -34,15 +34,15 @@ const DynamicHeader = ({
 
   return (
     <div
-      className={`fixed left-0 top-0 z-50 w-full bg-etc-white text-grayscale-900 shadow-md transition-all ${
+      className={`fixed left-1/2 top-0 z-50 w-full max-w-[600px] -translate-x-1/2 transform bg-etc-white text-grayscale-900 shadow-md transition-all ${
         scrolled ? '' : 'hidden'
       }`}
     >
-      <div className="mx-auto flex w-full max-w-[600px] items-center justify-between p-4">
+      <div className="flex w-full items-center justify-between p-4">
         {/* 뒤로가기 버튼과 주류 이름 */}
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-1 items-center space-x-2">
           <BackButton />
-          <p className="max-w-[150px] truncate text-title-xl text-grayscale-900">
+          <p className="flex-1 truncate break-words text-title-xl text-grayscale-900">
             {name}
           </p>
         </div>
