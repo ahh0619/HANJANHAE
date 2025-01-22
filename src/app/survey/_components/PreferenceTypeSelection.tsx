@@ -53,13 +53,13 @@ const PreferenceTypeSelection = ({
 
   return (
     <div
-      className={`mx-auto flex flex-col items-center${
+      className={`flex flex-col items-center ${
         isPopupOpen ? 'overflow-hidden' : ''
       }`}
     >
       {/* 제목 */}
-      <div className="relative mb-[32px] flex h-[44px] w-full items-center">
-        <div className="absolute left-[0px]">
+      <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
+        <div className="absolute left-[8px]">
           <BackButton />
         </div>
         <h1 className="mx-auto text-title-xl text-grayscale-900">
@@ -77,7 +77,7 @@ const PreferenceTypeSelection = ({
         <p className="text-title-lb text-grayscale-900">(중복 선택 가능)</p>
       </div>
 
-      <div className="flex w-[335px] flex-wrap content-start items-start gap-x-[16px] gap-y-[12px]">
+      <div className="flex w-[375px] flex-wrap content-start items-start gap-x-[16px] gap-y-[12px] px-[20px]">
         {options.map((option) => (
           <button
             key={option}
@@ -93,7 +93,7 @@ const PreferenceTypeSelection = ({
         ))}
       </div>
 
-      <div className="mt-[48px] flex h-[48px] w-full items-center">
+      <div className="mt-[48px] flex h-[48px] w-full items-center px-[20px]">
         <p
           className="my-auto flex h-[24px] w-[147px] items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
           onClick={openPopup}

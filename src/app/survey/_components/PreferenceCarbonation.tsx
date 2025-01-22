@@ -36,10 +36,14 @@ const PreferenceCarbonation = ({
   return (
     <div className="flex flex-col items-center">
       {/* 제목 */}
-      <div className="relative mb-[32px] flex h-[44px] w-full items-center">
-        <div className="absolute left-[12px]">
-          <img src={'/assets/icons/chevron-left.svg'} onClick={onPrev} />
-        </div>
+      <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
+        <img
+          src={'/assets/icons/chevron-left.svg'}
+          onClick={onPrev}
+          className="absolute left-[8px] p-[8px]"
+          width={'40px'}
+          height={'40px'}
+        />
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
         </h1>
