@@ -49,7 +49,7 @@ const PreferencesForm = () => {
         className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm ${
           isFormComplete && hasPreferencesChanged
             ? 'bg-primary text-grayscale-100'
-            : 'cursor-not-allowed bg-grayscale-200 text-grayscale-500'
+            : 'cursor-not-allowed bg-grayscale-200 text-grayscale-50'
         }`}
       >
         수정하기

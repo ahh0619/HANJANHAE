@@ -10,13 +10,13 @@ const alcoholTypes = [
 
 const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
   return (
-    <div className="mb-10 h-[130px] w-[311px]">
+    <div className="mb-10 h-[130px] w-full">
       {/* 제목 */}
       <label className="mb-[16px] flex items-center text-title-mb">
-        술 종류로 찾기 (중복선택 가능)
+        1. 어떤 종류의 술을 선호하시나요? (중복선택 가능)
       </label>
       {/* 버튼 목록 */}
-      <div className="flex h-[92px] flex-wrap gap-x-[16px] gap-y-[12px]">
+      <div className="flex h-[92px] w-[311px] flex-wrap gap-x-[16px] gap-y-[12px]">
         {alcoholTypes.map((type) => (
           <button
             key={type.key}
