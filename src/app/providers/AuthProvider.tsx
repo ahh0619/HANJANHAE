@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   /* 로그인 */
   const login = async (values: SignInDataType) => {
     try {
-      const response = await fetch('/api/signin', {
+      const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

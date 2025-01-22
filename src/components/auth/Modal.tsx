@@ -15,7 +15,11 @@ const Modal = ({ title, content, button }: ModalProps) => {
       <div className="w-full max-w-80 rounded-2xl bg-etc-white p-5 text-center">
         <h2 className="mb-4 text-title-lb text-grayscale-900">{title}</h2>
         <p className="mb-5 text-label-lm text-grayscale-900">{content}</p>
-        <Button label={button.text} handleClick={button.onClick} />
+        <Button
+          category="modal"
+          label={button.text}
+          handleClick={button.onClick}
+        />
       </div>
     </div>
   );

@@ -19,6 +19,16 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
         </button>
       )}
 
+      {category === 'modal' && (
+        <button
+          type="submit"
+          className="w-full rounded-[8px] bg-primary p-3 text-title-mb text-grayscale-100"
+          onClick={handleClick}
+        >
+          {label}
+        </button>
+      )}
+
       {category === 'option' && (
         <p
           className="cursor-pointer p-3 text-label-lm text-grayscale-500"
