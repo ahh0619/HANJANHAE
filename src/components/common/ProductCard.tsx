@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 import LikeButton from './LikeButton';
+import OptimizedImage from './OptimizedImage';
 
 type ProductCardProps = {
   id: string;
@@ -52,12 +52,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
-          <Image
+          <OptimizedImage
             src={imageUrl}
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
+            fill
+            className="rounded-lg object-cover"
           />
         </div>
         {/* 이름 */}

@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+
+import OptimizedImage from './OptimizedImage';
 
 const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
@@ -51,8 +52,8 @@ const BottomNavBar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-grayscale-200 bg-etc-white shadow-md">
-      <ul className="flex items-center justify-between py-2">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-etc-white shadow-md">
+      <ul className="mx-auto flex w-full max-w-[600px] items-center justify-between border-t border-grayscale-200 py-2">
         {navItems.map((item) => (
           <li
             key={item.href}
@@ -64,7 +65,7 @@ const BottomNavBar: React.FC = () => {
                 pathname === item.href ? item.activeColor : 'text-grayscale-900'
               }`}
             >
-              <Image
+              <OptimizedImage
                 src={pathname === item.href ? item.activeIcon : item.icon}
                 alt={item.name}
                 width={24}

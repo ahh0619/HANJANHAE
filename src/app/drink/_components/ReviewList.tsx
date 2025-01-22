@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useRef } from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import Toast from '@/components/common/Toast';
 import { useReviewEditing } from '@/hooks/review/useReviewEditing';
 import { useToast } from '@/hooks/review/useToast';
@@ -97,7 +97,7 @@ const ReviewList = ({
       {/* 리뷰 없음 */}
       {reviews.length === 0 && (
         <div className="mt-20 flex flex-col items-center justify-center space-y-2 rounded-lg">
-          <Image
+          <OptimizedImage
             src="/assets/icons/no-reviews.svg"
             alt="등록된 리뷰가 없습니다."
             width={131}

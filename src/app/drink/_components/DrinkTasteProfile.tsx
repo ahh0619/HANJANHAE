@@ -1,13 +1,4 @@
-type Drink = {
-  sweetness: number | null;
-  acidity: number | null;
-  carbonation: number | null;
-  body: number | null;
-};
-
-type DrinkTasteProfileProps = {
-  drink: Drink;
-};
+import { DrinkTasteProfileProps } from '@/types/drink';
 
 const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
   const renderBar = (value: number | null | undefined, index: number) => {

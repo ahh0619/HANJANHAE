@@ -1,3 +1,5 @@
+import OptimizedImage from '@/components/common/OptimizedImage';
+
 type FoodPairingProps = {
   pairings: { food_name: string; food_image: string | null }[];
 };
@@ -15,9 +17,10 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
             {/* 음식 이미지 */}
             <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-grayscale-300">
               {food.food_image ? (
-                <img
+                <OptimizedImage
                   src={food.food_image}
                   alt={food.food_name}
+                  fill
                   className="h-full w-full object-cover"
                 />
               ) : (
