@@ -13,7 +13,7 @@ const Menu = ({ menus }: MenuProps) => {
         <div className="flex items-center gap-5" key={menu.id}>
           {menu.image && (
             <Image
-              className="h-24 w-[136px] object-cover"
+              className="h-24 w-[136px] object-cover rounded-[8px]"
               width={136}
               height={96}
               src={menu.image}

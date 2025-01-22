@@ -14,17 +14,9 @@ type SignInProps = {
 const signinSchema = z.object({
   email: z
     .string()
-    .nonempty('아이디를 입력해 주세요.')
+    .nonempty('아이디를 입력해주세요.')
     .email('이메일 형식으로 입력해주세요.'),
-  password: z
-    .string()
-    .nonempty('비밀번호를 입력해 주세요.')
-    .regex(
-      new RegExp(
-        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
-      ),
-      '영문, 숫자, 특수문자 포함 6 ~ 20자로 입력해 주세요',
-    ),
+  password: z.string().nonempty('비밀번호를 입력해주세요.'),
 });
 
 const useSignIn = ({ handleError }: SignInProps) => {

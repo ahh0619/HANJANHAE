@@ -18,7 +18,7 @@ const CheckField = ({ id, label, checked, handleChange }: CheckFieldProps) => {
         onChange={handleChange}
       />
       <label
-        className="flex items-center gap-2 text-body-sm text-grayscale-900"
+        className={`flex items-center gap-2 text-body-sm ${id === 'all' ? 'text-grayscale-500' : 'text-grayscale-900'}`}
         htmlFor={id}
       >
         <Image

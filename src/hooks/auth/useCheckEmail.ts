@@ -12,7 +12,7 @@ type CheckEmailProps = {
 const checkEmailSchema = z.object({
   email: z
     .string()
-    .nonempty('아이디를 입력해 주세요.')
+    .nonempty('아이디를 입력해주세요.')
     .email('이메일 형식으로 입력해주세요.'),
 });
 

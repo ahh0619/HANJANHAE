@@ -21,13 +21,13 @@ const InputField = <T extends FieldValues>({
         {label}
       </label>
       <input
-        className="rounded-[8px] border border-grayscale-300 p-3 text-caption-lm"
+        className={`rounded-[8px] border ${error ? 'border-etc-red' : 'border-grayscale-300'} p-3 text-caption-lm focus:outline-none ${error ? 'focus:border-etc-red' : 'focus:border-grayscale-900'}`}
         type={type}
         id={id as string}
         autoComplete="off"
         {...register(id)}
       />
-      <p className="text-caption-sm text-grayscale-600">{error ?? '\u00A0'}</p>
+      <p className="text-caption-sm text-etc-red">{error ?? '\u00A0'}</p>
     </div>
   );
 };
