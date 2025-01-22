@@ -3,37 +3,32 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { deleteUser } from '@/app/actions/auth';
 import { useAuth } from '@/app/providers/AuthProvider';
+import Modal from '@/components/common/Modal';
 import { useAuthStore } from '@/store/authStore';
 
 const MyPageAccountOptions = () => {
   const router = useRouter();
 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { logout } = useAuth();
 
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      queryClient.removeQueries({ queryKey: ['userProfile'] });
-    } catch (error: any) {
-      window.alert('회원가입에 실패하였습니다.');
-    }
+    logout();
+    queryClient.removeQueries({ queryKey: ['userProfile'] });
   };
 
   const handleDeleteUser = async () => {
-    if (window.confirm('회원 탈퇴를 하시겠어요?')) {
-      try {
-        await deleteUser();
-        removeUser();
-      } catch (error: any) {
-        window.alert('회원 탈퇴에 실패하였습니다.');
-      }
-    }
+    setIsModalOpen(false);
+
+    deleteUser();
+    removeUser();
   };
 
   return (
@@ -83,11 +78,28 @@ const MyPageAccountOptions = () => {
       <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
         <button
           className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
-          onClick={handleDeleteUser}
+          onClick={() => setIsModalOpen(true)}
         >
           회원 탈퇴
         </button>
       </div>
+
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="회원 탈퇴를 하시겠어요?"
+          content="탈퇴 하시면 저장된 정보가 모두 사라집니다."
+          secondaryAction={{
+            text: '회원으로 남기',
+            onClick: () => setIsModalOpen(false),
+          }}
+          primaryAction={{
+            text: '탈퇴하기',
+            onClick: handleDeleteUser,
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -32,7 +32,7 @@ const Container = () => {
         label=""
         handleClick={() => (step === 1 ? router.push('/signin') : setStep(1))}
       />
-      <h1 className="mb-12 py-[6px] text-center text-title-xl text-grayscale-900">
+      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900">
         회원가입
       </h1>
       {step === 2 && (

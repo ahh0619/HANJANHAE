@@ -19,7 +19,7 @@ const MainSection = ({ place }: MainSectionProps) => {
       <div className="relative">
         <Button category="back-place" label="" handleClick={() => router.back()} />
         <Image
-          className="mb-3 h-[280px] w-full object-cover"
+          className="mb-3 h-[280px] w-full object-cover rounded-[8px]"
           width={280}
           height={280}
           src={place.image}

@@ -84,7 +84,9 @@ const Terms = ({ handleMoveStep, handleSelectTerms }: TermsProps) => {
           handleChange={handleToggleAll}
         />
 
-        <div className="my-2 h-[1px] bg-grayscale-200"></div>
+        <div className="relative my-2">
+          <div className="absolute left-[-20px] right-[-20px] h-[1px] bg-grayscale-200"></div>
+        </div>
 
         <CheckField
           id="adult"
