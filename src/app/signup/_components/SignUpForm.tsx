@@ -50,7 +50,9 @@ const SignUpForm = () => {
           />
         </div>
 
-        <Button label="회원가입" />
+        <div className="absolute bottom-16 -mx-5 w-full px-5">
+          <Button label="회원가입" />
+        </div>
       </form>
 
       {isOpenModal && (
