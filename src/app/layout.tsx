@@ -46,7 +46,7 @@ const RootLayout = ({
         <AuthProvider>
           <Provider>
             <KakaoInit />
-            <main className="m-auto mb-32">{children}</main>
+            <main className="m-auto mb-32 max-w-[600px]">{children}</main>
             <ScrollTop />
             <BottomNavBar />
           </Provider>
