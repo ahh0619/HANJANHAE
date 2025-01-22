@@ -38,16 +38,20 @@ const usePreferences = () => {
 
   const handleTypeChange = (type: string) => {
     setPreferences((prev) => {
-      const typesArray = prev.type ? prev.type.split(',') : [];
+      const typesArray = prev?.type ? prev.type.split(',') : [];
+      let updatedTypes;
+
       if (typesArray.includes(type)) {
-        const updatedTypes = typesArray
-          .filter((item) => item !== type)
-          .join(',');
-        return { ...prev, type: updatedTypes };
+        updatedTypes = typesArray.filter((item) => item !== type).join(',');
       } else {
-        const updatedTypes = [...typesArray, type].join(',');
-        return { ...prev, type: updatedTypes };
+        updatedTypes = [...typesArray, type].join(',');
       }
+
+      const isChanged = updatedTypes !== defaultPreferences?.type;
+
+      return isChanged
+        ? { ...prev, type: updatedTypes }
+        : { ...prev, type: defaultPreferences?.type };
     });
   };
 
