@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+
+import OptimizedImage from './OptimizedImage';
 
 const BottomNavBar: React.FC = () => {
   const pathname = usePathname();
@@ -64,7 +65,7 @@ const BottomNavBar: React.FC = () => {
                 pathname === item.href ? item.activeColor : 'text-grayscale-900'
               }`}
             >
-              <Image
+              <OptimizedImage
                 src={pathname === item.href ? item.activeIcon : item.icon}
                 alt={item.name}
                 width={24}

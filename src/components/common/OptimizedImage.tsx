@@ -6,8 +6,7 @@ const OptimizedImage = ({
   className = '',
   width,
   height,
-  layout = undefined,
-  objectFit = 'cover',
+  fill = false,
   ...props
 }: ImageProps) => {
   const getIconDimensions = (src: string) => {
@@ -31,20 +30,21 @@ const OptimizedImage = ({
 
   const dimensions = getIconDimensions(src as string);
 
-  const computedWidth = layout === 'fill' ? undefined : dimensions.width;
-  const computedHeight = layout === 'fill' ? undefined : dimensions.height;
+  const computedWidth = fill ? undefined : (width ?? dimensions.width);
+  const computedHeight = fill ? undefined : (height ?? dimensions.height);
 
   return (
-    <Image
-      src={src || ''}
-      alt={alt}
-      width={computedWidth}
-      height={computedHeight}
-      layout={layout}
-      objectFit={objectFit}
-      className={className}
-      {...props}
-    />
+    <div className={`relative ${fill ? 'h-full w-full' : ''} ${className}`}>
+      <Image
+        src={src || ''}
+        alt={alt}
+        width={computedWidth}
+        height={computedHeight}
+        fill={fill}
+        className={className}
+        {...props}
+      />
+    </div>
   );
 };
 
