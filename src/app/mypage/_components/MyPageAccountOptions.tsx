@@ -1,11 +1,11 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { deleteUser } from '@/app/actions/auth';
 import { useAuth } from '@/app/providers/AuthProvider';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { useAuthStore } from '@/store/authStore';
 
 const MyPageAccountOptions = () => {
@@ -46,7 +46,7 @@ const MyPageAccountOptions = () => {
           onClick={() => router.push('/password/check')}
         >
           <div className="flex h-12 w-12 items-center justify-center p-3">
-            <Image
+            <OptimizedImage
               src="/assets/icons/key.svg"
               alt="Key Icon"
               width={24}
@@ -65,7 +65,7 @@ const MyPageAccountOptions = () => {
           onClick={handleLogout}
         >
           <div className="flex h-12 w-12 items-center justify-center">
-            <Image
+            <OptimizedImage
               src="/assets/icons/logout.svg"
               alt="Logout Icon"
               width={24}

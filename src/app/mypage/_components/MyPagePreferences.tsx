@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { useSurveyStore } from '@/store/surveyStore';
 
 const MyPagePreferences = ({ userId }: { userId: string }) => {
@@ -20,7 +20,7 @@ const MyPagePreferences = ({ userId }: { userId: string }) => {
       >
         {/* 왼쪽 아이콘 및 텍스트 */}
         <div className="flex items-center">
-          <Image
+          <OptimizedImage
             src="/assets/icons/my_preference_button_image1.svg"
             alt="소주잔 아이콘"
             width={48}
@@ -33,7 +33,7 @@ const MyPagePreferences = ({ userId }: { userId: string }) => {
 
         {/* 오른쪽 아이콘 */}
         <div className="absolute right-2 top-[43px] -translate-y-1/2 transform">
-          <Image
+          <OptimizedImage
             src="/assets/icons/my_preference_button_image2.svg"
             alt="서류 아이콘"
             width={57}

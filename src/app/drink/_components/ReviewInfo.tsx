@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { ReviewInfoProps } from '@/types/review';
 
 const ReviewInfo = ({
@@ -21,7 +20,7 @@ const ReviewInfo = ({
     <div className="flex items-start space-x-3">
       {/* 프로필 이미지 */}
       <div className="relative h-14 w-14 overflow-hidden rounded-full">
-        <Image
+        <OptimizedImage
           src={profile_image || '/assets/icons/default_profile_image.svg'}
           alt={`${nickname || '유저'}의 프로필 이미지`}
           fill
@@ -56,7 +55,7 @@ const ReviewInfo = ({
               className={`h-6 w-6 ${editable ? 'cursor-pointer' : ''}`}
               onClick={() => editable && handleStarClick(index)}
             >
-              <Image
+              <OptimizedImage
                 src={
                   index < rating
                     ? '/assets/icons/star_pressed.svg'

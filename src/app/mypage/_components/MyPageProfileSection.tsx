@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 type MyPageProfileSectionProps = {
   userData: {
@@ -16,7 +16,7 @@ const MyPageProfileSection: React.FC<MyPageProfileSectionProps> = ({
     <div className="flex items-center rounded-lg bg-etc-white px-5">
       {/* 프로필 이미지 */}
       <div className="flex h-20 w-20 items-center overflow-hidden rounded-full">
-        <Image
+        <OptimizedImage
           src={
             userData.profile_image || '/assets/icons/default_profile_image.svg'
           }

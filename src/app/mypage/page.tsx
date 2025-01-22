@@ -23,7 +23,7 @@ const MyPage = async () => {
   const userProfile = await fetchUser();
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col items-center">
+    <div className="mx-auto flex min-h-screen flex-col items-center">
       <MyPageComponent initialUserProfile={userProfile} />
     </div>
   );
