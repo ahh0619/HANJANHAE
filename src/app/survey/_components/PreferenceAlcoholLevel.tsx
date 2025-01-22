@@ -32,11 +32,17 @@ const PreferenceAlcoholLevel = ({
   ];
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="mx-auto flex flex-col items-center">
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-full items-center">
-        <div className="absolute left-[12px]">
-          <img src={'/assets/icons/chevron-left.svg'} onClick={onPrev} />
+        <div className="absolute">
+          <img
+            src={'/assets/icons/chevron-left.svg'}
+            onClick={onPrev}
+            className="p-[8px]"
+            width={'40px'}
+            height={'40px'}
+          />
         </div>
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
@@ -47,7 +53,7 @@ const PreferenceAlcoholLevel = ({
       <ProgressBar currentStep={2} />
 
       {/* 질문 */}
-      <div className="my-[56px] w-full px-[20px]">
+      <div className="my-[56px] flex w-[335px]">
         <h3 className="text-title-lb text-grayscale-900">
           어느 정도 도수의 술을 선호하시나요?
         </h3>
