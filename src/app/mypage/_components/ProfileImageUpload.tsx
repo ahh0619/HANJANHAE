@@ -49,12 +49,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
         className="absolute -bottom-2 -right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-grayscale-500 bg-secondary-100 p-1 shadow-md"
         onClick={handleButtonClick}
       >
-        <OptimizedImage
-          src="/assets/icons/camera.svg"
-          alt="카메라 아이콘"
-          width={24}
-          height={24}
-        />
+        <OptimizedImage src="/assets/icons/camera.svg" alt="카메라 아이콘" />
       </button>
     </div>
   );

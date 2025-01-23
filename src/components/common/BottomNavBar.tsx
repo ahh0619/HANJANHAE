@@ -68,8 +68,6 @@ const BottomNavBar: React.FC = () => {
               <OptimizedImage
                 src={pathname === item.href ? item.activeIcon : item.icon}
                 alt={item.name}
-                width={24}
-                height={24}
                 className="transition-all"
               />
               <span

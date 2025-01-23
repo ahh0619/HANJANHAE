@@ -52,8 +52,6 @@ export default function ScrollTop() {
         <OptimizedImage
           src="/assets/icons/arrow-up.svg"
           alt="위로가기"
-          width={24}
-          height={24}
           className="text-primary"
         />
       </button>
