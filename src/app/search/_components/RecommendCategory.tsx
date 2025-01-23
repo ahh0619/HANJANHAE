@@ -1,7 +1,9 @@
 'use client';
 
-import useFilterStore from "@/store/filterStore";
-import useFocusStore from "@/store/focusStore";
+import { useQueryClient } from '@tanstack/react-query';
+
+import useFilterStore from '@/store/filterStore';
+import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
 
@@ -10,6 +12,7 @@ const RecommendCategory = ({
 }: {
   setSearchValue: (val: string) => void;
 }) => {
+  const queryClient = useQueryClient();
   const categories = ['증류주', '모주', '막걸리'];
   const {
     searchTriggerFetch,
@@ -30,6 +33,10 @@ const RecommendCategory = ({
   const { selectedSort, setSelectedSort } = useSortStore();
 
   const handleCategoryClick = (category: string) => {
+    queryClient.removeQueries({
+      queryKey: ['filterDrinks'],
+      exact: false,
+    });
     setSearchValue(category);
     setKeyword(category);
     setTriggerFetch(false);
