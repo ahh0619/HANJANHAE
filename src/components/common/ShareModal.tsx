@@ -52,8 +52,6 @@ const ShareModal: React.FC<ShareModalProps> = ({
                 <OptimizedImage
                   src={option.icon}
                   alt={option.label}
-                  width={48}
-                  height={48}
                   className="rounded"
                 />
                 <span className="w-20 truncate text-center text-label-mm text-black">

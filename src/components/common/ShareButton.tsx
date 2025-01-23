@@ -3,7 +3,7 @@
 import { Share2 } from 'lucide-react';
 import React, { useState } from 'react';
 
-import Toast from '@/components/common/Toast';
+import { useToast } from '@/app/providers/ToastProvider';
 import { copyLinkToClipboard, shareViaKakao } from '@/utils/share/shareUtils';
 
 import ShareModal from './ShareModal';
@@ -22,7 +22,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   imageUrl = 'https://via.placeholder.com/300',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const { openToast } = useToast();
 
   const shareOptions = [
     {
@@ -30,7 +30,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
       label: '링크 복사',
       onClick: () => {
         copyLinkToClipboard(url || window.location.href);
-        setToastMessage('클립보드에 복사되었어요');
+        openToast('클립보드에 복사되었어요', 3000);
       },
     },
     {
@@ -71,13 +71,6 @@ const ShareButton: React.FC<ShareButtonProps> = ({
         onClose={() => setIsOpen(false)}
         shareOptions={shareOptions}
       />
-      {toastMessage && (
-        <Toast
-          message={toastMessage}
-          duration={3000}
-          onClose={() => setToastMessage(null)}
-        />
-      )}
     </>
   );
 };

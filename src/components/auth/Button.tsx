@@ -79,7 +79,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
       {category.includes('back') && (
         <button
           type="button"
-          className="absolute left-2 top-[2px] flex items-center justify-center"
+          className="absolute left-2 top-[2px] flex items-center justify-center z-20"
           onClick={handleClick}
         >
           <OptimizedImage

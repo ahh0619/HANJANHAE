@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 type PlaceMapProps = {
@@ -13,6 +14,10 @@ const KakaoMap = ({ location_x, location_y }: PlaceMapProps) => {
 
   return (
     <div>
+      <Script
+        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+        strategy="beforeInteractive"
+      />
       <Map
         className="h-[200px] w-full bg-gray-200"
         center={{ lat: location_x, lng: location_y }}

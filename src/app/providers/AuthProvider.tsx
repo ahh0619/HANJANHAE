@@ -17,8 +17,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchSignedUser = async () => {
       try {
-        setUser(await fetchUser());
-        setIsAuthenticated(true);
+        const currentUser = await fetchUser();
+        setUser(currentUser);
+        setIsAuthenticated(!!currentUser);
       } catch (error) {
         setUser(null);
         setIsAuthenticated(false);
