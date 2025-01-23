@@ -41,7 +41,6 @@
 body {
   color: rgb(var(--gray-900));
   background: var(--white);
-  overflow-y: scroll;
   -webkit-overflow-scrolling: auto;
 }
 
@@ -125,4 +124,25 @@ body {
 
 .scroll-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+/* rc slider css */
+.rc-slider{
+  position:relative !important;
+  padding: 0 !important;
+  width:94.65% !important;
+  left:50%;
+  transform:translate(-50%)
+}
+
+.rc-slider-handle{
+  z-index:2 !important;
+  opacity: 1 !important;
+  width:20px !important;
+  height:20px !important;
+  background-color: white !important;
+  border-radius:20px !important;
+  border-color:var(--primary-100, #BF324B) !important;
+  border: solid 4px var(--primary-100, #BF324B) ! important;
+  margin-top: -6px !important;
 }

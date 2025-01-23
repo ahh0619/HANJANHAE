@@ -14,7 +14,7 @@ const useFilterLikedResults = () => {
 
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
-      queryKey: ['LikedDrinks', selectedSort === 'liked'],
+      queryKey: ['filterDrinks', selectedSort === 'liked'],
       queryFn: ({ pageParam = 1 }) => getPopularDrinks({ page: pageParam }),
       getNextPageParam: (lastPage) =>
         lastPage.hasNextPage ? lastPage.nextPage : null,

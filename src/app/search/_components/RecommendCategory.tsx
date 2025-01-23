@@ -2,9 +2,8 @@
 
 import useFilterStore from "@/store/filterStore";
 import useFocusStore from "@/store/focusStore";
-import useSearchStore from "@/store/keywordStore";
-import useResults from "@/store/resultStore";
-import useSortStore from "@/store/selectStore";
+import useSearchStore from '@/store/keywordStore';
+import useSortStore from '@/store/selectStore';
 
 const RecommendCategory = ({
   setSearchValue,
@@ -28,21 +27,20 @@ const RecommendCategory = ({
     setValues,
   } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
-  const { clearResults } = useResults();
-  const { selectedSort, setSelectedSort } = useSortStore()
+  const { selectedSort, setSelectedSort } = useSortStore();
 
   const handleCategoryClick = (category: string) => {
     setSearchValue(category);
     setKeyword(category);
-    clearResults();
     setTriggerFetch(false);
-    setIsSearchFocuse(true);
+    setIsFiltered(true);
+    setIsSearchFocuse(false);
     setSearchTriggerFetch(true);
     setSelectedSort('alphabetical');
   };
 
   return (
-    <div className="mt-[60px]">
+    <div className="relative mt-[60px] h-[475px] w-[100%] max-w-[448px]">
       <h2 className="font-title-lm mb-2 text-left text-grayscale-900">
         추천 검색어
       </h2>
