@@ -3,7 +3,7 @@ const FavoriteFoodInput = ({ preferences, handleFoodChange }) => {
     <div className="mb-[60px]">
       {/* 제목 */}
       <label className="mb-[16px] block text-title-mb leading-[21.6px] text-grayscale-900">
-        선호하는 안주를 알려주세요. <br />
+        7. 선호하는 안주를 알려주세요. <br />
         어울리는 전통주를 추천해드려요.
       </label>
       {/* 입력 필드 */}
@@ -12,7 +12,7 @@ const FavoriteFoodInput = ({ preferences, handleFoodChange }) => {
         value={preferences.food}
         onChange={handleFoodChange}
         placeholder="예) 골뱅이무침"
-        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:border-primary focus:outline-none focus:ring-1 focus:ring-gray-500"
+        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:outline-none"
       />
 
       {/* 힌트 텍스트 */}

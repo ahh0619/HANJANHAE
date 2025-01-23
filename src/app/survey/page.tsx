@@ -67,7 +67,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex w-full justify-center">
       <Funnel>
         <Step name="주종">
           <PreferenceTypeSelection

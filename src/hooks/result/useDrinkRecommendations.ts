@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { fetchRecoData, fetchSurveyData } from '@/app/actions/preference';
+import {
+  fetchRecoData,
+  fetchSurveyData,
+  recommendDrinks,
+} from '@/app/actions/preference';
 import { useSurveyStore } from '@/store/surveyStore';
 
 const useDrinkRecommendations = (userId: string) => {
@@ -30,21 +34,10 @@ const useDrinkRecommendations = (userId: string) => {
           return;
         }
 
-        // 라우트 핸들러로 추천 요청
-        const response = await fetch('/api/recommend', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ surveyData, userId }),
+        const updatedRecoData = await recommendDrinks({
+          surveyData,
+          userId,
         });
-
-        if (!response.ok) {
-          throw new Error('추천 생성 실패');
-        }
-
-        const updatedRecoData = await response.json();
-        console.log('updatedRecoData: ', updatedRecoData);
 
         setDrinks(updatedRecoData);
         setIsSurveyCompleted(true);

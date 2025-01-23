@@ -12,7 +12,7 @@ const AfterBanner = () => {
           <div className="mt-[28px] text-lg font-bold text-white">
             <p className="leading-[27px]">취향 조사 완료!</p>
             <p className="leading-[27px]">나만을 위한 추천 리스트가</p>
-            <p className="leading-[27px]">생성되었어요</p>
+            <p className="leading-[27px]">확인해보세요</p>
           </div>
           {/* 버튼 영역 */}
           <button className="mb-[29px] flex h-[26px] w-[58px] items-center justify-center rounded-xl bg-white px-[8px] py-[4px] text-xs leading-[18px] text-primary">
