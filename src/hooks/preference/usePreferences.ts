@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
@@ -12,7 +11,16 @@ const usePreferences = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthStore();
-  const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const loadSurveyDefaults = async () => {
@@ -62,7 +70,7 @@ const usePreferences = () => {
   const handleSubmit = async () => {
     console.log('preferences Saved:', preferences);
     await updateSurvey({ surveyData: preferences, userId: user.id });
-    router.push('/preferences/result');
+    openModal();
   };
 
   const isFormComplete =
@@ -87,6 +95,10 @@ const usePreferences = () => {
     hasPreferencesChanged,
     isLoading,
     error,
+    openModal,
+    closeModal,
+    isModalOpen,
+    setIsModalOpen,
   };
 };
 
