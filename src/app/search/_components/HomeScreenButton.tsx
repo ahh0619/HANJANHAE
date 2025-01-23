@@ -18,7 +18,9 @@ const HomeScreenButton = () => {
           height={24}
           className="m-2 h-6 w-6"
         />
-        <span>스마트 서치</span>
+        <span className="leading-150 text-label-lm text-gray-900">
+          스마트 서치
+        </span>
       </button>
     </div>
   );

@@ -9,11 +9,10 @@ import useSearchSortedResults from '@/hooks/search/useSearchSortedResults';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 
-import { SelectSorted } from './SelectSorted';
 import Skeleton from './Skeleton';
+import TotalAndSort from './TotalAndSort';
 
 const ResultList = ({ user }) => {
-
   const { isFiltered } = useFilterStore();
   const { isSearchFocus } = useFocusStore();
   const {
@@ -76,20 +75,23 @@ const ResultList = ({ user }) => {
     hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
     fetchNextPage: activeFetchNextPage,
   });
+
+  const isLoading = sortSearchIsLoading || sortFilterIsLoading || likeIsLoading;
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {(sortSearchIsLoading || sortFilterIsLoading || likeIsLoading) && (
-        <Skeleton />
+      {isLoading && <Skeleton />}
+      {!isLoading && activeData.length === 0 && (
+        <div className="mt-8 text-center text-gray-500">
+          검색 결과가 존재하지 않습니다.
+        </div>
       )}
       {activeData.length > 0 && (
-        <div className="mt-[16px] flex w-full items-center justify-between">
-          <span className="text-xs font-medium not-italic leading-[1.5] text-grayscale-900">
-            {filterSortTotal || searchSortTotal || likedTotal}개의 검색결과가
-            있습니다.
-          </span>
-          <SelectSorted />
-        </div>
+        <TotalAndSort
+          filterSortTotal={filterSortTotal}
+          searchSortTotal={searchSortTotal}
+          likedTotal={likedTotal}
+        />
       )}
       <div className="mt-[12px] grid w-full grid-cols-2 justify-items-center gap-[8px]">
         {activeData.length > 0 &&
@@ -109,12 +111,6 @@ const ResultList = ({ user }) => {
 
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
-
-      {(isFiltered || isSearchFocus) && activeData.length === 0 && (
-        <div className="mt-8 text-center text-gray-500">
-          검색 결과가 존재하지 않습니다.
-        </div>
-      )}
     </>
   );
 };

@@ -24,10 +24,17 @@ export type PopularDrinks = {
   image: string;
   like_count: number;
 };
+export type DrinkWithLikeStats = {
+  id: number; // 음료 ID
+  name: string; // 음료 이름
+  image: string; // 음료 이미지 URL
+  like_count: number; // 각 음료의 좋아요 개수
+  total_likes: number; // 전체 좋아요 개수
+};
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
-// 삭제 예정 필터링 로직 
+// 삭제 예정 필터링 로직
 // export async function filterDrinks({
 //   types,
 //   alcoholStrength,
@@ -337,7 +344,9 @@ export const getPopularDrinks = async ({
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc('fetch_drinks_with_like_count');
-
+  if (data) {
+    console.log(data); // data가 DrinkWithLikeStats[] 타입과 일치
+  }
   // 수정된 RPC 함수 호출
 
   if (error) {

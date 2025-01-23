@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { FilterParams, filterSortedDrinks } from '@/app/actions/filter';
@@ -6,6 +6,7 @@ import useFilterStore from '@/store/filterStore';
 import useSortStore from '@/store/selectStore';
 
 const useFilterSortedResults = () => {
+  const queryClient = useQueryClient();
   const {
     selectedTypes,
     alcoholStrength,
@@ -24,11 +25,7 @@ const useFilterSortedResults = () => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       // filterSortedDrinks
-      queryKey: [
-        'filterSortedDrinks',
-        filterParams,
-        selectedSort === 'alphabetical',
-      ],
+      queryKey: ['filterDrinks', filterParams, selectedSort === 'alphabetical'],
       queryFn: ({ pageParam = 1 }) =>
         filterSortedDrinks({ ...filterParams, page: pageParam }),
       getNextPageParam: (lastPage) =>

@@ -1,10 +1,11 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { filterDrinksByKeyword } from '@/app/actions/filter';
 import useSearchStore from '@/store/keywordStore';
 
 const useSearchResults = () => {
+  const queryClient = useQueryClient();
   const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
     useSearchStore();
 

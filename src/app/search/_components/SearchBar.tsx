@@ -1,10 +1,10 @@
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRef } from 'react';
 
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
-import useResults from '@/store/resultStore';
 import useSortStore from '@/store/selectStore';
 
 const SearchBar = ({
@@ -15,6 +15,7 @@ const SearchBar = ({
   onChange: (val: string) => void;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
   const {
     triggerFetch,
     isFiltered,
@@ -31,33 +32,35 @@ const SearchBar = ({
     resetSearchStore,
   } = useSearchStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
-  const { clearResults } = useResults();
   const { selectedSort, setSelectedSort } = useSortStore();
   const handleReset = () => {
-    resetStates(); // 저장된 정보 삭제
-    resetFilters(); // 필터값 리셋
-    setIsFiltered(false); // 필터 상태정보
-    setIsSearchFocuse(false);
     onChange(''); // value 값  지우기
-    resetSearchStore(); // keyword 지우기
-    setValues([1, 3]);
     setSelectedSort('alphabetical'); // 초기값 세팅
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      queryClient.removeQueries({
+        queryKey: ['filterDrinks'],
+        exact: false,
+      });
       const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
       setKeyword(newKeyword);
-      clearResults();
       setTriggerFetch(false);
-      setIsSearchFocuse(true);
+      setIsSearchFocuse(false);
       setSearchTriggerFetch(true);
+      setIsFiltered(true);
       setSelectedSort('alphabetical');
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setIsSearchFocuse(true);
+    setIsFiltered(false);
   };
 
   return (
@@ -68,10 +71,8 @@ const SearchBar = ({
     >
       <div
         className={`flex h-[48px] w-full items-center justify-between gap-2 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
-          isSearchFocus || isFiltered
-            ? 'border border-grayscale-900 bg-white'
-            : 'bg-gray-100'
-        }`}
+          isSearchFocus ? 'border border-grayscale-900 bg-white' : 'bg-gray-100'
+        }${isFiltered && 'border border-grayscale-300'}`}
       >
         <Image
           src="/assets/icons/search.svg"
@@ -90,6 +91,7 @@ const SearchBar = ({
             className="h-[24px] w-[223px] flex-shrink-0 bg-transparent text-caption-lm leading-normal focus:outline-none"
             ref={inputRef}
             onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
           />
         </div>
         {(isSearchFocus || isFiltered) && (

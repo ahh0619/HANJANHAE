@@ -1,5 +1,7 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import useFilterStore from '@/store/filterStore';
@@ -10,6 +12,7 @@ import useSortStore from '@/store/selectStore';
 import FilterType from './FilterTypes';
 
 const FilterModal = () => {
+  const queryClient = useQueryClient();
   const { isModalOpen, closeModal } = useModalStore();
   useBodyLock();
 
@@ -38,6 +41,10 @@ const FilterModal = () => {
   }, [isModalOpen]);
 
   const handleApplyfilters = () => {
+    queryClient.removeQueries({
+      queryKey: ['filterDrinks'],
+      exact: false,
+    });
     if (alcoholStrength === null) {
       setAlcoholStrength([0, 100]);
     }
@@ -55,7 +62,7 @@ const FilterModal = () => {
   };
 
   return (
-    <div>
+    <>
       {/* Background Overlay */}
       <div
         className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-300 ease-in ${
@@ -71,15 +78,20 @@ const FilterModal = () => {
         }`}
       >
         {/* Modal Box */}
-        <div className="relative flex h-[95%] w-full flex-col rounded-t-[32px] bg-white shadow-lg">
+        <div className="relative left-1/2 flex h-[95%] max-w-[600px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg">
           {/* Modal Header */}
-          <div className="mt-[12px] flex h-[56px] items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]">
-            <button
+          <div
+            className="mt-[12px] flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
+            style={{ height: 'auto', padding: '12px 19px' }}
+          >
+            <Image
+              src="/assets/icons/cancelDark.svg"
+              alt="Cancel"
+              width={24}
+              height={24}
+              className="h-[40px] w-[40px] cursor-pointer p-2"
               onClick={closeModal}
-              className="text-lg font-semibold text-gray-500"
-            >
-              ✕
-            </button>
+            />
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
@@ -98,7 +110,7 @@ const FilterModal = () => {
         </div>
 
         {/* Apply Button */}
-        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-full -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
+        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[full] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
           <button
             onClick={handleApplyfilters}
             className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
@@ -107,7 +119,7 @@ const FilterModal = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
