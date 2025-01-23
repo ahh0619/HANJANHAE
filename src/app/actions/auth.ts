@@ -1,11 +1,9 @@
 'use server';
-import { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 
 import {
   CheckEmailType,
   ResetPasswordType,
-  SignInDataType,
   SignUpDataType,
   UserType,
 } from '@/types/Auth';
@@ -33,22 +31,6 @@ export const signup = async (data: SignUpDataType): Promise<void> => {
   redirect('/signin');
 };
 
-/* 로그인 */
-export const signin = async (data: SignInDataType): Promise<void> => {
-  const supabase = createClient();
-
-  const { email, password } = data;
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) throw new Error(error.message);
-
-  redirect('/');
-};
-
 /* 로그아웃 */
 export const signout = async (): Promise<void> => {
   const supabase = createClient();
@@ -58,18 +40,6 @@ export const signout = async (): Promise<void> => {
   if (error) throw new Error(error.message);
 
   redirect('/signin');
-};
-
-/* 로그인 여부 확인하기 */
-export const checkUser = async (): Promise<User | null> => {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  return error || !user ? null : user;
 };
 
 /* 사용자 정보 가져오기 */

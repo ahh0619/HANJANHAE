@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
@@ -12,7 +11,16 @@ const usePreferences = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthStore();
-  const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const loadSurveyDefaults = async () => {
@@ -38,16 +46,20 @@ const usePreferences = () => {
 
   const handleTypeChange = (type: string) => {
     setPreferences((prev) => {
-      const typesArray = prev.type ? prev.type.split(',') : [];
+      const typesArray = prev?.type ? prev.type.split(',') : [];
+      let updatedTypes;
+
       if (typesArray.includes(type)) {
-        const updatedTypes = typesArray
-          .filter((item) => item !== type)
-          .join(',');
-        return { ...prev, type: updatedTypes };
+        updatedTypes = typesArray.filter((item) => item !== type).join(',');
       } else {
-        const updatedTypes = [...typesArray, type].join(',');
-        return { ...prev, type: updatedTypes };
+        updatedTypes = [...typesArray, type].join(',');
       }
+
+      const isChanged = updatedTypes !== defaultPreferences?.type;
+
+      return isChanged
+        ? { ...prev, type: updatedTypes }
+        : { ...prev, type: defaultPreferences?.type };
     });
   };
 
@@ -58,7 +70,7 @@ const usePreferences = () => {
   const handleSubmit = async () => {
     console.log('preferences Saved:', preferences);
     await updateSurvey({ surveyData: preferences, userId: user.id });
-    router.push('/preferences/result');
+    openModal();
   };
 
   const isFormComplete =
@@ -83,6 +95,10 @@ const usePreferences = () => {
     hasPreferencesChanged,
     isLoading,
     error,
+    openModal,
+    closeModal,
+    isModalOpen,
+    setIsModalOpen,
   };
 };
 

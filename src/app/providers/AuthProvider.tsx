@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
 
-import { checkUser, fetchUser, signout } from '../actions/auth';
+import { fetchUser, signout } from '../actions/auth';
 
 const AuthContext = createContext(null);
 
@@ -17,10 +17,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchSignedUser = async () => {
       try {
-        if (await checkUser()) {
-          setUser(await fetchUser());
-          setIsAuthenticated(true);
-        }
+        setUser(await fetchUser());
+        setIsAuthenticated(true);
       } catch (error) {
         setUser(null);
         setIsAuthenticated(false);

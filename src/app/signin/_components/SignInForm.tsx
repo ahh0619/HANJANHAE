@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/auth/Button';
 import CheckField from '@/components/auth/CheckField';
@@ -18,11 +18,16 @@ const SignInForm = () => {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { handleSubmit, register, onSubmit, errors } = useSignIn({
+    isSaveEmail: options.save,
     handleError: (message: string) => {
       setErrorMessage(message);
       setIsOpenModal(true);
     },
   });
+
+  useEffect(() => {
+    setOptions({ ...options, ['save']: !!localStorage.getItem('user_email') });
+  }, []);
 
   /* 체크 여부 토글 */
   const handleToggleItem = ({ name }: { name: keyof typeof options }) => {
