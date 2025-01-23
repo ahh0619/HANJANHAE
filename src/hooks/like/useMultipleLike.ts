@@ -10,7 +10,7 @@ import { useToast } from '@/app/providers/ToastProvider';
 
 import { useMultipleLikeStatus } from './useMultipleLikeStatus';
 
-export function useMultipleLike(userId: string, drinkIds: string[]) {
+export const useMultipleLike = (userId: string, drinkIds: string[]) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -110,4 +110,4 @@ export function useMultipleLike(userId: string, drinkIds: string[]) {
     likeMap,
     toggleItem,
   };
-}
+};

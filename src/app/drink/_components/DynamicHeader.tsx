@@ -16,12 +16,12 @@ type DynamicHeaderProps = {
   drinkId: string;
 };
 
-export default function DynamicHeader({
+const DynamicHeader = ({
   name,
   image,
   description,
   drinkId,
-}: DynamicHeaderProps) {
+}: DynamicHeaderProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
   const router = useRouter();
@@ -62,4 +62,6 @@ export default function DynamicHeader({
       </div>
     </div>
   );
-}
+};
+
+export default DynamicHeader;

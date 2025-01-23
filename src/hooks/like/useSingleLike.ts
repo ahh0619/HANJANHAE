@@ -8,7 +8,7 @@ import { useModal } from '@/app/providers/ModalProvider';
 import { useToast } from '@/app/providers/ToastProvider';
 import { useLikeStatus } from '@/hooks/like/useLikeStatus';
 
-export function useSingleLike(drinkId: string, userId?: string) {
+export const useSingleLike = (drinkId: string, userId?: string) => {
   const queryClient = useQueryClient();
   const { data, isLoading: isQueryLoading } = useLikeStatus(
     drinkId,
@@ -99,4 +99,4 @@ export function useSingleLike(drinkId: string, userId?: string) {
     isLiked,
     handleToggleLike,
   };
-}
+};

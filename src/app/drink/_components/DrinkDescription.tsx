@@ -8,12 +8,12 @@ import { useSingleLike } from '@/hooks/like/useSingleLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkDescriptionProps } from '@/types/drink';
 
-export default function DrinkDescription({
+const DrinkDescription = ({
   name,
   imageUrl,
   description,
   drinkId,
-}: DrinkDescriptionProps) {
+}: DrinkDescriptionProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
   const router = useRouter();
@@ -42,4 +42,6 @@ export default function DrinkDescription({
       </p>
     </section>
   );
-}
+};
+
+export default DrinkDescription;

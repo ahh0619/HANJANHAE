@@ -22,7 +22,7 @@ type ModalContextType = {
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
-export function ModalProvider({ children }: { children: React.ReactNode }) {
+export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [modalOptions, setModalOptions] = useState<{
@@ -65,12 +65,12 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
       />
     </ModalContext.Provider>
   );
-}
+};
 
-export function useModal() {
+export const useModal = () => {
   const context = useContext(ModalContext);
   if (!context) {
     throw new Error('useModal must be used within a ModalProvider');
   }
   return context;
-}
+};

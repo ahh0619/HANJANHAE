@@ -7,7 +7,7 @@ import { ModalProvider } from './providers/ModalProvider';
 import QueryProvider from './providers/QueryProvider';
 import { ToastProvider } from './providers/ToastProvider';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryProvider>
       <AuthProvider>
@@ -17,4 +17,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       </AuthProvider>
     </QueryProvider>
   );
-}
+};
+
+export default Providers;
