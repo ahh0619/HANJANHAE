@@ -55,7 +55,7 @@ const LikesContent = () => {
   console.log('lieksdata: ', likesData);
 
   return (
-    <div className="px-[20px]">
+    <div>
       {likesData.pages[0].data.length > 0 ? (
         <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
           {likesData.pages
