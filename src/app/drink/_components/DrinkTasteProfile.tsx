@@ -31,12 +31,12 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
       </div>
 
       {/* 약함과 Bars */}
-      <div className="flex flex-1 items-center justify-end space-x-2">
+      <div className="grid grid-cols-[auto_auto_1fr_auto] items-center gap-x-1">
         {/* 약함 */}
         <span className="text-caption-mm text-grayscale-500">약함</span>
 
         {/* Bars */}
-        <div className="flex w-full max-w-52 space-x-1">
+        <div className="flex max-w-[246px] flex-1 space-x-1">
           {[...Array(5)].map((_, i) => renderBar(value, i))}
         </div>
 
@@ -49,7 +49,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
   return (
     <section className="mt-8 px-5">
       <h3 className="mb-4 text-title-lm text-grayscale-900">맛 프로필</h3>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {renderProfileRow('단맛', drink.sweetness)}
         {renderProfileRow('신맛', drink.acidity)}
         {renderProfileRow('청량감', drink.carbonation)}

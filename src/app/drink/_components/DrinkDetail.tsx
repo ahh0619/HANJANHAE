@@ -18,7 +18,7 @@ const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
         drinkId={drink.id}
       />
 
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto">
         <DrinkImage image={drink.image} name={drink.name} />
         <DrinkDescription
           name={drink.name}
