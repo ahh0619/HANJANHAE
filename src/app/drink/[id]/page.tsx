@@ -1,8 +1,12 @@
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { fetchDrinks } from '@/app/actions/drink';
-import { fetchFoodPairings } from '@/app/actions/foodpairing';
-import DrinkDetail from '@/app/drink/_components/DrinkDetail';
+
+import DrinkSection from '../_components/DrinkSection';
+import FoodPairing from '../_components/FoodPairing';
+import Loading from '../_components/Loading';
+import ReviewSection from '../_components/ReviewSection';
 
 type DrinkDetailPageProps = {
   params: { id: string };
@@ -11,8 +15,7 @@ type DrinkDetailPageProps = {
 export async function generateMetadata({
   params,
 }: DrinkDetailPageProps): Promise<Metadata> {
-  const drinkUrlName = decodeURIComponent(params.id);
-  const drink = await fetchDrinks(drinkUrlName);
+  const drink = await fetchDrinks(params.id);
 
   if (!drink) {
     return {
@@ -30,21 +33,29 @@ export async function generateMetadata({
   };
 }
 
-const DrinkDetailPage = async ({ params }: DrinkDetailPageProps) => {
-  const drinkUrlName = decodeURIComponent(params.id);
-  const drink = await fetchDrinks(drinkUrlName);
-  const foodPairings = await fetchFoodPairings(drink.id);
+const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
+  return (
+    <div className="mx-auto">
+      <div className="relative">
+        {/* Drink Section */}
+        <Suspense fallback={<Loading />}>
+          <DrinkSection drinkId={params.id} />
+        </Suspense>
 
-  if (!drink) {
-    return (
-      <div className="mx-auto p-4 text-center text-gray-500">
-        <h1 className="text-2xl font-bold">주류 정보를 찾을 수 없습니다.</h1>
-        <p>올바른 ID를 입력했는지 확인해주세요.</p>
+        {/* Food Pairing Section */}
+        <Suspense fallback={<Loading />}>
+          <section className="mt-10 border-b px-5">
+            <FoodPairing drinkId={params.id} />
+          </section>
+        </Suspense>
+
+        {/* Review Section */}
+        <Suspense fallback={<Loading />}>
+          <ReviewSection drinkId={params.id} />
+        </Suspense>
       </div>
-    );
-  }
-
-  return <DrinkDetail drink={drink} foodPairings={foodPairings} />;
+    </div>
+  );
 };
 
 export default DrinkDetailPage;
