@@ -1,6 +1,6 @@
 'use client';
 
-const Skeleton = ({ hasMargin = true }: { hasMargin: boolean }) => {
+const Skeleton = ({ hasMargin = true }: { hasMargin?: boolean }) => {
   return (
     <div
       className={`mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] ${
