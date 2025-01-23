@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { fetchLikesByUser } from '@/app/actions/like';
-import Modal from '@/components/common/Modal';
 import ProductCard from '@/components/common/ProductCard';
-import Toast from '@/components/common/Toast';
 import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
 
@@ -38,15 +36,10 @@ const LikesContent = () => {
   const allLikes = likesData?.pages.flatMap((page) => page.data) || [];
   const allDrinkIds = allLikes.map((item) => item.drink_id);
 
-  const {
-    isLoading,
-    likeMap,
-    toggleItem,
-    isModalOpen,
-    closeModal,
-    toastMessage,
-    closeToast,
-  } = useMultipleLike(userId, allDrinkIds);
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -112,27 +105,6 @@ const LikesContent = () => {
           </p>
         </div>
       )}
-      {/* 로그인 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="좋아요를 하시겠어요?"
-        content="좋아요 기능을 사용하려면\n로그인을 해야 해요."
-        secondaryAction={{
-          text: '돌아가기',
-          onClick: closeModal,
-        }}
-        primaryAction={{
-          text: '로그인하기',
-          onClick: () => {
-            router.push('/signin');
-            closeModal();
-          },
-        }}
-      />
-
-      {/* 토스트 */}
-      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </div>
   );
 };

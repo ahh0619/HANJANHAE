@@ -2,9 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import Modal from '@/components/common/Modal';
 import ProductCard from '@/components/common/ProductCard';
-import Toast from '@/components/common/Toast';
 import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
@@ -90,10 +88,6 @@ const ResultList = ({ user }) => {
     isLoading: likeLoading,
     likeMap,
     toggleItem,
-    isModalOpen,
-    closeModal,
-    toastMessage,
-    closeToast,
   } = useMultipleLike(userId, allDrinkIds);
 
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
@@ -130,25 +124,6 @@ const ResultList = ({ user }) => {
 
         {/* 무한 스크롤 감지용 */}
         <div ref={observerRef} style={{ height: '1px' }} />
-
-        {/* 모달 */}
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          title="좋아요를 하시겠어요?"
-          content={`좋아요 기능을 사용하려면\n로그인을 해야 해요.`}
-          secondaryAction={{ text: '돌아가기', onClick: closeModal }}
-          primaryAction={{
-            text: '로그인하기',
-            onClick: () => {
-              router.push('/signin');
-              closeModal();
-            },
-          }}
-        />
-
-        {/* 토스트 */}
-        {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
       </div>
     </>
   );

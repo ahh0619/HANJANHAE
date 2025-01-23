@@ -10,9 +10,7 @@ import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
 import { PopularDrinkType } from '@/types/drink';
 
-import Modal from '../common/Modal';
 import ProductCard from '../common/ProductCard';
-import Toast from '../common/Toast';
 
 type PopularDrinkSectionProps = {
   drinks: PopularDrinkType[];
@@ -31,15 +29,10 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
 
   const allDrinkIds = drinks.map((d) => d.id);
 
-  const {
-    isLoading,
-    likeMap,
-    toggleItem,
-    isModalOpen,
-    closeModal,
-    toastMessage,
-    closeToast,
-  } = useMultipleLike(userId, allDrinkIds);
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
   if (!isBrowser) return null;
 
@@ -66,22 +59,6 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
           })}
         </Swiper>
       )}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="좋아요를 하시겠어요?"
-        content={`좋아요 기능을 사용하려면 \n 로그인을 해야 해요.`}
-        secondaryAction={{ text: '돌아가기', onClick: closeModal }}
-        primaryAction={{
-          text: '로그인하기',
-          onClick: () => {
-            router.push('/signin');
-            closeModal();
-          },
-        }}
-      />
-
-      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </section>
   );
 };

@@ -3,9 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import Modal from '@/components/common/Modal';
 import ProductCard from '@/components/common/ProductCard';
-import Toast from '@/components/common/Toast';
 import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { Tables } from '@/types/supabase';
 
@@ -19,15 +17,10 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   const router = useRouter();
   const allDrinkIds = drinks.map((d) => d.drink_id);
 
-  const {
-    isLoading,
-    likeMap,
-    toggleItem,
-    isModalOpen,
-    closeModal,
-    toastMessage,
-    closeToast,
-  } = useMultipleLike(userId, allDrinkIds);
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-col">
@@ -94,27 +87,6 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           );
         })}
       </div>
-      {/* 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="좋아요를 하시겠어요?"
-        content="좋아요 기능을 사용하려면\n로그인을 해야 해요."
-        secondaryAction={{
-          text: '돌아가기',
-          onClick: closeModal,
-        }}
-        primaryAction={{
-          text: '로그인하기',
-          onClick: () => {
-            router.push('/signin');
-            closeModal();
-          },
-        }}
-      />
-
-      {/* 토스트 */}
-      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </div>
   );
 };

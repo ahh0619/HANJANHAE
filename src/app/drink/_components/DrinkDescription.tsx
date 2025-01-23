@@ -3,9 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import LikeButton from '@/components/common/LikeButton';
-import Modal from '@/components/common/Modal';
 import ShareButton from '@/components/common/ShareButton';
-import Toast from '@/components/common/Toast';
 import { useSingleLike } from '@/hooks/like/useSingleLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkDescriptionProps } from '@/types/drink';
@@ -20,15 +18,10 @@ export default function DrinkDescription({
   const userId = user?.id || '';
   const router = useRouter();
 
-  const {
-    isLoading,
-    isLiked,
-    handleToggleLike,
-    isModalOpen,
-    closeModal,
-    toastMessage,
-    closeToast,
-  } = useSingleLike(drinkId, userId);
+  const { isLoading, isLiked, handleToggleLike } = useSingleLike(
+    drinkId,
+    userId,
+  );
 
   return (
     <section className="mt-3 px-5">
@@ -47,25 +40,6 @@ export default function DrinkDescription({
       <p className="mt-2 text-body-sm text-grayscale-900">
         {description || '설명 없음'}
       </p>
-
-      {/* 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="좋아요를 하시겠어요?"
-        content={`좋아요 기능을 사용하려면 \n 로그인을 해야 해요.`}
-        secondaryAction={{ text: '돌아가기', onClick: closeModal }}
-        primaryAction={{
-          text: '로그인하기',
-          onClick: () => {
-            router.push('/signin');
-            closeModal();
-          },
-        }}
-      />
-
-      {/* 토스트 */}
-      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </section>
   );
 }
