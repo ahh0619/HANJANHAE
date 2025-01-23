@@ -1,5 +1,5 @@
 import Button from '@/components/auth/Button';
-import { TermsData } from '@/datas/Terms';
+import { PRIVACY_POLICY, SERVICE_POLICY } from '@/constants';
 
 type TermsDetailProps = {
   terms: number | null;
@@ -26,7 +26,7 @@ const TermsDetail = ({ terms, handleClose }: TermsDetailProps) => {
         </p>
 
         <p className="whitespace-pre-line text-body-sm text-grayscale-900">
-          {terms === 1 ? TermsData['use'] : TermsData['personal']}
+          {terms === 1 ? SERVICE_POLICY : PRIVACY_POLICY}
         </p>
       </div>
     </div>
