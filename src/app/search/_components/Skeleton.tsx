@@ -1,8 +1,12 @@
 'use client';
 
-const Skeleton = () => {
+const Skeleton = ({ hasMargin = true }: { hasMargin: boolean }) => {
   return (
-    <div className="mx-[56px] mt-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
+    <div
+      className={`mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] ${
+        hasMargin ? 'mt-[56px]' : ''
+      }`}
+    >
       {Array.from({ length: 6 }).map((_, idx) => (
         <div
           className="flex w-[100%] animate-pulse flex-col rounded-lg border bg-gray-50 p-2"
