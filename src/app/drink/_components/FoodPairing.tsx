@@ -6,7 +6,7 @@ const FoodPairing = async ({ drinkId }: { drinkId: string }) => {
 
   return (
     <section className="mx-auto w-full">
-      <h3 className="text-title-lm text-grayscale-900">추천 페어링 음식</h3>
+      <h3 className="text-title-lb text-grayscale-900">추천 페어링 음식</h3>
       <div className="mt-4 grid grid-cols-3 justify-items-center gap-8">
         {pairings.map((food, index) => (
           <div

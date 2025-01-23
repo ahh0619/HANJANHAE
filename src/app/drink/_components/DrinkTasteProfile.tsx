@@ -48,7 +48,7 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
 
   return (
     <section className="mt-8 px-5">
-      <h3 className="mb-4 text-title-lm text-grayscale-900">맛 프로필</h3>
+      <h3 className="mb-4 text-title-lb text-grayscale-900">맛 프로필</h3>
       <div className="space-y-3">
         {renderProfileRow('단맛', drink.sweetness)}
         {renderProfileRow('신맛', drink.acidity)}
