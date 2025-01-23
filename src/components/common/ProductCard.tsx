@@ -43,10 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <LikeButton drinkId={id} userId={userId} likeStatus={likeStatus} />
       </div>
 
-      <Link
-        href={`/drink/${encodeURIComponent(name)}`}
-        className="flex flex-col"
-      >
+      <Link href={`/drink/${id}`} className="flex flex-col">
         {/* 이미지 */}
         <div
           className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"

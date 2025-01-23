@@ -62,8 +62,6 @@ const ReviewInfo = ({
                     : '/assets/icons/star.svg'
                 }
                 alt={index < rating ? '채워진 별' : '빈 별'}
-                width={24}
-                height={24}
               />
             </div>
           ))}

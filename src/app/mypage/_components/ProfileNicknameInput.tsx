@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import React from 'react';
+
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 type ProfileNicknameInputProps = {
   value: string;
@@ -30,12 +31,7 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
         onClick={() => onChange('')}
         className="absolute bottom-16 right-3 top-10 -translate-y-1/2 transform p-2 text-grayscale-500"
       >
-        <Image
-          src="/assets/icons/cancel.svg"
-          alt="입력 지우기 버튼"
-          width={24}
-          height={24}
-        />
+        <OptimizedImage src="/assets/icons/cancel.svg" alt="입력 지우기 버튼" />
       </button>
     )}
   </div>

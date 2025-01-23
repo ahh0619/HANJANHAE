@@ -1,16 +1,15 @@
-import { DrinkDetailProps } from '@/types/drink';
+import { fetchDrinks } from '@/app/actions/drink';
 
 import DrinkBasicInfo from './DrinkBasicInfo';
 import DrinkDescription from './DrinkDescription';
 import DrinkImage from './DrinkImage';
 import DrinkTasteProfile from './DrinkTasteProfile';
 import DynamicHeader from './DynamicHeader';
-import FoodPairing from './FoodPairing';
-import ReviewSection from './ReviewSection';
 
-const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
+const DrinkSection = async ({ drinkId }: { drinkId: string }) => {
+  const drink = await fetchDrinks(drinkId);
   return (
-    <div className="relative">
+    <>
       <DynamicHeader
         name={drink.name}
         image={drink.image!}
@@ -30,17 +29,9 @@ const DrinkDetail = ({ drink, foodPairings }: DrinkDetailProps) => {
 
         {/* Taste Profile */}
         <DrinkTasteProfile drink={drink} />
-
-        {/* Food Pairings */}
-        <section className="mt-10 border-b px-5">
-          <FoodPairing pairings={foodPairings} />
-        </section>
-
-        {/* Reviews */}
-        <ReviewSection drinkId={drink.id} />
       </div>
-    </div>
+    </>
   );
 };
 
-export default DrinkDetail;
+export default DrinkSection;

@@ -44,8 +44,6 @@ const MyPageAccountOptions = () => {
             <OptimizedImage
               src="/assets/icons/key.svg"
               alt="Key Icon"
-              width={24}
-              height={24}
               className="h-6 w-6"
             />
           </div>
@@ -63,8 +61,6 @@ const MyPageAccountOptions = () => {
             <OptimizedImage
               src="/assets/icons/logout.svg"
               alt="Logout Icon"
-              width={24}
-              height={24}
               className="h-6 w-6"
             />
           </div>

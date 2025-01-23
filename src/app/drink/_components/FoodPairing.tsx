@@ -1,10 +1,9 @@
+import { fetchFoodPairings } from '@/app/actions/foodpairing';
 import OptimizedImage from '@/components/common/OptimizedImage';
 
-type FoodPairingProps = {
-  pairings: { food_name: string; food_image: string | null }[];
-};
+const FoodPairing = async ({ drinkId }: { drinkId: string }) => {
+  const pairings = await fetchFoodPairings(drinkId);
 
-const FoodPairing = ({ pairings }: FoodPairingProps) => {
   return (
     <section className="mx-auto w-full">
       <h3 className="text-title-lm text-grayscale-900">추천 페어링 음식</h3>
