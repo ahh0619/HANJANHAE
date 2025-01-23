@@ -110,20 +110,23 @@ const ResultList = ({ user }) => {
       {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
       <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
         {activeData.length > 0 &&
-          activeData.map((result) => (
-            <ProductCard
-              key={result.id}
-              id={result.id}
-              name={result.name}
-              imageUrl={result.image}
-              isLiked={isLiked}
-              onToggleLike={() => toggleItem(result.id)}
-              width={'100%'}
-              height={'241px'}
-              marginBottom={'20px'}
-              imgHeight={'207px'}
-            />
-          ))}
+          activeData.map((result) => {
+            const isLiked = likeMap[result.id] || false;
+            return (
+              <ProductCard
+                key={result.id}
+                id={result.id}
+                name={result.name}
+                imageUrl={result.image}
+                isLiked={isLiked}
+                onToggleLike={() => toggleItem(result.id)}
+                width={'100%'}
+                height={'241px'}
+                marginBottom={'20px'}
+                imgHeight={'207px'}
+              />
+            );
+          })}
 
         {/* 무한 스크롤 감지용 */}
         <div ref={observerRef} style={{ height: '1px' }} />
