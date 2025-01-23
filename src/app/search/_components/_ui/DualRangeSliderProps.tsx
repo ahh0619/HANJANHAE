@@ -1,102 +1,105 @@
 'use client';
 
-import * as SliderPrimitive from '@radix-ui/react-slider';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
-
-interface DualRangeSliderProps
-  extends React.ComponentProps<typeof SliderPrimitive.Root> {
-  labelPosition?: 'top' | 'bottom';
+type DualRangeSliderProps = {
+  value: number[];
+  onValueChange: (newValues: number[]) => void;
   label?: (value: number | undefined) => React.ReactNode;
-  initialInteracted?: boolean; // 상위 컴포넌트에서 초기 상태 관리
-}
+  min?: number;
+  max?: number;
+  step?: number;
+};
 
-const DualRangeSlider = React.forwardRef<
-  React.ElementRef<typeof SliderPrimitive.Root>,
-  DualRangeSliderProps
->(
-  (
-    {
-      className,
-      label,
-      labelPosition = 'top',
-      initialInteracted = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const [isInteracted, setIsInteracted] = React.useState(initialInteracted);
+const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
+  value,
+  onValueChange,
+  label,
+  min = 1,
+  max = 3,
+  step = 1,
+}) => {
+  const handleSliderChange = (newValues: [number, number]) => {
+    onValueChange(newValues);
+  };
 
-    const handleValueChange = (newValues: number[]) => {
-      setIsInteracted(true);
-      props.onValueChange?.(newValues); // 기존 핸들러 호출
-    };
+  const handleMidButtonClick = () => {
+    const middleValue = Math.round((max + min) / 2); // 중앙값 계산
+    if (value[0] === min && value[1] === max) {
+      // 슬라이더 범위가 [min, max]일 때
+      onValueChange([min, middleValue]); // [min, middleValue]로 축소
+    } else {
+      // 기본 동작: 중앙값 포함
+      onValueChange([
+        Math.min(value[0], middleValue),
+        Math.max(value[1], middleValue),
+      ]);
+    }
+  };
 
-    return (
-      <div className="relative w-full">
-        <SliderPrimitive.Root
-          ref={ref}
-          className={cn(
-            'relative flex w-full touch-none select-none items-center',
-            className,
-          )}
-          {...props}
-          onValueChange={handleValueChange}
-        >
-          {/* 당장 해결하기에 너무 빡세서 일단 해결하지 않음*/}
-          {/* <span
-            className={cn(
-              'absolute left-[50%] h-[20px] w-[20px] translate-x-[-50%] rounded-full transition-all',
-              isInteracted
-                ? 'bg-primary-100 opacity-100' // 활성화 상태
-                : 'bg-gray-200 opacity-0', // 초기 상태에서 숨김
-            )}
-          ></span> */}
-          <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-gray-300">
-            <SliderPrimitive.Range
-              className={cn(
-                'absolute h-full transition-colors',
-                isInteracted ? 'bg-primary-100' : 'bg-gray-200',
-              )}
-            />
-          </SliderPrimitive.Track>
-          {Array.isArray(props.value) &&
-            props.value.map((value, index) => (
-              <React.Fragment key={index}>
-                <SliderPrimitive.Thumb
-                  className={cn(
-                    'bg-background ring-offset-background focus-visible:ring-ring relative block h-[20px] w-[20px] rounded-full border-2 transition-colors',
-                    isInteracted
-                      ? 'border-primary-100 bg-primary-100'
-                      : 'border-gray-200 bg-gray-200',
-                  )}
-                />
-              </React.Fragment>
-            ))}
-        </SliderPrimitive.Root>
-        <div className="absolute top-[14px] flex w-full justify-between text-caption-mm font-medium text-gray-900">
-          <span className="text-left">
-            저도수
-            <br />
-            (14도 이하)
-          </span>
-          <span className="text-center">
-            중간 도수
-            <br />
-            (15~30도)
-          </span>
-          <span className="text-right">
-            고도수
-            <br />
-            (31도 이상)
-          </span>
+  return (
+    <div className="relative w-full">
+      {/* 슬라이더 */}
+      <Slider
+        range
+        value={value}
+        onChange={handleSliderChange}
+        min={min}
+        max={max}
+        step={step}
+        trackStyle={[
+          { backgroundColor: '#BF324B', height: 8 },
+          { backgroundColor: '#BF324B', height: 8 },
+        ]}
+        handleStyle={[
+          { borderColor: '#BF324B', height: 18, width: 18 },
+          { borderColor: '#BF324B', height: 18, width: 18 },
+        ]}
+        railStyle={{ backgroundColor: '#E0E0E0', height: 8 }}
+      />
+
+      {/* 범위 텍스트 및 중간 도수 동그라미 */}
+      <div className="absolute top-[14px] flex w-full justify-between text-caption-mm font-medium text-gray-900">
+        <div className="text-left">
+          저도수
+          <br />
+          (14도 이하)
+        </div>
+        <div className="relative text-center">
+          중간 도수
+          <br />
+          (15~30도)
+          <div
+            style={{
+              zIndex:
+                (value[0] === 1 && value[1] === 2) ||
+                (value[0] === 2 && value[1] === 3)
+                  ? -1
+                  : 0,
+              position: 'absolute',
+              top: '-20px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '20px',
+              height: '20px',
+              borderRadius: '50%',
+              backgroundColor:
+                value[0] <= 2 && value[1] >= 2 ? '#BF324B' : '#E0E0E0',
+            }}
+            onClick={handleMidButtonClick}
+          />
+        </div>
+        <div className="text-right">
+          고도수
+          <br />
+          (31도 이상)
         </div>
       </div>
-    );
-  },
-);
-DualRangeSlider.displayName = 'DualRangeSlider';
+    </div>
+  );
+};
 
 export { DualRangeSlider };
 
