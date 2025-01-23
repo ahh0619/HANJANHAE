@@ -1,7 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 
+import Modal from '@/components/common/Modal';
 import ProductCard from '@/components/common/ProductCard';
+import Toast from '@/components/common/Toast';
+import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
@@ -13,6 +17,8 @@ import Skeleton from './Skeleton';
 import TotalAndSort from './TotalAndSort';
 
 const ResultList = ({ user }) => {
+  const router = useRouter();
+  const userId = user?.id || '';
   const { isFiltered } = useFilterStore();
   const { isSearchFocus } = useFocusStore();
   const {
@@ -71,12 +77,25 @@ const ResultList = ({ user }) => {
       : isLikedActive
         ? fetchNextLikePage
         : () => {};
+
   const observerRef = useIntersectionObserver({
     hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
     fetchNextPage: activeFetchNextPage,
   });
 
   const isLoading = sortSearchIsLoading || sortFilterIsLoading || likeIsLoading;
+
+  const allDrinkIds = activeData.map((item) => item.id);
+  const {
+    isLoading: likeLoading,
+    likeMap,
+    toggleItem,
+    isModalOpen,
+    closeModal,
+    toastMessage,
+    closeToast,
+  } = useMultipleLike(userId, allDrinkIds);
+
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
@@ -94,22 +113,45 @@ const ResultList = ({ user }) => {
         />
       )}
       <div className="mt-[12px] grid w-full grid-cols-2 justify-items-center gap-[8px]">
-        {activeData.length > 0 &&
-          activeData.map((result) => (
+        {activeData.map((result) => {
+          const isLiked = likeMap[result.id] || false;
+          return (
             <ProductCard
               key={result.id}
               id={result.id}
               name={result.name}
               imageUrl={result.image}
-              userId={user ? user.id : null}
-              width={'163px'}
-              height={'241px'}
-              marginBottom={'20px'}
-              imgHeight={'207px'}
+              isLiked={isLiked}
+              onToggleLike={() => toggleItem(result.id)}
+              width="163px"
+              height="241px"
+              marginBottom="20px"
+              imgHeight="207px"
             />
-          ))}
+          );
+        })}
 
+        {/* 무한 스크롤 감지용 */}
         <div ref={observerRef} style={{ height: '1px' }} />
+
+        {/* 모달 */}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title="좋아요를 하시겠어요?"
+          content={`좋아요 기능을 사용하려면\n로그인을 해야 해요.`}
+          secondaryAction={{ text: '돌아가기', onClick: closeModal }}
+          primaryAction={{
+            text: '로그인하기',
+            onClick: () => {
+              router.push('/signin');
+              closeModal();
+            },
+          }}
+        />
+
+        {/* 토스트 */}
+        {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
       </div>
     </>
   );

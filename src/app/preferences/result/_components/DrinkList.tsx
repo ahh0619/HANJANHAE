@@ -1,6 +1,12 @@
-import Link from 'next/link';
+'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import Modal from '@/components/common/Modal';
 import ProductCard from '@/components/common/ProductCard';
+import Toast from '@/components/common/Toast';
+import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { Tables } from '@/types/supabase';
 
 type DrinkListProps = {
@@ -10,6 +16,19 @@ type DrinkListProps = {
 };
 
 const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
+  const router = useRouter();
+  const allDrinkIds = drinks.map((d) => d.drink_id);
+
+  const {
+    isLoading,
+    likeMap,
+    toggleItem,
+    isModalOpen,
+    closeModal,
+    toastMessage,
+    closeToast,
+  } = useMultipleLike(userId, allDrinkIds);
+
   return (
     <div className="mx-auto flex w-full max-w-md flex-col">
       <Link href={'/'} className="flex w-full justify-center">
@@ -32,15 +51,17 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           </p>
         </div>
         {drinks.map((drink) => {
+          const isLiked = likeMap[drink.drink_id] || false;
           return (
             <div key={drink.name} className="mb-[20px] flex h-[190px]">
               <ProductCard
                 id={drink.drink_id}
                 name={drink.name}
                 imageUrl={drink.image}
-                userId={userId}
-                height={'216px'}
-                imgHeight={'186px'}
+                isLiked={isLiked}
+                onToggleLike={() => toggleItem(drink.drink_id)}
+                height="216px"
+                imgHeight="186px"
                 isNameVisible={false}
               />
 
@@ -73,6 +94,27 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           );
         })}
       </div>
+      {/* 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="좋아요를 하시겠어요?"
+        content="좋아요 기능을 사용하려면\n로그인을 해야 해요."
+        secondaryAction={{
+          text: '돌아가기',
+          onClick: closeModal,
+        }}
+        primaryAction={{
+          text: '로그인하기',
+          onClick: () => {
+            router.push('/signin');
+            closeModal();
+          },
+        }}
+      />
+
+      {/* 토스트 */}
+      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </div>
   );
 };

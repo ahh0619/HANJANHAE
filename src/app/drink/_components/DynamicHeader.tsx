@@ -1,10 +1,14 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
+import Modal from '@/components/common/Modal';
 import ShareButton from '@/components/common/ShareButton';
+import Toast from '@/components/common/Toast';
+import { useSingleLike } from '@/hooks/like/useSingleLike';
 import { useAuthStore } from '@/store/authStore';
 
 type DynamicHeaderProps = {
@@ -14,23 +18,34 @@ type DynamicHeaderProps = {
   drinkId: string;
 };
 
-const DynamicHeader = ({
+export default function DynamicHeader({
   name,
   image,
   description,
   drinkId,
-}: DynamicHeaderProps) => {
+}: DynamicHeaderProps) {
   const { user } = useAuthStore();
-  const [scrolled, setScrolled] = useState(false);
+  const userId = user?.id || '';
+  const router = useRouter();
 
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 200);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const {
+    isLoading,
+    isLiked,
+    handleToggleLike,
+    isModalOpen,
+    closeModal,
+    toastMessage,
+    closeToast,
+  } = useSingleLike(drinkId, userId);
 
   return (
     <div
@@ -46,15 +61,34 @@ const DynamicHeader = ({
             {name}
           </p>
         </div>
-
-        {/* 좋아요 및 공유 버튼 */}
+        {/* 좋아요 & 공유 버튼 */}
         <div className="flex space-x-2">
-          <LikeButton userId={user?.id} drinkId={drinkId} />
+          <LikeButton isLiked={isLiked} onClick={handleToggleLike} />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>
+
+      {/* (A) 모달 */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="좋아요를 하시겠어요?"
+        content={`좋아요 기능을 사용하려면 \n 로그인을 해야 해요.`}
+        secondaryAction={{
+          text: '돌아가기',
+          onClick: closeModal,
+        }}
+        primaryAction={{
+          text: '로그인하기',
+          onClick: () => {
+            router.push('/signin');
+            closeModal();
+          },
+        }}
+      />
+
+      {/* (B) 토스트 */}
+      {toastMessage && <Toast message={toastMessage} onClose={closeToast} />}
     </div>
   );
-};
-
-export default DynamicHeader;
+}

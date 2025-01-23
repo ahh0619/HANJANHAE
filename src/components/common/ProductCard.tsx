@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,26 +10,26 @@ type ProductCardProps = {
   id: string;
   name: string;
   imageUrl: string;
-  userId: string | null;
+  isLiked: boolean;
+  onToggleLike: () => void;
   width?: string;
   height?: string;
   marginBottom?: string;
   imgHeight?: string | number;
   isNameVisible?: boolean;
-  likeStatus?: boolean;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   name,
   imageUrl,
-  userId,
+  isLiked,
+  onToggleLike,
   width = '124px',
   height = '186px',
   marginBottom = '0px',
   imgHeight = '152px',
   isNameVisible = true,
-  likeStatus = false,
 }) => {
   return (
     <div
@@ -40,9 +42,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* 좋아요 버튼 */}
       <div className="absolute bottom-[34px] right-0 z-10">
-        <LikeButton drinkId={id} userId={userId} likeStatus={likeStatus} />
+        <LikeButton isLiked={isLiked} onClick={onToggleLike} />
       </div>
 
+      {/* 상세 페이지 링크 */}
       <Link href={`/drink/${id}`} className="flex flex-col">
         {/* 이미지 */}
         <div
