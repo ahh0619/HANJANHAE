@@ -1,10 +1,12 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
 import ShareButton from '@/components/common/ShareButton';
+import { useSingleLike } from '@/hooks/like/useSingleLike';
 import { useAuthStore } from '@/store/authStore';
 
 type DynamicHeaderProps = {
@@ -21,16 +23,22 @@ const DynamicHeader = ({
   drinkId,
 }: DynamicHeaderProps) => {
   const { user } = useAuthStore();
-  const [scrolled, setScrolled] = useState(false);
+  const userId = user?.id || '';
+  const router = useRouter();
 
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 200);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const { isLoading, isLiked, handleToggleLike } = useSingleLike(
+    drinkId,
+    userId,
+  );
 
   return (
     <div
@@ -46,10 +54,9 @@ const DynamicHeader = ({
             {name}
           </p>
         </div>
-
-        {/* 좋아요 및 공유 버튼 */}
+        {/* 좋아요 & 공유 버튼 */}
         <div className="flex space-x-2">
-          <LikeButton userId={user?.id} drinkId={drinkId} />
+          <LikeButton isLiked={isLiked} onClick={handleToggleLike} />
           <ShareButton title={name} text={description} imageUrl={image} />
         </div>
       </div>

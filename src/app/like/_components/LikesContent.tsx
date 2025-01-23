@@ -1,16 +1,20 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { fetchLikesByUser } from '@/app/actions/like';
 import ProductCard from '@/components/common/ProductCard';
+import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
 
 import SkeletonPage from './SkeletonPage';
 
 const LikesContent = () => {
   const { user } = useAuthStore();
+  const router = useRouter();
+  const userId = user?.id || '';
 
   const {
     data: likesData,
@@ -28,6 +32,14 @@ const LikesContent = () => {
     initialPageParam: undefined,
     enabled: !!user,
   });
+
+  const allLikes = likesData?.pages.flatMap((page) => page.data) || [];
+  const allDrinkIds = allLikes.map((item) => item.drink_id);
+
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,22 +70,23 @@ const LikesContent = () => {
     <div className="px-[20px]">
       {likesData.pages[0].data.length > 0 ? (
         <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
-          {likesData.pages
-            .flatMap((page) => page.data)
-            .map((like) => (
+          {allLikes.map((like) => {
+            const isLiked = likeMap[like.drink_id] || false;
+            return (
               <ProductCard
                 key={like.id}
                 id={like.drink_id}
                 name={like.drinks.name}
                 imageUrl={like.drinks.image}
-                userId={like.user_id}
-                likeStatus={true}
-                width={'163px'}
-                height={'241px'}
-                marginBottom={'20px'}
-                imgHeight={'207px'}
+                isLiked={isLiked}
+                onToggleLike={() => toggleItem(like.drink_id)}
+                width="163px"
+                height="241px"
+                marginBottom="20px"
+                imgHeight="207px"
               />
-            ))}
+            );
+          })}
 
           <div
             ref={observerRef}

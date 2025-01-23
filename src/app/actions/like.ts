@@ -79,6 +79,36 @@ export const toggleLike = async ({
   }
 };
 
+// 리스트 형태의 좋아요 확인 액션
+export const fetchMultipleLikeStatus = async (
+  userId: string,
+  drinkIds: string[],
+): Promise<Record<string, boolean>> => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('likes')
+    .select('drink_id')
+    .eq('user_id', userId)
+    .in('drink_id', drinkIds);
+
+  if (error) {
+    console.error(error);
+    throw new Error('Bulk like status fetch 실패');
+  }
+
+  const result: Record<string, boolean> = {};
+  drinkIds.forEach((id) => {
+    result[id] = false;
+  });
+  data?.forEach((row) => {
+    if (row.drink_id) {
+      result[row.drink_id] = true;
+    }
+  });
+  return result;
+};
+
 export const fetchLikesByUser = async ({
   userId,
   pageParam = 1,

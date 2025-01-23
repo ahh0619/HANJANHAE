@@ -2,13 +2,12 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 
-import { AuthProvider } from '@/app/providers/AuthProvider';
-import Provider from '@/app/providers/Provider';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
 
 import '@/styles/globals.css';
+import { Providers } from './providers';
 
 const pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
@@ -43,14 +42,12 @@ const RootLayout = ({
         />
       </head>
       <body className="antialiased">
-        <AuthProvider>
-          <Provider>
-            <KakaoInit />
-            <main className="m-auto mb-32 max-w-[600px]">{children}</main>
-            <ScrollTop />
-            <BottomNavBar />
-          </Provider>
-        </AuthProvider>
+        <Providers>
+          <KakaoInit />
+          <main className="m-auto mb-32 max-w-[600px]">{children}</main>
+          <ScrollTop />
+          <BottomNavBar />
+        </Providers>
       </body>
     </html>
   );
