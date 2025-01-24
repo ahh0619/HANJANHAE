@@ -1,6 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
@@ -12,6 +13,7 @@ const RecommendCategory = ({
 }: {
   setSearchValue: (val: string) => void;
 }) => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const categories = ['증류주', '모주', '막걸리'];
   const {
@@ -39,6 +41,7 @@ const RecommendCategory = ({
     });
     setSearchValue(category);
     setKeyword(category);
+    router.push(`/search?query=${encodeURIComponent(category)}`);
     setTriggerFetch(false);
     setIsFiltered(true);
     setIsSearchFocuse(false);
