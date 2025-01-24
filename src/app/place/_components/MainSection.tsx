@@ -31,7 +31,7 @@ const MainSection = ({ place }: MainSectionProps) => {
         />
       </div>
 
-      <div className="mb-3 flex items-center justify-between px-2 px-5">
+      <div className="mb-3 flex items-center justify-between px-5">
         <p className="text-title-xl text-grayscale-900">{place.name}</p>
         <ShareButton
           title={place.name}
