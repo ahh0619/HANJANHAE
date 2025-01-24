@@ -1,3 +1,6 @@
+import { notFound } from 'next/navigation';
+import { validate as isUuid } from 'uuid';
+
 import { fetchDrinks } from '@/app/actions/drink';
 
 import DrinkBasicInfo from './DrinkBasicInfo';
@@ -7,6 +10,11 @@ import DrinkTasteProfile from './DrinkTasteProfile';
 import DynamicHeader from './DynamicHeader';
 
 const DrinkSection = async ({ drinkId }: { drinkId: string }) => {
+  if (!isUuid(drinkId)) {
+    console.error(`Invalid UUID format: ${drinkId}`);
+    notFound();
+  }
+
   const drink = await fetchDrinks(drinkId);
   return (
     <>

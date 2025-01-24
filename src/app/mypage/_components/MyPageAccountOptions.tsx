@@ -9,13 +9,12 @@ import { useModal } from '@/app/providers/ModalProvider';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { useAuthStore } from '@/store/authStore';
 
-export default function MyPageAccountOptions() {
+const MyPageAccountOptions = () => {
   const router = useRouter();
   const { logout } = useAuth();
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
-  // 전역 모달 훅
   const { openModal, closeModal } = useModal();
 
   const handleLogout = async () => {
@@ -95,4 +94,6 @@ export default function MyPageAccountOptions() {
       </div>
     </div>
   );
-}
+};
+
+export default MyPageAccountOptions;
