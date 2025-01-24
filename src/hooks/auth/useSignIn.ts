@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -51,7 +52,8 @@ const useSignIn = ({ isSaveEmail, handleError }: SignInProps) => {
     try {
       await login(values);
       router.push('/');
-    } catch (error: any) {
+    } catch (error) {
+      Sentry.captureException(error);
       handleError(manageSignInError(error.message));
     }
   };

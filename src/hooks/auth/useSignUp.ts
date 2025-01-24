@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -53,6 +54,7 @@ const useSignUp = ({ handleError }: SignUpProps) => {
     try {
       await signup(values);
     } catch (error) {
+      Sentry.captureException(error);
       handleError(manageSignUpError(error.message));
     }
   };
