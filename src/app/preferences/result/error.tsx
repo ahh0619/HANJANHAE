@@ -1,9 +1,20 @@
 'use client';
 
-export default function Error({ error }) {
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
+
+import { ErrorProps } from '@/types/errorTypes';
+
+const Error = ({ error, reset }: ErrorProps) => {
+  useEffect(() => {
+    Sentry.captureException(error);
+    console.error(error);
+  }, [error]);
+
   return (
-    <div>
-      <h2>Something went wrong! {error.message}</h2>
+    <div className="flex h-screen w-full items-center justify-center">
+      {error.message}
     </div>
   );
-}
+};
+export default Error;
