@@ -1,3 +1,4 @@
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 
 type TasteRadioButtonProps = {
@@ -56,34 +57,16 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
             >
               {selectedValue === value ? (
                 // 클릭된 상태의 SVG
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="45"
-                  height="40"
-                  viewBox="0 0 45 40"
-                  fill="none"
-                >
-                  <circle cx="23" cy="20" r="16" fill="#BF324B" />
-                  <circle cx="23" cy="20" r="13" fill="white" />
-                  <circle cx="23" cy="20" r="9" fill="#BF324B" />
-                </svg>
+                <OptimizedImage
+                  src="/assets/icons/Radio-Button-clicked.svg"
+                  alt="선택 아이콘"
+                />
               ) : (
                 // 기본 상태의 SVG
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="45"
-                  height="40"
-                  viewBox="0 0 45 40"
-                  fill="none"
-                >
-                  <circle
-                    cx="23"
-                    cy="20"
-                    r="15.5"
-                    fill="white"
-                    stroke="#ADADAD"
-                  />
-                </svg>
+                <OptimizedImage
+                  src="/assets/icons/Radio-Button.svg"
+                  alt="선택해제 아이콘"
+                />
               )}
             </div>
             <span className="color-grayscale-900 mt-1 text-caption-mm font-medium leading-[150%]">

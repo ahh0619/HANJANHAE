@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useRef } from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
@@ -70,20 +70,18 @@ const SearchBar = ({
       } m-0 mx-auto flex w-full items-center bg-white transition-all duration-300`}
     >
       <div
-        className={`flex h-[48px] w-full items-center justify-between gap-2 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
+        className={`flex h-[48px] w-full items-center justify-between gap-3 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
           isSearchFocus ? 'border border-grayscale-900 bg-white' : 'bg-gray-100'
         }${isFiltered && 'border border-grayscale-300'}`}
       >
-        <Image
+        <OptimizedImage
           src={
             isFiltered
               ? '/assets/icons/search-gray.svg'
               : '/assets/icons/search.svg'
-          } // isFiltered가 true이면 search-gray 아이콘, 그렇지 않으면 기본 아이콘
-          alt="Search_Icon"
-          width={24}
-          height={24}
-          className="m-2 h-6 w-6"
+          }
+          alt={isFiltered ? '이미 검색된 아이콘' : '검색 중인 아이콘'}
+          className="ml-1"
         />
         <div className="flex h-[40px] w-full items-center text-left">
           <input
@@ -99,11 +97,9 @@ const SearchBar = ({
           />
         </div>
         {(isSearchFocus || isFiltered) && (
-          <Image
+          <OptimizedImage
             src="/assets/icons/cancelDark.svg"
-            alt="Cancel"
-            width={24}
-            height={24}
+            alt="검색어 삭제 버튼"
             className="cursor-pointer"
             onClick={handleReset}
           />

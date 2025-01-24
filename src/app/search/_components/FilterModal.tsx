@@ -1,9 +1,9 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore, { useBodyLock } from '@/store/modalStore';
@@ -86,14 +86,13 @@ const FilterModal = () => {
             className="mt-[12px] flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
             style={{ height: 'auto', padding: '12px 19px' }}
           >
-            <Image
+            <OptimizedImage
               src="/assets/icons/cancelDark.svg"
-              alt="Cancel"
-              width={24}
-              height={24}
-              className="h-[40px] w-[40px] cursor-pointer p-2"
+              alt="검색 키워드 삭제 아이콘"
+              className="cursor-pointer"
               onClick={closeModal}
             />
+
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
