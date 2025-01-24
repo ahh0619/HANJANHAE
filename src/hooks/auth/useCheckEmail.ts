@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -33,7 +34,8 @@ const useCheckEmail = ({ handleMessage }: CheckEmailProps) => {
     try {
       await sendEmailForResetPassword(values);
       handleMessage(['메일이 전송되었습니다.', '메일함을 확인해주세요.']);
-    } catch (error: any) {
+    } catch (error) {
+      Sentry.captureException(error);
       handleMessage(['메일 전송에 실패했습니다.', '다시 시도해주세요.']);
     }
   };
