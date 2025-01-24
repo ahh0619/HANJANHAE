@@ -10,7 +10,7 @@ export const fetchDrinks = async (id: string): Promise<DrinkType | null> => {
   const { data, error } = await supabase
     .from('drinks')
     .select('*')
-    .eq('name', id)
+    .eq('id', id)
     .maybeSingle();
 
   if (error) {

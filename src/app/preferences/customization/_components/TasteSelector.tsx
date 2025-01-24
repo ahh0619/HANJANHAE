@@ -1,10 +1,10 @@
 import OptionItem from '@/app/survey/_components/OptionItem';
 
 const tasteAttributes = [
-  { key: 'sweetness', label: '단맛' },
-  { key: 'acidity', label: '신맛' },
-  { key: 'carbonation', label: '청량감' },
-  { key: 'body', label: '무게감(바디감)' },
+  { key: 'sweetness', label: '단맛', step: '3' },
+  { key: 'acidity', label: '신맛', step: '4' },
+  { key: 'carbonation', label: '청량감', step: '5' },
+  { key: 'body', label: '무게감(바디감)', step: '6' },
 ];
 
 const intensityOptions = [
@@ -21,7 +21,7 @@ const TasteSelector = ({ preferences, handleSelect }) => {
       {tasteAttributes.map((attr) => (
         <div className="mb-10" key={attr.key}>
           <label className="mb-[16px] block text-title-mb text-grayscale-900">
-            {attr.label}으로 찾기
+            {attr.step}. 어느 정도의 {attr.label}을 선호하시나요?
           </label>
           <div className="flex w-full justify-between space-x-8">
             {intensityOptions.map((option) => (

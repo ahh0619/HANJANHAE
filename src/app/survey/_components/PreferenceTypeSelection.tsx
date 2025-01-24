@@ -56,11 +56,10 @@ const PreferenceTypeSelection = ({
       className={`flex flex-col items-center ${
         isPopupOpen ? 'overflow-hidden' : ''
       }`}
-      style={{ maxHeight: '100vh' }}
     >
       {/* 제목 */}
-      <div className="relative mb-[32px] flex h-[44px] w-full items-center">
-        <div className="absolute left-[12px]">
+      <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
+        <div className="absolute left-[8px]">
           <BackButton />
         </div>
         <h1 className="mx-auto text-title-xl text-grayscale-900">
@@ -71,14 +70,14 @@ const PreferenceTypeSelection = ({
       <ProgressBar currentStep={1} />
 
       {/* 질문 */}
-      <div className="mb-[32px] mt-[56px] w-full px-[20px]">
+      <div className="mb-[32px] mt-[56px] w-[335px]">
         <h3 className="text-title-lb text-grayscale-900">
           어떤 종류의 술을 선호하시나요?
         </h3>
         <p className="text-title-lb text-grayscale-900">(중복 선택 가능)</p>
       </div>
 
-      <div className="flex w-full flex-wrap content-start items-start gap-x-[16px] gap-y-[12px] px-[20px]">
+      <div className="flex w-[375px] flex-wrap content-start items-start gap-x-[16px] gap-y-[12px] px-[20px]">
         {options.map((option) => (
           <button
             key={option}

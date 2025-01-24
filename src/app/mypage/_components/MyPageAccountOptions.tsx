@@ -1,44 +1,52 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { deleteUser } from '@/app/actions/auth';
 import { useAuth } from '@/app/providers/AuthProvider';
+import { useModal } from '@/app/providers/ModalProvider';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { useAuthStore } from '@/store/authStore';
 
 const MyPageAccountOptions = () => {
   const router = useRouter();
-
   const { logout } = useAuth();
-
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
+  const { openModal, closeModal } = useModal();
+
   const handleLogout = async () => {
-    try {
-      await logout();
-      queryClient.removeQueries({ queryKey: ['userProfile'] });
-    } catch (error: any) {
-      window.alert('회원가입에 실패하였습니다.');
-    }
+    logout();
+    queryClient.removeQueries({ queryKey: ['userProfile'] });
   };
 
   const handleDeleteUser = async () => {
-    if (window.confirm('회원 탈퇴를 하시겠어요?')) {
-      try {
-        await deleteUser();
-        removeUser();
-      } catch (error: any) {
-        window.alert('회원 탈퇴에 실패하였습니다.');
-      }
-    }
+    deleteUser();
+    removeUser();
+  };
+
+  const openDeleteModal = () => {
+    openModal({
+      title: '회원 탈퇴를 하시겠어요?',
+      content: '탈퇴 하시면 저장된 정보가 모두 사라집니다.',
+      secondaryAction: {
+        text: '회원으로 남기',
+        onClick: closeModal,
+      },
+      primaryAction: {
+        text: '탈퇴하기',
+        onClick: () => {
+          closeModal();
+          handleDeleteUser();
+        },
+      },
+    });
   };
 
   return (
     <div className="mt-6 w-full px-5">
-      {/* Account options section */}
       <div>
         {/* Password Reset */}
         <div
@@ -46,11 +54,9 @@ const MyPageAccountOptions = () => {
           onClick={() => router.push('/password/check')}
         >
           <div className="flex h-12 w-12 items-center justify-center p-3">
-            <Image
+            <OptimizedImage
               src="/assets/icons/key.svg"
               alt="Key Icon"
-              width={24}
-              height={24}
               className="h-6 w-6"
             />
           </div>
@@ -65,11 +71,9 @@ const MyPageAccountOptions = () => {
           onClick={handleLogout}
         >
           <div className="flex h-12 w-12 items-center justify-center">
-            <Image
+            <OptimizedImage
               src="/assets/icons/logout.svg"
               alt="Logout Icon"
-              width={24}
-              height={24}
               className="h-6 w-6"
             />
           </div>
@@ -83,7 +87,7 @@ const MyPageAccountOptions = () => {
       <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
         <button
           className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
-          onClick={handleDeleteUser}
+          onClick={openDeleteModal}
         >
           회원 탈퇴
         </button>

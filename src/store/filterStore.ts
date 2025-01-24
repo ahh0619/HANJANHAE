@@ -38,7 +38,7 @@ const useFilterStore = create<FilterStore>((set) => ({
   resetFilters: () =>
     set({
       selectedTypes: [],
-      alcoholStrength: null,
+      alcoholStrength: [0, 100],
       tastePreferences: {},
     }),
   setTriggerFetch: (trigger) => set({ triggerFetch: trigger }),

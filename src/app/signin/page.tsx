@@ -2,7 +2,7 @@ import Container from './_components/Container';
 
 const SignIn = () => {
   return (
-    <div className="relative mx-auto max-w-96 px-5">
+    <div className="relative mx-auto -mb-16 px-5">
       <Container />
     </div>
   );

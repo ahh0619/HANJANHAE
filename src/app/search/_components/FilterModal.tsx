@@ -1,7 +1,11 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { FilterParams } from '@/app/actions/filter';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore, { useBodyLock } from '@/store/modalStore';
@@ -10,11 +14,16 @@ import useSortStore from '@/store/selectStore';
 import FilterType from './FilterTypes';
 
 const FilterModal = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
   useBodyLock();
 
   const {
+    selectedTypes,
     alcoholStrength,
+    tastePreferences,
     setAlcoholStrength,
     setIsFiltered,
     resetFilters,
@@ -38,10 +47,16 @@ const FilterModal = () => {
   }, [isModalOpen]);
 
   const handleApplyfilters = () => {
+
+    queryClient.removeQueries({
+      queryKey: ['filterDrinks'],
+      exact: false,
+    });
     if (alcoholStrength === null) {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
+    router.push(`/search?query=${encodeURIComponent('filtered')}`);
     setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');
@@ -49,16 +64,17 @@ const FilterModal = () => {
 
   const handleFilterReset = () => {
     resetFilters();
+    setIsSliderClicked(false);
     setIsSearchFocuse(false);
     setValues([1, 3]);
     setSelectedSort('alphabetical');
   };
 
   return (
-    <div>
+    <>
       {/* Background Overlay */}
       <div
-        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-300 ease-in ${
+        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={closeModal}
@@ -66,20 +82,24 @@ const FilterModal = () => {
 
       {/* Modal Content */}
       <div
-        className={`fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
+        className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
           isAnimating ? 'translate-y-0' : 'translate-y-[120%]'
         }`}
       >
         {/* Modal Box */}
-        <div className="relative flex h-[95%] w-full flex-col rounded-t-[32px] bg-white shadow-lg">
+        <div className="relative left-1/2 flex h-[95%] max-w-[600px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg">
           {/* Modal Header */}
-          <div className="mt-[12px] flex h-[56px] items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]">
-            <button
+          <div
+            className="mt-[12px] flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
+            style={{ height: 'auto', padding: '12px 19px' }}
+          >
+            <OptimizedImage
+              src="/assets/icons/cancelDark.svg"
+              alt="검색 키워드 삭제 아이콘"
+              className="cursor-pointer"
               onClick={closeModal}
-              className="text-lg font-semibold text-gray-500"
-            >
-              ✕
-            </button>
+            />
+
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
@@ -92,13 +112,13 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="body-overflow-hidden html-overflow-hidden scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
+          <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
             <FilterType />
           </div>
         </div>
 
         {/* Apply Button */}
-        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-full -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
+        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
           <button
             onClick={handleApplyfilters}
             className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
@@ -107,7 +127,7 @@ const FilterModal = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

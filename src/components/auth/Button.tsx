@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import OptimizedImage from '../common/OptimizedImage';
 
 type ButtonProps = {
   category?: string;
@@ -19,6 +19,16 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
         </button>
       )}
 
+      {category === 'modal' && (
+        <button
+          type="submit"
+          className="w-full rounded-[8px] bg-primary p-3 text-title-mb text-grayscale-100"
+          onClick={handleClick}
+        >
+          {label}
+        </button>
+      )}
+
       {category === 'option' && (
         <p
           className="cursor-pointer p-3 text-label-lm text-grayscale-500"
@@ -33,9 +43,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
           className="flex w-full cursor-pointer justify-center gap-2 rounded-full border border-grayscale-200 bg-etc-white p-3"
           onClick={handleClick}
         >
-          <Image
-            width={24}
-            height={24}
+          <OptimizedImage
             src="/assets/icons/auth_google.svg"
             alt="social_google"
           />
@@ -48,28 +56,11 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
           className="flex w-full cursor-pointer justify-center gap-2 rounded-full bg-etc-yellow p-3"
           onClick={handleClick}
         >
-          <Image
-            width={24}
-            height={24}
+          <OptimizedImage
             src="/assets/icons/auth_kakao.svg"
             alt="social_kakao"
           />
           <p className="text-label-lm">{label}</p>
-        </div>
-      )}
-
-      {category === 'email' && (
-        <div
-          className="flex w-full cursor-pointer justify-center gap-2 rounded-full bg-grayscale-700 p-3"
-          onClick={handleClick}
-        >
-          <Image
-            width={24}
-            height={24}
-            src="/assets/icons/auth_email.svg"
-            alt="social_email"
-          />
-          <p className="text-label-lm text-etc-white">{label}</p>
         </div>
       )}
 
@@ -78,9 +69,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
           <p className="text-label-mm text-grayscale-500" onClick={handleClick}>
             {label}
           </p>
-          <Image
-            width={16}
-            height={16}
+          <OptimizedImage
             src="/assets/icons/chevron_right.svg"
             alt="chevron_right"
           />
@@ -90,12 +79,10 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
       {category.includes('back') && (
         <button
           type="button"
-          className="absolute left-2 top-[2px] flex items-center justify-center"
+          className="absolute left-2 top-[2px] flex items-center justify-center z-20"
           onClick={handleClick}
         >
-          <Image
-            width={40}
-            height={40}
+          <OptimizedImage
             src={`/assets/icons/${category === 'back' ? 'back' : 'back_gray'}.svg`}
             alt="back"
           />

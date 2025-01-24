@@ -41,7 +41,6 @@
 body {
   color: rgb(var(--gray-900));
   background: var(--white);
-  overflow-y: scroll;
   -webkit-overflow-scrolling: auto;
 }
 
@@ -104,12 +103,36 @@ body {
   --font-caption-sm: 10px medium 150%;
 }
 
-.body-overflow-hidden {
-  overflow-y: hidden; /* 세로 스크롤 비활성화 */
+
+/* pc 환경에서는 우선 따로 스크롤 지정할 것 당장은 스크롤 숨김*/
+html {
+  overflow-y: scroll; /* 항상 수직 스크롤 동작 허용 */
+  overflow-x: hidden; /* 수평 스크롤 비활성화 */
+
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
+
 .html-overflow-hidden {
-  overflow-y: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+  
+}
+
+.html-overflow-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+
+.body-overflow-hidden {
+  overflow-y: hidden; /* 세로 스크롤 비활성화 */
+  padding-right:10px;
 }
 
 /* 모달 시 스크롤 숨기기 */
@@ -125,4 +148,24 @@ body {
 
 .scroll-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+/* rc slider css */
+.rc-slider{
+  position:relative !important;
+  padding: 0 !important;
+  width:94.65% !important;
+  left:50%;
+  transform:translate(-50%)
+}
+
+.rc-slider-handle{
+  z-index:2 !important;
+  opacity: 1 !important;
+  width:20px !important;
+  height:20px !important;
+  background-color: white !important;
+  border-radius:20px !important;
+  /* border: solid 4px var(--primary-100, #BF324B) ! important; */
+  margin-top: -6px !important;
 }

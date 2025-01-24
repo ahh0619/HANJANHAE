@@ -1,5 +1,6 @@
-import Image from 'next/image';
 import React, { useRef } from 'react';
+
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 type ProfileImageUploadProps = {
   preview: string | null;
@@ -26,7 +27,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
     <div className="relative mb-5 flex h-[100px] w-[100px] items-center justify-center rounded-full">
       {/* Profile Image */}
       <label className="relative flex h-full w-full cursor-pointer items-center justify-center overflow-hidden rounded-full">
-        <Image
+        <OptimizedImage
           src={preview || '/assets/icons/default_profile_image.svg'}
           alt="프로필 이미지"
           width={100}
@@ -48,12 +49,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
         className="absolute -bottom-2 -right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-grayscale-500 bg-secondary-100 p-1 shadow-md"
         onClick={handleButtonClick}
       >
-        <Image
-          src="/assets/icons/camera.svg"
-          alt="카메라 아이콘"
-          width={24}
-          height={24}
-        />
+        <OptimizedImage src="/assets/icons/camera.svg" alt="카메라 아이콘" />
       </button>
     </div>
   );

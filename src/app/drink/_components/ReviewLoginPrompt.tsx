@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 export type ReviewLoginPromptProps = {
   onLoginClick: () => void;
@@ -20,12 +20,7 @@ const ReviewLoginPrompt = ({ onLoginClick }: ReviewLoginPromptProps) => {
           onClick={onLoginClick}
           className="absolute bottom-5 right-4 flex items-center space-x-1 rounded-lg bg-primary px-4 py-2 text-label-mb text-grayscale-100 hover:bg-primary-hover"
         >
-          <Image
-            src="/assets/icons/login.svg"
-            alt="로그인 아이콘"
-            width={18}
-            height={18}
-          />
+          <OptimizedImage src="/assets/icons/login.svg" alt="로그인 아이콘" />
           <span>로그인하러 가기</span>
         </button>
       </div>

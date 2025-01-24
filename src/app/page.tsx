@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 
-import UserInitializer from '@/components/auth/UserInitializer';
 import Banner from '@/components/home/Banner';
 import PlaceSection from '@/components/home/PlaceSection';
 import PopularDrinkSection from '@/components/home/PopularDrinkSection';
@@ -35,7 +34,6 @@ const Home = async () => {
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />
       <PlaceSection places={places} />
-      <UserInitializer />
     </>
   );
 };

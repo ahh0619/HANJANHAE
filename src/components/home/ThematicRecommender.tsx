@@ -1,33 +1,39 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css';
-
+import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
-import { Database } from '@/types/supabase';
+import { DrinkType } from '@/types/drink';
 
 import ProductCard from '../common/ProductCard';
 
-type Drink = Database['public']['Tables']['drinks']['Row'];
-
-type Recommendations = {
-  season: string;
-  foodCategory: string;
-  mood: string;
-  seasonRecommendations: Drink[];
-  foodRecommendations: Drink[];
-  moodRecommendations: Drink[];
-};
-
 type ThematicRecommenderProps = {
-  recommendations: Recommendations;
+  recommendations: {
+    season: string;
+    foodCategory: string;
+    mood: string;
+    seasonRecommendations: DrinkType[];
+    foodRecommendations: DrinkType[];
+    moodRecommendations: DrinkType[];
+  };
 };
 
-const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
+export default function ThematicRecommender({
   recommendations,
-}) => {
+}: ThematicRecommenderProps) {
+  const { user } = useAuthStore();
+  const userId = user?.id || '';
+  const router = useRouter();
+
+  const [isBrowser, setIsBrowser] = useState(false);
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
   const {
     season,
     foodCategory,
@@ -37,49 +43,49 @@ const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
     moodRecommendations,
   } = recommendations;
 
-  const sections = [
-    {
-      title: `${season}에 어울리는 전통주`,
-      items: seasonRecommendations,
-    },
-    {
-      title: `${foodCategory}에 어울리는 전통주`,
-      items: foodRecommendations,
-    },
-    {
-      title: `${mood}에 어울리는 전통주`,
-      items: moodRecommendations,
-    },
+  const allItems = [
+    ...seasonRecommendations,
+    ...foodRecommendations,
+    ...moodRecommendations,
   ];
+  const allDrinkIds = allItems.map((item) => item.id);
 
-  const { user } = useAuthStore();
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
-  const [isBrowser, setIsBrowser] = useState(false);
+  if (!isBrowser) {
+    return null;
+  }
 
-  useEffect(() => {
-    setIsBrowser(true);
-  }, []);
-
-  if (!isBrowser) return null;
+  const sections = [
+    { title: `${season}에 어울리는 전통주`, items: seasonRecommendations },
+    { title: `${foodCategory}에 어울리는 전통주`, items: foodRecommendations },
+    { title: `${mood}에 어울리는 전통주`, items: moodRecommendations },
+  ];
 
   return (
     <div className="mt-9 space-y-6 px-5">
-      {/* 추천 섹션 */}
-      {sections.map((section, index) => (
-        <section key={index}>
+      {sections.map((section, idx) => (
+        <section key={idx}>
           <h2 className="mb-3 text-title-lb">{section.title}</h2>
           {section.items.length > 0 ? (
             <Swiper spaceBetween={16} slidesPerView="auto">
-              {section.items.map((item: any) => (
-                <SwiperSlide key={item.id} style={{ width: 'auto' }}>
-                  <ProductCard
-                    id={item.id}
-                    name={item.name}
-                    imageUrl={item.image}
-                    userId={user ? user.id : null}
-                  />
-                </SwiperSlide>
-              ))}
+              {section.items.map((item) => {
+                const isLiked = likeMap[item.id] || false;
+                return (
+                  <SwiperSlide key={item.id} style={{ width: 'auto' }}>
+                    <ProductCard
+                      id={item.id}
+                      name={item.name}
+                      imageUrl={item.image}
+                      isLiked={isLiked}
+                      onToggleLike={() => toggleItem(item.id)}
+                    />
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           ) : (
             <p className="text-center text-gray-500">추천 결과가 없습니다.</p>
@@ -88,6 +94,4 @@ const ThematicRecommender: React.FC<ThematicRecommenderProps> = ({
       ))}
     </div>
   );
-};
-
-export default ThematicRecommender;
+}

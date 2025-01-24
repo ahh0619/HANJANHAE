@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-
-import Modal from '@/components/common/Modal';
+import { useModal } from '@/app/providers/ModalProvider';
 import { ReviewContentProps } from '@/types/review';
 
 import ReviewEditDeleteButtons from './ReviewEditDeleteButtons';
@@ -27,27 +25,31 @@ const ReviewContent = ({
   onEdit,
   onDelete,
 }: ReviewContentProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal, closeModal } = useModal();
+
+  const isEdited = review.updated_at && review.updated_at !== review.created_at;
 
   const handleDeleteClick = () => {
-    setIsModalOpen(true);
+    openModal({
+      title: '리뷰 삭제를 하시겠어요?',
+      content: '삭제한 리뷰는 복구할 수 없습니다.',
+      primaryAction: {
+        text: '삭제하기',
+        onClick: () => {
+          closeModal();
+          onDelete();
+        },
+      },
+      secondaryAction: {
+        text: '취소하기',
+        onClick: closeModal,
+      },
+    });
   };
-
-  const handleConfirmDelete = () => {
-    setIsModalOpen(false);
-    onDelete();
-  };
-
-  const handleCancelDelete = () => {
-    setIsModalOpen(false);
-  };
-
-  // "편집됨"
-  const isEdited = review.updated_at && review.updated_at !== review.created_at;
 
   return (
     <div className="flex flex-col space-y-2">
-      {/* 상단: 닉네임, 프로필 이미지, 별점, 날짜 */}
+      {/* 편집 모드 */}
       {editing ? (
         <ReviewEditingContent
           editComment={editComment}
@@ -84,21 +86,6 @@ const ReviewContent = ({
           />
         </div>
       )}
-
-      {/* 삭제 확인 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        title="리뷰 삭제를 하시겠어요?"
-        content="삭제한 리뷰는 복구할 수 없습니다."
-        primaryAction={{
-          text: '삭제하기',
-          onClick: handleConfirmDelete,
-        }}
-        secondaryAction={{
-          text: '취소하기',
-          onClick: handleCancelDelete,
-        }}
-      />
     </div>
   );
 };

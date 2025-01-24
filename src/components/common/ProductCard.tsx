@@ -1,33 +1,35 @@
-import Image from 'next/image';
+'use client';
+
 import Link from 'next/link';
 import React from 'react';
 
 import LikeButton from './LikeButton';
+import OptimizedImage from './OptimizedImage';
 
 type ProductCardProps = {
   id: string;
   name: string;
   imageUrl: string;
-  userId: string | null;
+  isLiked: boolean;
+  onToggleLike: () => void;
   width?: string;
   height?: string;
   marginBottom?: string;
   imgHeight?: string | number;
   isNameVisible?: boolean;
-  likeStatus?: boolean;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
   name,
   imageUrl,
-  userId,
+  isLiked,
+  onToggleLike,
   width = '124px',
   height = '186px',
   marginBottom = '0px',
   imgHeight = '152px',
   isNameVisible = true,
-  likeStatus = false,
 }) => {
   return (
     <div
@@ -40,24 +42,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* 좋아요 버튼 */}
       <div className="absolute bottom-[34px] right-0 z-10">
-        <LikeButton drinkId={id} userId={userId} likeStatus={likeStatus} />
+        <LikeButton isLiked={isLiked} onClick={onToggleLike} />
       </div>
 
-      <Link
-        href={`/drink/${encodeURIComponent(name)}`}
-        className="flex flex-col"
-      >
+      {/* 상세 페이지 링크 */}
+      <Link href={`/drink/${id}`} className="flex flex-col">
         {/* 이미지 */}
         <div
           className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
           style={{ height: imgHeight }}
         >
-          <Image
+          <OptimizedImage
             src={imageUrl}
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg"
+            fill
+            className="rounded-lg object-cover"
           />
         </div>
         {/* 이름 */}

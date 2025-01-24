@@ -1,8 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
+import OptimizedImage from './OptimizedImage';
 
 export default function ScrollTop() {
   const pathname = usePathname();
@@ -48,11 +49,9 @@ export default function ScrollTop() {
         }`}
         aria-label="위로가기"
       >
-        <Image
+        <OptimizedImage
           src="/assets/icons/arrow-up.svg"
           alt="위로가기"
-          width={24}
-          height={24}
           className="text-primary"
         />
       </button>

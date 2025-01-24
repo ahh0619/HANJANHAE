@@ -5,7 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { SignInDataType } from '@/types/Auth';
 
-import { checkUser, fetchUser, signout } from '../actions/auth';
+import { fetchUser, signout } from '../actions/auth';
 
 const AuthContext = createContext(null);
 
@@ -17,10 +17,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchSignedUser = async () => {
       try {
-        if (await checkUser()) {
-          setUser(await fetchUser());
-          setIsAuthenticated(true);
-        }
+        const currentUser = await fetchUser();
+        setUser(currentUser);
+        setIsAuthenticated(!!currentUser);
       } catch (error) {
         setUser(null);
         setIsAuthenticated(false);
@@ -33,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   /* 로그인 */
   const login = async (values: SignInDataType) => {
     try {
-      const response = await fetch('/api/signin', {
+      const response = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -24,10 +24,17 @@ export type PopularDrinks = {
   image: string;
   like_count: number;
 };
+export type DrinkWithLikeStats = {
+  id: number; // 음료 ID
+  name: string; // 음료 이름
+  image: string; // 음료 이미지 URL
+  like_count: number; // 각 음료의 좋아요 개수
+  total_likes: number; // 전체 좋아요 개수
+};
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
-// 삭제 예정 필터링 로직 
+// 삭제 예정 필터링 로직
 // export async function filterDrinks({
 //   types,
 //   alcoholStrength,
@@ -126,6 +133,7 @@ export async function filterDrinks({
 
   const { data, count, error } = await query;
 
+  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
@@ -182,6 +190,7 @@ export async function filterDrinksByKeyword({
     .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
     .range(offset, offset + limit - 1);
 
+  // 에러처리
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
@@ -258,6 +267,7 @@ export async function filterSortedDrinks({
 
   const { data, count, error } = await query;
 
+  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
@@ -337,7 +347,9 @@ export const getPopularDrinks = async ({
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc('fetch_drinks_with_like_count');
-
+  if (data) {
+    console.log(data); // data가 DrinkWithLikeStats[] 타입과 일치
+  }
   // 수정된 RPC 함수 호출
 
   if (error) {
@@ -349,6 +361,11 @@ export const getPopularDrinks = async ({
       totalCount: 0,
     };
   }
+  if (error) {
+    
+    throw new Error('Error fetching popular drinks');
+  }
+
   const totalCount = data?.[0]?.total_likes || 0;
 
   // name, image, like_count를 기준으로 음료 데이터를 정렬

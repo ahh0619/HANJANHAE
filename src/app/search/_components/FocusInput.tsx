@@ -1,21 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 
 import FilterSideBar from './FilterSideBar';
 import HomeScreenButton from './HomeScreenButton';
-import RecommendCategory from './RecommendCategory';
 import SearchBar from './SearchBar';
 import StandByScreen from './StandByScreen';
 
-const FocusInput = () => {
+export type FocusInputProps = {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+};
+
+const FocusInput: React.FC<FocusInputProps> = ({
+  searchValue,
+  setSearchValue,
+}) => {
   const { triggerFetch, setTriggerFetch, isFiltered } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   // 검색어 상태 관리
-  const [searchValue, setSearchValue] = useState('');
   useEffect(() => {
     if (!triggerFetch) return;
     setIsSearchFocuse(false);
@@ -23,14 +29,15 @@ const FocusInput = () => {
   }, [triggerFetch]);
 
   return (
-    <div className="mx-auto mt-[76px] w-full max-w-md text-center">
+    <div className="mx-auto mt-[32px] w-full max-w-md text-center">
       {/* 검색바와 취소 버튼 */}
       <SearchBar value={searchValue} onChange={setSearchValue} />
 
       {!(isFiltered || isSearchFocus) && <HomeScreenButton />}
+
+      {/* 필터된 결과 sideBar */}
       {isFiltered && <FilterSideBar />}
 
-      {isSearchFocus && <RecommendCategory setSearchValue={setSearchValue} />}
       {!(isFiltered || isSearchFocus) && <StandByScreen />}
     </div>
   );

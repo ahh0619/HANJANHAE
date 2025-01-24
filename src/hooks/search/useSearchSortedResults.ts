@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { filterKeywordSortedDrinks } from '@/app/actions/filter';
@@ -6,6 +6,7 @@ import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
 
 const useSearchSortedResults = () => {
+  const queryClient = useQueryClient();
   const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
     useSearchStore();
   const { selectedSort } = useSortStore();
@@ -18,7 +19,7 @@ const useSearchSortedResults = () => {
     hasNextPage,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ['SearchSortedDrinks', keyword, selectedSort === 'alphabetical'],
+    queryKey: ['filterDrinks', keyword, selectedSort === 'alphabetical'],
     queryFn: ({ pageParam = 1 }) =>
       filterKeywordSortedDrinks({ keyword, page: pageParam }),
     getNextPageParam: (lastPage) =>
@@ -33,6 +34,7 @@ const useSearchSortedResults = () => {
   useEffect(() => {
     if (searchTriggerFetch) {
       refetch(); // enabled false를 이용한 트리거
+
       setSearchTriggerFetch(false);
     }
   }, [searchTriggerFetch]);

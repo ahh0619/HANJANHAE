@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { MenuType } from '@/types/place';
 
 type MenuProps = {
@@ -12,12 +11,12 @@ const Menu = ({ menus }: MenuProps) => {
       {menus.map((menu: MenuType) => (
         <div className="flex items-center gap-5" key={menu.id}>
           {menu.image && (
-            <Image
-              className="h-24 w-[136px] object-cover"
-              width={136}
-              height={96}
+            <OptimizedImage
               src={menu.image}
               alt={menu.name}
+              className="rounded-[8px] object-cover"
+              width={136}
+              height={96}
             />
           )}
           <p>{menu.name}</p>

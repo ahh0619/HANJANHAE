@@ -1,11 +1,12 @@
-type FoodPairingProps = {
-  pairings: { food_name: string; food_image: string | null }[];
-};
+import { fetchFoodPairings } from '@/app/actions/foodpairing';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
-const FoodPairing = ({ pairings }: FoodPairingProps) => {
+const FoodPairing = async ({ drinkId }: { drinkId: string }) => {
+  const pairings = await fetchFoodPairings(drinkId);
+
   return (
     <section className="mx-auto w-full">
-      <h3 className="text-title-lm text-grayscale-900">추천 페어링 음식</h3>
+      <h3 className="text-title-lb text-grayscale-900">추천 페어링 음식</h3>
       <div className="mt-4 grid grid-cols-3 justify-items-center gap-8">
         {pairings.map((food, index) => (
           <div
@@ -15,9 +16,10 @@ const FoodPairing = ({ pairings }: FoodPairingProps) => {
             {/* 음식 이미지 */}
             <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-grayscale-300">
               {food.food_image ? (
-                <img
+                <OptimizedImage
                   src={food.food_image}
                   alt={food.food_name}
+                  fill
                   className="h-full w-full object-cover"
                 />
               ) : (

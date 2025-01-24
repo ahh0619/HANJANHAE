@@ -1,8 +1,9 @@
 'use client';
 
 import { X } from 'lucide-react';
-import Image from 'next/image';
 import React from 'react';
+
+import OptimizedImage from './OptimizedImage';
 
 type ShareOption = {
   icon: string;
@@ -48,11 +49,9 @@ const ShareModal: React.FC<ShareModalProps> = ({
                 onClick={option.onClick}
                 className="flex flex-col items-center justify-center space-y-2"
               >
-                <Image
+                <OptimizedImage
                   src={option.icon}
                   alt={option.label}
-                  width={48}
-                  height={48}
                   className="rounded"
                 />
                 <span className="w-20 truncate text-center text-label-mm text-black">

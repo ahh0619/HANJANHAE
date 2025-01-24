@@ -2,9 +2,11 @@
 
 import 'swiper/css';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
 import { PopularDrinkType } from '@/types/drink';
 
@@ -16,12 +18,21 @@ type PopularDrinkSectionProps = {
 
 const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
   const { user } = useAuthStore();
+  const router = useRouter();
+  const userId = user?.id || '';
 
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
     setIsBrowser(true);
   }, []);
+
+  const allDrinkIds = drinks.map((d) => d.id);
+
+  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+    userId,
+    allDrinkIds,
+  );
 
   if (!isBrowser) return null;
 
@@ -32,16 +43,20 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
         <p>데이터가 존재하지 않습니다.</p>
       ) : (
         <Swiper spaceBetween={16} slidesPerView="auto">
-          {drinks.map((drink) => (
-            <SwiperSlide key={drink.id} style={{ width: 'auto' }}>
-              <ProductCard
-                id={drink.id}
-                name={drink.name}
-                imageUrl={drink.image}
-                userId={user ? user.id : null}
-              />
-            </SwiperSlide>
-          ))}
+          {drinks.map((drink) => {
+            const isLiked = likeMap[drink.id] || false;
+            return (
+              <SwiperSlide key={drink.id} style={{ width: 'auto' }}>
+                <ProductCard
+                  id={drink.id}
+                  name={drink.name}
+                  imageUrl={drink.image}
+                  isLiked={isLiked}
+                  onToggleLike={() => toggleItem(drink.id)}
+                />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       )}
     </section>

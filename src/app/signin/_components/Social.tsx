@@ -1,17 +1,24 @@
 'use client';
 
+import * as Sentry from '@sentry/nextjs';
+import { useState } from 'react';
+
 import Button from '@/components/auth/Button';
+import Modal from '@/components/auth/Modal';
 import useSocial from '@/hooks/auth/useSocial';
 
 const Social = () => {
   const { handleGoogle, handleKakao } = useSocial();
 
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
   const handleSubmit = async (provider: string) => {
     try {
-      provider === 'google' && (await handleGoogle({ isSignin: true }));
-      provider === 'kakao' && (await handleKakao({ isSignin: true }));
+      provider === 'google' && (await handleGoogle());
+      provider === 'kakao' && (await handleKakao());
     } catch (error: any) {
-      window.alert(error);
+      Sentry.captureException(error);
+      setIsOpenModal(true);
     }
   };
 
@@ -30,6 +37,14 @@ const Social = () => {
           handleClick={() => handleSubmit('kakao')}
         />
       </div>
+
+      {isOpenModal && (
+        <Modal
+          title="소셜 로그인에 실패했습니다."
+          content="다시 시도해주세요."
+          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+        />
+      )}
     </>
   );
 };
