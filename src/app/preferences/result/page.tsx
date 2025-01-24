@@ -3,7 +3,7 @@ import { fetchUser } from '@/app/actions/auth';
 import DrinkAuthReco from './_components/DrinkAuthReco';
 import DrinkGuestReco from './_components/DrinkGuestReco';
 
-const Page = async () => {
+const Result = async () => {
   const user = await fetchUser();
 
   return user ? (
@@ -13,4 +13,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default Result;

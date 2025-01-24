@@ -8,6 +8,7 @@ import {
 import { useSurveyStore } from '@/store/surveyStore';
 
 const useDrinkRecommendations = (userId: string) => {
+  const [error, setError] = useState('');
   const [drinks, setDrinks] = useState(null);
   const { setIsSurveyCompleted } = useSurveyStore();
 
@@ -26,11 +27,10 @@ const useDrinkRecommendations = (userId: string) => {
 
         // Step 2-2:  1번 데이터가 없으면, 설문조사 결과 가져오기
         const surveyData = await fetchSurveyData(userId);
-        console.log('surveyData: ', surveyData);
 
         if (!surveyData) {
-          console.error('No survey data found');
-          setDrinks([]);
+          console.log('설문조사 없음');
+          setError('설문조사한 결과가 없습니다');
           return;
         }
 
@@ -38,6 +38,11 @@ const useDrinkRecommendations = (userId: string) => {
           surveyData,
           userId,
         });
+
+        if (!updatedRecoData) {
+          setError('AI 전통주 추천 실패!');
+          return;
+        }
 
         setDrinks(updatedRecoData);
         setIsSurveyCompleted(true);
@@ -50,7 +55,7 @@ const useDrinkRecommendations = (userId: string) => {
     fetchRecommendations();
   }, [userId]);
 
-  return drinks;
+  return { drinks, error };
 };
 
 export default useDrinkRecommendations;

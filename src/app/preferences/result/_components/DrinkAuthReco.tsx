@@ -11,14 +11,15 @@ type DrinkAuthRecoProps = {
 };
 
 const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
-  const drinks = useDrinkRecommendations(userId);
+  const { drinks, error } = useDrinkRecommendations(userId);
+
+  if (error !== '') {
+    console.log('에러난다~~');
+    throw new Error(error);
+  }
 
   if (drinks === null) {
     return <LoadingAnimation />;
-  }
-
-  if (drinks.length === 0) {
-    return <div>추천 결과 없음</div>;
   }
 
   return (

@@ -5,6 +5,7 @@ import { useSurveyStore } from '@/store/surveyStore';
 import { Tables } from '@/types/supabase';
 
 const useGuestDrinkRecommendations = () => {
+  const [error, setError] = useState('');
   const [drinks, setDrinks] = useState<Tables<'reco_results'>[] | null>(null);
   const { setIsSurveyCompleted } = useSurveyStore();
 
@@ -19,15 +20,20 @@ const useGuestDrinkRecommendations = () => {
 
       const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
 
-      if (!surveyData) {
-        console.error('No survey data found');
-        setDrinks([]);
+      if (!surveyData || Object.keys(surveyData).length === 0) {
+        console.log('설문조사 없음');
+        setError('설문조사한 결과가 없습니다');
         return;
       }
 
       const updatedRecoData = await recommendDrinks({
         surveyData,
       });
+
+      if (!updatedRecoData) {
+        setError('AI 전통주 추천 실패!');
+        return;
+      }
 
       setDrinks(updatedRecoData);
       localStorage.setItem('recoData', JSON.stringify(updatedRecoData));
@@ -37,7 +43,7 @@ const useGuestDrinkRecommendations = () => {
     fetchRecommendations();
   }, []);
 
-  return drinks;
+  return { error, drinks };
 };
 
 export default useGuestDrinkRecommendations;
