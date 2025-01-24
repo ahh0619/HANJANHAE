@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import { toggleLike } from '@/app/actions/like';
 import { useModal } from '@/app/providers/ModalProvider';
 import { useToast } from '@/app/providers/ToastProvider';
-import { useLikeStatus } from '@/hooks/like/useLikeStatus';
+import { useSingleLikeStatus } from '@/hooks/like/useSingleLikeStatus';
 
 export const useSingleLike = (drinkId: string, userId?: string) => {
   const queryClient = useQueryClient();
-  const { data, isLoading: isQueryLoading } = useLikeStatus(
+  const { data, isLoading: isQueryLoading } = useSingleLikeStatus(
     drinkId,
     userId || '',
   );
