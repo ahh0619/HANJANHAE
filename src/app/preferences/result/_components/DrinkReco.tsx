@@ -1,17 +1,17 @@
 'use client';
 
-import useDrinkRecommendations from '@/hooks/result/useDrinkRecommendations';
+import useRecommendations from '@/hooks/result/useRecomendations';
 
 import DrinkList from './DrinkList';
 import LoadingAnimation from './LoadingAnimation';
 
 type DrinkAuthRecoProps = {
-  userId: string;
+  userId?: string | undefined;
   nickname: string;
 };
 
-const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
-  const { drinks, error } = useDrinkRecommendations(userId);
+const DrinkReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
+  const { drinks, error } = useRecommendations(userId);
 
   if (error !== '') {
     console.log('에러난다~~');
@@ -31,4 +31,4 @@ const DrinkAuthReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
   );
 };
 
-export default DrinkAuthReco;
+export default DrinkReco;
