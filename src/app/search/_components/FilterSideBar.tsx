@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
 
@@ -109,7 +108,7 @@ const FilterSideBar = () => {
   };
 
   return (
-    <div className="mt-[16px] flex items-center justify-between gap-2 rounded-lg">
+    <div className="mt-[16px] flex h-[32px] items-center justify-between gap-2 rounded-lg">
       {/* 각 필터 버튼 */}
       <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
@@ -123,11 +122,13 @@ const FilterSideBar = () => {
           {filters.map((filter, index) => (
             <div
               key={index}
-              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-2 text-sm text-gray-700"
+              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
             >
-              <span>{filter.label}</span>
+              <span className="flex items-center text-label-mm">
+                {filter.label}
+              </span>
               <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
                 aria-label={`${filter.label} 삭제`}
                 onClick={() => {
                   if (
@@ -146,11 +147,9 @@ const FilterSideBar = () => {
                   }
                 }}
               >
-                <Image
-                  src="/assets/icons/cancelGray.svg"
-                  alt="Cancel_button"
-                  width={16}
-                  height={16}
+                <OptimizedImage
+                  src="/assets/icons/cancel-primary.svg"
+                  alt="선택된 필터 취소 버튼"
                   className="cursor-pointer"
                 />
               </button>
@@ -166,11 +165,9 @@ const FilterSideBar = () => {
           aria-label="필터 설정"
           onClick={openModal}
         >
-          <Image
+          <OptimizedImage
             src="/assets/icons/sliders-v-alt-white.svg"
-            alt="Slider_button"
-            width={20}
-            height={20}
+            alt="필터 버튼"
             className="cursor-pointer"
           />
         </button>

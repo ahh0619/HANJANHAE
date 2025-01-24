@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import LikeButton from '@/components/common/LikeButton';
 import ShareButton from '@/components/common/ShareButton';
 import { useSingleLike } from '@/hooks/like/useSingleLike';
@@ -16,7 +14,6 @@ const DrinkDescription = ({
 }: DrinkDescriptionProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
-  const router = useRouter();
 
   const { isLoading, isLiked, handleToggleLike } = useSingleLike(
     drinkId,

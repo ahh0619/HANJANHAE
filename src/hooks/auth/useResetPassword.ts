@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -45,7 +46,8 @@ const useResetPassword = ({ token, handleError }: ResetPasswordProps) => {
   const onSubmit = async (values: ResetPasswordType) => {
     try {
       await resetPassword({ token, password: values.password });
-    } catch (error: any) {
+    } catch (error) {
+      Sentry.captureException(error);
       handleError('비밀번호 변경에 실패했습니다.');
     }
   };

@@ -41,7 +41,7 @@ const SearchWrap = () => {
   return (
     <>
       {!isFiltered && !isSearchFocus && <Logo />}
-      <div className="mx-auto flex w-full flex-col items-center overflow-hidden px-5">
+      <div className="html-overflow-hidden mx-auto flex w-full flex-col items-center overflow-hidden px-5">
         {/* Search Bar */}
         <FocusInput searchValue={searchValue} setSearchValue={setSearchValue} />
         {/* <FilterResults /> */}

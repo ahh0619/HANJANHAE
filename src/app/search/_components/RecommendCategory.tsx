@@ -56,7 +56,7 @@ const RecommendCategory = ({
           <button
             key={category}
             onClick={() => handleCategoryClick(category)}
-            className="rounded-[16px] border border-primary-200 bg-[#FFEAED] p-[8px] px-[16px] text-label-lm font-medium not-italic leading-[1.5] text-primary-200"
+            className="rounded-[16px] bg-[#F5F5F5] p-[8px] px-[16px] text-label-lm font-medium not-italic leading-[1.5] text-gray-700"
           >
             {category}
           </button>

@@ -29,7 +29,7 @@ const FocusInput: React.FC<FocusInputProps> = ({
   }, [triggerFetch]);
 
   return (
-    <div className="mx-auto mt-[76px] w-full max-w-md text-center">
+    <div className="mx-auto mt-[32px] w-full max-w-md text-center">
       {/* 검색바와 취소 버튼 */}
       <SearchBar value={searchValue} onChange={setSearchValue} />
 

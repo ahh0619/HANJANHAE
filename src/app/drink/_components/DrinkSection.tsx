@@ -8,6 +8,7 @@ import DynamicHeader from './DynamicHeader';
 
 const DrinkSection = async ({ drinkId }: { drinkId: string }) => {
   const drink = await fetchDrinks(drinkId);
+
   return (
     <>
       <DynamicHeader
