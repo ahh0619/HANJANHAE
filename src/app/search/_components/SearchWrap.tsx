@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import Logo from '@/components/layout/Logo';
@@ -25,16 +25,25 @@ const SearchWrap = () => {
     isFiltered,
   } = useFilterStore();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   useEffect(() => {
     if (pathname === '/search') {
-      setKeyword('');
-      resetFilters();
-      setTriggerFetch(false);
-      setSearchTriggerFetch(false);
-      setIsSearchFocuse(false);
-      setIsFiltered(false);
+      const query = searchParams.get('query'); // 'query' 파라미터 값 가져오기
+
+      if (!query) {
+        // query가 없을 때만 초기화
+        setKeyword('');
+        resetFilters();
+        setTriggerFetch(false);
+        setSearchTriggerFetch(false);
+        setIsSearchFocuse(false);
+        setIsFiltered(false);
+        console.log('초기화 동작 실행');
+      } else {
+        console.log('쿼리가 존재하여 초기화하지 않음');
+      }
     }
-  }, [pathname]);
+  }, [pathname, searchParams]);
   const [searchValue, setSearchValue] = useState('');
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const { isModalOpen } = useModalStore();
