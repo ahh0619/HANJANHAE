@@ -1,10 +1,10 @@
 const SkeletonPage = () => {
   return (
-    <div className="px-[20px]">
+    <div className="">
       <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
         {Array.from({ length: 6 }).map((_, idx) => (
           <div
-            className="relative flex w-[163px] animate-pulse flex-col rounded-lg border bg-gray-50 p-2"
+            className="relative mb-[20px] flex w-[163px] animate-pulse flex-col rounded-lg border bg-gray-50 p-2"
             key={idx}
           >
             {/* 이미지 자리 */}

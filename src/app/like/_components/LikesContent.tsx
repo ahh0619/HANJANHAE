@@ -1,19 +1,16 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 import { fetchLikesByUser } from '@/app/actions/like';
+import Skeleton from '@/app/search/_components/Skeleton';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleLike } from '@/hooks/like/useMultipleLike';
 import { useAuthStore } from '@/store/authStore';
 
-import SkeletonPage from './SkeletonPage';
-
 const LikesContent = () => {
   const { user } = useAuthStore();
-  const router = useRouter();
   const userId = user?.id || '';
 
   const {
@@ -58,18 +55,18 @@ const LikesContent = () => {
   }, [fetchNextPage, hasNextPage]);
 
   if (isPending) {
-    return <SkeletonPage />;
+    return <Skeleton hasMargin={false} />;
   }
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log('lieksdata: ', likesData);
+  console.log('likesData: ', likesData);
 
   return (
-    <div className="px-[20px]">
+    <>
       {likesData.pages[0].data.length > 0 ? (
-        <div className="grid w-full grid-cols-2 justify-items-center gap-[8px]">
+        <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
           {allLikes.map((like) => {
             const isLiked = likeMap[like.drink_id] || false;
             return (
@@ -80,14 +77,15 @@ const LikesContent = () => {
                 imageUrl={like.drinks.image}
                 isLiked={isLiked}
                 onToggleLike={() => toggleItem(like.drink_id)}
-                width="163px"
-                height="241px"
-                marginBottom="20px"
-                imgHeight="207px"
+                width={'100%'}
+                height={'241px'}
+                marginBottom={'20px'}
+                imgHeight={'207px'}
               />
             );
           })}
 
+          {/* 무한 스크롤 감지용 */}
           <div
             ref={observerRef}
             className="col-span-2 flex h-6 items-center justify-center"
@@ -105,7 +103,7 @@ const LikesContent = () => {
           </p>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
