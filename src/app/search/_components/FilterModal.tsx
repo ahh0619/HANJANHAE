@@ -47,7 +47,7 @@ const FilterModal = () => {
   }, [isModalOpen]);
 
   const handleApplyfilters = () => {
-
+    const defaultKeyword = 'filtered';
     queryClient.removeQueries({
       queryKey: ['filterDrinks'],
       exact: false,
@@ -56,7 +56,7 @@ const FilterModal = () => {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
-    router.push(`/search?query=${encodeURIComponent('filtered')}`);
+    router.push(`/search?query=${encodeURIComponent(defaultKeyword)}`);
     setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');
