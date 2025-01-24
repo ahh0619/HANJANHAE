@@ -1,8 +1,9 @@
 'use client';
-
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import * as React from 'react';
+
+import useFocusStore from '@/store/focusStore';
 
 type DualRangeSliderProps = {
   value: number[];
@@ -21,12 +22,20 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   max = 3,
   step = 1,
 }) => {
+  // 핸들을 드래그하거나 슬라이더가 변경되기 전에 상태를 업데이트
+  const { isSliderClicked, setIsSliderClicked } = useFocusStore();
+  const handleBeforeChange = () => {
+    setIsSliderClicked(true);
+  };
+
   const handleSliderChange = (newValues: [number, number]) => {
+    setIsSliderClicked(true); // 슬라이더 값이 변경되면 클릭 상태로 변경
     onValueChange(newValues);
   };
 
   const handleMidButtonClick = () => {
     const middleValue = Math.round((max + min) / 2); // 중앙값 계산
+
     if (value[0] === min && value[1] === max) {
       // 슬라이더 범위가 [min, max]일 때
       onValueChange([min, middleValue]); // [min, middleValue]로 축소
@@ -37,6 +46,8 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
         Math.max(value[1], middleValue),
       ]);
     }
+
+    setIsSliderClicked(true); // 버튼 클릭 시에도 트랙 색상을 업데이트
   };
 
   return (
@@ -45,19 +56,27 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       <Slider
         range
         value={value}
-        onChange={handleSliderChange}
+        onBeforeChange={handleBeforeChange} // 최초 드래그 시작 시 호출
+        onChange={handleSliderChange} // 드래그 중 값이 변경될 때 호출
         min={min}
         max={max}
         step={step}
-        trackStyle={[
-          { backgroundColor: '#BF324B', height: 8 },
-          { backgroundColor: '#BF324B', height: 8 },
-        ]}
-        handleStyle={[
-          { borderColor: '#BF324B', height: 18, width: 18 },
-          { borderColor: '#BF324B', height: 18, width: 18 },
-        ]}
-        railStyle={{ backgroundColor: '#E0E0E0', height: 8 }}
+        styles={{
+          track: {
+            backgroundColor: isSliderClicked ? '#BF324B' : '#E0E0E0', // 클릭 여부에 따라 색상 변경
+            height: 8,
+          },
+          handle: {
+            borderColor: isSliderClicked ? '#BF324B' : '#E0E0E0', // 클릭 여부에 따라 색상 변경
+            border: isSliderClicked ? 'solid 4px #BF324B' : 'solid 4px #E0E0E0',
+            height: 18,
+            width: 18,
+          },
+          rail: {
+            backgroundColor: '#E0E0E0',
+            height: 8,
+          },
+        }}
       />
 
       {/* 범위 텍스트 및 중간 도수 동그라미 */}
@@ -85,10 +104,13 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
               width: '20px',
               height: '20px',
               borderRadius: '50%',
-              backgroundColor:
-                value[0] <= 2 && value[1] >= 2 ? '#BF324B' : '#E0E0E0',
+              backgroundColor: !isSliderClicked // 클릭 여부에 따라 초기 색상 유지
+                ? '#E0E0E0'
+                : value[0] <= 2 && value[1] >= 2
+                  ? '#BF324B'
+                  : '#E0E0E0',
             }}
-            onClick={handleMidButtonClick}
+            onClick={handleMidButtonClick} // 클릭 시 트랙 업데이트
           />
         </div>
         <div className="text-right">
@@ -102,4 +124,3 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
 };
 
 export { DualRangeSlider };
-

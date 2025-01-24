@@ -1,11 +1,11 @@
-import Image from 'next/image';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 const StandByScreen = () => {
   return (
     <div className="bg-gray mt-[76px] flex flex-col items-center">
-      <Image
+      <OptimizedImage
         src="/assets/icons/Character_search.svg"
-        alt="Searcn_Image"
+        alt="전통주 캐릭터 이미지"
         width={131}
         height={206}
         className="h-[206px] w-[131px]"

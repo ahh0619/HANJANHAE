@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import useFilterStore from '@/store/filterStore';
 
 import { DualRangeSlider } from './_ui/DualRangeSliderProps';
