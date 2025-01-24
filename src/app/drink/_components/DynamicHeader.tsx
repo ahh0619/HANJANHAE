@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import BackButton from '@/components/common/BackButton';
@@ -24,7 +23,6 @@ const DynamicHeader = ({
 }: DynamicHeaderProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
-  const router = useRouter();
 
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
