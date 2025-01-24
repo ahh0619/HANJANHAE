@@ -6,14 +6,15 @@ import DrinkList from './DrinkList';
 import LoadingAnimation from './LoadingAnimation';
 
 const DrinkGuestReco = () => {
-  const drinks = useGuestDrinkRecommendations();
+  const { drinks, error } = useGuestDrinkRecommendations();
+
+  if (error !== '') {
+    console.log('에러난다~~');
+    throw new Error(error);
+  }
 
   if (drinks === null) {
     return <LoadingAnimation />;
-  }
-
-  if (drinks.length === 0) {
-    return <div>추천 결과 없음</div>;
   }
 
   return (
