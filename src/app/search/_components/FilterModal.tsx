@@ -13,6 +13,7 @@ import FilterType from './FilterTypes';
 
 const FilterModal = () => {
   const queryClient = useQueryClient();
+  const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
   useBodyLock();
 
@@ -56,6 +57,7 @@ const FilterModal = () => {
 
   const handleFilterReset = () => {
     resetFilters();
+    setIsSliderClicked(false);
     setIsSearchFocuse(false);
     setValues([1, 3]);
     setSelectedSort('alphabetical');
@@ -65,7 +67,7 @@ const FilterModal = () => {
     <>
       {/* Background Overlay */}
       <div
-        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-300 ease-in ${
+        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={closeModal}
@@ -73,7 +75,7 @@ const FilterModal = () => {
 
       {/* Modal Content */}
       <div
-        className={`fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
+        className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
           isAnimating ? 'translate-y-0' : 'translate-y-[120%]'
         }`}
       >
@@ -104,13 +106,13 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="body-overflow-hidden html-overflow-hidden scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
+          <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
             <FilterType />
           </div>
         </div>
 
         {/* Apply Button */}
-        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[full] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
+        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
           <button
             onClick={handleApplyfilters}
             className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"

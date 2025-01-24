@@ -123,11 +123,11 @@ const FilterSideBar = () => {
           {filters.map((filter, index) => (
             <div
               key={index}
-              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-gray-500 bg-white px-3 py-2 text-sm text-gray-700"
+              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
             >
-              <span>{filter.label}</span>
+              <span className="flex items-center">{filter.label}</span>
               <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
                 aria-label={`${filter.label} 삭제`}
                 onClick={() => {
                   if (
@@ -147,7 +147,7 @@ const FilterSideBar = () => {
                 }}
               >
                 <Image
-                  src="/assets/icons/cancelGray.svg"
+                  src="/assets/icons/cancel-primary.svg"
                   alt="Cancel_button"
                   width={16}
                   height={16}

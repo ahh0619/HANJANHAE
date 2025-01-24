@@ -75,7 +75,11 @@ const SearchBar = ({
         }${isFiltered && 'border border-grayscale-300'}`}
       >
         <Image
-          src="/assets/icons/search.svg"
+          src={
+            isFiltered
+              ? '/assets/icons/search-gray.svg'
+              : '/assets/icons/search.svg'
+          } // isFiltered가 true이면 search-gray 아이콘, 그렇지 않으면 기본 아이콘
           alt="Search_Icon"
           width={24}
           height={24}
