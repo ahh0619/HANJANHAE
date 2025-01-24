@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
+import { validate as uuid } from 'uuid';
 
 import { fetchDrinks } from '@/app/actions/drink';
 
@@ -34,6 +36,10 @@ export async function generateMetadata({
 }
 
 const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
+  if (!uuid(params.id)) {
+    notFound();
+  }
+
   return (
     <div className="mx-auto">
       <div className="relative">
