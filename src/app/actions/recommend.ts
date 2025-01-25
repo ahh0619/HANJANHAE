@@ -1,5 +1,6 @@
 'use server';
 
+import * as Sentry from '@sentry/node';
 import { OpenAI } from 'openai';
 
 import { fetchDrinksByNames, fetchRandomDrinks } from './drink';
@@ -30,6 +31,7 @@ function parseRecommendations(raw: string): DrinkRecommendation[] {
   try {
     parsed = JSON.parse(maybeJson);
   } catch (err) {
+    Sentry.captureException(err);
     throw new Error('JSON 파싱 실패');
   }
 
@@ -50,7 +52,9 @@ function parseRecommendations(raw: string): DrinkRecommendation[] {
     }
   }
 
-  throw new Error('데이터 형식 오류');
+  const error = new Error('데이터 형식 오류');
+  Sentry.captureException(error);
+  throw error;
 }
 
 const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
@@ -80,14 +84,18 @@ const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
 
         return drinks;
       } catch (error) {
+        Sentry.captureException(error);
         console.error('추천 데이터 파싱 실패:', error);
         return await fetchRandomDrinks(5);
       }
     } else {
-      console.error('OpenAI 실행 실패:', run);
+      const error = new Error('OpenAI 실행 실패');
+      Sentry.captureException(error);
+      console.error(error, run);
       return await fetchRandomDrinks(5);
     }
   } catch (error) {
+    Sentry.captureException(error);
     console.error('fetchRecommendedDrinks 함수 에러:', error);
     return await fetchRandomDrinks(5);
   }

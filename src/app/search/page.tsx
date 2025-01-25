@@ -1,9 +1,13 @@
+import { Suspense } from 'react';
+
 import SearchWrap from './_components/SearchWrap';
 
 const Search = () => {
   return (
     <>
-      <SearchWrap />
+      <Suspense fallback={<div>로딩 중</div>}>
+        <SearchWrap />
+      </Suspense>
     </>
   );
 };

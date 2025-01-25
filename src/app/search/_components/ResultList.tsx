@@ -1,5 +1,4 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 
 import ProductCard from '@/components/common/ProductCard';
@@ -82,6 +81,7 @@ const ResultList = ({ user }) => {
   });
 
   const isLoading = sortSearchIsLoading || sortFilterIsLoading || likeIsLoading;
+  const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
   const {
@@ -91,6 +91,15 @@ const ResultList = ({ user }) => {
   } = useMultipleLike(userId, allDrinkIds);
 
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
+
+  // 에러가 났을 때 error.tsx로 안가도 될 수 있다
+  // -> 페이지 전체가 error.tsx로 보내는데 별 거 아닌 부분에서는 안가도 된다.
+  // 페이지 레이아웃 남겨두고 다른 코드 남겨두고 결과 부분만 잠시 문제가 있습니다~
+  // 표시하고 싶을 수도 있다.
+  // 만약 그럴거라면 react query 이용하고 있다면,
+  if (isError) {
+    throw new Error('데이터를 불러올 수 없습니다.');
+  }
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}

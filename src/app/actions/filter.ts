@@ -133,6 +133,7 @@ export async function filterDrinks({
 
   const { data, count, error } = await query;
 
+  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
@@ -189,6 +190,7 @@ export async function filterDrinksByKeyword({
     .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
     .range(offset, offset + limit - 1);
 
+  // 에러처리
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
@@ -265,6 +267,7 @@ export async function filterSortedDrinks({
 
   const { data, count, error } = await query;
 
+  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
@@ -358,6 +361,11 @@ export const getPopularDrinks = async ({
       totalCount: 0,
     };
   }
+  if (error) {
+    
+    throw new Error('Error fetching popular drinks');
+  }
+
   const totalCount = data?.[0]?.total_likes || 0;
 
   // name, image, like_count를 기준으로 음료 데이터를 정렬

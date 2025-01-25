@@ -1,8 +1,10 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { FilterParams } from '@/app/actions/filter';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
@@ -12,13 +14,16 @@ import useSortStore from '@/store/selectStore';
 import FilterType from './FilterTypes';
 
 const FilterModal = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
   useBodyLock();
 
   const {
+    selectedTypes,
     alcoholStrength,
+    tastePreferences,
     setAlcoholStrength,
     setIsFiltered,
     resetFilters,
@@ -42,6 +47,7 @@ const FilterModal = () => {
   }, [isModalOpen]);
 
   const handleApplyfilters = () => {
+    const defaultKeyword = 'filtered';
     queryClient.removeQueries({
       queryKey: ['filterDrinks'],
       exact: false,
@@ -50,6 +56,7 @@ const FilterModal = () => {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
+    router.push(`/search?query=${encodeURIComponent(defaultKeyword)}`);
     setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');

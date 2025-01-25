@@ -1,4 +1,6 @@
+'use client';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
@@ -14,6 +16,7 @@ const SearchBar = ({
   value: string;
   onChange: (val: string) => void;
 }) => {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const {
@@ -44,7 +47,8 @@ const SearchBar = ({
         queryKey: ['filterDrinks'],
         exact: false,
       });
-      const newKeyword = inputRef.current?.value || ''; // 혹시 모를 || '' 도 체크
+      const newKeyword = inputRef.current?.value.trim() || '';
+      router.push(`/search?query=${encodeURIComponent(newKeyword)}`);
       setKeyword(newKeyword);
       setTriggerFetch(false);
       setIsSearchFocuse(false);

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 import { checkNickname, updateUserProfile } from '@/app/actions/mypage';
 import { createClient } from '@/utils/supabase/client';
@@ -16,6 +17,11 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const sanitizeFileName = (fileName: string): string => {
+    const extension = fileName.split('.').pop();
+    return `${uuid()}.${extension}`;
+  };
 
   useEffect(() => {
     if (user) {
@@ -45,10 +51,10 @@ const useProfileEdit = (user: User | null, onClose: () => void) => {
 
       if (selectedFile) {
         const supabase = createClient();
-        const fileName = `${Date.now()}_${selectedFile.name}`;
+        const sanitizedFileName = sanitizeFileName(selectedFile.name);
         const { data, error } = await supabase.storage
           .from('profile_images')
-          .upload(fileName, selectedFile);
+          .upload(sanitizedFileName, selectedFile);
 
         if (error) throw new Error(error.message);
 
