@@ -71,7 +71,7 @@ const SearchBar = ({
     <div
       className={`${
         isSearchFocus || isFiltered ? 'mt-0' : 'mt-0'
-      } m-0 mx-auto flex w-full items-center bg-white transition-all duration-300`}
+      } !xl:w-[482px] m-0 mx-auto flex w-full items-center xl:mx-0 xl:w-[482px] ${isFiltered && `xl:w-[588px]`}`}
     >
       <div
         className={`flex h-[48px] w-full items-center justify-between gap-3 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${

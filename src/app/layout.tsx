@@ -52,7 +52,9 @@ const RootLayout = ({
       <body className="antialiased">
         <Providers>
           <KakaoInit />
-          <main className="m-auto mb-32 max-w-[600px]">{children}</main>
+          <main className="m-auto mb-32 max-w-[600px] xl:max-w-none">
+            {children}
+          </main>
           <ScrollTop />
           <BottomNavBar />
         </Providers>

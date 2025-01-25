@@ -108,7 +108,7 @@ const FilterSideBar = () => {
   };
 
   return (
-    <div className="mt-[16px] flex h-[32px] items-center justify-between gap-2 rounded-lg">
+    <div className="mx-auto mt-[16px] flex h-[32px] w-[448px] items-center justify-between gap-2 rounded-lg xl:mb-[30px] xl:mt-[30px] xl:w-[588px]">
       {/* 각 필터 버튼 */}
       <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
