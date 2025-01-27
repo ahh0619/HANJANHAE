@@ -3,17 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { UserType } from '@/types/Auth';
+import { useAuthStore } from '@/store/authStore';
 
 import LoggedInMenu from './LoggedInMenu';
 import LoggedOutMenu from './LoggedOutMenu';
 import Logo from './Logo';
 
-type HeaderClientProps = {
-  user: UserType | null;
-};
-
-const HeaderClient = ({ user }: HeaderClientProps) => {
+const HeaderClient = () => {
+  const user = useAuthStore();
   const pathname = usePathname();
   const isActive = (href: string) => href === pathname;
 
