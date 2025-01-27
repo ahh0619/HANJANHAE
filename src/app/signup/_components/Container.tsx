@@ -6,7 +6,6 @@ import { useState } from 'react';
 import Button from '@/components/auth/Button';
 
 import SignUpForm from './SignUpForm';
-import Terms from './Terms';
 import TermsDetail from './TermsDetail';
 
 const Container = () => {
@@ -22,13 +21,13 @@ const Container = () => {
   const handleSelectTerms = (value: number | null) => setTerms(value);
 
   return (
-    <div className="h-[100vh]">
+    <div className="h-[100vh] xl:h-full">
       <Button
         category="back"
         label=""
         handleClick={() => (step === 1 ? router.push('/signin') : setStep(1))}
       />
-      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900">
+      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900 xl:mb-10 xl:py-0 xl:pt-[18px]">
         회원가입
       </h1>
       {step === 2 && (
@@ -39,13 +38,12 @@ const Container = () => {
         />
       )}
 
-      {step === 1 && (
-        <Terms
-          handleMoveStep={handleMoveStep}
-          handleSelectTerms={handleSelectTerms}
-        />
-      )}
-      {step === 2 && !terms && <SignUpForm />}
+      <SignUpForm
+        step={step}
+        handleMoveStep={handleMoveStep}
+        handleSelectTerms={handleSelectTerms}
+      />
+
       {terms && <TermsDetail terms={terms} handleClose={handleSelectTerms} />}
     </div>
   );
