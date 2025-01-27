@@ -96,8 +96,26 @@ const LikesContent = () => {
           </div>
         </div>
       ) : (
-        <div className="mt-[160px] flex w-full flex-col items-center">
-          <img src="/Character.svg" />
+        <div className="mt-[160px] flex w-full flex-col items-center xl:mt-[0px] xl:h-screen">
+          <div className="flex items-center xl:h-screen">
+            <img
+              src="/assets/icons/pinkHeart.svg"
+              className="hidden xl:block"
+            />
+            <img
+              src="/assets/icons/hotpinkHeart.svg"
+              className="hidden xl:block"
+            />
+            <img src="/Character.svg" />
+            <img
+              src="/assets/icons/pinkHeart.svg"
+              className="hidden xl:block"
+            />
+            <img
+              src="/assets/icons/hotpinkHeart.svg"
+              className="hidden xl:block"
+            />
+          </div>
           <p className="mt-[36px] h-[22px] text-title-mb text-grayscale-500">
             좋아요 한 전통주가 없습니다
           </p>
