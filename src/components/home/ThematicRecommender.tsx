@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -22,12 +21,9 @@ type ThematicRecommenderProps = {
   };
 };
 
-export default function ThematicRecommender({
-  recommendations,
-}: ThematicRecommenderProps) {
+const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
-  const router = useRouter();
 
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
@@ -66,10 +62,12 @@ export default function ThematicRecommender({
   ];
 
   return (
-    <div className="mt-9 space-y-6 px-5">
+    <div className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
       {sections.map((section, idx) => (
         <section key={idx}>
-          <h2 className="mb-3 text-title-lb">{section.title}</h2>
+          <h2 className="mb-3 text-title-lb xl:mb-11 xl:mt-[100px]">
+            {section.title}
+          </h2>
           {section.items.length > 0 ? (
             <Swiper spaceBetween={16} slidesPerView="auto">
               {section.items.map((item) => {
@@ -94,4 +92,6 @@ export default function ThematicRecommender({
       ))}
     </div>
   );
-}
+};
+
+export default ThematicRecommender;
