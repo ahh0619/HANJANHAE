@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white p-5 text-center shadow-lg">
+      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white p-5 text-center shadow-lg xl:w-[400px] xl:px-3 xl:py-5">
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
@@ -60,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Secondary Action */}
             {secondaryAction && (
               <button
-                className="w-[136px] rounded-[8px] border border-secondary bg-etc-white px-4 py-3 text-title-mb text-primary hover:bg-secondary-hover"
+                className="w-[136px] rounded-[8px] border border-secondary bg-etc-white px-4 py-3 text-title-mb text-primary hover:bg-secondary-hover xl:w-[164px]"
                 onClick={secondaryAction.onClick}
               >
                 {secondaryAction.text}
@@ -69,7 +69,7 @@ const Modal: React.FC<ModalProps> = ({
             {/* Primary Action */}
             {primaryAction && (
               <button
-                className="w-[136px] rounded-[8px] bg-primary px-4 py-3 text-title-mb text-white hover:bg-primary-hover"
+                className="w-[136px] rounded-[8px] bg-primary px-4 py-3 text-title-mb text-white hover:bg-primary-hover xl:w-[164px]"
                 onClick={primaryAction.onClick}
               >
                 {primaryAction.text}
@@ -80,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="mt-6 text-label-mm text-grayscale-500 underline hover:text-grayscale-700"
+              className="mt-6 text-label-mm text-grayscale-500 underline hover:text-grayscale-700 xl:mb-5"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}

@@ -44,7 +44,7 @@ const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
 
   return (
     <div className="mx-auto max-w-[1280px] xl:mt-8">
-      <div className="relative flex flex-col xl:flex-row xl:gap-[126px]">
+      <div className="relative flex flex-col justify-center xl:flex-row xl:gap-[126px]">
         <div className="flex-1 bg-etc-white xl:sticky xl:top-0 xl:h-[534px] xl:w-[430px] xl:flex-none xl:shrink-0">
           <Suspense fallback={<Loading />}>
             <DrinkOverviewSection drinkId={params.id} />
