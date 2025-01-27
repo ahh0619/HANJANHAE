@@ -1,5 +1,7 @@
+import HeaderClient from './HeaderClient';
+
 const Header = () => {
-  return <div>Header</div>;
+  return <HeaderClient />;
 };
 
 export default Header;
