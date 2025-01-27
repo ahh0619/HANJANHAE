@@ -87,6 +87,24 @@
   }
 }
 
+.swiper-pagination-progressbar {
+  @apply h-3 w-full bg-secondary-100 !important;
+  @apply overflow-hidden rounded !important;
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+}
+
+.swiper-pagination-progressbar-fill {
+  @apply bg-primary-100 !important;
+  position: absolute !important;
+  opacity: 1 !important;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 :root {
   /* Primary Colors */
   --primary-color: #bf324b;

@@ -5,6 +5,7 @@ import Script from 'next/script';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
+import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 
@@ -57,6 +58,7 @@ const RootLayout = ({
           <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-[1280px]">
             {children}
           </main>
+          <Footer />
           <ScrollTop />
           <BottomNavBar />
         </Providers>
