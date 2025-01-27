@@ -77,10 +77,7 @@ const LikesContent = () => {
                 imageUrl={like.drinks.image}
                 isLiked={isLiked}
                 onToggleLike={() => toggleItem(like.drink_id)}
-                width={'100%'}
-                height={'241px'}
-                marginBottom={'20px'}
-                imgHeight={'207px'}
+                scenario="like"
               />
             );
           })}

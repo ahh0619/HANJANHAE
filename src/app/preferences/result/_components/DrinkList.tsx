@@ -51,8 +51,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                 imageUrl={drink.image}
                 isLiked={isLiked}
                 onToggleLike={() => toggleItem(drink.drink_id)}
-                height="216px"
-                imgHeight="186px"
+                scenario="result"
                 isNameVisible={false}
               />
 

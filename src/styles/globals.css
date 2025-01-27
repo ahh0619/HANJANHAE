@@ -2,6 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .product-card-default {
+    @apply relative flex h-[186px] w-[124px] flex-col;
+  }
+  .product-card-default-image {
+    @apply relative h-[152px] w-[124px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  .product-card-default-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-default {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-default-image {
+      @apply h-[291px] w-[224px];
+    }
+    .product-card-default-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+
+  .product-card-result {
+    @apply relative flex h-[186px] w-[124px] flex-col;
+  }
+  .product-card-result-image {
+    @apply relative h-[186px] w-[124px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  .product-card-result-likeBtn {
+    @apply absolute bottom-0 right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-result {
+      @apply h-[222px] w-[160px];
+    }
+    .product-card-result-image {
+      @apply h-[222px] w-[160px];
+    }
+  }
+
+  .product-card-search {
+    @apply relative flex h-[241px] w-[163px] flex-col;
+  }
+  .product-card-search-image {
+    @apply relative h-[207px] w-[163px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  .product-card-search-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+  @screen xl {
+    .product-card-search {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-search-image {
+      @apply h-[291px] w-[224px];
+    }
+    .product-card-search-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+
+  .product-card-like {
+    @apply relative flex h-[241px] w-[163px] flex-col;
+  }
+  .product-card-like-image {
+    @apply relative h-[207px] w-[163px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  .product-card-like-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+  @screen xl {
+    .product-card-like {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-like-image {
+      @apply h-[291px] w-[224px];
+    }
+    .product-card-like-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+}
+
 :root {
   /* Primary Colors */
   --primary-color: #bf324b;
@@ -103,7 +188,6 @@ body {
   --font-caption-sm: 10px medium 150%;
 }
 
-
 /* pc 환경에서는 우선 따로 스크롤 지정할 것 당장은 스크롤 숨김*/
 html {
   overflow-y: scroll; /* 항상 수직 스크롤 동작 허용 */
@@ -114,7 +198,6 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
-
 .html-overflow-hidden {
   overflow-y: scroll;
   overflow-x: hidden;
@@ -122,17 +205,15 @@ html {
   /* 스크롤바 숨기기 */
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
-  
 }
 
 .html-overflow-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
 
-
 .body-overflow-hidden {
   overflow-y: hidden; /* 세로 스크롤 비활성화 */
-  padding-right:10px;
+  padding-right: 10px;
 }
 
 /* 모달 시 스크롤 숨기기 */
@@ -151,21 +232,21 @@ html {
 }
 
 /* rc slider css */
-.rc-slider{
-  position:relative !important;
+.rc-slider {
+  position: relative !important;
   padding: 0 !important;
-  width:94.65% !important;
-  left:50%;
-  transform:translate(-50%)
+  width: 94.65% !important;
+  left: 50%;
+  transform: translate(-50%);
 }
 
-.rc-slider-handle{
-  z-index:2 !important;
+.rc-slider-handle {
+  z-index: 2 !important;
   opacity: 1 !important;
-  width:20px !important;
-  height:20px !important;
+  width: 20px !important;
+  height: 20px !important;
   background-color: white !important;
-  border-radius:20px !important;
+  border-radius: 20px !important;
   /* border: solid 4px var(--primary-100, #BF324B) ! important; */
   margin-top: -6px !important;
 }
