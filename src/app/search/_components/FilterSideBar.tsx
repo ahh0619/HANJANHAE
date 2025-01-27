@@ -1,3 +1,4 @@
+import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
@@ -115,13 +116,6 @@ const FilterSideBar = () => {
       <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
         <Swiper spaceBetween={8} slidesPerView="auto">
-          {/* <div
-            className="scrollbar-hide flex w-full space-x-2 overflow-x-auto"
-            style={{
-              scrollbarWidth: 'none', // Firefox
-              msOverflowStyle: 'none', // IE/Edge
-            }}
-          > */}
           {filters.map((filter, index) => (
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <div
