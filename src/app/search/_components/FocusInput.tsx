@@ -32,7 +32,7 @@ const FocusInput: React.FC<FocusInputProps> = ({
     <div className="w-full bg-[#FFF] text-center xl:bg-[#ffEAED]">
       {/* 검색바와 취소 버튼 */}
       <div
-        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 xl:pb-[108px] ${isFiltered && `xl:pb-0`}`}
+        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${isFiltered ? '!pb-0' : 'xl:pb-[108px]'}`}
       >
         <div className="static xl:relative">
           <SearchBar value={searchValue} onChange={setSearchValue} />

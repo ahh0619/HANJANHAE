@@ -1,3 +1,5 @@
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
@@ -108,54 +110,58 @@ const FilterSideBar = () => {
   };
 
   return (
-    <div className="mx-auto mt-[16px] flex h-[32px] w-[448px] items-center justify-between gap-2 rounded-lg xl:mb-[30px] xl:mt-[30px] xl:w-[588px]">
+    <div className="mx-auto mt-[16px] flex h-[32px] max-w-md items-center justify-between gap-2 rounded-lg xl:mb-[30px] xl:mt-[30px] xl:w-[588px] xl:max-w-none">
       {/* 각 필터 버튼 */}
       <div className="w-fit overflow-hidden">
         {/* Swiper 컨테이너 영역 */}
-        <div
-          className="scrollbar-hide flex w-full space-x-2 overflow-x-auto"
-          style={{
-            scrollbarWidth: 'none', // Firefox
-            msOverflowStyle: 'none', // IE/Edge
-          }}
-        >
+        <Swiper spaceBetween={8} slidesPerView="auto">
+          {/* <div
+            className="scrollbar-hide flex w-full space-x-2 overflow-x-auto"
+            style={{
+              scrollbarWidth: 'none', // Firefox
+              msOverflowStyle: 'none', // IE/Edge
+            }}
+          > */}
           {filters.map((filter, index) => (
-            <div
-              key={index}
-              className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
-            >
-              <span className="flex items-center text-label-mm">
-                {filter.label}
-              </span>
-              <button
-                className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
-                aria-label={`${filter.label} 삭제`}
-                onClick={() => {
-                  if (
-                    Array.isArray(filter.value) && // filter.value가 배열인지 확인
-                    Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
-                    filter.value.length === alcoholStrength.length && // 길이 비교
-                    filter.value.every(
-                      (val, index) => val === alcoholStrength[index],
-                    ) // 모든 요소 비교
-                  ) {
-                    handleRemoveStrength();
-                  } else if (filter.original in tastePreferences) {
-                    handleRemoveTastePreference(filter.original); // 맛 필터 삭제
-                  } else {
-                    handleRemoveType(filter.original); // 술 타입 필터 삭제
-                  }
-                }}
+            <SwiperSlide key={index} style={{ width: 'auto' }}>
+              <div
+                key={index}
+                className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
               >
-                <OptimizedImage
-                  src="/assets/icons/cancel-primary.svg"
-                  alt="선택된 필터 취소 버튼"
-                  className="cursor-pointer"
-                />
-              </button>
-            </div>
+                <span className="flex items-center text-label-mm">
+                  {filter.label}
+                </span>
+                <button
+                  className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+                  aria-label={`${filter.label} 삭제`}
+                  onClick={() => {
+                    if (
+                      Array.isArray(filter.value) && // filter.value가 배열인지 확인
+                      Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
+                      filter.value.length === alcoholStrength.length && // 길이 비교
+                      filter.value.every(
+                        (val, index) => val === alcoholStrength[index],
+                      ) // 모든 요소 비교
+                    ) {
+                      handleRemoveStrength();
+                    } else if (filter.original in tastePreferences) {
+                      handleRemoveTastePreference(filter.original); // 맛 필터 삭제
+                    } else {
+                      handleRemoveType(filter.original); // 술 타입 필터 삭제
+                    }
+                  }}
+                >
+                  <OptimizedImage
+                    src="/assets/icons/cancel-primary.svg"
+                    alt="선택된 필터 취소 버튼"
+                    className="cursor-pointer"
+                  />
+                </button>
+              </div>
+            </SwiperSlide>
           ))}
-        </div>
+          {/* </div> */}
+        </Swiper>
       </div>
 
       {/* 설정 아이콘 */}
