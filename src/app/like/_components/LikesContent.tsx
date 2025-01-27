@@ -66,7 +66,7 @@ const LikesContent = () => {
   return (
     <>
       {likesData.pages[0].data.length > 0 ? (
-        <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
+        <div className="grid w-full grid-cols-2 gap-x-[8px] gap-y-[8px] xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[20px]">
           {allLikes.map((like) => {
             const isLiked = likeMap[like.drink_id] || false;
             return (
@@ -88,7 +88,7 @@ const LikesContent = () => {
           {/* 무한 스크롤 감지용 */}
           <div
             ref={observerRef}
-            className="col-span-2 flex h-6 items-center justify-center"
+            className="col-span-2 flex h-6 items-center justify-center xl:col-span-5"
           >
             {isFetchingNextPage && (
               <div className="h-6 w-6 animate-spin rounded-full border-4 border-grayscale-300 border-t-grayscale-600"></div>
