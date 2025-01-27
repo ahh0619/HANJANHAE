@@ -8,7 +8,8 @@ import { SignUpDataType } from '@/types/Auth';
 import { manageSignUpError } from '@/utils/auth/manageError';
 
 type SignUpProps = {
-  handleError: (message: string) => void;
+  isAgreeAll: boolean;
+  handleErrorMessage: (message: string[]) => void;
 };
 
 const signupSchema = z
@@ -34,7 +35,7 @@ const signupSchema = z
     path: ['passwordConfirm'],
   });
 
-const useSignUp = ({ handleError }: SignUpProps) => {
+const useSignUp = ({ isAgreeAll, handleErrorMessage }: SignUpProps) => {
   const {
     register,
     handleSubmit,
@@ -51,11 +52,22 @@ const useSignUp = ({ handleError }: SignUpProps) => {
   });
 
   const onSubmit = async (values: SignUpDataType) => {
+    if (!isAgreeAll) {
+      handleErrorMessage([
+        '약관 동의는 필수입니다.',
+        '모든 항목에 동의해주세요.',
+      ]);
+      return;
+    }
+
     try {
       await signup(values);
     } catch (error) {
       Sentry.captureException(error);
-      handleError(manageSignUpError(error.message));
+      handleErrorMessage([
+        manageSignUpError(error.message),
+        '다시 시도해주세요.',
+      ]);
     }
   };
 
