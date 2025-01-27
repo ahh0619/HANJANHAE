@@ -18,7 +18,7 @@ const HeaderClient = () => {
 
   return (
     <header
-      className={`fixed left-0 right-0 top-0 z-50 hidden h-[102px] xl:block ${isSearchPage ? 'bg-[#FFEAED80]' : 'bg-white'} `}
+      className={`sticky top-0 z-50 hidden h-[102px] xl:block ${isSearchPage ? 'bg-[#FFEAED80]' : 'bg-white'} `}
     >
       <div className="mx-auto flex h-full w-[1200px] items-center justify-between px-10">
         <div className="flex items-center gap-[62px]">
@@ -27,6 +27,7 @@ const HeaderClient = () => {
           </Link>
 
           <nav className="flex items-center gap-2">
+            {/* AI 전통주 추천 목록 */}
             <Link
               href="/preferences/result"
               className={`border-b-2 px-3 py-2 text-label-lm transition-colors ${
@@ -38,6 +39,7 @@ const HeaderClient = () => {
               AI 전통주 추천 목록
             </Link>
 
+            {/* 전통주 검색 */}
             <Link
               href="/search"
               className={`border-b-2 px-3 py-2 text-label-lm transition-colors ${
