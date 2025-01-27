@@ -65,11 +65,19 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     <div className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
       {sections.map((section, idx) => (
         <section key={idx}>
-          <h2 className="mb-3 text-title-lb xl:mb-11 xl:mt-[100px]">
+          <h2 className="mb-3 text-title-lb xl:mb-11 xl:mt-[100px] xl:text-title-xl">
             {section.title}
           </h2>
           {section.items.length > 0 ? (
-            <Swiper spaceBetween={16} slidesPerView="auto">
+            <Swiper
+              spaceBetween={16}
+              slidesPerView="auto"
+              breakpoints={{
+                1280: {
+                  spaceBetween: 20,
+                },
+              }}
+            >
               {section.items.map((item) => {
                 const isLiked = likeMap[item.id] || false;
                 return (

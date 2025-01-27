@@ -5,8 +5,9 @@ import Script from 'next/script';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
-
+import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
+
 import { Providers } from './providers';
 
 const pretendard = localFont({
@@ -52,6 +53,7 @@ const RootLayout = ({
       <body className="antialiased">
         <Providers>
           <KakaoInit />
+          <Header />
           <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-[1280px]">
             {children}
           </main>
