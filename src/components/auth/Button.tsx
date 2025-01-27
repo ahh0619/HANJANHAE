@@ -22,7 +22,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
       {category === 'modal' && (
         <button
           type="submit"
-          className="w-full rounded-[8px] bg-primary p-3 text-title-mb text-grayscale-100"
+          className="mb-2 w-full rounded-[8px] bg-primary p-3 text-title-mb text-grayscale-100"
           onClick={handleClick}
         >
           {label}
@@ -79,7 +79,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
       {category.includes('back') && (
         <button
           type="button"
-          className="absolute left-2 top-[2px] flex items-center justify-center z-20"
+          className="absolute left-2 top-[2px] z-20 flex items-center justify-center xl:hidden"
           onClick={handleClick}
         >
           <OptimizedImage
@@ -91,11 +91,19 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
 
       {category === 'cancel' && (
         <p
-          className="absolute right-2 top-[2px] flex h-10 w-10 cursor-pointer items-center justify-center text-label-lm text-grayscale-900"
+          className="absolute right-2 top-[2px] flex h-10 w-10 cursor-pointer items-center justify-center text-label-lm text-grayscale-900 xl:hidden"
           onClick={handleClick}
         >
           {label}
         </p>
+      )}
+
+      {category === 'close' && (
+        <div className="flex w-full justify-end">
+          <button type="button" onClick={handleClick}>
+            <OptimizedImage src="/assets/icons/cancelDark.svg" alt="close" />
+          </button>
+        </div>
       )}
     </>
   );
