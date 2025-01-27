@@ -25,7 +25,7 @@ const Social = () => {
   return (
     <>
       <p className="mb-5 text-center text-title-lm">SNS 로그인</p>
-      <div className="mb-10 flex flex-col gap-3">
+      <div className="flex flex-col gap-3 pb-[43px] xl:pb-[220px]">
         <Button
           category="google"
           label="구글로 로그인하기"
