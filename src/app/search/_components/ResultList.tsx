@@ -123,10 +123,7 @@ const ResultList = ({ user }) => {
                 imageUrl={result.image}
                 isLiked={isLiked}
                 onToggleLike={() => toggleItem(result.id)}
-                width={'100%'}
-                height={'241px'}
-                marginBottom={'20px'}
-                imgHeight={'207px'}
+                scenario="search"
               />
             );
           })}
