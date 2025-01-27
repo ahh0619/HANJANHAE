@@ -24,14 +24,14 @@ const DrinkTasteProfile: React.FC<DrinkTasteProfileProps> = ({ drink }) => {
     label: string,
     value: number | null | undefined,
   ) => (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex w-[336px] items-center gap-x-12 xl:w-[486px] xl:gap-x-14">
       {/* Label */}
       <div>
-        <span className="w-16 text-body-mm text-grayscale-900">{label}</span>
+        <p className="w-[42px] text-body-mm text-grayscale-900">{label}</p>
       </div>
 
       {/* 약함과 Bars */}
-      <div className="grid grid-cols-[auto_auto_1fr_auto] items-center gap-x-1">
+      <div className="flex items-center gap-x-1">
         {/* 약함 */}
         <span className="text-caption-mm text-grayscale-500">약함</span>
 
