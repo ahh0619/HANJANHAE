@@ -2,7 +2,7 @@ import OptimizedImage from '../common/OptimizedImage';
 
 const Footer = () => {
   return (
-    <footer className="hidden w-full bg-grayscale-100 p-10 text-grayscale-700 xl:block">
+    <footer className="z-50 hidden w-full bg-grayscale-100 p-10 text-grayscale-700 xl:block">
       <div className="mx-auto flex h-[142px] w-[1200px] flex-col justify-between">
         <div className="flex w-full items-start justify-between">
           <div className="flex flex-col gap-3 text-caption-mm leading-relaxed">

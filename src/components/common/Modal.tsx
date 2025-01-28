@@ -62,6 +62,7 @@ const Modal: React.FC<ModalProps> = ({
               <button
                 className="w-[136px] rounded-[8px] border border-secondary bg-etc-white px-4 py-3 text-title-mb text-primary hover:bg-secondary-hover xl:w-[164px]"
                 onClick={secondaryAction.onClick}
+                onMouseDown={(e) => e.stopPropagation()}
               >
                 {secondaryAction.text}
               </button>
