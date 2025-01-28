@@ -67,6 +67,10 @@ const SearchBar = ({
     setIsFiltered(false);
   };
 
+  const handleBlur = () => {
+    
+  }
+
   return (
     <div
       className={`${
@@ -98,6 +102,7 @@ const SearchBar = ({
             ref={inputRef}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
+            // onBlur={handleBlur}
           />
         </div>
         {(isSearchFocus || isFiltered) && (

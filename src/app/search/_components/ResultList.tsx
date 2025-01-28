@@ -100,6 +100,7 @@ const ResultList = ({ user }) => {
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
+  // if(isLoading) return <Skeleton/>
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}

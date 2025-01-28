@@ -73,6 +73,7 @@ const FilterSideBar = () => {
   }));
 
   // 변환된 필터 데이터를 배열로 구성
+  // 이 부분을 좀 리팩토링을 한번 해볼만 하다.
   const filters: FilterItem[] = [
     ...selectedTypes.map((type) => ({
       label: type,
