@@ -10,7 +10,7 @@ import LoggedOutMenu from './LoggedOutMenu';
 import Logo from './Logo';
 
 const HeaderClient = () => {
-  const user = useAuthStore();
+  const { user } = useAuthStore();
   const pathname = usePathname();
 
   const isActive = (href: string) => href === pathname;

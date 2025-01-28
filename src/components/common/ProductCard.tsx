@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import LikeButton from './LikeButton';
+import OptimizedImage from './OptimizedImage';
 
 type ProductCardScenario = 'default' | 'result' | 'search' | 'like';
 
@@ -75,7 +75,7 @@ const ProductCard = ({
         {/* 이미지 영역 */}
         <div className={classes.image}>
           {/* fill 모드 */}
-          <Image
+          <OptimizedImage
             src={imageUrl}
             alt={name}
             fill
