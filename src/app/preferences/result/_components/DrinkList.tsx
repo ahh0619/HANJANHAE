@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleLike } from '@/hooks/like/useMultipleLike';
@@ -14,7 +13,6 @@ type DrinkListProps = {
 };
 
 const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
-  const router = useRouter();
   const allDrinkIds = drinks.map((d) => d.drink_id);
 
   const { isLoading, likeMap, toggleItem } = useMultipleLike(
@@ -53,8 +51,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                 imageUrl={drink.image}
                 isLiked={isLiked}
                 onToggleLike={() => toggleItem(drink.drink_id)}
-                height="216px"
-                imgHeight="186px"
+                scenario="result"
                 isNameVisible={false}
               />
 

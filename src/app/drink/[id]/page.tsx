@@ -5,7 +5,9 @@ import { validate as uuid } from 'uuid';
 
 import { fetchDrinks } from '@/app/actions/drink';
 
-import DrinkSection from '../_components/DrinkSection';
+import DrinkDetailNavigator from '../_components/DrinkDetailNavigator';
+import DrinkInfoAndTasteProfile from '../_components/DrinkInfoAndTasteProfile';
+import DrinkOverviewSection from '../_components/DrinkOverviewSection';
 import FoodPairing from '../_components/FoodPairing';
 import Loading from '../_components/Loading';
 import ReviewSection from '../_components/ReviewSection';
@@ -41,24 +43,37 @@ const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
   }
 
   return (
-    <div className="mx-auto">
-      <div className="relative">
-        {/* Drink Section */}
-        <Suspense fallback={<Loading />}>
-          <DrinkSection drinkId={params.id} />
-        </Suspense>
+    <div className="mx-auto max-w-[1280px] xl:mt-8">
+      <div className="relative flex flex-col justify-center xl:flex-row xl:gap-[126px]">
+        <div className="flex-1 bg-etc-white xl:sticky xl:top-[102px] xl:h-[534px] xl:w-[430px] xl:flex-none xl:shrink-0">
+          <Suspense fallback={<Loading />}>
+            <DrinkOverviewSection drinkId={params.id} />
+          </Suspense>
+        </div>
 
-        {/* Food Pairing Section */}
-        <Suspense fallback={<Loading />}>
-          <section className="mt-10 border-b px-5">
-            <FoodPairing drinkId={params.id} />
+        <div className="w-full xl:w-[534px] xl:flex-none">
+          <div className="sticky top-[102px] z-10 mx-auto hidden bg-etc-white xl:block">
+            <DrinkDetailNavigator />
+          </div>
+
+          <section id="info" className="xl:mx-auto xl:max-w-[486px]">
+            <Suspense fallback={<Loading />}>
+              <DrinkInfoAndTasteProfile drinkId={params.id} />
+            </Suspense>
+
+            <Suspense fallback={<Loading />}>
+              <section className="mt-10 border-b px-5 xl:mt-[60px] xl:px-0">
+                <FoodPairing drinkId={params.id} />
+              </section>
+            </Suspense>
           </section>
-        </Suspense>
 
-        {/* Review Section */}
-        <Suspense fallback={<Loading />}>
-          <ReviewSection drinkId={params.id} />
-        </Suspense>
+          <section id="review" className="xl:mx-auto xl:max-w-[486px]">
+            <Suspense fallback={<Loading />}>
+              <ReviewSection drinkId={params.id} />
+            </Suspense>
+          </section>
+        </div>
       </div>
     </div>
   );

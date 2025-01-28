@@ -13,6 +13,7 @@ import FilterModal from './FilterModal';
 import FilterSearchResults from './FilterSearchResults';
 import FocusInput from './FocusInput';
 import RecommendCategory from './RecommendCategory';
+import StandByScreen from './StandByScreen';
 
 const SearchWrap = () => {
   const { searchTriggerFetch, setKeyword, setSearchTriggerFetch } =
@@ -54,8 +55,17 @@ const SearchWrap = () => {
         {/* Search Bar */}
         <FocusInput searchValue={searchValue} setSearchValue={setSearchValue} />
         {/* <FilterResults /> */}
-        {isSearchFocus && <RecommendCategory setSearchValue={setSearchValue} />}
+        {isSearchFocus && (
+          <RecommendCategory
+            className="block xl:hidden"
+            setSearchValue={setSearchValue}
+          />
+        )}
         {isFiltered && <FilterSearchResults />}
+        {!(isFiltered || isSearchFocus) && (
+          <StandByScreen className="block xl:hidden" />
+        )}
+        {!isFiltered && <StandByScreen className="hidden xl:flex" />}
         {isModalOpen && <FilterModal />}
       </div>
     </>

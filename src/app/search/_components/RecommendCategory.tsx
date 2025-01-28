@@ -8,10 +8,14 @@ import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
 
-const RecommendCategory = ({
-  setSearchValue,
-}: {
+type RecommendCateGory = {
+  className?: string;
   setSearchValue: (val: string) => void;
+};
+
+const RecommendCategory: React.FC<RecommendCateGory> = ({
+  setSearchValue,
+  className,
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -50,7 +54,9 @@ const RecommendCategory = ({
   };
 
   return (
-    <div className="relative mt-[60px] h-[475px] w-[100%] max-w-[448px]">
+    <div
+      className={`xl:shadow-search relative mt-[60px] h-[475px] w-[100%] max-w-[448px] bg-transparent p-0 xl:absolute xl:mt-[0] xl:h-auto xl:max-w-none xl:rounded-[8px] xl:bg-white xl:px-[24px] xl:pb-[31px] xl:pt-[17px] ${className}`}
+    >
       <h2 className="font-title-lm mb-2 text-left text-grayscale-900">
         추천 검색어
       </h2>

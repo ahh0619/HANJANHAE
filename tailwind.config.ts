@@ -12,6 +12,11 @@ const config: Config = {
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
       },
+      screens: {
+        md: '768px', // 중간 화면 (예: 태블릿)
+        lg: '1024px', // 큰 화면 (예: 노트북)
+        xl: '1280px', // 초대형 화면 (예: 데스크탑)
+      },
       colors: {
         // Primary Colors
         primary: 'var(--primary-color)',
@@ -79,6 +84,8 @@ const config: Config = {
       },
       boxShadow: {
         'main-banner': '0px 5px 15px 0px rgba(249, 159, 175, 0.40)',
+        search:'0px 2px 8px 0px rgba(99, 99, 99, 0.20)',
+        select:'0px 0px 3px 0px rgba(0, 0, 0, 0.25)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
