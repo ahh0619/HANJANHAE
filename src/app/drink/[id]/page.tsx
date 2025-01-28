@@ -45,30 +45,30 @@ const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
   return (
     <div className="mx-auto max-w-[1280px] xl:mt-8">
       <div className="relative flex flex-col justify-center xl:flex-row xl:gap-[126px]">
-        <div className="flex-1 bg-etc-white xl:sticky xl:top-0 xl:h-[534px] xl:w-[430px] xl:flex-none xl:shrink-0">
+        <div className="flex-1 bg-etc-white xl:sticky xl:top-[102px] xl:h-[534px] xl:w-[430px] xl:flex-none xl:shrink-0">
           <Suspense fallback={<Loading />}>
             <DrinkOverviewSection drinkId={params.id} />
           </Suspense>
         </div>
 
         <div className="w-full xl:w-[534px] xl:flex-none">
-          <div className="sticky top-0 z-10 mx-auto hidden bg-etc-white xl:block">
+          <div className="sticky top-[102px] z-10 mx-auto hidden bg-etc-white xl:block">
             <DrinkDetailNavigator />
           </div>
 
-          <section id="info" className="xl:mx-auto xl:max-w-[486px] xl:px-6">
+          <section id="info" className="xl:mx-auto xl:max-w-[486px]">
             <Suspense fallback={<Loading />}>
               <DrinkInfoAndTasteProfile drinkId={params.id} />
             </Suspense>
 
             <Suspense fallback={<Loading />}>
-              <section className="mt-10 border-b px-5">
+              <section className="mt-10 border-b px-5 xl:mt-[60px] xl:px-0">
                 <FoodPairing drinkId={params.id} />
               </section>
             </Suspense>
           </section>
 
-          <section id="review" className="xl:mx-auto xl:max-w-[486px] xl:px-6">
+          <section id="review" className="xl:mx-auto xl:max-w-[486px]">
             <Suspense fallback={<Loading />}>
               <ReviewSection drinkId={params.id} />
             </Suspense>

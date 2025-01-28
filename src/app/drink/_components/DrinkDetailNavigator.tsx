@@ -6,7 +6,7 @@ const DrinkDetailNavigator = () => {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
   const [ignoreScroll, setIgnoreScroll] = useState(false);
 
-  const NAV_HEIGHT = 80;
+  const NAV_HEIGHT = 182;
 
   const handleTabClick = (targetId: 'info' | 'review') => {
     setActiveTab(targetId);
