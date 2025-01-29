@@ -13,7 +13,7 @@ const openai = new OpenAI({
 
 type DrinkRecommendation = { name: string };
 
-function extractJsonChunk(input: string): string {
+const extractJsonChunk = (input: string): string => {
   let text = input.replace(/```(?:json)?|```/g, '').trim();
   const match = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
 
@@ -22,9 +22,9 @@ function extractJsonChunk(input: string): string {
   }
 
   return text;
-}
+};
 
-function parseRecommendations(raw: string): DrinkRecommendation[] {
+const parseRecommendations = (raw: string): DrinkRecommendation[] => {
   const maybeJson = extractJsonChunk(raw);
 
   let parsed: unknown;
@@ -55,7 +55,7 @@ function parseRecommendations(raw: string): DrinkRecommendation[] {
   const error = new Error('데이터 형식 오류');
   Sentry.captureException(error);
   throw error;
-}
+};
 
 const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
   try {

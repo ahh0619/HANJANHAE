@@ -2,39 +2,34 @@
 
 import { createClient } from '@/utils/supabase/server';
 
-type CheckLikeStatusParams = {
-  drinkId: string;
-  userId: string;
-};
-
-type CheckLikeStatusResult = {
-  liked: boolean;
-};
-
 type ToggleLikeParams = {
   userId: string;
   drinkId: string;
 };
 
-// 좋아요 상태 확인 액션
-export const checkLikeStatus = async ({
-  drinkId,
-  userId,
-}: CheckLikeStatusParams): Promise<CheckLikeStatusResult> => {
+// 전체적인 좋아요 상태관리
+export const fetchAllLikeStatus = async (
+  userId: string,
+): Promise<Record<string, boolean>> => {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from('likes')
-    .select('*')
-    .eq('user_id', userId)
-    .eq('drink_id', drinkId)
-    .single();
+    .select('drink_id')
+    .eq('user_id', userId);
 
-  if (error || !data) {
-    return { liked: false };
+  if (error) {
+    console.error(error);
+    throw new Error('전체 좋아요 상태 조회 실패');
   }
 
-  return { liked: true };
+  const likeMap: Record<string, boolean> = {};
+  (data || []).forEach((row) => {
+    if (row.drink_id) {
+      likeMap[row.drink_id] = true;
+    }
+  });
+  return likeMap;
 };
 
 // 좋아요 토글 액션
@@ -77,36 +72,6 @@ export const toggleLike = async ({
 
     return { success: true, liked: true };
   }
-};
-
-// 리스트 형태의 좋아요 확인 액션
-export const fetchMultipleLikeStatus = async (
-  userId: string,
-  drinkIds: string[],
-): Promise<Record<string, boolean>> => {
-  const supabase = createClient();
-
-  const { data, error } = await supabase
-    .from('likes')
-    .select('drink_id')
-    .eq('user_id', userId)
-    .in('drink_id', drinkIds);
-
-  if (error) {
-    console.error(error);
-    throw new Error('Bulk like status fetch 실패');
-  }
-
-  const result: Record<string, boolean> = {};
-  drinkIds.forEach((id) => {
-    result[id] = false;
-  });
-  data?.forEach((row) => {
-    if (row.drink_id) {
-      result[row.drink_id] = true;
-    }
-  });
-  return result;
 };
 
 export const fetchLikesByUser = async ({

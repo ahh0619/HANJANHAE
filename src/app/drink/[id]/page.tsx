@@ -16,9 +16,9 @@ type DrinkDetailPageProps = {
   params: { id: string };
 };
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
-}: DrinkDetailPageProps): Promise<Metadata> {
+}: DrinkDetailPageProps): Promise<Metadata> => {
   const drink = await fetchDrinks(params.id);
 
   if (!drink) {
@@ -31,11 +31,8 @@ export async function generateMetadata({
   return {
     title: `${drink.name} - 한잔해`,
     description: `${drink.name}에 대한 상세 정보와 추천 페어링 음식을 확인하세요.`,
-    icons: {
-      icon: 'assets/icons/favicon.svg',
-    },
   };
-}
+};
 
 const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
   if (!uuid(params.id)) {
