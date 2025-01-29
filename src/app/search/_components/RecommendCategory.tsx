@@ -55,7 +55,7 @@ const RecommendCategory: React.FC<RecommendCateGory> = ({
 
   return (
     <div
-      className={`xl:shadow-search relative mt-[60px] h-[475px] w-[100%] max-w-[448px] bg-transparent p-0 xl:absolute xl:mt-[0] xl:h-auto xl:max-w-none xl:rounded-[8px] xl:bg-white xl:px-[24px] xl:pb-[31px] xl:pt-[17px] ${className}`}
+      className={`absolute mt-[0] h-auto w-[100%] rounded-[8px] bg-white px-[24px] pb-[31px] pt-[17px] shadow-search ${className}`}
     >
       <h2 className="font-title-lm mb-2 text-left text-grayscale-900">
         추천 검색어
@@ -65,6 +65,7 @@ const RecommendCategory: React.FC<RecommendCateGory> = ({
           <button
             key={category}
             onClick={() => handleCategoryClick(category)}
+            onMouseDown={(e) => e.preventDefault()}
             className="rounded-[16px] bg-[#F5F5F5] p-[8px] px-[16px] text-label-lm font-medium not-italic leading-[1.5] text-gray-700"
           >
             {category}

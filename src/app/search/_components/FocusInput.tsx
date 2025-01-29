@@ -34,19 +34,14 @@ const FocusInput: React.FC<FocusInputProps> = ({
       <div
         className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${isFiltered ? '!pb-0' : 'xl:pb-[108px]'}`}
       >
-        <div className="static xl:relative">
+        <div className={`relative z-50 xl:h-auto`}>
           <SearchBar value={searchValue} onChange={setSearchValue} />
           {isSearchFocus && (
-            <RecommendCategory
-              className="hidden xl:block"
-              setSearchValue={setSearchValue}
-            />
+            <RecommendCategory setSearchValue={setSearchValue} />
           )}
         </div>
 
-        {!(isFiltered || isSearchFocus) && (
-          <HomeScreenButton className="block xl:hidden" />
-        )}
+        {!isFiltered && <HomeScreenButton className="block xl:hidden" />}
         {!isFiltered && <HomeScreenButton className="hidden xl:block" />}
       </div>
       {/* 필터된 결과 sideBar */}

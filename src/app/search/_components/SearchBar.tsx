@@ -64,12 +64,11 @@ const SearchBar = ({
 
   const handleFocus = () => {
     setIsSearchFocuse(true);
-    setIsFiltered(false);
   };
 
   const handleBlur = () => {
-    
-  }
+    setIsSearchFocuse(false);
+  };
 
   return (
     <div
@@ -102,7 +101,7 @@ const SearchBar = ({
             ref={inputRef}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
-            // onBlur={handleBlur}
+            onBlur={handleBlur}
           />
         </div>
         {(isSearchFocus || isFiltered) && (
