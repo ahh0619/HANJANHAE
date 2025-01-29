@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+
+import OptimizedImage from '../common/OptimizedImage';
 
 type InputFieldProps<T extends FieldValues> = {
   id: Path<T>;
@@ -15,18 +18,35 @@ const InputField = <T extends FieldValues>({
   register,
   error,
 }: InputFieldProps<T>) => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
   return (
     <div className="flex flex-col gap-1">
       <label className="text-title-mm" htmlFor={id as string}>
         {label}
       </label>
-      <input
-        className={`rounded-[8px] border ${error ? 'border-etc-red' : 'border-grayscale-300'} p-3 text-caption-lm focus:outline-none ${error ? 'focus:border-etc-red' : 'focus:border-grayscale-900'}`}
-        type={type}
-        id={id as string}
-        autoComplete="off"
-        {...register(id)}
-      />
+      <div className="relative">
+        <input
+          className={`w-full rounded-[8px] border ${error ? 'border-etc-red' : 'border-grayscale-300'} p-3 text-caption-lm focus:outline-none ${error ? 'focus:border-etc-red' : 'focus:border-grayscale-900'}`}
+          type={type === 'password' && isVisible ? 'text' : type}
+          id={id as string}
+          autoComplete="off"
+          {...register(id)}
+        />
+        {type === 'password' && (
+          <div
+            className="absolute right-0 top-px cursor-pointer p-3"
+            onClick={() => setIsVisible(!isVisible)}
+          >
+            <OptimizedImage
+              src={`/assets/icons/password_${isVisible ? 'invisible' : 'visible'}.svg`}
+              alt="place_address"
+              width={24}
+              height={24}
+            />
+          </div>
+        )}
+      </div>
       <p className="text-caption-sm text-etc-red">{error ?? '\u00A0'}</p>
     </div>
   );
