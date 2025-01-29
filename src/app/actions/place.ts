@@ -18,7 +18,7 @@ export const fetchPlaces = async (): Promise<PlaceType[]> => {
     },
   );
 
-  const { data, error } = await supabase.from('places').select('*');
+  const { data, error } = await supabase.rpc('fetch_random_places');
 
   return error || !data ? [] : data;
 };
