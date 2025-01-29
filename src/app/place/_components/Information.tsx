@@ -4,15 +4,23 @@ type InformationProps = {
   address: string;
   opening_hours: string;
   phone_number: string;
+  isSelected: boolean;
 };
 
 const Information = ({
   address,
   opening_hours,
   phone_number,
+  isSelected,
 }: InformationProps) => {
   return (
-    <div className="flex w-full flex-col gap-6">
+    <div
+      id="information"
+      className={`w-full flex-col gap-6 ${isSelected ? 'flex' : 'hidden'} xl:flex xl:pb-[60px]`}
+    >
+      <p className="-mb-1 hidden text-title-lb text-grayscale-900 xl:inline">
+        정보
+      </p>
       <div className="flex items-start gap-3">
         <OptimizedImage
           src="/assets/icons/place_address.svg"
