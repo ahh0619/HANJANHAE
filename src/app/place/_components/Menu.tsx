@@ -1,3 +1,5 @@
+import { useMediaQuery } from 'react-responsive';
+
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { MenuType } from '@/types/place';
 
@@ -7,6 +9,8 @@ type MenuProps = {
 };
 
 const Menu = ({ menus, isSelected }: MenuProps) => {
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+
   return (
     <div
       id="menu"
@@ -22,9 +26,9 @@ const Menu = ({ menus, isSelected }: MenuProps) => {
             <OptimizedImage
               src={menu.image}
               alt={menu.name}
-              className="rounded-[8px] object-cover"
-              width={136}
-              height={96}
+              className="h-[96px] w-[136px] rounded-[8px] object-cover xl:h-[136px] xl:w-[194px]"
+              width={isDesktop ? 194 : 136}
+              height={isDesktop ? 136 : 96}
             />
           )}
           <p>{menu.name}</p>
