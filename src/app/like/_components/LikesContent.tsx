@@ -94,8 +94,8 @@ const LikesContent = () => {
           </div>
         </div>
       ) : (
-        <div className="mt-[160px] flex w-full flex-col items-center xl:mt-[0px] xl:h-screen">
-          <div className="flex items-center xl:h-screen">
+        <div className="my-auto flex w-full flex-col items-center justify-center xl:mt-[0px] xl:h-lvh">
+          <div className="flex items-center">
             <img
               src="/assets/icons/pinkHeart.svg"
               className="hidden xl:block"
@@ -106,11 +106,11 @@ const LikesContent = () => {
             />
             <img src="/Character.svg" />
             <img
-              src="/assets/icons/pinkHeart.svg"
+              src="/assets/icons/hotpinkHeart.svg"
               className="hidden xl:block"
             />
             <img
-              src="/assets/icons/hotpinkHeart.svg"
+              src="/assets/icons/pinkHeart.svg"
               className="hidden xl:block"
             />
           </div>
