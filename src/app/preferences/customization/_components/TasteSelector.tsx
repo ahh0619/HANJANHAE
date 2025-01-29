@@ -20,7 +20,7 @@ const TasteSelector = ({ preferences, handleSelect }) => {
     <>
       {tasteAttributes.map((attr) => (
         <div className="mb-10 xl:mb-[72px]" key={attr.key}>
-          <label className="mb-[16px] block text-title-mb text-grayscale-900 xl:text-title-lb">
+          <label className="mb-[16px] block text-title-mb text-grayscale-900 xl:mb-[20px] xl:text-title-lb">
             {attr.step}. 어느 정도의 {attr.label}을 선호하시나요?
           </label>
           <div className="flex w-full justify-between space-x-8">

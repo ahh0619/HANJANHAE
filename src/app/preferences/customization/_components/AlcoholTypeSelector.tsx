@@ -12,7 +12,7 @@ const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
   return (
     <div className="mb-10 w-full xl:mb-[72px]">
       {/* 제목 */}
-      <label className="mb-[16px] block text-title-mb xl:text-title-lb">
+      <label className="mb-[16px] block text-title-mb xl:mb-[20px] xl:text-title-lb">
         1. 어떤 종류의 술을 선호하시나요?
         <span className="ml-1 inline xl:block xl:before:content-['\2002']">
           (중복선택 가능)

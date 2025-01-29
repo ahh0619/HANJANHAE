@@ -55,7 +55,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
       <button
         onClick={handleSubmit}
         disabled={!isFormComplete || !hasPreferencesChanged}
-        className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm ${
+        className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm xl:mb-[220px] ${
           isFormComplete && hasPreferencesChanged
             ? 'bg-primary text-grayscale-100'
             : 'cursor-not-allowed bg-grayscale-200 text-grayscale-50'
