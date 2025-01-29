@@ -55,7 +55,6 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="swiper-pagination mt-2 rounded" />
         </>
       )}
     </section>
