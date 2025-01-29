@@ -22,14 +22,14 @@ const PreferenceTypeSelection = ({
   onNext,
   onPrev,
 }: PreferenceTypeProps) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openPopup = () => {
-    setIsPopupOpen(true);
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  const closePopup = () => {
-    setIsPopupOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleNext = () => {
@@ -37,11 +37,7 @@ const PreferenceTypeSelection = ({
   };
 
   return (
-    <div
-      className={`flex flex-col items-center ${
-        isPopupOpen ? 'overflow-hidden' : ''
-      }`}
-    >
+    <div className={`flex flex-col items-center`}>
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
         <img
@@ -85,7 +81,7 @@ const PreferenceTypeSelection = ({
       <div className="mt-[48px] flex h-[48px] w-full items-center px-[20px]">
         <p
           className="my-auto flex h-[24px] w-[147px] items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
-          onClick={openPopup}
+          onClick={openModal}
         >
           주류용어설명
           <img
@@ -103,7 +99,7 @@ const PreferenceTypeSelection = ({
       />
 
       {/* 팝업 */}
-      <Popup isOpen={isPopupOpen} onClose={closePopup} />
+      <Popup isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };

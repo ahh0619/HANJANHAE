@@ -36,6 +36,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
   return (
     <div className="px-[19px]">
       <AlcoholTypeSelector
+        mode={mode}
         preferences={preferences}
         handleTypeChange={handleTypeChange}
       />

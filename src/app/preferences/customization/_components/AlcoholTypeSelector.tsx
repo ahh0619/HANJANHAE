@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import AlcoholExplanationModal from './AlcoholExplanationModal';
+
 const alcoholTypes = [
   { key: '탁주', label: '탁주' },
   { key: '증류주', label: '증류주' },
@@ -8,7 +12,17 @@ const alcoholTypes = [
   { key: '기타주류', label: '기타주류' },
 ];
 
-const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
+const AlcoholTypeSelector = ({ preferences, handleTypeChange, mode }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="mb-10 w-full xl:mb-[72px]">
       {/* 제목 */}
@@ -34,6 +48,21 @@ const AlcoholTypeSelector = ({ preferences, handleTypeChange }) => {
           </button>
         ))}
       </div>
+
+      <div
+        className={`mt-[20px] flex h-[24px] text-label-lm leading-[24px] text-grayscale-500 ${mode === 'edit' && 'hidden'}`}
+        onClick={openModal}
+      >
+        주류용어설명
+        <img
+          src="/fi_alert-circle.svg"
+          alt="설명 아이콘"
+          className="ml-[8px] h-[24px] w-[24px] cursor-pointer"
+        />
+      </div>
+
+      {/* 모달 */}
+      <AlcoholExplanationModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
