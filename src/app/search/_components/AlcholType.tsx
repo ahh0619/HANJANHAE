@@ -18,7 +18,6 @@ const AlcholType = () => {
       : [...selectedTypes, type];
     setSelectedTypes(updatedTypes);
   };
-  console.log(selectedTypes);
 
   return (
     <div className="mb-6">

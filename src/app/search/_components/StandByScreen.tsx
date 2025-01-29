@@ -1,8 +1,14 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
 
-const StandByScreen = () => {
+type StandBySCreenProps = {
+  className?: string;
+};
+
+const StandByScreen: React.FC<StandBySCreenProps> = ({ className }) => {
   return (
-    <div className="bg-gray mt-[76px] flex flex-col items-center">
+    <div
+      className={`bg-gray mt-[76px] flex flex-col items-center xl:mt-[146px] ${className}`}
+    >
       <OptimizedImage
         src="/assets/icons/Character_search.svg"
         alt="전통주 캐릭터 이미지"

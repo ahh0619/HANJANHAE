@@ -100,6 +100,7 @@ const ResultList = ({ user }) => {
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
+  // if(isLoading) return <Skeleton/>
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
@@ -111,7 +112,7 @@ const ResultList = ({ user }) => {
       )}
 
       {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
-      <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
+      <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {
             const isLiked = likeMap[result.id] || false;
