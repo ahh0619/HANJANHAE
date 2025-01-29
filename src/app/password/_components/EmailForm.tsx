@@ -26,7 +26,7 @@ const EmailForm = ({ isModal, handleClose }: EmailFormProps) => {
   return (
     <>
       <form
-        className={`flex flex-col pb-10 xl:pb-[220px] ${isModal ? 'gap-5' : 'gap-[100px]'}`}
+        className={`flex flex-col pb-10 xl:pb-0 ${isModal ? 'gap-5' : 'gap-[100px]'}`}
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputField
