@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkType } from '@/types/drink';
 
@@ -46,10 +46,10 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   ];
   const allDrinkIds = allItems.map((item) => item.id);
 
-  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
     userId,
-    allDrinkIds,
-  );
+    drinkIds: allDrinkIds,
+  });
 
   if (!isBrowser) {
     return null;
@@ -65,7 +65,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     <div className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
       {sections.map((section, idx) => (
         <section key={idx}>
-          <h2 className="mb-3 text-title-lb xl:mb-11 xl:mt-[100px] xl:text-title-xl">
+          <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
             {section.title}
           </h2>
           {section.items.length > 0 ? (
@@ -87,7 +87,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
                       name={item.name}
                       imageUrl={item.image}
                       isLiked={isLiked}
-                      onToggleLike={() => toggleItem(item.id)}
+                      onToggleLike={() => handleToggleLike(item.id)}
                     />
                   </SwiperSlide>
                 );

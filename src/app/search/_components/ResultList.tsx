@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 
 import ProductCard from '@/components/common/ProductCard';
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
@@ -87,8 +87,8 @@ const ResultList = ({ user }) => {
   const {
     isLoading: likeLoading,
     likeMap,
-    toggleItem,
-  } = useMultipleLike(userId, allDrinkIds);
+    handleToggleLike,
+  } = useMultipleDrinkLike({ userId, drinkIds: allDrinkIds });
 
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
 
@@ -123,7 +123,7 @@ const ResultList = ({ user }) => {
                 name={result.name}
                 imageUrl={result.image}
                 isLiked={isLiked}
-                onToggleLike={() => toggleItem(result.id)}
+                onToggleLike={() => handleToggleLike(result.id)}
                 scenario="search"
               />
             );
