@@ -1,14 +1,18 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useModalStore from '@/store/modalStore';
 
-const HomeScreenButton = () => {
+type HomeScreenButtonProps = {
+  className?: string;
+};
+
+const HomeScreenButton: React.FC<HomeScreenButtonProps> = ({className}) => {
   const { openModal } = useModalStore();
 
   return (
-    <div className="flex w-full justify-center">
+    <div className={`flex w-full justify-center xl:w-auto ${className}`}>
       <button
         onClick={openModal}
-        className="mt-[31px] flex h-[36px] w-[157px] items-center justify-center gap-2 rounded-[8px] bg-[#BF324B] px-3 py-2"
+        className="mt-[31px] flex h-[36px] w-[157px] items-center justify-center gap-2 rounded-[8px] bg-[#BF324B] px-3 py-2 xl:mt-[0]"
       >
         <OptimizedImage
           src="/assets/icons/sliders-v-alt-white.svg"

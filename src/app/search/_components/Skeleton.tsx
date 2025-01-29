@@ -3,7 +3,7 @@
 const Skeleton = ({ hasMargin = true }: { hasMargin?: boolean }) => {
   return (
     <div
-      className={`mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] ${
+      className={`xl:gap-y-[56px]" mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] ${
         hasMargin ? 'mt-[56px]' : ''
       }`}
     >

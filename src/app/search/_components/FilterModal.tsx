@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { FilterParams } from '@/app/actions/filter';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
@@ -46,8 +45,10 @@ const FilterModal = () => {
     }
   }, [isModalOpen]);
 
+  
   const handleApplyfilters = () => {
     const defaultKeyword = 'filtered';
+    router.push(`/search?query=${defaultKeyword}`);
     queryClient.removeQueries({
       queryKey: ['filterDrinks'],
       exact: false,
@@ -56,7 +57,6 @@ const FilterModal = () => {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
-    router.push(`/search?query=${encodeURIComponent(defaultKeyword)}`);
     setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');
