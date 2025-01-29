@@ -1,12 +1,15 @@
-interface PopupProps {
+type MobileAlcoholExplanationModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
-const Popup = ({ isOpen, onClose }: PopupProps) => {
+const MobileAlcoholExplanationModal = ({
+  isOpen,
+  onClose,
+}: MobileAlcoholExplanationModalProps) => {
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-end bg-black/50 transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 flex items-end justify-center bg-black/50 transition-opacity duration-300 ${
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
     >
@@ -77,4 +80,4 @@ const Popup = ({ isOpen, onClose }: PopupProps) => {
   );
 };
 
-export default Popup;
+export default MobileAlcoholExplanationModal;

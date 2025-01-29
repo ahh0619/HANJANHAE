@@ -1,8 +1,10 @@
 import { memo, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
+import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
-import Popup from './Popup';
+import MobileAlcoholExplanationModal from './MobileAlcoholExplanationModal';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
@@ -24,20 +26,18 @@ const PreferenceTypeSelection = ({
 }: PreferenceTypeProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  // Tailwind의 sm(640px) 기준으로 반응형 체크
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleNext = () => {
     onNext({ type: surveyData.type });
   };
 
   return (
-    <div className={`flex flex-col items-center`}>
+    <div className="flex flex-col items-center">
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
         <img
@@ -80,14 +80,14 @@ const PreferenceTypeSelection = ({
 
       <div className="mt-[48px] flex h-[48px] w-full items-center px-[20px]">
         <p
-          className="my-auto flex h-[24px] w-[147px] items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
+          className="my-auto flex h-[24px] w-[147px] cursor-pointer items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
           onClick={openModal}
         >
           주류용어설명
           <img
             src="/fi_alert-circle.svg"
             alt="설명 아이콘"
-            className="ml-[8px] h-[24px] w-[24px] cursor-pointer"
+            className="ml-[8px] h-[24px] w-[24px]"
           />
         </p>
       </div>
@@ -98,8 +98,15 @@ const PreferenceTypeSelection = ({
         disabled={!surveyData.type?.trim()}
       />
 
-      {/* 팝업 */}
-      <Popup isOpen={isModalOpen} onClose={closeModal} />
+      {/* 모달 */}
+      {isMobile ? (
+        <MobileAlcoholExplanationModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
+      ) : (
+        <AlcoholExplanationModal isOpen={isModalOpen} onClose={closeModal} />
+      )}
     </div>
   );
 };
