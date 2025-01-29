@@ -2,7 +2,7 @@
 
 import LikeButton from '@/components/common/LikeButton';
 import ShareButton from '@/components/common/ShareButton';
-import { useSingleLike } from '@/hooks/like/useSingleLike';
+import { useSingleDrinkLike } from '@/hooks/like/useSingleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkDescriptionProps } from '@/types/drink';
 
@@ -15,13 +15,13 @@ const DrinkDescription = ({
   const { user } = useAuthStore();
   const userId = user?.id || '';
 
-  const { isLoading, isLiked, handleToggleLike } = useSingleLike(
+  const { isLiked, isLoading, handleToggleLike } = useSingleDrinkLike({
     drinkId,
     userId,
-  );
+  });
 
   return (
-    <section className="mt-3 px-5">
+    <section className="mt-3 px-5 xl:mt-5 xl:px-0">
       <div className="flex items-center justify-between">
         <h2 className="text-title-xl text-grayscale-900">{name}</h2>
         <div className="flex">

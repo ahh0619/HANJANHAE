@@ -51,7 +51,7 @@ const BottomNavBar: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-etc-white shadow-md">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 block bg-etc-white shadow-md xl:hidden">
       <ul className="mx-auto flex w-full max-w-[600px] items-center justify-between border-t border-grayscale-200 py-2">
         {navItems.map((item) => (
           <li

@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { fetchLikesByUser } from '@/app/actions/like';
 import Skeleton from '@/app/search/_components/Skeleton';
 import ProductCard from '@/components/common/ProductCard';
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 
 const LikesContent = () => {
@@ -28,15 +28,18 @@ const LikesContent = () => {
     getNextPageParam: (lastPage) => lastPage.nextPage,
     initialPageParam: undefined,
     enabled: !!user,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
   });
 
   const allLikes = likesData?.pages.flatMap((page) => page.data) || [];
   const allDrinkIds = allLikes.map((item) => item.drink_id);
 
-  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
     userId,
-    allDrinkIds,
-  );
+    drinkIds: allDrinkIds,
+  });
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,8 +64,6 @@ const LikesContent = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log('likesData: ', likesData);
-
   return (
     <>
       {likesData.pages[0].data.length > 0 ? (
@@ -76,11 +77,8 @@ const LikesContent = () => {
                 name={like.drinks.name}
                 imageUrl={like.drinks.image}
                 isLiked={isLiked}
-                onToggleLike={() => toggleItem(like.drink_id)}
-                width={'100%'}
-                height={'241px'}
-                marginBottom={'20px'}
-                imgHeight={'207px'}
+                onToggleLike={() => handleToggleLike(like.drink_id)}
+                scenario="like"
               />
             );
           })}

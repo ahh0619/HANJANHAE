@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 import ProductCard from '@/components/common/ProductCard';
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { Tables } from '@/types/supabase';
 
 type DrinkListProps = {
@@ -15,10 +15,10 @@ type DrinkListProps = {
 const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   const allDrinkIds = drinks.map((d) => d.drink_id);
 
-  const { isLoading, likeMap, toggleItem } = useMultipleLike(
-    userId,
-    allDrinkIds,
-  );
+  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
+    userId: userId || '',
+    drinkIds: allDrinkIds,
+  });
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
@@ -62,9 +62,8 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                     name={drink.name}
                     imageUrl={drink.image}
                     isLiked={isLiked}
-                    onToggleLike={() => toggleItem(drink.drink_id)}
-                    height="216px"
-                    imgHeight="186px"
+                    onToggleLike={() => handleToggleLike(drink.drink_id)}
+                    scenario="result"
                     isNameVisible={false}
                   />
                 </div>

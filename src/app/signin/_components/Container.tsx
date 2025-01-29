@@ -14,7 +14,7 @@ const Container = () => {
   return (
     <>
       <Button category="back" label="" handleClick={() => router.push('/')} />
-      <h1 className="mb-12 py-[6px] text-center text-title-xl text-grayscale-900">
+      <h1 className="mb-12 py-[6px] text-center text-title-xl text-grayscale-900 xl:mb-16 xl:py-0 xl:pt-[18px]">
         로그인
       </h1>
       <SignInForm />

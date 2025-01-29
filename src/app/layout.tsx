@@ -5,8 +5,10 @@ import Script from 'next/script';
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
-
+import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
+
 import { Providers } from './providers';
 
 const pretendard = localFont({
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
   title: '한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',
   icons: {
-    icon: 'assets/icons/favicon.svg',
+    icon: '/assets/icons/favicon.svg',
   },
   openGraph: {
     title: '한잔해',
@@ -52,9 +54,11 @@ const RootLayout = ({
       <body className="antialiased">
         <Providers>
           <KakaoInit />
-          <main className="m-auto mb-32 max-w-[600px] xl:max-w-none">
+          <Header />
+          <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-[1280px]">
             {children}
           </main>
+          <Footer />
           <ScrollTop />
           <BottomNavBar />
         </Providers>

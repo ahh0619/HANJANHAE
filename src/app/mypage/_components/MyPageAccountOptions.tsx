@@ -2,6 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useMediaQuery } from 'react-responsive';
 
 import { deleteUser } from '@/app/actions/auth';
 import { useAuth } from '@/app/providers/AuthProvider';
@@ -16,6 +17,8 @@ const MyPageAccountOptions = () => {
   const { removeUser } = useAuthStore();
 
   const { openModal, closeModal } = useModal();
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
   const handleLogout = async () => {
     logout();
@@ -84,7 +87,13 @@ const MyPageAccountOptions = () => {
       </div>
 
       {/* Delete account section */}
-      <div className="absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center">
+      <div
+        className={
+          isDesktop
+            ? 'relative mt-10 flex justify-center'
+            : 'absolute bottom-[calc(68px+3rem)] left-0 right-0 flex justify-center'
+        }
+      >
         <button
           className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
           onClick={openDeleteModal}

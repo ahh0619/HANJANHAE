@@ -5,9 +5,15 @@ import { useRouter } from 'next/navigation';
 
 type ErrorComponentProps = {
   reset: () => void;
+  title?: string;
+  message?: string;
 };
 
-const ErrorComponent = ({ reset }: ErrorComponentProps) => {
+const ErrorComponent = ({
+  reset,
+  title = 'Error',
+  message = '화면을 불러올 수 없어요.\n잠시 후 다시 시도해 주세요!',
+}: ErrorComponentProps) => {
   const router = useRouter();
 
   return (
@@ -16,14 +22,14 @@ const ErrorComponent = ({ reset }: ErrorComponentProps) => {
         {/* Error Marker */}
         <div className="flex flex-col items-center gap-4 text-center text-gray-700">
           <AlertTriangle className="h-12 w-12 text-red-600" />
-          <p className="text-[40px] font-black">Error</p>
-          <p className="flex flex-col items-center text-body-mm">
-            <span>
-              화면을 불러올 수 없어요.
-              <br />
-            </span>
-            <span>잠시 후 다시 시도해 주세요!</span>
-          </p>
+          <p className="text-[40px] font-black">{title}</p>
+
+          {/* 여러 줄 처리를 위해 '\n' 기준으로 분할 후 맵핑 */}
+          {message.split('\n').map((line, idx) => (
+            <p key={idx} className="text-center text-body-mm">
+              {line}
+            </p>
+          ))}
         </div>
 
         {/* Buttons */}
