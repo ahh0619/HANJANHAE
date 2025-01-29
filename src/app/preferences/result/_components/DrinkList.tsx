@@ -21,10 +21,13 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   });
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+    <div className="mx-auto w-full max-w-7xl">
       {/* Back Button과 제목 */}
-      <div className="mx-auto flex w-[334px] flex-col items-center sm:w-[580px] xl:hidden">
-        <Link href={'/'} className="mb-6 flex w-full justify-start">
+      <div className="mx-auto flex w-[374px] flex-col items-center sm:w-full xl:hidden">
+        <Link
+          href={'/'}
+          className="mb-[36px] flex w-full justify-start sm:px-2"
+        >
           <div className="flex h-[44px] w-[367px] items-center">
             <img
               src="/assets/icons/chevron-left.svg"
@@ -36,7 +39,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           </div>
         </Link>
 
-        <div className="mb-10 flex w-full flex-col justify-start px-[20px]">
+        <div className="mb-[36px] flex w-full flex-col justify-start px-4 sm:px-6">
           <h1 className="mb-2 text-title-lm">{title}</h1>
           <p className="text-body-mm">
             오늘은 추천 전통주를 드셔보시는 건 어떤가요?
@@ -45,7 +48,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
       </div>
 
       {/* 카드 리스트 */}
-      <div className="mx-auto flex flex-col items-center">
+      <div className="mx-auto flex flex-col items-center px-4 sm:px-6 xl:h-[846px] xl:py-[50px]">
         <div className="grid grid-cols-1 gap-x-8 gap-y-[20px] sm:grid-cols-1 xl:grid-cols-2 xl:gap-y-[40px]">
           {drinks.map((drink) => {
             const isLiked = likeMap[drink.drink_id] || false;
@@ -53,7 +56,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
             return (
               <div
                 key={drink.name}
-                className="mx-auto flex h-[186px] w-full items-start gap-5 sm:w-[580px]"
+                className="mx-auto flex h-[186px] w-full items-start gap-5 sm:w-[580px] xl:h-[222px]"
               >
                 {/* 이미지 영역 */}
                 <div className="flex-shrink-0">
@@ -72,24 +75,30 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                 <div className="flex w-[190px] flex-col justify-start sm:w-[400px]">
                   {/* 주종 */}
                   <div className="flex text-grayscale-900">
-                    <p className="w-[59px] text-title-sb">주종</p>
-                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px]">
+                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                      주종
+                    </p>
+                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px] xl:text-body-mm">
                       {drink.type}
                     </p>
                   </div>
 
                   {/* 술 이름 */}
                   <div className="mt-[12px] flex text-grayscale-900">
-                    <p className="w-[59px] text-title-sb">술 이름</p>
-                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px]">
+                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                      술 이름
+                    </p>
+                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px] xl:text-body-mm">
                       {drink.name}
                     </p>
                   </div>
 
                   {/* 추천 이유 */}
                   <div className="mt-[12px] flex text-grayscale-900">
-                    <p className="w-[59px] text-title-sb">추천 이유</p>
-                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px]">
+                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                      추천 이유
+                    </p>
+                    <p className="ml-[12px] w-[133px] text-body-sm sm:w-[329px] xl:text-body-mm">
                       {drink.reason}
                     </p>
                   </div>
