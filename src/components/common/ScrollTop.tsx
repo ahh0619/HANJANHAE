@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import OptimizedImage from './OptimizedImage';
 
-export default function ScrollTop() {
+const ScrollTop = () => {
   const pathname = usePathname();
 
   const [visible, setVisible] = useState(false);
@@ -57,4 +57,6 @@ export default function ScrollTop() {
       </button>
     )
   );
-}
+};
+
+export default ScrollTop;

@@ -15,14 +15,14 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toastMessage, setToastMessage] = useState('');
   const [duration, setDuration] = useState(3000);
 
-  function openToast(message: string, customDuration = 3000) {
+  const openToast = (message: string, customDuration = 3000) => {
     setToastMessage(message);
     setDuration(customDuration);
-  }
+  };
 
-  function closeToast() {
+  const closeToast = () => {
     setToastMessage('');
-  }
+  };
 
   return (
     <ToastContext.Provider value={{ openToast, closeToast }}>
