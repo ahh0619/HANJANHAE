@@ -28,6 +28,9 @@ const LikesContent = () => {
     getNextPageParam: (lastPage) => lastPage.nextPage,
     initialPageParam: undefined,
     enabled: !!user,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
   });
 
   const allLikes = likesData?.pages.flatMap((page) => page.data) || [];

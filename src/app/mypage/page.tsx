@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { fetchUser } from '../actions/auth';
 import MyPageComponent from './_components/MyPageComponent';
 
-export async function generateMetadata(): Promise<Metadata> {
+export const generateMetadata = async (): Promise<Metadata> => {
   try {
     const userProfile = await fetchUser();
 
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: '데이터를 가져오는 중 오류가 발생했습니다.',
     };
   }
-}
+};
 
 const MyPage = async () => {
   const userProfile = await fetchUser();

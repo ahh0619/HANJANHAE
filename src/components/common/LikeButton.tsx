@@ -7,7 +7,7 @@ type LikeButtonProps = {
   onClick: () => void;
 };
 
-export default function LikeButton({ isLiked, onClick }: LikeButtonProps) {
+const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -21,4 +21,6 @@ export default function LikeButton({ isLiked, onClick }: LikeButtonProps) {
       />
     </button>
   );
-}
+};
+
+export default LikeButton;

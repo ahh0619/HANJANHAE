@@ -38,18 +38,18 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }>({});
 
-  function openModal(
+  const openModal = (
     options: ModalContextType['openModal'] extends (o: infer U) => any
       ? U
       : never,
-  ) {
+  ) => {
     setModalOptions(options);
     setIsOpen(true);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>

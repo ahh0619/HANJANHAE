@@ -5,7 +5,7 @@ import { toggleLike } from '@/app/actions/like';
 import { useModal } from '@/app/providers/ModalProvider';
 import { useToast } from '@/app/providers/ToastProvider';
 
-export function useToggleLike(userId: string) {
+export const useToggleLike = (userId: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { openModal, closeModal } = useModal();
@@ -71,12 +71,12 @@ export function useToggleLike(userId: string) {
     },
   });
 
-  function toggle(drinkId: string) {
+  const toggle = (drinkId: string) => {
     mutation.mutate(drinkId);
-  }
+  };
 
   return {
     toggle,
     isLoading: mutation.isPending,
   };
-}
+};
