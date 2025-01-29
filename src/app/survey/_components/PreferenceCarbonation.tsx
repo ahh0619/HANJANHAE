@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -9,20 +9,15 @@ import StepButton from './StepButton';
 const PreferenceCarbonation = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedCarbonation, setSelectedCarbonation] = useState<string | null>(
-    surveyData.carbonation || null,
-  );
-
   const handleSelect = (carbonation: string) => {
-    setSelectedCarbonation(carbonation);
+    handlePreferenceChange('carbonation', carbonation);
   };
 
   const handleNext = () => {
-    if (selectedCarbonation) {
-      onNext({ carbonation: selectedCarbonation });
-    }
+    onNext({ carbonation: surveyData.carbonation });
   };
 
   const options = [
@@ -59,13 +54,14 @@ const PreferenceCarbonation = ({
         </h3>
       </div>
 
+      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {options.map((option, index) => (
           <OptionItem
             key={option.value}
             value={option.value}
             label={option.label}
-            isSelected={selectedCarbonation === option.value}
+            isSelected={surveyData.carbonation === option.value}
             onSelect={handleSelect}
             showLabel={index % 2 === 0}
           />
@@ -76,10 +72,10 @@ const PreferenceCarbonation = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedCarbonation}
+        disabled={!surveyData.carbonation}
       />
     </div>
   );
 };
 
-export default PreferenceCarbonation;
+export default memo(PreferenceCarbonation);

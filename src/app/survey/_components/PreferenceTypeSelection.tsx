@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
-import BackButton from '@/components/common/BackButton';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import Popup from './Popup';
@@ -18,12 +17,11 @@ const options = [
 ];
 
 const PreferenceTypeSelection = ({
-  onNext,
   surveyData,
+  handleTypeChange,
+  onNext,
+  onPrev,
 }: PreferenceTypeProps) => {
-  const [selectedTypes, setSelectedTypes] = useState<string>(
-    surveyData.type || '',
-  );
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => {
@@ -34,21 +32,8 @@ const PreferenceTypeSelection = ({
     setIsPopupOpen(false);
   };
 
-  const toggleSelection = (type: string) => {
-    const typesArray = selectedTypes ? selectedTypes.split(',') : [];
-    if (typesArray.includes(type)) {
-      setSelectedTypes(typesArray.filter((item) => item !== type).join(','));
-    } else {
-      setSelectedTypes([...typesArray, type].join(','));
-    }
-  };
-
   const handleNext = () => {
-    const typesString = selectedTypes
-      .split(',')
-      .filter((type) => type.trim() !== '')
-      .join(',');
-    onNext({ type: typesString });
+    onNext({ type: surveyData.type });
   };
 
   return (
@@ -59,9 +44,13 @@ const PreferenceTypeSelection = ({
     >
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
-        <div className="absolute left-[8px]">
-          <BackButton />
-        </div>
+        <img
+          src={'/assets/icons/chevron-left.svg'}
+          onClick={onPrev}
+          className="absolute left-[8px] p-[8px]"
+          width={'40px'}
+          height={'40px'}
+        />
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
         </h1>
@@ -82,11 +71,11 @@ const PreferenceTypeSelection = ({
           <button
             key={option}
             className={`h-[40px] rounded-[16px] border-[1px] px-[12px] py-[8px] text-label-lm ${
-              selectedTypes.split(',').includes(option)
+              surveyData.type?.split(',').includes(option)
                 ? 'border-primary bg-primary text-grayscale-100'
                 : 'border-grayscale-500 bg-white text-grayscale-900'
             } transition`}
-            onClick={() => toggleSelection(option)}
+            onClick={() => handleTypeChange(option)}
           >
             {option}
           </button>
@@ -110,7 +99,7 @@ const PreferenceTypeSelection = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedTypes.trim()}
+        disabled={!surveyData.type?.trim()}
       />
 
       {/* 팝업 */}
@@ -119,4 +108,4 @@ const PreferenceTypeSelection = ({
   );
 };
 
-export default PreferenceTypeSelection;
+export default memo(PreferenceTypeSelection);

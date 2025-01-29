@@ -11,12 +11,15 @@ import FavoriteFoodInput from './FavoriteFoodInput';
 import PreferencesFormSkeleton from './PreferencesFormSkeleton';
 import TasteSelector from './TasteSelector';
 
-const PreferencesForm = () => {
+type PreferencesFormProps = {
+  mode: 'edit' | 'create';
+};
+
+const PreferencesForm = ({ mode }: PreferencesFormProps) => {
   const {
     preferences,
     handlePreferenceChange,
     handleTypeChange,
-    handleFoodChange,
     handleSubmit,
     isFormComplete,
     hasPreferencesChanged,
@@ -24,7 +27,7 @@ const PreferencesForm = () => {
     error,
     isModalOpen,
     closeModal,
-  } = usePreferences();
+  } = usePreferences(mode);
   const router = useRouter();
 
   if (isLoading) return <PreferencesFormSkeleton />;
@@ -46,7 +49,7 @@ const PreferencesForm = () => {
       />
       <FavoriteFoodInput
         preferences={preferences}
-        handleFoodChange={handleFoodChange}
+        handleSelect={handlePreferenceChange}
       />
 
       <button
@@ -58,15 +61,16 @@ const PreferencesForm = () => {
             : 'cursor-not-allowed bg-grayscale-200 text-grayscale-50'
         }`}
       >
-        수정하기
+        {mode === 'edit' ? '수정하기' : '저장하기'}
       </button>
 
+      {/* 모달 */}
       <Modal
         isOpen={isModalOpen}
         title="취향 정보가 수정되었어요."
-        content={`수정된 추천 전통주 리스트를 보러갈까요?`}
+        content="수정된 추천 전통주 리스트를 보러갈까요?"
         secondaryAction={{
-          text: '다음에 보기 ',
+          text: '다음에 보기',
           onClick: () => {
             router.push('/mypage');
             closeModal();

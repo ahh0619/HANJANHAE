@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { fetchUser } from '@/app/actions/auth';
 import {
+  addSurvey,
   fetchRecoData,
   fetchSurveyData,
   recommendDrinks,
@@ -85,4 +87,21 @@ export const fetchAuthRecommend = async ({
 
   setDrinks(updatedRecoData);
   setIsSurveyCompleted(true);
+};
+
+export const saveSurveyData = async (surveyData) => {
+  try {
+    const user = await fetchUser();
+    // 로그인 유저 - 슈퍼베이스 테이블에 저장
+    if (user) {
+      await addSurvey({ surveyData, userId: user.id });
+    }
+    // 비로그인 유저 - 로컬스토리지 저장
+    else {
+      localStorage.setItem('surveyData', JSON.stringify(surveyData));
+    }
+  } catch (error) {
+    console.error('Failed to save survey data:', error);
+    throw new Error('설문조사 저장 실패!');
+  }
 };

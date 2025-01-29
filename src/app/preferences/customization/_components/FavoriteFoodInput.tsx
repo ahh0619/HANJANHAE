@@ -1,4 +1,4 @@
-const FavoriteFoodInput = ({ preferences, handleFoodChange }) => {
+const FavoriteFoodInput = ({ preferences, handleSelect }) => {
   return (
     <div className="mb-[60px] xl:mb-[148px]">
       {/* 제목 */}
@@ -6,11 +6,11 @@ const FavoriteFoodInput = ({ preferences, handleFoodChange }) => {
         7. 선호하는 안주를 알려주세요. <br />
         어울리는 전통주를 추천해드려요.
       </label>
-      {/* 입력 필드 */}
+
       <input
         type="text"
         value={preferences.food}
-        onChange={handleFoodChange}
+        onChange={(e) => handleSelect('food', e.target.value)}
         placeholder="예) 골뱅이무침"
         className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:outline-none"
       />
