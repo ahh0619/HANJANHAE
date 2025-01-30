@@ -180,6 +180,7 @@ body {
 /* Typography Styles */
 :root {
   /* Title */
+  --font-title-2xl: 40px bold 135%;
   --font-title-xl: 24px bold 135%;
   --font-title-lb: 20px bold 135%;
   --font-title-lm: 20px medium 135%;

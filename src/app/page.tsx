@@ -28,8 +28,10 @@ const Home = async () => {
 
   return (
     <>
-      <Logo />
-      <Welcome />
+      <div className="xl:hidden">
+        <Logo />
+        <Welcome />
+      </div>
       <Banner />
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />

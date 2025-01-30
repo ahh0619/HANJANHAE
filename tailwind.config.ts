@@ -53,6 +53,7 @@ const config: Config = {
       },
       fontSize: {
         // Title
+        'title-2xl': ['40px', { lineHeight: '135%', fontWeight: '700' }],
         'title-xl': ['24px', { lineHeight: '135%', fontWeight: '700' }],
         'title-lb': ['20px', { lineHeight: '135%', fontWeight: '700' }],
         'title-lm': ['20px', { lineHeight: '135%', fontWeight: '500' }],
@@ -84,8 +85,8 @@ const config: Config = {
       },
       boxShadow: {
         'main-banner': '0px 5px 15px 0px rgba(249, 159, 175, 0.40)',
-        search:'0px 2px 8px 0px rgba(99, 99, 99, 0.20)',
-        select:'0px 0px 3px 0px rgba(0, 0, 0, 0.25)',
+        search: '0px 2px 8px 0px rgba(99, 99, 99, 0.20)',
+        select: '0px 0px 3px 0px rgba(0, 0, 0, 0.25)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
