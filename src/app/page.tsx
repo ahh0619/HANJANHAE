@@ -28,8 +28,10 @@ const Home = async () => {
 
   return (
     <div className="mx-auto max-w-none xl:max-w-[1280px]">
-      <Logo />
-      <Welcome />
+      <div className="xl:hidden">
+        <Logo />
+        <Welcome />
+      </div>
       <Banner />
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />
