@@ -27,14 +27,14 @@ const Home = async () => {
   ]);
 
   return (
-    <>
+    <div className="mx-auto max-w-none xl:max-w-[1280px]">
       <Logo />
       <Welcome />
       <Banner />
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />
       <PlaceSection places={places} />
-    </>
+    </div>
   );
 };
 

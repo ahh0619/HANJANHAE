@@ -32,7 +32,6 @@ const useFilterResults = () => {
       retry: 1,
     });
   // triggerFetch true일 때 refetch 호출
-  console.log(triggerFetch);
   useEffect(() => {
     if (triggerFetch) {
       refetch(); // enabled false를 이용한 트리거
