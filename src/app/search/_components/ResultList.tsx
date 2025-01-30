@@ -106,7 +106,7 @@ const ResultList = ({ user }) => {
       {/* 로딩 중일 때 Skeleton 표시 */}
       {isLoading && <Skeleton />}
       {!isLoading && activeData.length === 0 && (
-        <div className="mt-8 text-center text-gray-500">
+        <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
         </div>
       )}

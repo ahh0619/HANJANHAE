@@ -25,7 +25,7 @@ const useFilterSortedResults = () => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
     useInfiniteQuery({
       // filterSortedDrinks
-      queryKey: ['filterDrinks', filterParams, selectedSort === 'alphabetical'],
+      queryKey: ['filterDrinks'],
       queryFn: ({ pageParam = 1 }) =>
         filterSortedDrinks({ ...filterParams, page: pageParam }),
       getNextPageParam: (lastPage) =>

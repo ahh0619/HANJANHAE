@@ -27,7 +27,7 @@ const Home = async () => {
   ]);
 
   return (
-    <>
+    <div className="mx-auto max-w-none xl:max-w-[1280px]">
       <div className="xl:hidden">
         <Logo />
         <Welcome />
@@ -36,7 +36,7 @@ const Home = async () => {
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />
       <PlaceSection places={places} />
-    </>
+    </div>
   );
 };
 

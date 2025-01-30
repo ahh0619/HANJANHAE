@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore, { useBodyLock } from '@/store/modalStore';
@@ -17,6 +18,7 @@ const FilterModal = () => {
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
+  const totalCount = useDrinkCount();
   useBodyLock();
 
   const {
@@ -45,7 +47,6 @@ const FilterModal = () => {
     }
   }, [isModalOpen]);
 
-  
   const handleApplyfilters = () => {
     const defaultKeyword = 'filtered';
     router.push(`/search?query=${defaultKeyword}`);
@@ -123,7 +124,7 @@ const FilterModal = () => {
             onClick={handleApplyfilters}
             className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
           >
-            적용하기
+            {totalCount} 개가 검색되었습니다.
           </button>
         </div>
       </div>
