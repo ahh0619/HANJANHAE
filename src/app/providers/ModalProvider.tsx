@@ -16,6 +16,11 @@ type ModalContextType = {
       text: string;
       onClick: () => void;
     };
+    optionalAction?: {
+      text: string;
+      onClick: () => void;
+    };
+    showCloseButton?: boolean;
   }) => void;
   closeModal: () => void;
 };
@@ -36,6 +41,11 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
       text: string;
       onClick: () => void;
     };
+    optionalAction?: {
+      text: string;
+      onClick: () => void;
+    };
+    showCloseButton?: boolean;
   }>({});
 
   const openModal = (
@@ -62,6 +72,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         content={modalOptions.content || ''}
         primaryAction={modalOptions.primaryAction}
         secondaryAction={modalOptions.secondaryAction}
+        optionalAction={modalOptions.optionalAction}
+        showCloseButton={modalOptions.showCloseButton}
       />
     </ModalContext.Provider>
   );

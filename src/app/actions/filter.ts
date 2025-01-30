@@ -312,8 +312,8 @@ export async function filterKeywordSortedDrinks({
 
   const { data, count, error } = await supabase
     .from('drinks')
-    .select('id, name,image', { count: 'exact' })
-    .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
+    .select('id,name,image,type', { count: 'exact' })
+    .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, offset + limit - 1);
 
@@ -362,7 +362,6 @@ export const getPopularDrinks = async ({
     };
   }
   if (error) {
-    
     throw new Error('Error fetching popular drinks');
   }
 
@@ -388,5 +387,58 @@ export const getPopularDrinks = async ({
     totalCount,
   };
 };
+
+export async function getDrinkCount({
+  types,
+  alcoholStrength,
+  tastePreferences,
+}: FilterParams): Promise<{
+  totalCount: number; // 전체 개수 추가
+}> {
+  const supabase = createClient();
+  // 전체 말고 필요한 필드만 선택해서 가져오기
+  // let query = supabase.from('drinks').select('*');
+  let query = supabase
+    .from('drinks')
+    .select('type, alcohol_content, sweetness, acidity, carbonation, body', {
+      count: 'exact',
+      head: true,
+    });
+
+  // 술 타입 필터링
+  if (types.length > 0) {
+    query = query.in('type', types);
+  }
+
+  // 도수 필터링
+  if (alcoholStrength) {
+    const [min, max] = alcoholStrength;
+
+    // alcohol_content는 numeric 필드이므로 범위로 필터링
+    query = query.gte('alcohol_content', min).lte('alcohol_content', max);
+  } else {
+    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
+    query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
+  }
+
+  // 맛 카테고리 필터링
+  if (tastePreferences) {
+    Object.entries(tastePreferences).forEach(([category, value]) => {
+      query = query.eq(category, value);
+    });
+  }
+  // 페이지네이션 적용
+
+  const { count, error } = await query;
+
+  // 에러 처리
+  if (error) {
+    throw new Error('Error fetching filtered data');
+  }
+
+  return {
+    totalCount: count || 0, // 전체 카운트 반환
+  };
+}
 
 

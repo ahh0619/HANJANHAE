@@ -49,14 +49,14 @@ const Modal: React.FC<ModalProps> = ({
         )}
 
         {/* Header */}
-        <h2 className="text-title-lb">{title}</h2>
+        <h2 className="text-title-lb xl:mt-5">{title}</h2>
 
         {/* Content */}
         <p className="mt-4 whitespace-pre-line text-label-lm">{content}</p>
 
         {/* Footer */}
-        <div className="mt-[20px] flex flex-col items-center">
-          <div className="flex justify-center space-x-2">
+        <div className="mt-[20px] flex flex-col items-center space-y-2">
+          <div className="flex justify-center space-x-2 xl:px-5">
             {/* Secondary Action */}
             {secondaryAction && (
               <button
@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="mt-[24px] text-label-mm text-grayscale-500 underline hover:text-grayscale-700"
+              className="!mt-6 text-label-mm text-grayscale-500 underline hover:text-grayscale-700 xl:!mb-5"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}

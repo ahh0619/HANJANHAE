@@ -23,7 +23,7 @@ const Container = () => {
             : router.push('/mypage')
         }
       />
-      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900">
+      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900  xl:mb-10 xl:py-0 xl:pt-[18px]">
         비밀번호 재설정
       </h1>
 

@@ -44,18 +44,18 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="en" className={`${pretendard.variable} font-sans`}>
+    <html lang="ko" className={`${pretendard.variable} font-sans`}>
       <head>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"
           strategy="lazyOnload"
         />
       </head>
-      <body className="antialiased">
+      <body className={`${pretendard.variable} font-sans antialiased`}>
         <Providers>
           <KakaoInit />
           <Header />
-          <main className="m-auto mb-32 w-full max-w-[600px] xl:mb-0 xl:max-w-[1280px]">
+          <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-none">
             {children}
           </main>
           <Footer />

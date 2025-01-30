@@ -51,7 +51,7 @@ const useSignIn = ({ isSaveEmail, handleError }: SignInProps) => {
 
     try {
       await login(values);
-      router.push('/');
+      window.location.href = '/';
     } catch (error) {
       Sentry.captureException(error);
       handleError(manageSignInError(error.message));
