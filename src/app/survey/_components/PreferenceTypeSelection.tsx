@@ -47,6 +47,14 @@ const PreferenceTypeSelection = ({
           width={'40px'}
           height={'40px'}
         />
+        {/* <div className="absolute left-[8px] p-[8px]" onClick={onPrev}>
+          <OptimizedImage
+            src="/assets/icons/chevron-left.svg"
+            alt="뒤로가기 아이콘"
+            width={24}
+            height={24}
+          />
+        </div> */}
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
         </h1>

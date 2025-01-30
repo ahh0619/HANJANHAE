@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { Tables } from '@/types/supabase';
@@ -28,13 +29,12 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           href={'/'}
           className="mb-[36px] flex w-full justify-start sm:px-2"
         >
-          <div className="flex h-[44px] w-[367px] items-center">
-            <img
+          <div className="flex h-[44px] w-[367px] items-center p-[8px]">
+            <OptimizedImage
               src="/assets/icons/chevron-left.svg"
               alt="뒤로가기 아이콘"
-              width="40px"
-              height="40px"
-              className="p-[8px]"
+              width={24}
+              height={24}
             />
           </div>
         </Link>
