@@ -16,7 +16,8 @@ const OptimizedImage = ({
       src.includes('chevron_right') ||
       src.includes('check') ||
       src.includes('cancelGray') ||
-      src.includes('cancel-primary')
+      src.includes('cancel-primary') ||
+      src.includes('chevron-right')
     ) {
       return { width: 16, height: 16 };
     }

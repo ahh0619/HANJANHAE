@@ -2,9 +2,9 @@
 
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import Image from 'next/image';
 import * as React from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { cn } from '@/lib/utils';
 
 const Select = SelectPrimitive.Root;
@@ -27,11 +27,9 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <Image
+      <OptimizedImage
         src="/assets/icons/chevron-right.svg"
-        alt="Checked"
-        width={16}
-        height={16}
+        alt="체크 아이콘"
         className="pointer-events-none"
       />
     </SelectPrimitive.Icon>
@@ -136,11 +134,9 @@ const SelectItem = React.forwardRef<
     <div className="flex w-full items-center justify-between">
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator>
-        <Image
+        <OptimizedImage
           src="/assets/icons/check.svg"
-          alt="Checked"
-          width={16}
-          height={16}
+          alt="체크 아이콘"
           className="pointer-events-none"
         />
       </SelectPrimitive.ItemIndicator>
