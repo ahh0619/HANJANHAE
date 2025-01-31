@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -9,20 +9,15 @@ import StepButton from './StepButton';
 const PreferenceBody = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedBody, setSelectedBody] = useState<string | null>(
-    surveyData.body || null,
-  );
-
-  const handleSelect = (sweetness: string) => {
-    setSelectedBody(sweetness);
+  const handleSelect = (body: string) => {
+    handlePreferenceChange('body', body);
   };
 
   const handleNext = () => {
-    if (selectedBody) {
-      onNext({ body: selectedBody });
-    }
+    onNext({ body: surveyData.body });
   };
 
   const options = [
@@ -60,13 +55,14 @@ const PreferenceBody = ({
         </h3>
       </div>
 
+      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {options.map((option, index) => (
           <OptionItem
             key={option.value}
             value={option.value}
             label={option.label}
-            isSelected={selectedBody === option.value}
+            isSelected={surveyData.body === option.value}
             onSelect={handleSelect}
             showLabel={index % 2 === 0}
           />
@@ -77,10 +73,10 @@ const PreferenceBody = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedBody}
+        disabled={!surveyData.body}
       />
     </div>
   );
 };
 
-export default PreferenceBody;
+export default memo(PreferenceBody);

@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { fetchLikesByUser } from '@/app/actions/like';
 import Skeleton from '@/app/search/_components/Skeleton';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
@@ -67,7 +68,7 @@ const LikesContent = () => {
   return (
     <>
       {likesData.pages[0].data.length > 0 ? (
-        <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
+        <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
           {allLikes.map((like) => {
             const isLiked = likeMap[like.drink_id] || false;
             return (
@@ -86,7 +87,7 @@ const LikesContent = () => {
           {/* 무한 스크롤 감지용 */}
           <div
             ref={observerRef}
-            className="col-span-2 flex h-6 items-center justify-center"
+            className="col-span-2 flex h-6 items-center justify-center xl:col-span-5"
           >
             {isFetchingNextPage && (
               <div className="h-6 w-6 animate-spin rounded-full border-4 border-grayscale-300 border-t-grayscale-600"></div>
@@ -94,8 +95,47 @@ const LikesContent = () => {
           </div>
         </div>
       ) : (
-        <div className="mt-[160px] flex w-full flex-col items-center">
-          <img src="/Character.svg" />
+        <div className="my-auto flex w-full flex-col items-center justify-center xl:mt-[0px] xl:h-lvh">
+          <div className="relative flex items-center justify-center">
+            <div className="hidden items-center xl:flex">
+              <OptimizedImage
+                src="/assets/icons/pinkHeart.svg"
+                alt="pinkHeart"
+                width={164}
+                height={164}
+              />
+              <OptimizedImage
+                src="/assets/icons/hotpinkHeart.svg"
+                alt="hotpinkHeart"
+                width={164}
+                height={164}
+              />
+            </div>
+
+            <div className="block">
+              <OptimizedImage
+                src="/Character.svg"
+                alt="Character"
+                width={138}
+                height={206}
+              />
+            </div>
+
+            <div className="hidden items-center xl:flex">
+              <OptimizedImage
+                src="/assets/icons/hotpinkHeart.svg"
+                alt="hotpinkHeart"
+                width={164}
+                height={164}
+              />
+              <OptimizedImage
+                src="/assets/icons/pinkHeart.svg"
+                alt="pinkHeart"
+                width={164}
+                height={164}
+              />
+            </div>
+          </div>
           <p className="mt-[36px] h-[22px] text-title-mb text-grayscale-500">
             좋아요 한 전통주가 없습니다
           </p>
