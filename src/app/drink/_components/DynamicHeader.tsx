@@ -27,7 +27,7 @@ const DynamicHeader = ({
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 200);
+      setScrolled(window.scrollY > 400);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -48,7 +48,7 @@ const DynamicHeader = ({
         {/* 뒤로가기 버튼과 주류 이름 */}
         <div className="flex min-w-0 flex-1 items-center gap-1">
           <BackButton />
-          <p className="min-w-0 max-w-[63.7%] overflow-hidden text-ellipsis whitespace-nowrap text-title-xl text-grayscale-900">
+          <p className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-title-xl text-grayscale-900">
             {name}
           </p>
         </div>
