@@ -57,7 +57,7 @@ const RootLayout = ({
         />
       </head>
       <body
-        className={`${pretendard.variable} font-sans antialiased xl:flex xl:h-screen xl:flex-col`}
+        className={`${pretendard.variable} font-sans text-grayscale-900 antialiased xl:flex xl:h-screen xl:flex-col`}
       >
         <Providers>
           <KakaoInit />

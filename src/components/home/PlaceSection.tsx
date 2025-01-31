@@ -24,7 +24,7 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
   if (!isBrowser) return null;
 
   return (
-    <section className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
+    <section className="mt-9 px-5 xl:mt-[100px] xl:px-10">
       <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:text-title-xl">
         전통주 다이닝바 추천
       </h2>
@@ -36,7 +36,7 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
           {/* 스와이퍼 */}
           <Swiper
             modules={[Pagination]}
-            spaceBetween={16}
+            spaceBetween={12}
             slidesPerView="auto"
             breakpoints={{
               1280: {
