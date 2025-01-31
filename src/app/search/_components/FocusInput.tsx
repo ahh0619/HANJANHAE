@@ -34,7 +34,7 @@ const FocusInput: React.FC<FocusInputProps> = ({
       <div
         className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${isFiltered ? '!pb-0' : 'xl:pb-[108px]'}`}
       >
-        <div className={`relative z-50 xl:h-auto`}>
+        <div className={`relative z-30 xl:h-auto`}>
           <SearchBar value={searchValue} onChange={setSearchValue} />
           {isSearchFocus && (
             <RecommendCategory setSearchValue={setSearchValue} />
