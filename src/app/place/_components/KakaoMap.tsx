@@ -1,4 +1,3 @@
-import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useMediaQuery } from 'react-responsive';
@@ -20,17 +19,15 @@ const KakaoMap = ({ location_x, location_y, isSelected }: PlaceMapProps) => {
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   useEffect(() => {
-    setIsMapLoaded(true);
+    if (typeof window !== 'undefined' && window.kakao && window.kakao.maps) {
+      window.kakao.maps.load(() => setIsMapLoaded(true));
+    }
   }, []);
 
   return (
     <div id="map">
-      <Script
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
-        strategy="beforeInteractive"
-      />
-
       <p className="hidden text-title-lb text-grayscale-900 xl:inline">지도</p>
+
       {isMapLoaded && ((!isDesktop && isSelected) || isDesktop) && (
         <Map
           className="h-[200px] w-full bg-gray-200 xl:mt-5 xl:h-[310px]"
