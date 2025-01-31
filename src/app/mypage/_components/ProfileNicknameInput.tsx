@@ -29,7 +29,7 @@ const ProfileNicknameInput: React.FC<ProfileNicknameInputProps> = ({
       <button
         type="button"
         onClick={() => onChange('')}
-        className="absolute bottom-16 right-3 top-10 -translate-y-1/2 transform p-2 text-grayscale-500"
+        className="absolute bottom-16 right-3 top-[51px] h-10 w-10 -translate-y-1/2 transform p-2 text-grayscale-500"
       >
         <OptimizedImage src="/assets/icons/cancel.svg" alt="입력 지우기 버튼" />
       </button>

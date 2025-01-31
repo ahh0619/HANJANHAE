@@ -104,7 +104,7 @@ const MyPageAccountOptions = () => {
           }
         >
           <button
-            className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
+            className="cursor-pointer p-3 text-body-mm text-grayscale-600 underline"
             onClick={openDeleteModal}
           >
             회원 탈퇴

@@ -21,7 +21,7 @@ const ReviewLoginPrompt = ({ onLoginClick }: ReviewLoginPromptProps) => {
           className="absolute bottom-5 right-4 flex items-center space-x-1 rounded-lg bg-primary px-4 py-2 text-label-mb text-grayscale-100 hover:bg-primary-hover"
         >
           <OptimizedImage src="/assets/icons/login.svg" alt="로그인 아이콘" />
-          <span>로그인하러 가기</span>
+          <span>로그인 하러 가기</span>
         </button>
       </div>
     </div>
