@@ -123,6 +123,4 @@ export const deleteUser = async (): Promise<void> => {
   const { error } = await adminClient.deleteUser(session.user.id);
 
   if (error) throw new Error(error.message);
-
-  redirect('/');
 };

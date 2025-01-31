@@ -29,8 +29,9 @@ const MyPageAccountOptions = () => {
   };
 
   const handleDeleteUser = async () => {
-    deleteUser();
     removeUser();
+    window.location.href = '/';
+    deleteUser();
   };
 
   const openDeleteModal = () => {
