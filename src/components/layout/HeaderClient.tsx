@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { useAuthStore } from '@/store/authStore';
 
@@ -16,9 +17,26 @@ const HeaderClient = () => {
   const isActive = (href: string) => href === pathname;
   const isSearchPage = isActive('/search');
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 200) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <header
-      className={`sticky top-0 z-50 hidden h-[102px] xl:block ${isSearchPage ? 'bg-[#FFEAED80]' : 'bg-white'} `}
+      className={`fixed top-0 z-50 hidden h-[102px] w-full transition-colors duration-300 xl:block ${
+        isSearchPage && !isScrolled ? 'bg-[#FFEAED80]' : 'bg-white'
+      }`}
     >
       <div className="mx-auto flex h-full w-[1200px] items-center justify-between px-10">
         <div className="flex items-center gap-[62px]">
