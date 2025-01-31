@@ -39,7 +39,7 @@ const ReviewSection = ({ drinkId }: ReviewSectionProps) => {
   }
 
   return (
-    <section className="px-5 xl:px-0">
+    <section className="mb-[84px] px-5 xl:mb-[92px] xl:px-0">
       <h3 className="mt-8 text-title-lb text-grayscale-900 xl:mt-[60px]">
         리뷰
       </h3>

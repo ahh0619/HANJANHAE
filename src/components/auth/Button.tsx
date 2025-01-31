@@ -83,7 +83,7 @@ const Button = ({ category = 'main', label, handleClick }: ButtonProps) => {
           onClick={handleClick}
         >
           <OptimizedImage
-            src={`/assets/icons/${category === 'back' ? 'back' : 'back_gray'}.svg`}
+            src={`/assets/icons/${category === 'back' ? 'back' : 'back_place'}.svg`}
             alt="back"
           />
         </button>
