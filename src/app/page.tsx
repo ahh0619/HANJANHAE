@@ -27,7 +27,7 @@ const Home = async () => {
   ]);
 
   return (
-    <div className="mx-auto max-w-none xl:max-w-[1280px]">
+    <div className="mx-auto max-w-none xl:mb-[92px] xl:max-w-[1280px]">
       <div className="xl:hidden">
         <Logo />
         <Welcome />
