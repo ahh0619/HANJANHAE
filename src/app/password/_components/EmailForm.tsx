@@ -47,7 +47,7 @@ const EmailForm = ({ isModal, handleClose }: EmailFormProps) => {
             text: '확인',
             onClick: () => {
               setIsOpenModal(false);
-              handleClose();
+              handleClose && handleClose();
             },
           }}
         />
