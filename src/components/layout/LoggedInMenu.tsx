@@ -36,9 +36,9 @@ const LoggedInMenu = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isMyPageModalOpen]);
 
