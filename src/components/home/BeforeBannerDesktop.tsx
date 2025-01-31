@@ -59,9 +59,9 @@ const BeforeBannerDesktop = () => {
         <p className="text-title-lm">
           취향 조사 후 나만을 위한 추천 리스트를 확인해보세요!
         </p>
-        <p className="text-title-2xl mt-8">AI가 맞춤 전통주를 추천해드려요</p>
+        <p className="mt-8 text-title-2xl">AI가 맞춤 전통주를 추천해드려요</p>
 
-        <button className="mt-10 flex h-[62px] w-[209px] items-center rounded-full bg-white p-4 text-label-xlm text-primary">
+        <button className="mt-10 flex h-[62px] w-fit items-center rounded-full bg-white p-4 text-label-xlm text-primary">
           <span className="mr-1">취향 조사 하러가기</span>
           <OptimizedImage
             src="/assets/icons/desktop_chevron-right.svg"

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { useToast } from '@/app/providers/ToastProvider';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkType } from '@/types/drink';
@@ -15,6 +16,9 @@ type ThematicRecommenderProps = {
     season: string;
     foodCategory: string;
     mood: string;
+    isSeasonError?: boolean;
+    isFoodError?: boolean;
+    isMoodError?: boolean;
     seasonRecommendations: DrinkType[];
     foodRecommendations: DrinkType[];
     moodRecommendations: DrinkType[];
@@ -25,6 +29,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
 
+  const { openToast } = useToast();
+
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
@@ -34,6 +40,9 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     season,
     foodCategory,
     mood,
+    isSeasonError,
+    isFoodError,
+    isMoodError,
     seasonRecommendations,
     foodRecommendations,
     moodRecommendations,
@@ -50,6 +59,15 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     userId,
     drinkIds: allDrinkIds,
   });
+
+  useEffect(() => {
+    if (isSeasonError || isFoodError || isMoodError) {
+      openToast(
+        'AI가 추천결과를 가져오지 못하여 일부 항목은 랜덤 전통주로 대체되었습니다.',
+        3000,
+      );
+    }
+  }, [isSeasonError, isFoodError, isMoodError, openToast]);
 
   if (!isBrowser) {
     return null;
