@@ -433,6 +433,47 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      fetch_drinks_with_like_count: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+          total_likes: number
+        }[]
+      }
+      fetch_drinks_with_likes: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+        }[]
+      }
+      fetch_liked_drinks_with_count: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+          total_likes: number
+          total_drinks_liked: number
+        }[]
+      }
+      fetch_liked_drinks_with_post_count: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          name: string
+          image: string
+          like_count: number
+          total_likes: number
+          total_posts: number
+        }[]
+      }
       fetch_popular_drinks: {
         Args: Record<PropertyKey, never>
         Returns: {
@@ -442,13 +483,63 @@ export type Database = {
           like_count: number
         }[]
       }
-      get_liked_drinks: {
-        Args: Record<PropertyKey, never>
+      filter_keyword_sorted_drinks: {
+        Args: {
+          keyword: string
+          page?: number
+          page_size?: number
+          sort_column?: string
+          sort_order?: string
+        }
         Returns: {
           id: string
           name: string
           image: string
-          like_count: number
+          total_count: number
+        }[]
+      }
+      filter_sorted_drinks: {
+        Args: {
+          types: string[]
+          alcohol_strength: number[]
+          taste_preferences: Json
+          page?: number
+          page_size?: number
+          sort_column?: string
+          sort_order?: string
+        }
+        Returns: {
+          id: string
+          name: string
+          type: string
+          alcohol_content: number
+          image: string
+          sweetness: number
+          acidity: number
+          carbonation: number
+          body: number
+          total_count: number
+        }[]
+      }
+      random_drinks: {
+        Args: {
+          _limit?: number
+        }
+        Returns: {
+          acidity: number | null
+          alcohol_content: number | null
+          body: number | null
+          carbonation: number | null
+          created_at: string | null
+          description: string | null
+          id: string
+          image: string | null
+          ingredients: string | null
+          manufacturer: string | null
+          name: string
+          sweetness: number | null
+          type: string
+          volume: string | null
         }[]
       }
     }

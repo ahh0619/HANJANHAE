@@ -4,8 +4,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { FilterParams } from '@/app/actions/filter';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore, { useBodyLock } from '@/store/modalStore';
@@ -18,6 +18,7 @@ const FilterModal = () => {
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
+  const totalCount = useDrinkCount();
   useBodyLock();
 
   const {
@@ -48,6 +49,7 @@ const FilterModal = () => {
 
   const handleApplyfilters = () => {
     const defaultKeyword = 'filtered';
+    router.push(`/search?query=${defaultKeyword}`);
     queryClient.removeQueries({
       queryKey: ['filterDrinks'],
       exact: false,
@@ -56,7 +58,6 @@ const FilterModal = () => {
       setAlcoholStrength([0, 100]);
     }
     closeModal();
-    router.push(`/search?query=${encodeURIComponent(defaultKeyword)}`);
     setIsFiltered(true);
     setTriggerFetch(true);
     setSelectedSort('alphabetical');
@@ -99,7 +100,6 @@ const FilterModal = () => {
               className="cursor-pointer"
               onClick={closeModal}
             />
-
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
@@ -115,16 +115,16 @@ const FilterModal = () => {
           <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
             <FilterType />
           </div>
-        </div>
 
-        {/* Apply Button */}
-        <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
-          <button
-            onClick={handleApplyfilters}
-            className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
-          >
-            적용하기
-          </button>
+          {/* Apply Button */}
+          <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
+            <button
+              onClick={handleApplyfilters}
+              className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
+            >
+              {totalCount} 개가 검색되었습니다.
+            </button>
+          </div>
         </div>
       </div>
     </>

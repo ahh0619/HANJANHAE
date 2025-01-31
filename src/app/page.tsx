@@ -27,14 +27,16 @@ const Home = async () => {
   ]);
 
   return (
-    <>
-      <Logo />
-      <Welcome />
+    <div className="mx-auto max-w-none xl:max-w-[1280px] xl:pb-[92px]">
+      <div className="xl:hidden">
+        <Logo />
+        <Welcome />
+      </div>
       <Banner />
       <ThematicRecommender recommendations={recommendations} />
       <PopularDrinkSection drinks={popularDrinks} />
       <PlaceSection places={places} />
-    </>
+    </div>
   );
 };
 

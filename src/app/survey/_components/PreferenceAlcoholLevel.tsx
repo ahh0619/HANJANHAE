@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -9,20 +9,15 @@ import StepButton from './StepButton';
 const PreferenceAlcoholLevel = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(
-    surveyData.level || null,
-  );
-
   const handleSelect = (level: string) => {
-    setSelectedLevel(level);
+    handlePreferenceChange('level', level);
   };
 
   const handleNext = () => {
-    if (selectedLevel) {
-      onNext({ level: selectedLevel });
-    }
+    onNext({ level: surveyData.level });
   };
 
   const options = [
@@ -49,6 +44,7 @@ const PreferenceAlcoholLevel = ({
 
       {/* 진행바 */}
       <ProgressBar currentStep={2} />
+
       {/* 질문 */}
       <div className="my-[56px] flex w-[335px]">
         <h3 className="text-title-lb text-grayscale-900">
@@ -56,6 +52,7 @@ const PreferenceAlcoholLevel = ({
         </h3>
       </div>
 
+      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {options.map((option) => (
           <OptionItem
@@ -63,19 +60,20 @@ const PreferenceAlcoholLevel = ({
             value={option.value}
             label={option.value}
             range={option.range}
-            isSelected={selectedLevel === option.value}
+            isSelected={surveyData.level === option.value}
             onSelect={handleSelect}
           />
         ))}
       </div>
+
       {/* 버튼 */}
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedLevel}
+        disabled={!surveyData.level}
       />
     </div>
   );
 };
 
-export default PreferenceAlcoholLevel;
+export default memo(PreferenceAlcoholLevel);

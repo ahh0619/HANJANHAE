@@ -1,11 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useToast } from '@/app/providers/ToastProvider';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 import { DrinkType } from '@/types/drink';
 
@@ -16,18 +16,20 @@ type ThematicRecommenderProps = {
     season: string;
     foodCategory: string;
     mood: string;
+    isSeasonError?: boolean;
+    isFoodError?: boolean;
+    isMoodError?: boolean;
     seasonRecommendations: DrinkType[];
     foodRecommendations: DrinkType[];
     moodRecommendations: DrinkType[];
   };
 };
 
-export default function ThematicRecommender({
-  recommendations,
-}: ThematicRecommenderProps) {
+const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   const { user } = useAuthStore();
   const userId = user?.id || '';
-  const router = useRouter();
+
+  const { openToast } = useToast();
 
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
@@ -38,6 +40,9 @@ export default function ThematicRecommender({
     season,
     foodCategory,
     mood,
+    isSeasonError,
+    isFoodError,
+    isMoodError,
     seasonRecommendations,
     foodRecommendations,
     moodRecommendations,
@@ -50,10 +55,19 @@ export default function ThematicRecommender({
   ];
   const allDrinkIds = allItems.map((item) => item.id);
 
-  const { isLoading, likeMap, toggleItem } = useMultipleLike(
+  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
     userId,
-    allDrinkIds,
-  );
+    drinkIds: allDrinkIds,
+  });
+
+  useEffect(() => {
+    if (isSeasonError || isFoodError || isMoodError) {
+      openToast(
+        `AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.`,
+        3000,
+      );
+    }
+  }, [isSeasonError, isFoodError, isMoodError, openToast]);
 
   if (!isBrowser) {
     return null;
@@ -66,12 +80,22 @@ export default function ThematicRecommender({
   ];
 
   return (
-    <div className="mt-9 space-y-6 px-5">
+    <div className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
       {sections.map((section, idx) => (
         <section key={idx}>
-          <h2 className="mb-3 text-title-lb">{section.title}</h2>
+          <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
+            {section.title}
+          </h2>
           {section.items.length > 0 ? (
-            <Swiper spaceBetween={16} slidesPerView="auto">
+            <Swiper
+              spaceBetween={16}
+              slidesPerView="auto"
+              breakpoints={{
+                1280: {
+                  spaceBetween: 20,
+                },
+              }}
+            >
               {section.items.map((item) => {
                 const isLiked = likeMap[item.id] || false;
                 return (
@@ -81,7 +105,7 @@ export default function ThematicRecommender({
                       name={item.name}
                       imageUrl={item.image}
                       isLiked={isLiked}
-                      onToggleLike={() => toggleItem(item.id)}
+                      onToggleLike={() => handleToggleLike(item.id)}
                     />
                   </SwiperSlide>
                 );
@@ -94,4 +118,6 @@ export default function ThematicRecommender({
       ))}
     </div>
   );
-}
+};
+
+export default ThematicRecommender;

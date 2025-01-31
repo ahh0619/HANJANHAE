@@ -25,8 +25,8 @@ const PasswordForm = () => {
 
   return (
     <>
-      <form className="mb-10" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-[100px] flex flex-col gap-6">
+      <form className="pb-10 xl:pb-[220px]" onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-[100px] flex flex-col gap-6 xl:mb-[80px]">
           <InputField
             id="password"
             label="비밀번호를 변경해주세요."

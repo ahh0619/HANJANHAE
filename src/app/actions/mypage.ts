@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 
 export type UpdateUserProfileType = {
   nickname?: string;
-  profile_image?: string;
+  profile_image?: string | null;
 };
 
 // 유저 정보 업데이트
@@ -30,7 +30,7 @@ export const updateUserProfile = async (
     updates.nickname = data.nickname;
   }
 
-  if (data.profile_image) {
+  if (data.profile_image !== undefined) {
     updates.profile_image = data.profile_image;
   }
 

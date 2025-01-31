@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import BackButton from '@/components/common/BackButton';
 import LikeButton from '@/components/common/LikeButton';
 import ShareButton from '@/components/common/ShareButton';
-import { useSingleLike } from '@/hooks/like/useSingleLike';
+import { useSingleDrinkLike } from '@/hooks/like/useSingleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 
 type DynamicHeaderProps = {
@@ -33,10 +33,10 @@ const DynamicHeader = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const { isLoading, isLiked, handleToggleLike } = useSingleLike(
+  const { isLiked, isLoading, handleToggleLike } = useSingleDrinkLike({
     drinkId,
     userId,
-  );
+  });
 
   return (
     <div

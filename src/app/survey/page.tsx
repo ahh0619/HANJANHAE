@@ -1,124 +1,31 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-import useFunnel from '@/hooks/survey/useFunnel';
-import { Tables } from '@/types/supabase';
+import PreferencesSection from '@/app/preferences/customization/_components/PreferencesSection';
 
-import { fetchUser } from '../actions/auth';
-import { addSurvey } from '../actions/preference';
-import PreferenceAcidity from './_components/PreferenceAcidity';
-import PreferenceAlcoholLevel from './_components/PreferenceAlcoholLevel';
-import PreferenceBody from './_components/PreferenceBody';
-import PreferenceCarbonation from './_components/PreferenceCarbonation';
-import PreferenceFood from './_components/PreferenceFood';
-import PreferenceSweetness from './_components/PreferenceSweetness';
-import PreferenceTypeSelection from './_components/PreferenceTypeSelection';
+import MobilePreferencesSection from './_components/MobilePreferencesSection';
 
 const Page = () => {
-  const { Funnel, Step, next, prev, currentStep } = useFunnel('주종');
-  const [surveyData, setSurveyData] = useState<Partial<Tables<'survey'>>>({
-    type: null,
-    level: null,
-    sweetness: null,
-    acidity: null,
-    carbonation: null,
-    body: null,
-    food: null,
-  });
-
-  const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+  const isXL = useMediaQuery({ query: '(min-width: 1280px)' });
 
   useEffect(() => {
-    const saveSurveyData = async () => {
-      if (currentStep === '완료') {
-        console.log('data: ', surveyData);
+    setIsClient(true);
+  }, []);
 
-        try {
-          const user = await fetchUser();
-
-          // 로그인 유저 - 슈퍼베이스 테이블에 저장
-          if (user) {
-            await addSurvey({ surveyData, userId: user.id });
-          }
-          // 비로그인 유저 - 로컬스토리지 저장
-          else {
-            localStorage.setItem('surveyData', JSON.stringify(surveyData));
-          }
-
-          router.push('/preferences/result');
-        } catch (error) {
-          console.error('Failed to save survey data:', error);
-        }
-      }
-    };
-
-    saveSurveyData();
-  }, [currentStep]);
-
-  const handleNext = (data: Partial<Tables<'survey'>>, nextStep: string) => {
-    setSurveyData((prev) => ({ ...prev, ...data }));
-    next(nextStep);
-  };
-
-  const handlePrev = (prevStep: string) => {
-    prev(prevStep);
-  };
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="flex w-full justify-center">
-      <Funnel>
-        <Step name="주종">
-          <PreferenceTypeSelection
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '도수')}
-            onPrev={() => router.push('/')}
-          />
-        </Step>
-        <Step name="도수">
-          <PreferenceAlcoholLevel
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '단맛')}
-            onPrev={() => handlePrev('주종')}
-          />
-        </Step>
-        <Step name="단맛">
-          <PreferenceSweetness
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '신맛')}
-            onPrev={() => handlePrev('도수')}
-          />
-        </Step>
-        <Step name="신맛">
-          <PreferenceAcidity
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '청량감')}
-            onPrev={() => handlePrev('단맛')}
-          />
-        </Step>
-        <Step name="청량감">
-          <PreferenceCarbonation
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '바디감')}
-            onPrev={() => handlePrev('신맛')}
-          />
-        </Step>
-        <Step name="바디감">
-          <PreferenceBody
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '안주')}
-            onPrev={() => handlePrev('청량감')}
-          />
-        </Step>
-        <Step name="안주">
-          <PreferenceFood
-            surveyData={surveyData}
-            onNext={(data) => handleNext(data, '완료')}
-            onPrev={() => handlePrev('바디감')}
-          />
-        </Step>
-      </Funnel>
+      {isXL ? (
+        <PreferencesSection title="내 취향 조사" mode="create" />
+      ) : (
+        <MobilePreferencesSection />
+      )}
     </div>
   );
 };

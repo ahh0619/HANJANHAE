@@ -3,11 +3,11 @@
 const Skeleton = ({ hasMargin = true }: { hasMargin?: boolean }) => {
   return (
     <div
-      className={`mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] ${
+      className={`xl:gap-y-[56px]" mx-[56px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] ${
         hasMargin ? 'mt-[56px]' : ''
       }`}
     >
-      {Array.from({ length: 6 }).map((_, idx) => (
+      {Array.from({ length: 20 }).map((_, idx) => (
         <div
           className="flex w-[100%] animate-pulse flex-col rounded-lg border bg-gray-50 p-2"
           key={idx}

@@ -3,7 +3,6 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import Logo from '@/components/layout/Logo';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
@@ -12,7 +11,8 @@ import useModalStore from '@/store/modalStore';
 import FilterModal from './FilterModal';
 import FilterSearchResults from './FilterSearchResults';
 import FocusInput from './FocusInput';
-import RecommendCategory from './RecommendCategory';
+import SearchLogo from './SearchLogo';
+import StandByScreen from './StandByScreen';
 
 const SearchWrap = () => {
   const { searchTriggerFetch, setKeyword, setSearchTriggerFetch } =
@@ -47,15 +47,16 @@ const SearchWrap = () => {
   const [searchValue, setSearchValue] = useState('');
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const { isModalOpen } = useModalStore();
+
   return (
     <>
-      {!isFiltered && !isSearchFocus && <Logo />}
-      <div className="html-overflow-hidden mx-auto flex w-full flex-col items-center overflow-hidden px-5">
+      {!isFiltered && <SearchLogo />}
+      <div className="html-overflow-hidden mx-auto flex w-full flex-col items-center overflow-hidden px-5 xl:px-0">
         {/* Search Bar */}
         <FocusInput searchValue={searchValue} setSearchValue={setSearchValue} />
-        {/* <FilterResults /> */}
-        {isSearchFocus && <RecommendCategory setSearchValue={setSearchValue} />}
         {isFiltered && <FilterSearchResults />}
+        {!isFiltered && <StandByScreen className="block xl:hidden" />}
+        {!isFiltered && <StandByScreen className="hidden xl:flex" />}
         {isModalOpen && <FilterModal />}
       </div>
     </>

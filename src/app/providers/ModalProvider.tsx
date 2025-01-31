@@ -16,6 +16,11 @@ type ModalContextType = {
       text: string;
       onClick: () => void;
     };
+    optionalAction?: {
+      text: string;
+      onClick: () => void;
+    };
+    showCloseButton?: boolean;
   }) => void;
   closeModal: () => void;
 };
@@ -36,20 +41,25 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
       text: string;
       onClick: () => void;
     };
+    optionalAction?: {
+      text: string;
+      onClick: () => void;
+    };
+    showCloseButton?: boolean;
   }>({});
 
-  function openModal(
+  const openModal = (
     options: ModalContextType['openModal'] extends (o: infer U) => any
       ? U
       : never,
-  ) {
+  ) => {
     setModalOptions(options);
     setIsOpen(true);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
@@ -62,6 +72,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         content={modalOptions.content || ''}
         primaryAction={modalOptions.primaryAction}
         secondaryAction={modalOptions.secondaryAction}
+        optionalAction={modalOptions.optionalAction}
+        showCloseButton={modalOptions.showCloseButton}
       />
     </ModalContext.Provider>
   );

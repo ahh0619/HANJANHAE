@@ -6,7 +6,8 @@ type TasteRadioButtonProps = {
 };
 
 const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
-  const { tastePreferences, setTastePreferences } = useFilterStore();
+  const { tastePreferences, setTastePreferences, removeTastePreference } =
+    useFilterStore();
 
   const levels = [
     // 텍스트와 숫자 매핑
@@ -23,12 +24,12 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     청량감: 'carbonation',
     바디감: 'body',
   };
-
+  console.log(tastePreferences);
   const handleCategoryClick = (value: number) => {
     const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
 
     if (tastePreferences[mappedCategory] === value) {
-      setTastePreferences(mappedCategory, null); // 선택 해제
+      removeTastePreference(mappedCategory); // 초기화
     } else {
       setTastePreferences(mappedCategory, value); // 선택된 값 저장
     }
@@ -36,7 +37,6 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
 
   const selectedValue = tastePreferences[categoryMapping[category]] || null;
 
-  console.log(tastePreferences);
 
   return (
     <div className="mt-10 h-[100px]">

@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
 
 import LikeButton from './LikeButton';
 import OptimizedImage from './OptimizedImage';
+
+type ProductCardScenario = 'default' | 'result' | 'search' | 'like';
 
 type ProductCardProps = {
   id: string;
@@ -12,46 +13,68 @@ type ProductCardProps = {
   imageUrl: string;
   isLiked: boolean;
   onToggleLike: () => void;
-  width?: string;
-  height?: string;
-  marginBottom?: string;
-  imgHeight?: string | number;
+  scenario?: ProductCardScenario;
   isNameVisible?: boolean;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({
+const scenarioToClass = (scenario: ProductCardScenario) => {
+  switch (scenario) {
+    case 'default':
+      return {
+        container: 'product-card-default',
+        image: 'product-card-default-image',
+        likeBtn: 'product-card-default-likeBtn',
+      };
+    case 'result':
+      return {
+        container: 'product-card-result',
+        image: 'product-card-result-image',
+        likeBtn: 'product-card-result-likeBtn',
+      };
+    case 'search':
+      return {
+        container: 'product-card-search',
+        image: 'product-card-search-image',
+        likeBtn: 'product-card-search-likeBtn',
+      };
+    case 'like':
+      return {
+        container: 'product-card-like',
+        image: 'product-card-like-image',
+        likeBtn: 'product-card-like-likeBtn',
+      };
+    default:
+      return {
+        container: 'product-card-default',
+        image: 'product-card-default-image',
+        likeBtn: 'product-card-default-likeBtn',
+      };
+  }
+};
+
+const ProductCard = ({
   id,
   name,
   imageUrl,
   isLiked,
   onToggleLike,
-  width = '124px',
-  height = '186px',
-  marginBottom = '0px',
-  imgHeight = '152px',
+  scenario = 'default',
   isNameVisible = true,
-}) => {
+}: ProductCardProps) => {
+  const classes = scenarioToClass(scenario);
+
   return (
-    <div
-      className="relative flex flex-col"
-      style={{
-        width,
-        height,
-        marginBottom,
-      }}
-    >
+    <div className={classes.container}>
       {/* 좋아요 버튼 */}
-      <div className="absolute bottom-[34px] right-0 z-10">
+      <div className={classes.likeBtn}>
         <LikeButton isLiked={isLiked} onClick={onToggleLike} />
       </div>
 
       {/* 상세 페이지 링크 */}
       <Link href={`/drink/${id}`} className="flex flex-col">
-        {/* 이미지 */}
-        <div
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50"
-          style={{ height: imgHeight }}
-        >
+        {/* 이미지 영역 */}
+        <div className={classes.image}>
+          {/* fill 모드 */}
           <OptimizedImage
             src={imageUrl}
             alt={name}
@@ -59,9 +82,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className="rounded-lg object-cover"
           />
         </div>
+
         {/* 이름 */}
         {isNameVisible && (
-          <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm">
+          <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm xl:mt-5">
             {name}
           </div>
         )}

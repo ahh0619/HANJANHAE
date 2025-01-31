@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useMediaQuery } from 'react-responsive';
 
 import Button from '@/components/auth/Button';
 import OptimizedImage from '@/components/common/OptimizedImage';
@@ -14,8 +15,10 @@ type MainSectionProps = {
 const MainSection = ({ place }: MainSectionProps) => {
   const router = useRouter();
 
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+
   return (
-    <>
+    <div className="xl:sticky xl:top-[102px] xl:shrink-0 xl:pb-[200px]">
       <div className="relative">
         <Button
           category="back-place"
@@ -25,13 +28,13 @@ const MainSection = ({ place }: MainSectionProps) => {
         <OptimizedImage
           src={place.image}
           alt={place.name}
-          className="mb-3 h-[280px] w-full rounded-[8px] object-cover"
-          width={375}
-          height={280}
+          className="mb-3 h-[280px] w-full rounded-[8px] object-cover xl:h-[337px] xl:w-[486px]"
+          width={isDesktop ? 486 : 375}
+          height={isDesktop ? 337 : 280}
         />
       </div>
 
-      <div className="mb-3 flex items-center justify-between px-2 px-5">
+      <div className="mb-3 flex items-center justify-between px-5">
         <p className="text-title-xl text-grayscale-900">{place.name}</p>
         <ShareButton
           title={place.name}
@@ -39,7 +42,7 @@ const MainSection = ({ place }: MainSectionProps) => {
           imageUrl={place.image}
         />
       </div>
-    </>
+    </div>
   );
 };
 

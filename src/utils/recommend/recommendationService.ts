@@ -57,17 +57,27 @@ export const getRecommendations = async () => {
   const mood = fixedMood;
 
   try {
-    const [seasonRecommendations, foodRecommendations, moodRecommendations] =
-      await Promise.all([
-        recommendBySeason(season),
-        recommendByFood(foodCategory),
-        recommendByMood(mood),
-      ]);
+    const [seasonResult, foodResult, moodResult] = await Promise.all([
+      recommendBySeason(season),
+      recommendByFood(foodCategory),
+      recommendByMood(mood),
+    ]);
+
+    const isSeasonError = seasonResult.isError;
+    const isMoodError = moodResult.isError;
+    const isFoodError = foodResult.isError;
+
+    const seasonRecommendations = seasonResult.drinks;
+    const foodRecommendations = foodResult.drinks;
+    const moodRecommendations = moodResult.drinks;
 
     return {
       season,
       foodCategory,
       mood,
+      isSeasonError,
+      isFoodError,
+      isMoodError,
       seasonRecommendations,
       foodRecommendations,
       moodRecommendations,

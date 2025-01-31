@@ -16,14 +16,15 @@ const OptimizedImage = ({
       src.includes('chevron_right') ||
       src.includes('check') ||
       src.includes('cancelGray') ||
-      src.includes('cancel-primary')
+      src.includes('cancel-primary') ||
+      src.includes('chevron-right')
     ) {
       return { width: 16, height: 16 };
     }
-    if (src.includes('login')) return { width: 18, height: 18 };
+    if (src.includes('login') || src.includes('header'))
+      return { width: 18, height: 18 };
     if (src.includes('sliders-v-alt-white')) return { width: 20, height: 20 };
-    if (src.includes('back') || src.includes('back_gray'))
-      return { width: 40, height: 40 };
+    if (src.includes('back')) return { width: 40, height: 40 };
     if (src.includes('Radio')) return { width: 45, height: 40 };
     if (src.includes('share_button_')) return { width: 48, height: 48 };
 

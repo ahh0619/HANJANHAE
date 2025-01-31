@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 
 import ProductCard from '@/components/common/ProductCard';
-import { useMultipleLike } from '@/hooks/like/useMultipleLike';
+import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
@@ -87,8 +87,8 @@ const ResultList = ({ user }) => {
   const {
     isLoading: likeLoading,
     likeMap,
-    toggleItem,
-  } = useMultipleLike(userId, allDrinkIds);
+    handleToggleLike,
+  } = useMultipleDrinkLike({ userId, drinkIds: allDrinkIds });
 
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
 
@@ -100,18 +100,19 @@ const ResultList = ({ user }) => {
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
+  // if(isLoading) return <Skeleton/>
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
       {isLoading && <Skeleton />}
       {!isLoading && activeData.length === 0 && (
-        <div className="mt-8 text-center text-gray-500">
+        <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
         </div>
       )}
 
       {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
-      <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px]">
+      <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {
             const isLiked = likeMap[result.id] || false;
@@ -122,11 +123,8 @@ const ResultList = ({ user }) => {
                 name={result.name}
                 imageUrl={result.image}
                 isLiked={isLiked}
-                onToggleLike={() => toggleItem(result.id)}
-                width={'100%'}
-                height={'241px'}
-                marginBottom={'20px'}
-                imgHeight={'207px'}
+                onToggleLike={() => handleToggleLike(result.id)}
+                scenario="search"
               />
             );
           })}

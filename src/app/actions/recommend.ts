@@ -3,7 +3,9 @@
 import * as Sentry from '@sentry/node';
 import { OpenAI } from 'openai';
 
-import { fetchDrinksByNames, fetchRandomDrinks } from './drink';
+import { recommendErrorHandler } from '@/utils/recommend/recommendErrorHandler';
+
+import { fetchDrinksByNames } from './drink';
 
 const openai = new OpenAI({
   organization: process.env.ORGANIZATION_ID,
@@ -13,7 +15,7 @@ const openai = new OpenAI({
 
 type DrinkRecommendation = { name: string };
 
-function extractJsonChunk(input: string): string {
+const extractJsonChunk = (input: string): string => {
   let text = input.replace(/```(?:json)?|```/g, '').trim();
   const match = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
 
@@ -22,9 +24,9 @@ function extractJsonChunk(input: string): string {
   }
 
   return text;
-}
+};
 
-function parseRecommendations(raw: string): DrinkRecommendation[] {
+const parseRecommendations = (raw: string): DrinkRecommendation[] => {
   const maybeJson = extractJsonChunk(raw);
 
   let parsed: unknown;
@@ -52,10 +54,8 @@ function parseRecommendations(raw: string): DrinkRecommendation[] {
     }
   }
 
-  const error = new Error('데이터 형식 오류');
-  Sentry.captureException(error);
-  throw error;
-}
+  throw new Error('데이터 형식 오류');
+};
 
 const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
   try {
@@ -82,22 +82,19 @@ const fetchRecommendedDrinks = async (content: string, assistantId: string) => {
         const namesArray = jsonData.map((item) => item.name);
         const drinks = await fetchDrinksByNames(namesArray);
 
-        return drinks;
+        return { isError: false, drinks };
       } catch (error) {
-        Sentry.captureException(error);
-        console.error('추천 데이터 파싱 실패:', error);
-        return await fetchRandomDrinks(5);
+        return await recommendErrorHandler(error, '추천 데이터 파싱 실패');
       }
     } else {
       const error = new Error('OpenAI 실행 실패');
-      Sentry.captureException(error);
-      console.error(error, run);
-      return await fetchRandomDrinks(5);
+      return await recommendErrorHandler(error, 'OpenAI 실행 실패');
     }
   } catch (error) {
-    Sentry.captureException(error);
-    console.error('fetchRecommendedDrinks 함수 에러:', error);
-    return await fetchRandomDrinks(5);
+    return await recommendErrorHandler(
+      error,
+      'fetchRecommendedDrinks 함수 에러',
+    );
   }
 };
 export const recommendByFood = async (foodCategory: string) => {

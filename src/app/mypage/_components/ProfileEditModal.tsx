@@ -28,11 +28,11 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
     handleUpdateProfile,
     errorMessage,
     resetNickname,
+    handleRemoveImage,
   } = useProfileEdit(user, onClose);
 
   if (!isOpen) return null;
 
-  // 닫기 버튼 클릭 핸들러
   const handleProfileEditModalClose = () => {
     resetNickname();
     onClose();
@@ -47,6 +47,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           <ProfileImageUpload
             preview={preview}
             onFileChange={handleFileChange}
+            onRemoveImage={handleRemoveImage}
           />
 
           {/* 닉네임 입력 */}

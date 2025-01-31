@@ -4,10 +4,18 @@
 import { Database } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/client';
 
+
+export type TastePreferences = {
+  sweetness?: number;
+  acidity?: number;
+  carbonation?: number;
+  body?: number;
+};
+
 export type FilterParams = {
   types: string[];
   alcoholStrength?: [number, number] | null;
-  tastePreferences?: Record<string, number>;
+  tastePreferences?: TastePreferences;
 };
 
 export type FilterInifnite = {
@@ -31,6 +39,8 @@ export type DrinkWithLikeStats = {
   like_count: number; // 각 음료의 좋아요 개수
   total_likes: number; // 전체 좋아요 개수
 };
+
+type FetchDrinksWithLikeCountResponse = Database["public"]["Functions"]["fetch_drinks_with_like_count"]["Returns"];
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
@@ -81,6 +91,10 @@ type Drink = Database['public']['Tables']['drinks']['Row'];
 //   return data as Drink[];
 // }
 
+const getRange = (page: number, pageSize: number): [number, number] => {
+  return [(page - 1) * pageSize, pageSize];
+};
+
 export async function filterDrinks({
   types,
   alcoholStrength,
@@ -126,9 +140,7 @@ export async function filterDrinks({
     });
   }
   // 페이지네이션 적용
-
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize - 1;
+  const [offset, limit] = getRange(page, pageSize);
   query = query.range(offset, offset + limit);
 
   const { data, count, error } = await query;
@@ -261,8 +273,7 @@ export async function filterSortedDrinks({
 
   // 페이지네이션 적용
 
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize - 1;
+  const [offset, limit] = getRange(page, pageSize);
   query = query.range(offset, offset + limit);
 
   const { data, count, error } = await query;
@@ -307,13 +318,12 @@ export async function filterKeywordSortedDrinks({
   const supabase = createClient();
 
   // 페이지네이션 적용
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize;
+  const [offset, limit] = getRange(page, pageSize);
 
   const { data, count, error } = await supabase
     .from('drinks')
-    .select('id, name,image', { count: 'exact' })
-    .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
+    .select('id,name,image,type', { count: 'exact' })
+    .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, offset + limit - 1);
 
@@ -362,7 +372,6 @@ export const getPopularDrinks = async ({
     };
   }
   if (error) {
-    
     throw new Error('Error fetching popular drinks');
   }
 
@@ -374,7 +383,7 @@ export const getPopularDrinks = async ({
     : [];
 
   // 페이지네이션
-  const offset = (page - 1) * pageSize;
+  const [offset] = getRange(page, pageSize);
   const paginatedLiked = sortedDrinks.slice(offset, offset + pageSize);
 
   // 다음 페이지 존재 여부 확인
@@ -388,5 +397,58 @@ export const getPopularDrinks = async ({
     totalCount,
   };
 };
+
+export async function getDrinkCount({
+  types,
+  alcoholStrength,
+  tastePreferences,
+}: FilterParams): Promise<{
+  totalCount: number; // 전체 개수 추가
+}> {
+  const supabase = createClient();
+  // 전체 말고 필요한 필드만 선택해서 가져오기
+  // let query = supabase.from('drinks').select('*');
+  let query = supabase
+    .from('drinks')
+    .select('type, alcohol_content, sweetness, acidity, carbonation, body', {
+      count: 'exact',
+      head: true,
+    });
+
+  // 술 타입 필터링
+  if (types.length > 0) {
+    query = query.in('type', types);
+  }
+
+  // 도수 필터링
+  if (alcoholStrength) {
+    const [min, max] = alcoholStrength;
+
+    // alcohol_content는 numeric 필드이므로 범위로 필터링
+    query = query.gte('alcohol_content', min).lte('alcohol_content', max);
+  } else {
+    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
+    query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
+  }
+
+  // 맛 카테고리 필터링
+  if (tastePreferences) {
+    Object.entries(tastePreferences).forEach(([category, value]) => {
+      query = query.eq(category, value);
+    });
+  }
+  // 페이지네이션 적용
+
+  const { count, error } = await query;
+
+  // 에러 처리
+  if (error) {
+    throw new Error('Error fetching filtered data');
+  }
+
+  return {
+    totalCount: count || 0, // 전체 카운트 반환
+  };
+}
 
 
