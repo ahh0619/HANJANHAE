@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
-import BackButton from '@/components/common/BackButton';
+import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
-import Popup from './Popup';
+import MobileAlcoholExplanationModal from './MobileAlcoholExplanationModal';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
@@ -18,50 +19,42 @@ const options = [
 ];
 
 const PreferenceTypeSelection = ({
-  onNext,
   surveyData,
+  handleTypeChange,
+  onNext,
+  onPrev,
 }: PreferenceTypeProps) => {
-  const [selectedTypes, setSelectedTypes] = useState<string>(
-    surveyData.type || '',
-  );
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
+  // Tailwind의 sm(640px) 기준으로 반응형 체크
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
 
-  const closePopup = () => {
-    setIsPopupOpen(false);
-  };
-
-  const toggleSelection = (type: string) => {
-    const typesArray = selectedTypes ? selectedTypes.split(',') : [];
-    if (typesArray.includes(type)) {
-      setSelectedTypes(typesArray.filter((item) => item !== type).join(','));
-    } else {
-      setSelectedTypes([...typesArray, type].join(','));
-    }
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleNext = () => {
-    const typesString = selectedTypes
-      .split(',')
-      .filter((type) => type.trim() !== '')
-      .join(',');
-    onNext({ type: typesString });
+    onNext({ type: surveyData.type });
   };
 
   return (
-    <div
-      className={`flex flex-col items-center ${
-        isPopupOpen ? 'overflow-hidden' : ''
-      }`}
-    >
+    <div className="flex flex-col items-center">
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
-        <div className="absolute left-[8px]">
-          <BackButton />
-        </div>
+        <img
+          src={'/assets/icons/chevron-left.svg'}
+          onClick={onPrev}
+          className="absolute left-[8px] p-[8px]"
+          width={'40px'}
+          height={'40px'}
+        />
+        {/* <div className="absolute left-[8px] p-[8px]" onClick={onPrev}>
+          <OptimizedImage
+            src="/assets/icons/chevron-left.svg"
+            alt="뒤로가기 아이콘"
+            width={24}
+            height={24}
+          />
+        </div> */}
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
         </h1>
@@ -82,11 +75,11 @@ const PreferenceTypeSelection = ({
           <button
             key={option}
             className={`h-[40px] rounded-[16px] border-[1px] px-[12px] py-[8px] text-label-lm ${
-              selectedTypes.split(',').includes(option)
+              surveyData.type?.split(',').includes(option)
                 ? 'border-primary bg-primary text-grayscale-100'
                 : 'border-grayscale-500 bg-white text-grayscale-900'
             } transition`}
-            onClick={() => toggleSelection(option)}
+            onClick={() => handleTypeChange(option)}
           >
             {option}
           </button>
@@ -95,14 +88,14 @@ const PreferenceTypeSelection = ({
 
       <div className="mt-[48px] flex h-[48px] w-full items-center px-[20px]">
         <p
-          className="my-auto flex h-[24px] w-[147px] items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
-          onClick={openPopup}
+          className="my-auto flex h-[24px] w-[147px] cursor-pointer items-center p-[12px] text-label-lm leading-[24px] text-grayscale-500"
+          onClick={openModal}
         >
           주류용어설명
           <img
             src="/fi_alert-circle.svg"
             alt="설명 아이콘"
-            className="ml-[8px] h-[24px] w-[24px] cursor-pointer"
+            className="ml-[8px] h-[24px] w-[24px]"
           />
         </p>
       </div>
@@ -110,13 +103,20 @@ const PreferenceTypeSelection = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedTypes.trim()}
+        disabled={!surveyData.type?.trim()}
       />
 
-      {/* 팝업 */}
-      <Popup isOpen={isPopupOpen} onClose={closePopup} />
+      {/* 모달 */}
+      {isMobile ? (
+        <MobileAlcoholExplanationModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
+      ) : (
+        <AlcoholExplanationModal isOpen={isModalOpen} onClose={closeModal} />
+      )}
     </div>
   );
 };
 
-export default PreferenceTypeSelection;
+export default memo(PreferenceTypeSelection);

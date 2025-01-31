@@ -1,15 +1,20 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
+import { saveSurveyData } from '@/lib/recommendations';
 import { useAuthStore } from '@/store/authStore';
 import { Tables } from '@/types/supabase';
 
-const usePreferences = () => {
-  const [preferences, setPreferences] = useState<Tables<'survey'> | null>(null);
+type Mode = 'create' | 'edit';
+const usePreferences = (mode: Mode) => {
+  const [preferences, setPreferences] =
+    useState<Partial<Tables<'survey'> | null>>(null);
   const [defaultPreferences, setDefaultPreferences] =
     useState<Tables<'survey'> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
   const { user } = useAuthStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,22 +28,34 @@ const usePreferences = () => {
   };
 
   useEffect(() => {
-    const loadSurveyDefaults = async () => {
-      try {
-        if (user) {
+    if (mode === 'edit' && user) {
+      // 'edit' 모드일 때만 기본값 로드
+      const loadSurveyDefaults = async () => {
+        try {
           const defaults = await fetchSurveyData(user.id);
           setPreferences(defaults);
-          setDefaultPreferences(defaults); // 초기값 저장
+          setDefaultPreferences(defaults);
+        } catch (err) {
+          setError('기존 설문조사 결과 가져오기 실패');
+        } finally {
           setIsLoading(false);
         }
-      } catch (err) {
-        setError('Failed to load survey defaults');
-        setIsLoading(false);
-      }
-    };
+      };
 
-    loadSurveyDefaults();
-  }, [user]);
+      loadSurveyDefaults();
+    } else if (mode === 'create') {
+      setPreferences({
+        type: '',
+        level: null,
+        sweetness: null,
+        acidity: null,
+        carbonation: null,
+        body: null,
+        food: '',
+      });
+      setIsLoading(false);
+    }
+  }, [mode, user]);
 
   const handlePreferenceChange = (key: string, value: string | number) => {
     setPreferences((prev) => ({ ...prev, [key]: value }));
@@ -55,32 +72,33 @@ const usePreferences = () => {
         updatedTypes = [...typesArray, type].join(',');
       }
 
-      const isChanged = updatedTypes !== defaultPreferences?.type;
-
-      return isChanged
-        ? { ...prev, type: updatedTypes }
-        : { ...prev, type: defaultPreferences?.type };
+      return { ...prev, type: updatedTypes };
     });
   };
 
-  const handleFoodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPreferences((prev) => ({ ...prev, food: e.target.value }));
-  };
-
   const handleSubmit = async () => {
-    console.log('preferences Saved:', preferences);
-    await updateSurvey({ surveyData: preferences, userId: user.id });
-    openModal();
+    console.log('Preferences Saved:', preferences);
+    try {
+      if (mode === 'edit') {
+        await updateSurvey({ surveyData: preferences, userId: user.id });
+        openModal();
+      } else {
+        await saveSurveyData(preferences);
+        router.push('/preferences/result');
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const isFormComplete =
     preferences?.type.length > 0 &&
-    preferences?.level &&
+    preferences?.level !== null &&
     preferences?.sweetness !== null &&
     preferences?.acidity !== null &&
     preferences?.carbonation !== null &&
     preferences?.body !== null &&
-    preferences?.food;
+    preferences?.food !== null;
 
   const hasPreferencesChanged =
     JSON.stringify(preferences) !== JSON.stringify(defaultPreferences);
@@ -89,7 +107,6 @@ const usePreferences = () => {
     preferences,
     handlePreferenceChange,
     handleTypeChange,
-    handleFoodChange,
     handleSubmit,
     isFormComplete,
     hasPreferencesChanged,
