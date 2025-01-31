@@ -63,7 +63,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   useEffect(() => {
     if (isSeasonError || isFoodError || isMoodError) {
       openToast(
-        'AI가 추천결과를 가져오지 못하여 일부 항목은 랜덤 전통주로 대체되었습니다.',
+        'AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.',
         3000,
       );
     }
