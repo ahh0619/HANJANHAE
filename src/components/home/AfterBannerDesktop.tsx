@@ -11,11 +11,11 @@ const AfterBannerDesktop = () => {
       {/* 왼쪽 텍스트 영역 */}
       <div className="flex flex-col">
         <p className="text-title-2xl text-grayscale-100">취향 조사 완료!</p>
-        <p className="text-title-2xl mt-2 text-grayscale-100">
+        <p className="mt-2 text-title-2xl text-grayscale-100">
           나만을 위한 추천 리스트가 생성되었어요
         </p>
 
-        <button className="it mt-10 flex h-[62px] w-[130px] items-center rounded-full bg-grayscale-100 bg-white p-4 text-label-xlm text-primary">
+        <button className="it mt-10 flex h-[62px] w-fit items-center rounded-full bg-grayscale-100 bg-white p-4 text-label-xlm text-primary">
           <span className="mr-1">보러가기</span>
           <OptimizedImage
             src="/assets/icons/desktop_chevron-right.svg"
