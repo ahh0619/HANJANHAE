@@ -58,7 +58,7 @@ const RootLayout = ({
         <Providers>
           <KakaoInit />
           <Header />
-          <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-none xl:flex-1">
+          <main className="m-auto mb-32 w-full max-w-[600px] xl:mt-[102px] xl:max-w-none xl:flex-1">
             {children}
           </main>
           <Footer />
