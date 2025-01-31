@@ -10,7 +10,7 @@ const ReviewLoginPrompt = ({ onLoginClick }: ReviewLoginPromptProps) => {
   return (
     <div className="mt-4 space-y-4">
       {/* Login Prompt Section */}
-      <div className="relative h-[125px] rounded-2xl bg-grayscale-100 p-4">
+      <div className="relative h-[125px] rounded-2xl bg-grayscale-150 p-4">
         <p className="!mt-[10px] pr-[10px] text-center text-body-mm text-grayscale-600">
           리뷰 등록은 로그인 후 가능해요.
         </p>

@@ -80,7 +80,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   ];
 
   return (
-    <div className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
+    <div className="mt-9 space-y-9 px-5 xl:mt-[100px] xl:px-10">
       {sections.map((section, idx) => (
         <section key={idx}>
           <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
@@ -88,7 +88,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
           </h2>
           {section.items.length > 0 ? (
             <Swiper
-              spaceBetween={16}
+              spaceBetween={12}
               slidesPerView="auto"
               breakpoints={{
                 1280: {

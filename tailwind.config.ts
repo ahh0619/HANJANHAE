@@ -28,8 +28,10 @@ const config: Config = {
         // Secondary Colors
         secondary: 'var(--secondary-color)',
         'secondary-hover': 'var(--secondary-hover-color)',
+        'secondary-50': 'var(--secondary-50)',
         'secondary-100': 'var(--secondary-100)',
         'secondary-200': 'var(--secondary-200)',
+        'secondary-250': 'var(--secondary-250)',
         'secondary-300': 'var(--secondary-300)',
 
         // Grayscale
@@ -41,8 +43,8 @@ const config: Config = {
         'grayscale-400': 'var(--gray-400)',
         'grayscale-300': 'var(--gray-300)',
         'grayscale-200': 'var(--gray-200)',
+        'grayscale-150': 'var(--gray-150)',
         'grayscale-100': 'var(--gray-100)',
-        'grayscale-50': 'var(--gray-50)',
 
         // Additional Colors
         'etc-white': 'var(--white)',

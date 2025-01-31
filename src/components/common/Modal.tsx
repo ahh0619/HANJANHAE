@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
-            className="absolute right-3 top-3 text-black hover:text-gray-600"
+            className="absolute right-3 top-3 text-grayscale-900 hover:text-gray-600"
             onClick={onClose}
             aria-label="Close"
           >

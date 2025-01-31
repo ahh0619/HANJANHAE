@@ -35,7 +35,7 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
   if (!isBrowser) return null;
 
   return (
-    <section className="mt-9 space-y-6 px-5 xl:mt-[100px] xl:px-10">
+    <section className="mt-9 px-5 xl:mt-[100px] xl:px-10">
       <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
         인기 전통주
       </h2>
@@ -43,7 +43,7 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
         <p>데이터가 존재하지 않습니다.</p>
       ) : (
         <Swiper
-          spaceBetween={16}
+          spaceBetween={12}
           slidesPerView="auto"
           breakpoints={{
             1280: {
