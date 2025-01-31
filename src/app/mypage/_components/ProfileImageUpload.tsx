@@ -54,17 +54,13 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
         <OptimizedImage src="/assets/icons/camera.svg" alt="카메라 아이콘" />
       </button>
 
-      {preview &&
-        preview !== '/assets/icons/default_profile_image.svg' &&
-        onRemoveImage && (
-          <button
-            type="button"
-            onClick={onRemoveImage}
-            className="absolute bottom-0 left-1/2 mb-[-1.5rem] w-full -translate-x-1/2 text-caption-mm text-grayscale-600 hover:underline"
-          >
-            이미지 삭제
-          </button>
-        )}
+      <button
+        type="button"
+        onClick={onRemoveImage}
+        className="absolute -bottom-2 left-1/2 mb-[-1.5rem] w-full -translate-x-1/2 px-3 py-1 text-caption-mm text-grayscale-600 hover:underline"
+      >
+        이미지 삭제
+      </button>
     </div>
   );
 };

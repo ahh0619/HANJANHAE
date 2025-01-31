@@ -26,7 +26,7 @@ const MyPagePreferences = ({ userId }: { userId: string }) => {
             width={48}
             height={48}
           />
-          <span className="ml-4 text-label-lm text-etc-white">
+          <span className="ml-4 text-label-lm text-grayscale-100">
             내 취향 정보 수정
           </span>
         </div>
