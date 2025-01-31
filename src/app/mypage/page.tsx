@@ -1,6 +1,8 @@
 import * as Sentry from '@sentry/nextjs';
 import type { Metadata } from 'next';
 
+import MobileOnlyProtectorProvider from '@/components/common/MobilePageGuardProvider';
+
 import { fetchUser } from '../actions/auth';
 import MyPageComponent from './_components/MyPageComponent';
 
@@ -33,7 +35,9 @@ const MyPage = async () => {
 
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center">
-      <MyPageComponent initialUserProfile={userProfile} />
+      <MobileOnlyProtectorProvider redirectUrl="/">
+        <MyPageComponent initialUserProfile={userProfile} />
+      </MobileOnlyProtectorProvider>
     </div>
   );
 };
