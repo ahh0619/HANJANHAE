@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import OptimizedImage from '../common/OptimizedImage';
 
 type CheckFieldProps = {
   id: string;
@@ -21,7 +21,7 @@ const CheckField = ({ id, label, checked, handleChange }: CheckFieldProps) => {
         className={`flex items-center gap-2 text-body-sm ${id === 'all' ? 'text-grayscale-500' : 'text-grayscale-900'}`}
         htmlFor={id}
       >
-        <Image
+        <OptimizedImage
           width={24}
           height={24}
           src={`/assets/icons/checkbox_${checked ? 'checked' : 'unchecked'}.svg`}
