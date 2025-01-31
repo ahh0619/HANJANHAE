@@ -100,7 +100,6 @@ const FilterModal = () => {
               className="cursor-pointer"
               onClick={closeModal}
             />
-
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
