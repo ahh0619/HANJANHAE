@@ -44,7 +44,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko" className={`${pretendard.variable} font-sans`}>
+    <html lang="ko">
       <head>
         <Script
           src="https://developers.kakao.com/sdk/js/kakao.min.js"

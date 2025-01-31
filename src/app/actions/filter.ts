@@ -4,10 +4,18 @@
 import { Database } from '@/types/supabase';
 import { createClient } from '@/utils/supabase/client';
 
+
+export type TastePreferences = {
+  sweetness?: number;
+  acidity?: number;
+  carbonation?: number;
+  body?: number;
+};
+
 export type FilterParams = {
   types: string[];
   alcoholStrength?: [number, number] | null;
-  tastePreferences?: Record<string, number>;
+  tastePreferences?: TastePreferences;
 };
 
 export type FilterInifnite = {
@@ -31,6 +39,8 @@ export type DrinkWithLikeStats = {
   like_count: number; // 각 음료의 좋아요 개수
   total_likes: number; // 전체 좋아요 개수
 };
+
+type FetchDrinksWithLikeCountResponse = Database["public"]["Functions"]["fetch_drinks_with_like_count"]["Returns"];
 
 type Drink = Database['public']['Tables']['drinks']['Row'];
 
@@ -81,6 +91,10 @@ type Drink = Database['public']['Tables']['drinks']['Row'];
 //   return data as Drink[];
 // }
 
+const getRange = (page: number, pageSize: number): [number, number] => {
+  return [(page - 1) * pageSize, pageSize];
+};
+
 export async function filterDrinks({
   types,
   alcoholStrength,
@@ -126,9 +140,7 @@ export async function filterDrinks({
     });
   }
   // 페이지네이션 적용
-
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize - 1;
+  const [offset, limit] = getRange(page, pageSize);
   query = query.range(offset, offset + limit);
 
   const { data, count, error } = await query;
@@ -261,8 +273,7 @@ export async function filterSortedDrinks({
 
   // 페이지네이션 적용
 
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize - 1;
+  const [offset, limit] = getRange(page, pageSize);
   query = query.range(offset, offset + limit);
 
   const { data, count, error } = await query;
@@ -307,8 +318,7 @@ export async function filterKeywordSortedDrinks({
   const supabase = createClient();
 
   // 페이지네이션 적용
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize;
+  const [offset, limit] = getRange(page, pageSize);
 
   const { data, count, error } = await supabase
     .from('drinks')
@@ -373,7 +383,7 @@ export const getPopularDrinks = async ({
     : [];
 
   // 페이지네이션
-  const offset = (page - 1) * pageSize;
+  const [offset] = getRange(page, pageSize);
   const paginatedLiked = sortedDrinks.slice(offset, offset + pageSize);
 
   // 다음 페이지 존재 여부 확인

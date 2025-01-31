@@ -29,7 +29,7 @@ const FocusInput: React.FC<FocusInputProps> = ({
   }, [triggerFetch]);
 
   return (
-    <div className="w-full bg-[#FFF] text-center xl:bg-[#ffEAED]">
+    <div className="w-full bg-[#FFF] text-center xl:bg-[#FFEAED80]">
       {/* 검색바와 취소 버튼 */}
       <div
         className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${isFiltered ? '!pb-0' : 'xl:pb-[108px]'}`}
