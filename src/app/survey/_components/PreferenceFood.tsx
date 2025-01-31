@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import ProgressBar from './ProgressBar';
@@ -8,24 +6,19 @@ import StepButton from './StepButton';
 const PreferenceFood = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedFood, setSelectedFood] = useState<string>(
-    surveyData.food || '',
-  );
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFood(e.target.value);
+    handlePreferenceChange('food', e.target.value);
   };
 
   const clearInput = () => {
-    setSelectedFood('');
+    handlePreferenceChange('food', '');
   };
 
   const handleNext = () => {
-    if (selectedFood) {
-      onNext({ food: selectedFood });
-    }
+    onNext({ food: surveyData.food });
   };
 
   return (
@@ -61,17 +54,18 @@ const PreferenceFood = ({
           type="text"
           placeholder="여기에 안주를 입력해주세요"
           className="h-[48px] w-full rounded-[8px] border border-grayscale-300 p-[12px] text-grayscale-900 focus:outline-none"
-          value={selectedFood}
+          // value={selectedFood}
+          value={surveyData.food}
           onChange={onChange}
         />
         {/* X 버튼 */}
-        {selectedFood && (
+        {surveyData.food && (
           <img
             src="/assets/icons/cancel.svg"
             className="absolute right-[11px] top-1/2 h-[40px] w-[40px] -translate-y-1/2 transform p-[8px]"
             onClick={clearInput}
             style={{
-              filter: 'invert(0%) brightness(0%)', // 블랙 색상 적용
+              filter: 'invert(0%) brightness(0%)',
             }}
           />
         )}
@@ -85,7 +79,7 @@ const PreferenceFood = ({
       <StepButton
         content={'완료'}
         onClick={handleNext}
-        disabled={!selectedFood}
+        disabled={!surveyData.food}
       />
     </div>
   );

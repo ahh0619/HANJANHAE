@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -9,20 +9,15 @@ import StepButton from './StepButton';
 const PreferenceSweetness = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedSweetness, setSelectedSweetness] = useState<string | null>(
-    surveyData.sweetness || null,
-  );
-
   const handleSelect = (sweetness: string) => {
-    setSelectedSweetness(sweetness);
+    handlePreferenceChange('sweetness', sweetness);
   };
 
   const handleNext = () => {
-    if (selectedSweetness) {
-      onNext({ sweetness: selectedSweetness });
-    }
+    onNext({ sweetness: surveyData.sweetness });
   };
 
   const options = [
@@ -59,13 +54,14 @@ const PreferenceSweetness = ({
         </h3>
       </div>
 
+      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {options.map((option, index) => (
           <OptionItem
             key={option.value}
             value={option.value}
             label={option.label}
-            isSelected={selectedSweetness === option.value}
+            isSelected={surveyData.sweetness === option.value}
             onSelect={handleSelect}
             showLabel={index % 2 === 0}
           />
@@ -76,10 +72,10 @@ const PreferenceSweetness = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedSweetness}
+        disabled={!surveyData.sweetness}
       />
     </div>
   );
 };
 
-export default PreferenceSweetness;
+export default memo(PreferenceSweetness);

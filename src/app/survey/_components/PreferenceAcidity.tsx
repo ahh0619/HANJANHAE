@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo } from 'react';
 
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -9,20 +9,15 @@ import StepButton from './StepButton';
 const PreferenceAcidity = ({
   onNext,
   onPrev,
+  handlePreferenceChange,
   surveyData,
 }: PreferenceTypeProps) => {
-  const [selectedAcidity, setSelectedAcidity] = useState<string | null>(
-    surveyData.acidity || null,
-  );
-
   const handleSelect = (acidity: string) => {
-    setSelectedAcidity(acidity);
+    handlePreferenceChange('acidity', acidity);
   };
 
   const handleNext = () => {
-    if (selectedAcidity) {
-      onNext({ acidity: selectedAcidity });
-    }
+    onNext({ acidity: surveyData.acidity });
   };
 
   const options = [
@@ -59,13 +54,14 @@ const PreferenceAcidity = ({
         </h3>
       </div>
 
+      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {options.map((option, index) => (
           <OptionItem
             key={option.value}
             value={option.value}
             label={option.label}
-            isSelected={selectedAcidity === option.value}
+            isSelected={surveyData.acidity === option.value}
             onSelect={handleSelect}
             showLabel={index % 2 === 0}
           />
@@ -76,10 +72,10 @@ const PreferenceAcidity = ({
       <StepButton
         content={'다음'}
         onClick={handleNext}
-        disabled={!selectedAcidity}
+        disabled={!surveyData.acidity}
       />
     </div>
   );
 };
 
-export default PreferenceAcidity;
+export default memo(PreferenceAcidity);
