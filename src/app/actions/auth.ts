@@ -88,7 +88,7 @@ export const sendEmailForResetPassword = async (
 
 /* 비밀번호 재설정 */
 export const resetPassword = async (
-  values: ResetPasswordType & { token: string },
+  values: ResetPasswordType & { user: UserType; token: string },
 ): Promise<void> => {
   const supabase = createClient();
 
@@ -103,6 +103,8 @@ export const resetPassword = async (
   });
 
   if (error) throw new Error(error.message);
+
+  if (!values.user) await signout();
 
   redirect('/mypage');
 };
