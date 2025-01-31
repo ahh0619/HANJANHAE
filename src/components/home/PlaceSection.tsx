@@ -55,6 +55,7 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="swiper-pagination mt-2 hidden rounded xl:block" />
         </>
       )}
     </section>
