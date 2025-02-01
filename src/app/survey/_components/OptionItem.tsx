@@ -4,7 +4,6 @@ type OptionItemProps = {
   isSelected: boolean; // 선택 여부
   range?: string;
   onSelect: (value: string) => void; // 선택 시 실행 함수
-  showLabel?: boolean;
 };
 
 const OptionItem = ({
@@ -13,7 +12,6 @@ const OptionItem = ({
   isSelected,
   range,
   onSelect,
-  showLabel,
 }: OptionItemProps) => {
   return (
     <label className="flex cursor-pointer flex-col items-center">

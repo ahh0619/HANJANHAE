@@ -96,7 +96,7 @@ export const saveSurveyData = async (surveyData) => {
     if (user) {
       await addSurvey({ surveyData, userId: user.id });
     }
-    // 비로그인 유저 - 로컬스토리지 저장
+    // // 비로그인 유저 - 로컬스토리지 저장
     else {
       localStorage.setItem('surveyData', JSON.stringify(surveyData));
     }

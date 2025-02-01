@@ -19,6 +19,7 @@ export type PreferenceTypeProps = {
   setSurveyData?: Dispatch<SetStateAction<Partial<Tables<'survey'>>>>;
   onNext: (data: Partial<Tables<'survey'>>) => void;
   onPrev: () => void;
+  currentStep: number;
 };
 
 export type StepProps = {

@@ -1,9 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import Modal from '@/components/common/Modal';
+import { updateSurvey } from '@/app/actions/preference';
+import { useModal } from '@/app/providers/ModalProvider';
 import usePreferences from '@/hooks/preference/usePreferences';
+import { saveSurveyData } from '@/lib/recommendations';
+import { useAuthStore } from '@/store/authStore';
 
 import AlcoholLevelSelector from './AlcoholLevelSelector';
 import AlcoholTypeSelector from './AlcoholTypeSelector';
@@ -20,18 +24,67 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
     preferences,
     handlePreferenceChange,
     handleTypeChange,
-    handleSubmit,
     isFormComplete,
     hasPreferencesChanged,
     isLoading,
     error,
-    isModalOpen,
-    closeModal,
   } = usePreferences(mode);
+  const { openModal, closeModal } = useModal();
+  const [submitError, setSubmitError] = useState('');
+  const { user } = useAuthStore();
   const router = useRouter();
 
+  const handleGoBack = () => {
+    const isFromResultPage = localStorage.getItem('fromResultPage');
+
+    if (isFromResultPage === 'yes') {
+      localStorage.setItem('fromResultPage', 'no');
+      router.push('/');
+    } else {
+      router.back();
+    }
+  };
+
+  const handleOpenModal = () => {
+    openModal({
+      title: '취향 정보가 수정되었어요.',
+      content: '수정된 추천 전통주 리스트를 보러갈까요?',
+      secondaryAction: {
+        text: '다음에 보기',
+        onClick: () => {
+          handleGoBack();
+          closeModal();
+        },
+      },
+      primaryAction: {
+        text: '보러가기',
+        onClick: () => {
+          router.push('/preferences/result');
+          closeModal();
+        },
+      },
+      showCloseButton: false,
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      if (mode === 'edit') {
+        await updateSurvey({ surveyData: preferences, userId: user.id });
+        handleOpenModal();
+      } else {
+        await saveSurveyData(preferences);
+        router.push('/preferences/result');
+      }
+    } catch (error) {
+      console.log('내 생각대로 왜 안돼');
+      setSubmitError(error.message);
+      // throw Error(error.message);
+    }
+  };
+
   if (isLoading) return <PreferencesFormSkeleton />;
-  if (error) return <p>Error: {error}</p>;
+  if (error || submitError) throw new Error(error || submitError);
 
   return (
     <div className="px-[19px]">
@@ -64,28 +117,6 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
       >
         {mode === 'edit' ? '수정하기' : '저장하기'}
       </button>
-
-      {/* 모달 */}
-      <Modal
-        isOpen={isModalOpen}
-        title="취향 정보가 수정되었어요."
-        content="수정된 추천 전통주 리스트를 보러갈까요?"
-        secondaryAction={{
-          text: '다음에 보기',
-          onClick: () => {
-            router.push('/mypage');
-            closeModal();
-          },
-        }}
-        primaryAction={{
-          text: '보러가기',
-          onClick: () => {
-            router.push('/preferences/result');
-            closeModal();
-          },
-        }}
-        showCloseButton={false}
-      />
     </div>
   );
 };
