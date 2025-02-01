@@ -11,6 +11,15 @@ const AlcoholExplanationModal = ({ isOpen, onClose }) => {
           onClick={onClose}
         />
 
+        {/* <div className="absolute right-[24px] top-[24px]" onClick={onClose}>
+          <OptimizedImage
+            src="/assets/icons/cancelDark.svg"
+            alt="닫기 아이콘"
+            width={24}
+            height={24}
+          />
+        </div> */}
+
         {/* 모달 내부 내용 (스크롤 가능) */}
         <div className="flex h-full flex-col p-[24px]">
           {/* 제목 */}

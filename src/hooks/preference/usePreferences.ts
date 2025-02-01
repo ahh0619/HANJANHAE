@@ -31,15 +31,17 @@ const usePreferences = (mode: Mode) => {
     if (mode === 'edit' && user) {
       // 'edit' 모드일 때만 기본값 로드
       const loadSurveyDefaults = async () => {
-        try {
-          const defaults = await fetchSurveyData(user.id);
-          setPreferences(defaults);
-          setDefaultPreferences(defaults);
-        } catch (err) {
+        const defaults = await fetchSurveyData(user.id);
+
+        if (!defaults) {
           setError('기존 설문조사 결과 가져오기 실패');
-        } finally {
           setIsLoading(false);
+          return;
         }
+
+        setPreferences(defaults);
+        setDefaultPreferences(defaults);
+        setIsLoading(false);
       };
 
       loadSurveyDefaults();
