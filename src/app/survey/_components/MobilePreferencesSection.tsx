@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import PreferencesForm from '@/app/preferences/customization/_components/PreferencesForm';
 import usePreferences from '@/hooks/preference/usePreferences';
@@ -24,6 +24,7 @@ const MobilePreferencesSection = () => {
     isLoading,
     // error,
   } = usePreferences('create');
+  const [submitError, setSubmitError] = useState('');
 
   const router = useRouter();
 
@@ -37,9 +38,9 @@ const MobilePreferencesSection = () => {
     return null;
   }
 
-  // if (error) {
-  //   throw new Error(error);
-  // }
+  if (submitError) {
+    throw new Error(submitError);
+  }
 
   const handleNext = (nextStep: string) => {
     next(nextStep);
@@ -54,7 +55,7 @@ const MobilePreferencesSection = () => {
       await saveSurveyData(PreferencesForm);
       router.push('/preferences/result');
     } catch (error) {
-      throw new Error(error.message);
+      setSubmitError(error.message);
     }
   };
 
