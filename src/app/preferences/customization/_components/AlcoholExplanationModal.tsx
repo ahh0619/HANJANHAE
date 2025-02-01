@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const AlcoholExplanationModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
@@ -5,20 +7,14 @@ const AlcoholExplanationModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative h-[456px] w-[560px] rounded-2xl bg-white shadow-lg">
         {/* 닫기 버튼 */}
-        <img
+        <Image
           src="/assets/icons/cancelDark.svg"
-          className="absolute right-[24px] top-[24px]"
+          className="absolute right-[16px] top-[16px] p-[8px]"
+          alt="닫기 아이콘"
+          width={40}
+          height={40}
           onClick={onClose}
         />
-
-        {/* <div className="absolute right-[24px] top-[24px]" onClick={onClose}>
-          <OptimizedImage
-            src="/assets/icons/cancelDark.svg"
-            alt="닫기 아이콘"
-            width={24}
-            height={24}
-          />
-        </div> */}
 
         {/* 모달 내부 내용 (스크롤 가능) */}
         <div className="flex h-full flex-col p-[24px]">

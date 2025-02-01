@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 type MobileAlcoholExplanationModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -20,12 +22,14 @@ const MobileAlcoholExplanationModal = ({
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫히지 않음
       >
         {/* 닫기 버튼 */}
-        <div
+        <Image
+          src="/assets/icons/cancel.svg"
+          alt="닫기 아이콘"
+          width={24}
+          height={24}
           className="absolute right-[8px] top-[20px] h-[40px] w-[40px] p-[8px]"
           onClick={onClose}
-        >
-          <img src={'/assets/icons/cancel.svg'} alt="닫기 버튼" />
-        </div>
+        />
 
         <h2 className="mb-[36px] mt-[24px] text-center text-title-xl text-grayscale-900">
           주류 용어 설명

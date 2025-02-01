@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState } from 'react';
 
 import AlcoholExplanationModal from './AlcoholExplanationModal';
@@ -50,14 +51,16 @@ const AlcoholTypeSelector = ({ preferences, handleTypeChange, mode }) => {
       </div>
 
       <div
-        className={`mt-[20px] flex h-[24px] text-label-lm leading-[24px] text-grayscale-500 ${mode === 'edit' && 'hidden'}`}
+        className={`mt-[20px] flex h-[24px] w-[125px] cursor-pointer text-label-lm leading-[24px] text-grayscale-500 ${mode === 'edit' && 'hidden'}`}
         onClick={openModal}
       >
         주류용어설명
-        <img
+        <Image
           src="/fi_alert-circle.svg"
           alt="설명 아이콘"
-          className="ml-[8px] h-[24px] w-[24px] cursor-pointer"
+          width={24}
+          height={24}
+          className="cursor-pointe ml-[8px] h-[24px] w-[24px]"
         />
       </div>
 

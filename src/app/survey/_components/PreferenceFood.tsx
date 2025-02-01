@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import PreferenceLayout from './PreferenceLayout';
@@ -36,10 +38,14 @@ const PreferenceFood = ({
           onChange={onChange}
         />
         {/* X 버튼 */}
+
         {surveyData.food && (
-          <img
+          <Image
             src="/assets/icons/cancel.svg"
             className="absolute right-[11px] top-1/2 h-[40px] w-[40px] -translate-y-1/2 transform p-[8px]"
+            alt="초기화 아이콘"
+            width={24}
+            height={24}
             onClick={clearInput}
             style={{
               filter: 'invert(0%) brightness(0%)',

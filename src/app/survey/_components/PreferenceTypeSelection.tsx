@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { memo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
@@ -64,9 +65,11 @@ const PreferenceTypeSelection = ({
             onClick={openModal}
           >
             주류용어설명
-            <img
+            <Image
               src="/fi_alert-circle.svg"
               alt="설명 아이콘"
+              width={24}
+              height={24}
               className="ml-[8px] h-[24px] w-[24px]"
             />
           </p>
