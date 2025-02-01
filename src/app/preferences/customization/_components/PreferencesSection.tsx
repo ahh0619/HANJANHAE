@@ -2,10 +2,10 @@ import BackButton from '@/components/common/BackButton';
 
 import PreferencesForm from './PreferencesForm';
 
-interface PreferencesSectionProps {
+type PreferencesSectionProps = {
   title: string;
   mode: 'edit' | 'create';
-}
+};
 
 const PreferencesSection: React.FC<PreferencesSectionProps> = ({
   title,
