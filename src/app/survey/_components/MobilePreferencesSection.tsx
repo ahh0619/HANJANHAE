@@ -23,8 +23,7 @@ const MobilePreferencesSection = () => {
     isLoading,
     // error,
   } = usePreferences('create');
-  const [submitError, setSubmitError] = useState('');
-
+  const [submitError, setSubmitError] = useState<string>('');
   const router = useRouter();
 
   useEffect(() => {

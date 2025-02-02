@@ -55,7 +55,11 @@ const PreferenceLayout = ({
       {children}
 
       {/* 버튼 */}
-      <StepButton content={'다음'} onClick={onNext} disabled={disabled} />
+      <StepButton
+        content={currentStep === 7 ? '완료' : '다음'}
+        onClick={onNext}
+        disabled={disabled}
+      />
     </div>
   );
 };

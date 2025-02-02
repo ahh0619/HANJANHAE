@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
+import useModalStore from '@/store/modalStore';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import MobileAlcoholExplanationModal from './MobileAlcoholExplanationModal';
@@ -25,13 +26,8 @@ const PreferenceTypeSelection = ({
   onPrev,
   currentStep,
 }: PreferenceTypeProps) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Tailwind의 sm(640px) 기준으로 반응형 체크
+  const { isModalOpen, openModal, closeModal } = useModalStore();
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>

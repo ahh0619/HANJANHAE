@@ -1,6 +1,14 @@
 import Image from 'next/image';
 
-const AlcoholExplanationModal = ({ isOpen, onClose }) => {
+type AlcoholExplanationModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+const AlcoholExplanationModal = ({
+  isOpen,
+  onClose,
+}: AlcoholExplanationModalProps) => {
   if (!isOpen) return null;
 
   return (

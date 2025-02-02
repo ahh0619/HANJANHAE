@@ -1,4 +1,6 @@
-const FavoriteFoodInput = ({ preferences, handleSelect }) => {
+import { PreferenceProps } from '@/types/preferences';
+
+const FavoriteFoodInput = ({ preferences, handleSelect }: PreferenceProps) => {
   return (
     <div className="mb-[60px] xl:mb-[148px]">
       {/* 제목 */}

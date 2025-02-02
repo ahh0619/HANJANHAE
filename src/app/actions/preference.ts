@@ -93,7 +93,7 @@ export const addSurvey = async ({
 }: {
   surveyData: Partial<SurveyType>;
   userId: string;
-}): Promise<void> => {
+}) => {
   const supabase = await createClient();
 
   const { error } = await supabase.from('survey').insert({

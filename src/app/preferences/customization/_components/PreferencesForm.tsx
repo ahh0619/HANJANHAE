@@ -30,7 +30,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
     error,
   } = usePreferences(mode);
   const { openModal, closeModal } = useModal();
-  const [submitError, setSubmitError] = useState('');
+  const [submitError, setSubmitError] = useState<string>('');
   const { user } = useAuthStore();
   const router = useRouter();
 

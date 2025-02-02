@@ -12,7 +12,7 @@ const messages = [
 ];
 
 const LoadingAnimation = () => {
-  const [messageIndex, setMessageIndex] = useState(0);
+  const [messageIndex, setMessageIndex] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {

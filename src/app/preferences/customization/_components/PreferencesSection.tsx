@@ -7,10 +7,7 @@ type PreferencesSectionProps = {
   mode: 'edit' | 'create';
 };
 
-const PreferencesSection: React.FC<PreferencesSectionProps> = ({
-  title,
-  mode,
-}) => {
+const PreferencesSection = ({ title, mode }: PreferencesSectionProps) => {
   return (
     <div className="mx-auto max-w-[400px]">
       <div className="relative mb-[32px] flex h-[44px] w-full items-center xl:mb-[64px] xl:h-[32px]">

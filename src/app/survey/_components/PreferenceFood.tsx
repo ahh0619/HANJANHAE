@@ -37,8 +37,8 @@ const PreferenceFood = ({
           value={surveyData.food}
           onChange={onChange}
         />
-        {/* X 버튼 */}
 
+        {/* X 버튼 */}
         {surveyData.food && (
           <Image
             src="/assets/icons/cancel.svg"
