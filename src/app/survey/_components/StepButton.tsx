@@ -2,11 +2,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Modal from '@/components/common/Modal';
-import { Tables } from '@/types/supabase';
+import { SurveyType } from '@/types/preferences';
 
 type StepButtonProps = {
   content: string;
-  onClick: (data: Partial<Tables<'survey'>>) => void;
+  onClick: (data: Partial<SurveyType>) => void;
   disabled: boolean;
 };
 

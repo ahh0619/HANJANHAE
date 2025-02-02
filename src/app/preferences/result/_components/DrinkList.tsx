@@ -5,10 +5,10 @@ import Link from 'next/link';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
-import { Tables } from '@/types/supabase';
+import { ResultType } from '@/types/preferences';
 
 type DrinkListProps = {
-  drinks: Tables<'reco_results'>[];
+  drinks: ResultType[];
   title: string;
   userId: string | null;
 };

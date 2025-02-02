@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import PreferencesForm from '@/app/preferences/customization/_components/PreferencesForm';
 import usePreferences from '@/hooks/preference/usePreferences';
 import useFunnel from '@/hooks/survey/useFunnel';
 import { saveSurveyData } from '@/lib/recommendations';
@@ -52,7 +51,7 @@ const MobilePreferencesSection = () => {
 
   const handleSubmit = async () => {
     try {
-      await saveSurveyData(PreferencesForm);
+      await saveSurveyData(surveyData);
       router.push('/preferences/result');
     } catch (error) {
       setSubmitError(error.message);

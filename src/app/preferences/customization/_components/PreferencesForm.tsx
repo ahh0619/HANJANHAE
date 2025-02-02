@@ -36,9 +36,9 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
 
   const handleGoBack = () => {
     const isFromResultPage = localStorage.getItem('fromResultPage');
+    localStorage.setItem('fromResultPage', 'no');
 
     if (isFromResultPage === 'yes') {
-      localStorage.setItem('fromResultPage', 'no');
       router.push('/');
     } else {
       router.back();
@@ -59,6 +59,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
       primaryAction: {
         text: '보러가기',
         onClick: () => {
+          localStorage.setItem('fromResultPage', 'no');
           router.push('/preferences/result');
           closeModal();
         },

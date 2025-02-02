@@ -7,10 +7,10 @@ import {
   fetchSurveyData,
   recommendDrinks,
 } from '@/app/actions/preference';
-import { Tables } from '@/types/supabase';
+import { ResultType } from '@/types/preferences';
 
 type fetchRecommendProps = {
-  setDrinks: Dispatch<SetStateAction<Tables<'reco_results'>[] | null>>;
+  setDrinks: Dispatch<SetStateAction<ResultType[] | null>>;
   setError: Dispatch<SetStateAction<string>>;
   setIsSurveyCompleted: (completed: boolean) => void;
   userId?: string | undefined;
@@ -96,7 +96,7 @@ export const saveSurveyData = async (surveyData) => {
     if (user) {
       await addSurvey({ surveyData, userId: user.id });
     }
-    // // 비로그인 유저 - 로컬스토리지 저장
+    // 비로그인 유저 - 로컬스토리지 저장
     else {
       localStorage.setItem('surveyData', JSON.stringify(surveyData));
     }

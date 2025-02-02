@@ -1,12 +1,12 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
-import { Tables } from '@/types/supabase';
+import { SurveyType } from '@/types/preferences';
 
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
 type PreferenceLayoutProps = {
   children: React.ReactNode;
-  onNext: (data: Partial<Tables<'survey'>>) => void;
+  onNext: (data: Partial<SurveyType>) => void;
   onPrev: () => void;
   question: string;
   subquestion?: string;

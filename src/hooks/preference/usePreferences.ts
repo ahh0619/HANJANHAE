@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
 import { saveSurveyData } from '@/lib/recommendations';
 import { useAuthStore } from '@/store/authStore';
-import { Tables } from '@/types/supabase';
+import { SurveyType } from '@/types/preferences';
 
 type Mode = 'create' | 'edit';
+
 const usePreferences = (mode: Mode) => {
-  const [preferences, setPreferences] =
-    useState<Partial<Tables<'survey'> | null>>(null);
+  const [preferences, setPreferences] = useState<Partial<SurveyType> | null>(
+    null,
+  );
   const [defaultPreferences, setDefaultPreferences] =
-    useState<Tables<'survey'> | null>(null);
+    useState<Partial<SurveyType> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();

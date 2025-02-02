@@ -6,11 +6,11 @@ import {
   recommendDrinks,
 } from '@/app/actions/preference';
 import { useSurveyStore } from '@/store/surveyStore';
-import { Tables } from '@/types/supabase';
+import { ResultType } from '@/types/preferences';
 
 const useReco = (userId: string | undefined) => {
   const [error, setError] = useState('');
-  const [drinks, setDrinks] = useState<Tables<'reco_results'>[] | null>(null);
+  const [drinks, setDrinks] = useState<ResultType[] | null>(null);
   const { setIsSurveyCompleted } = useSurveyStore();
 
   useEffect(() => {

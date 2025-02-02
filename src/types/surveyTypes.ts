@@ -1,23 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { Tables } from './supabase';
-
-export type surveyProps = {
-  type: string[] | null;
-  level: string | null;
-  sweetness: string | null;
-  acidity: string | null;
-  carbonation: string | null;
-  body: string | null;
-  food: string | null;
-};
+import { SurveyType } from './preferences';
 
 export type PreferenceTypeProps = {
-  surveyData?: Partial<Tables<'survey'>>;
+  surveyData?: Partial<SurveyType>;
   handleTypeChange?: (type: string) => void;
   handlePreferenceChange?: (key: string, value: string | number) => void;
-  setSurveyData?: Dispatch<SetStateAction<Partial<Tables<'survey'>>>>;
-  onNext: (data: Partial<Tables<'survey'>>) => void;
+  setSurveyData?: Dispatch<SetStateAction<Partial<SurveyType>>>;
+  onNext: (data: Partial<SurveyType>) => void;
   onPrev: () => void;
   currentStep: number;
 };
