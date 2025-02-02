@@ -1,6 +1,6 @@
-import OptimizedImage from '@/components/common/OptimizedImage';
 import { SurveyType } from '@/types/preferences';
 
+import Image from 'next/image';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 
@@ -26,15 +26,15 @@ const PreferenceLayout = ({
   return (
     <div className="flex flex-col items-center">
       {/* 제목 */}
-      <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[8px]">
-        <div className="absolute left-[8px] p-[8px]" onClick={onPrev}>
-          <OptimizedImage
-            src="/assets/icons/chevron-left.svg"
-            alt="뒤로가기 아이콘"
-            width={24}
-            height={24}
-          />
-        </div>
+      <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[4px]">
+        <Image
+          src="/assets/icons/chevron-left.svg"
+          alt="뒤로가기 아이콘"
+          width={40}
+          height={40}
+          className="absolute left-[4px] p-[8px]"
+          onClick={onPrev}
+        />
         <h1 className="mx-auto text-title-xl text-grayscale-900">
           내 취향 조사
         </h1>
