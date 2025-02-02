@@ -22,7 +22,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   });
 
   return (
-    <div className="mx-auto w-full max-w-7xl">
+    <div className="mx-auto mb-[-108px] w-full max-w-7xl">
       {/* Back Button과 제목 */}
       <div className="mx-auto flex w-[374px] flex-col items-center sm:w-full xl:hidden">
         <Link
