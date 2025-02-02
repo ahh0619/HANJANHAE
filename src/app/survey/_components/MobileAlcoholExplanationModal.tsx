@@ -18,7 +18,7 @@ const MobileAlcoholExplanationModal = ({
       <div
         className={`w-full max-w-lg rounded-t-[24px] bg-white transition-transform duration-300 ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
-        } custom-scrollbar h-[90vh] max-h-[90vh] overflow-y-auto`}
+        } custom-scrollbar h-[90%] max-h-[90%] overflow-y-auto`}
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫히지 않음
       >
         {/* 닫기 버튼 */}
