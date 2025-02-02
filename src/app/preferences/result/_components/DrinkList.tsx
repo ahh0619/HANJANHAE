@@ -54,7 +54,8 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
             const isLiked = likeMap[drink.drink_id] || false;
 
             return (
-              <div
+              <Link
+                href={`/drink/${drink.drink_id}`}
                 key={drink.name}
                 className="mx-auto flex h-[186px] w-full items-start gap-5 sm:w-[580px] xl:h-[222px]"
               >
@@ -103,7 +104,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
