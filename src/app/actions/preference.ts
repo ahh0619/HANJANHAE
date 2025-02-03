@@ -2,7 +2,7 @@
 
 import OpenAI from 'openai';
 
-import { Tables } from '@/types/supabase';
+import { ResultType, SurveyType } from '@/types/preferences';
 import { createClient } from '@/utils/supabase/server';
 
 const openai = new OpenAI({
@@ -15,11 +15,9 @@ export const recommendDrinks = async ({
   surveyData,
   userId,
 }: {
-  surveyData: Partial<Tables<'survey'>>;
+  surveyData: Partial<SurveyType>;
   userId?: string;
-}): Promise<Tables<'reco_results'>[] | null> => {
-  const supabase = await createClient();
-
+}): Promise<ResultType[] | null> => {
   const content = `
     1. 어떤 종류의 술을 선호하시나요? 답변: ${surveyData.type}
     2. 어느 정도 도수의 술을 선호하시나요? 답변: ${surveyData.level}
@@ -68,7 +66,7 @@ export const recommendDrinks = async ({
 
 export const hasRecoResult = async (
   userId: string,
-): Promise<Tables<'reco_results'>[] | null> => {
+): Promise<ResultType[] | null> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -93,9 +91,9 @@ export const addSurvey = async ({
   surveyData,
   userId,
 }: {
-  surveyData: Partial<Tables<'survey'>>;
+  surveyData: Partial<SurveyType>;
   userId: string;
-}): Promise<void> => {
+}) => {
   const supabase = await createClient();
 
   const { error } = await supabase.from('survey').insert({
@@ -118,7 +116,7 @@ export const addRecoResult = async ({
   recoData,
   userId,
 }: {
-  recoData: Tables<'reco_results'>[];
+  recoData: ResultType[];
   userId: string;
 }) => {
   const supabase = await createClient();
@@ -144,7 +142,7 @@ export const updateSurvey = async ({
   surveyData,
   userId,
 }: {
-  surveyData: Partial<Tables<'survey'>>;
+  surveyData: Partial<SurveyType>;
   userId: string;
 }) => {
   const supabase = await createClient();
@@ -177,9 +175,9 @@ export const deleteRecoResult = async (userId: string) => {
 
 export const fetchDrinksWithReason = async (
   jsonData: { name: string; reason: string }[],
-): Promise<Tables<'reco_results'>[]> => {
+): Promise<ResultType[]> => {
   const supabase = await createClient();
-  const results: Tables<'reco_results'>[] = [];
+  const results: ResultType[] = [];
 
   for (const item of jsonData) {
     const { name, reason } = item;
@@ -212,7 +210,7 @@ export const fetchDrinksWithReason = async (
 
 export const fetchSurveyData = async (
   userId: string,
-): Promise<Tables<'survey'> | null> => {
+): Promise<SurveyType | null> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -230,7 +228,7 @@ export const fetchSurveyData = async (
 
 export const fetchRecoData = async (
   userId: string,
-): Promise<Tables<'reco_results'>[] | null> => {
+): Promise<ResultType[] | null> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
