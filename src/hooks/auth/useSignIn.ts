@@ -54,7 +54,7 @@ const useSignIn = ({ isSaveEmail, handleError }: SignInProps) => {
       window.location.href = '/';
     } catch (error) {
       Sentry.captureException(error);
-      handleError(manageSignInError(error.message));
+      handleError(manageSignInError(error));
     }
   };
 
