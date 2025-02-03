@@ -6,9 +6,9 @@ import OptionItem from './OptionItem';
 import PreferenceLayout from './PreferenceLayout';
 
 const OPTIONS = [
-  { value: '저도수', range: '(6~15도)' },
-  { value: '중간도수', range: '(15~30도)' },
-  { value: '고도수', range: '(30도 이상)' },
+  { value: '저도수', range: '(14도 이하)' },
+  { value: '중간도수', range: '(15-30도)' },
+  { value: '고도수', range: '(31도 이상)' },
 ];
 
 const PreferenceAlcoholLevel = ({
@@ -31,12 +31,13 @@ const PreferenceAlcoholLevel = ({
       currentStep={currentStep}
     >
       <div className="flex w-full justify-between px-[20px]">
-        {OPTIONS.map((option) => (
+        {OPTIONS.map((option, index) => (
           <OptionItem
             key={option.value}
             value={option.value}
             label={option.value}
             range={option.range}
+            index={index}
             isSelected={surveyData.level === option.value}
             onSelect={handleSelect}
           />

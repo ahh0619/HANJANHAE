@@ -23,7 +23,7 @@ const MobileAlcoholExplanationModal = ({
       >
         {/* 닫기 버튼 */}
         <Image
-          src="/assets/icons/cancel.svg"
+          src="/assets/icons/cancelDark.svg"
           alt="닫기 아이콘"
           width={24}
           height={24}

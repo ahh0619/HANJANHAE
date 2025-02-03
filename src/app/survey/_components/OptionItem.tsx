@@ -1,9 +1,10 @@
 type OptionItemProps = {
-  value: string; // 옵션 값
-  label?: string; // 라벨 텍스트
-  isSelected: boolean; // 선택 여부
+  value: string;
+  label: string;
+  isSelected: boolean;
+  index?: number;
   range?: string;
-  onSelect: (value: string) => void; // 선택 시 실행 함수
+  onSelect: (value: string) => void;
 };
 
 const OptionItem = ({
@@ -11,10 +12,22 @@ const OptionItem = ({
   label,
   isSelected,
   range,
+  index,
   onSelect,
 }: OptionItemProps) => {
+  const alignment =
+    index === undefined
+      ? 'flex flex-col items-center' // index가 없을 경우 기본값 설정
+      : index === 0
+        ? 'flex flex-col items-start'
+        : index === 1
+          ? 'flex flex-col items-center'
+          : index === 2
+            ? 'flex flex-col items-end'
+            : '';
+
   return (
-    <label className="flex cursor-pointer flex-col items-center">
+    <label className={`flex cursor-pointer flex-col ${alignment}`}>
       <input
         type="radio"
         value={value}
@@ -34,16 +47,14 @@ const OptionItem = ({
           }`}
         ></div>
       </div>
-      {/* 라벨 텍스트 */}
-      {label && (
-        <span className={`mt-2 text-caption-mm text-grayscale-900`}>
-          {label}
-        </span>
-      )}
 
-      {range && (
-        <span className={`text-caption-mm text-grayscale-900`}>{range}</span>
-      )}
+      {/* 라벨 텍스트 */}
+      <div
+        className={`mt-2 text-caption-mm text-grayscale-900 ${index === undefined ? 'text-center' : alignment}`}
+      >
+        <p>{label}</p>
+        {range && <p>{range}</p>}
+      </div>
     </label>
   );
 };
