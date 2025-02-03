@@ -21,7 +21,7 @@ const DrinkDescription = ({
   });
 
   return (
-    <section className="mt-3 px-5 xl:mt-5 xl:px-0">
+    <section className="mt-3 px-5 xl:mt-5 xl:w-[384px] xl:px-0">
       <div className="flex items-start justify-between">
         <h2 className="flex-1 break-words text-title-xl text-grayscale-900">
           {name}

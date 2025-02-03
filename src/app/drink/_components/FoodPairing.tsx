@@ -14,7 +14,7 @@ const FoodPairing = async ({ drinkId }: { drinkId: string }) => {
             className="flex flex-col items-center justify-center"
           >
             {/* 음식 이미지 */}
-            <div className="relative flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-grayscale-300">
+            <div className="relative flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full bg-grayscale-300 xl:h-[114px] xl:w-[114px]">
               {food.food_image ? (
                 <OptimizedImage
                   src={food.food_image}

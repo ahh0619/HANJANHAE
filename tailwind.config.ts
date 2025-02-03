@@ -70,6 +70,7 @@ const config: Config = {
 
         // Label
         'label-xlm': ['20px', { lineHeight: '150%', fontWeight: '500' }],
+        'label-lmb': ['16px', { lineHeight: '150%', fontWeight: '700' }],
         'label-lm': ['16px', { lineHeight: '150%', fontWeight: '500' }],
         'label-mb': ['12px', { lineHeight: '150%', fontWeight: '700' }],
         'label-mm': ['12px', { lineHeight: '150%', fontWeight: '500' }],

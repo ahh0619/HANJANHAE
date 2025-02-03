@@ -44,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
             aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6" />
           </button>
         )}
 

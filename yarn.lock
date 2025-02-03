@@ -1399,10 +1399,10 @@
   dependencies:
     whatwg-url "^5.0.0"
 
-"@supabase/postgrest-js@1.17.7":
-  version "1.17.7"
-  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-1.17.7.tgz#2c0cc07c34cfbafcdf15a27e36c42119095ab154"
-  integrity sha512-aOzOYaTADm/dVTNksyqv9KsbhVa1gHz1Hoxb2ZEF2Ed9H7qlWOfptECQWmkEmrrFjtNaiPrgiSaPECvzI/seDA==
+"@supabase/postgrest-js@1.18.1":
+  version "1.18.1"
+  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-1.18.1.tgz#7ceac0dfbe567d953343c5ae9750f848cc6db744"
+  integrity sha512-dWDnoC0MoDHKhaEOrsEKTadWQcBNknZVQcSgNE/Q2wXh05mhCL1ut/jthRUrSbYcqIw/CEjhaeIPp7dLarT0bg==
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
@@ -1431,15 +1431,15 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
-"@supabase/supabase-js@^2.47.10":
-  version "2.47.10"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.47.10.tgz#310ce81dc734116f9445dbce7f9341ae1c24d834"
-  integrity sha512-vJfPF820Ho5WILYHfKiBykDQ1SB9odTHrRZ0JxHfuLMC8GRvv21YLkUZQK7/rSVCkLvD6/ZwMWaOAfdUd//guw==
+"@supabase/supabase-js@^2.48.1":
+  version "2.48.1"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.48.1.tgz#6bbe6bd799115bd1237510e1c2de6f8ccdd84cd0"
+  integrity sha512-VMD+CYk/KxfwGbI4fqwSUVA7CLr1izXpqfFerhnYPSi6LEKD8GoR4kuO5Cc8a+N43LnfSQwLJu4kVm2e4etEmA==
   dependencies:
     "@supabase/auth-js" "2.67.3"
     "@supabase/functions-js" "2.4.4"
     "@supabase/node-fetch" "2.6.15"
-    "@supabase/postgrest-js" "1.17.7"
+    "@supabase/postgrest-js" "1.18.1"
     "@supabase/realtime-js" "2.11.2"
     "@supabase/storage-js" "2.7.1"
 
@@ -2540,7 +2540,7 @@ dot-prop@^9.0.0:
   dependencies:
     type-fest "^4.18.2"
 
-dotenv@^16.3.1:
+dotenv@^16.3.1, dotenv@^16.4.7:
   version "16.4.7"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.4.7.tgz#0e20c5b82950140aa99be360a8a5f52335f53c26"
   integrity sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==
@@ -4110,10 +4110,20 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
 
 lodash@^4.17.21:
   version "4.17.21"
@@ -5055,6 +5065,14 @@ react-kakao-maps-sdk@^1.1.27:
   dependencies:
     "@babel/runtime" "^7.22.15"
     kakao.maps.d.ts "^0.1.39"
+
+react-lazy-load-image-component@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.6.3.tgz#4fc54ddb668dc0557a9e75b5797c236d52742379"
+  integrity sha512-kdQYUDbuISF3T9El0sBLNoWrmPohqlytcG4ognLtHYjY8bZAsJ0/Ez+VaV+0QlVyUY3K6dDXkuQAz3GpvdjBkw==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
 
 react-lottie-player@^2.1.0:
   version "2.1.0"
