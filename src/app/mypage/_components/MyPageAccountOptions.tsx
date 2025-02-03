@@ -28,6 +28,23 @@ const MyPageAccountOptions = () => {
     queryClient.removeQueries({ queryKey: ['userProfile'] });
   };
 
+  const openLogoutModal = () => {
+    openModal({
+      title: '로그아웃을 하시겠어요?',
+      secondaryAction: {
+        text: '돌아가기',
+        onClick: closeModal,
+      },
+      primaryAction: {
+        text: '로그아웃 하기',
+        onClick: () => {
+          closeModal();
+          handleLogout();
+        },
+      },
+    });
+  };
+
   const handleDeleteUser = async () => {
     removeUser();
     window.location.href = '/';
@@ -80,7 +97,7 @@ const MyPageAccountOptions = () => {
           {/* Logout */}
           <div
             className="mt-6 flex cursor-pointer items-center"
-            onClick={handleLogout}
+            onClick={openLogoutModal}
           >
             <div className="flex h-12 w-12 items-center justify-center">
               <OptimizedImage
