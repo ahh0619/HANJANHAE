@@ -27,7 +27,9 @@ const Container = () => {
         label=""
         handleClick={() => (step === 1 ? router.push('/signin') : setStep(1))}
       />
-      <h1 className="mb-8 py-[6px] text-center text-title-xl text-grayscale-900 xl:mb-10 xl:py-0 xl:pt-[18px]">
+      <h1
+        className={`${step === 1 ? 'mb-8' : 'mb-12'} py-[6px] text-center text-title-xl text-grayscale-900 xl:mb-10 xl:py-0 xl:pt-[18px]`}
+      >
         회원가입
       </h1>
       {step === 2 && (
