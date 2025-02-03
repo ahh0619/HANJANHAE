@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useFilterStore from '@/store/filterStore';
@@ -24,39 +24,44 @@ const SearchWrap = () => {
     setTriggerFetch,
     isFiltered,
   } = useFilterStore();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  useEffect(() => {
-    if (pathname === '/search') {
-      const query = searchParams.get('query'); // 'query' 파라미터 값 가져오기
-
-      if (!query) {
-        // query가 없을 때만 초기화
-        setKeyword('');
-        resetFilters();
-        setTriggerFetch(false);
-        setSearchTriggerFetch(false);
-        setIsSearchFocuse(false);
-        setIsFiltered(false);
-        console.log('초기화 동작 실행');
-      } else {
-        console.log('쿼리가 존재하여 초기화하지 않음');
-      }
-    }
-  }, [pathname, searchParams]);
+  const shouldShowResults = searchParams.toString() !== '';
+  const shouldHideFilterSidebar = searchParams.get('keyword') !== null;
   const [searchValue, setSearchValue] = useState('');
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const { isModalOpen } = useModalStore();
 
+  console.log(isFiltered);
+  useEffect(() => {
+    const handlePopState = () => {
+      if (window.location.pathname === '/search') {
+        setIsFiltered(false);
+      }
+    };
+
+    // popstate 이벤트 리스너 등록
+    window.addEventListener('popstate', handlePopState);
+
+    // cleanup: 컴포넌트 언마운트 시 리스너 제거
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   return (
     <>
-      {!isFiltered && <SearchLogo />}
+      {!shouldShowResults && <SearchLogo />}
       <div className="html-overflow-hidden mx-auto flex w-full flex-col items-center overflow-hidden px-5 xl:px-0">
         {/* Search Bar */}
-        <FocusInput searchValue={searchValue} setSearchValue={setSearchValue} />
-        {isFiltered && <FilterSearchResults />}
-        {!isFiltered && <StandByScreen className="block xl:hidden" />}
-        {!isFiltered && <StandByScreen className="hidden xl:flex" />}
+        <FocusInput
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          shouldShowResults={shouldShowResults}
+          shouldHideFilterSidebar={shouldHideFilterSidebar}
+        />
+        {shouldShowResults && <FilterSearchResults />}
+        {!shouldShowResults && <StandByScreen className="block xl:hidden" />}
+        {!shouldShowResults && <StandByScreen className="hidden xl:flex" />}
         {isModalOpen && <FilterModal />}
       </div>
     </>
