@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { resetPassword } from '@/app/actions/auth';
+import { useAuthStore } from '@/store/authStore';
 import { ResetPasswordType } from '@/types/Auth';
 
 type ResetPasswordProps = {
@@ -30,6 +31,8 @@ const resetPasswordSchema = z
   });
 
 const useResetPassword = ({ token, handleError }: ResetPasswordProps) => {
+  const { user } = useAuthStore();
+
   const {
     register,
     handleSubmit,
@@ -45,7 +48,7 @@ const useResetPassword = ({ token, handleError }: ResetPasswordProps) => {
 
   const onSubmit = async (values: ResetPasswordType) => {
     try {
-      await resetPassword({ token, password: values.password });
+      await resetPassword({ user, token, password: values.password });
     } catch (error) {
       Sentry.captureException(error);
       handleError('비밀번호 변경에 실패했습니다.');

@@ -39,7 +39,7 @@ const InputField = <T extends FieldValues>({
             onClick={() => setIsVisible(!isVisible)}
           >
             <OptimizedImage
-              src={`/assets/icons/password_${isVisible ? 'invisible' : 'visible'}.svg`}
+              src={`/assets/icons/password_${isVisible ? 'visible' : 'invisible'}.svg`}
               alt="place_address"
               width={24}
               height={24}

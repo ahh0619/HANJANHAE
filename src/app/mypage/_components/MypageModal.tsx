@@ -18,7 +18,7 @@ const MypageModal = () => {
     <div className="px-3 pb-7 pt-2">
       <MyPageProfileSection userData={userData} onEditClick={handleModalOpen} />
       <div className="mt-2">
-        <MyPagePreferences userId={userData.id} />
+        <MyPagePreferences />
       </div>
       <MyPageAccountOptions />
       <ProfileEditModal

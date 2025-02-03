@@ -4,24 +4,26 @@ import { useEffect, useState } from 'react';
 
 import Button from '@/components/auth/Button';
 import CheckField from '@/components/auth/CheckField';
+import ConfirmModal from '@/components/auth/ConfirmModal';
 import InputField from '@/components/auth/InputField';
-import Modal from '@/components/auth/Modal';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import useSignIn from '@/hooks/auth/useSignIn';
 
 const SignInForm = () => {
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
+
   const [options, setOptions] = useState({
     save: false,
     remember: false,
   });
 
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { handleSubmit, register, onSubmit, errors } = useSignIn({
     isSaveEmail: options.save,
     handleError: (message: string) => {
       setErrorMessage(message);
-      setIsOpenModal(true);
+      handleOpenModal();
     },
   });
 
@@ -72,10 +74,10 @@ const SignInForm = () => {
       </form>
 
       {isOpenModal && (
-        <Modal
+        <ConfirmModal
           title={errorMessage}
           content="다시 시도해주세요."
-          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+          button={{ text: '확인', onClick: handleCloseModal }}
         />
       )}
     </>

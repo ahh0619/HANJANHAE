@@ -8,6 +8,7 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
+import { generateUrl } from '@/utils/filter/generateUrl';
 
 const SearchBar = ({
   value,
@@ -43,17 +44,13 @@ const SearchBar = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      queryClient.removeQueries({
-        queryKey: ['filterDrinks'],
-        exact: false,
-      });
       const newKeyword = inputRef.current?.value.trim() || '';
-      router.push(`/search?query=${encodeURIComponent(newKeyword)}`);
       setKeyword(newKeyword);
-      setTriggerFetch(false);
-      setIsSearchFocuse(false);
-      setSearchTriggerFetch(true);
-      setIsFiltered(true);
+      // newKeyword를 직접 사용합니다.
+      const newUrl = generateUrl({
+        keyword: newKeyword,
+      });
+      router.push(newUrl);
       setSelectedSort('alphabetical');
     }
   };

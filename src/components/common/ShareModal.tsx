@@ -55,7 +55,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
                   alt={option.label}
                   className="rounded"
                 />
-                <span className="w-20 truncate text-center text-label-mm text-black">
+                <span className="w-20 truncate text-center text-label-mm text-grayscale-900">
                   {option.label}
                 </span>
               </button>

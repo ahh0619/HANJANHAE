@@ -50,11 +50,11 @@ const BeforeBannerMobile = () => {
       className="relative flex h-[184px] w-full flex-col items-start rounded-2xl bg-gradient-main-banner px-[20px] shadow-main-banner xl:hidden"
     >
       {/* 텍스트 영역 */}
-      <p className="mb-[8px] mt-[28px] text-xs font-bold leading-[18px] text-white">
+      <p className="mb-[8px] mt-[28px] text-body-sm text-grayscale-100">
         취향 조사 후 나만을 위한 추천 리스트를 확인해보세요!
       </p>
 
-      <div className="mb-[76px] text-[20px] font-bold leading-[27px] text-white">
+      <div className="mb-[76px] text-title-lb text-grayscale-100">
         <p>AI가 맞춤 전통주를</p>
         <p>추천해드려요</p>
       </div>

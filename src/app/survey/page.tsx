@@ -8,7 +8,7 @@ import PreferencesSection from '@/app/preferences/customization/_components/Pref
 import MobilePreferencesSection from './_components/MobilePreferencesSection';
 
 const Page = () => {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
   const isXL = useMediaQuery({ query: '(min-width: 1280px)' });
 
   useEffect(() => {

@@ -66,16 +66,19 @@ const BeforeBannerDesktop = () => {
           <OptimizedImage
             src="/assets/icons/desktop_chevron-right.svg"
             alt="arrow icon"
+            width={24}
+            height={24}
           />
         </button>
       </div>
 
       {/* 오른쪽 아이콘(이미지) */}
-      <div className="absolute bottom-[59px] right-[100px] top-[58px] h-[226px] w-[269px]">
+      <div className="absolute bottom-[59px] right-[100px] top-[58px]">
         <OptimizedImage
           src="/assets/Desktop_banner_image_before.svg"
           alt="Before Banner Desktop"
-          fill
+          width={269}
+          height={226}
         />
       </div>
     </Link>

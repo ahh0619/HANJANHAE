@@ -37,17 +37,15 @@ const OptimizedImage = ({
   const computedHeight = fill ? undefined : (height ?? dimensions.height);
 
   return (
-    <div className={`relative ${fill ? 'h-full w-full' : ''} ${className}`}>
-      <Image
-        src={src || ''}
-        alt={alt}
-        width={computedWidth}
-        height={computedHeight}
-        fill={fill}
-        className={className}
-        {...props}
-      />
-    </div>
+    <Image
+      src={src || ''}
+      alt={alt}
+      width={computedWidth}
+      height={computedHeight}
+      fill={fill}
+      className={className}
+      {...props}
+    />
   );
 };
 

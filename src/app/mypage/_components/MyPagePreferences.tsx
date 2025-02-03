@@ -1,21 +1,37 @@
-import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { useSurveyStore } from '@/store/surveyStore';
 
-const MyPagePreferences = ({ userId }: { userId: string }) => {
+const MyPagePreferences = () => {
   const { isSurveyCompleted, fetchSurveyStatus } = useSurveyStore();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     fetchSurveyStatus();
   }, [fetchSurveyStatus]);
 
+  const handleBannerClick = () => {
+    if (!isSurveyCompleted) {
+      router.push('/survey');
+      return;
+    }
+
+    const isFromResultPage = pathname.includes('/preferences/result');
+    if (isFromResultPage) {
+      localStorage.setItem('fromResultPage', 'yes');
+    }
+
+    router.push('/preferences/customization');
+  };
+
   return (
     <div className="mt-8 flex w-full justify-center px-5">
       {/* 배너 전체 */}
-      <Link
-        href={isSurveyCompleted ? '/preferences/customization' : '/survey'}
+      <div
+        onClick={handleBannerClick}
         className="relative flex h-[72px] w-full items-center rounded-xl bg-gradient-banner hover:opacity-90"
       >
         {/* 왼쪽 아이콘 및 텍스트 */}
@@ -26,7 +42,7 @@ const MyPagePreferences = ({ userId }: { userId: string }) => {
             width={48}
             height={48}
           />
-          <span className="ml-4 text-label-lm text-etc-white">
+          <span className="ml-4 text-label-lm text-grayscale-100">
             내 취향 정보 수정
           </span>
         </div>
@@ -40,7 +56,7 @@ const MyPagePreferences = ({ userId }: { userId: string }) => {
             height={72}
           />
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

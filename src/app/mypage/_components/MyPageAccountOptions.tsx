@@ -2,7 +2,6 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import { deleteUser } from '@/app/actions/auth';
@@ -10,16 +9,17 @@ import { useAuth } from '@/app/providers/AuthProvider';
 import { useModal } from '@/app/providers/ModalProvider';
 import ResetPasswordModal from '@/components/auth/ResetPasswordModal';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import { useAuthStore } from '@/store/authStore';
 
 const MyPageAccountOptions = () => {
-  const [isOpenResetModal, setIsOpenResetModal] = useState<boolean>(false);
   const router = useRouter();
   const { logout } = useAuth();
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
   const { openModal, closeModal } = useModal();
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
@@ -28,9 +28,27 @@ const MyPageAccountOptions = () => {
     queryClient.removeQueries({ queryKey: ['userProfile'] });
   };
 
+  const openLogoutModal = () => {
+    openModal({
+      title: '로그아웃을 하시겠어요?',
+      secondaryAction: {
+        text: '돌아가기',
+        onClick: closeModal,
+      },
+      primaryAction: {
+        text: '로그아웃 하기',
+        onClick: () => {
+          closeModal();
+          handleLogout();
+        },
+      },
+    });
+  };
+
   const handleDeleteUser = async () => {
-    deleteUser();
     removeUser();
+    window.location.href = '/';
+    deleteUser();
   };
 
   const openDeleteModal = () => {
@@ -59,9 +77,7 @@ const MyPageAccountOptions = () => {
           <div
             className="flex max-w-[182px] cursor-pointer items-center"
             onClick={() =>
-              isDesktop
-                ? setIsOpenResetModal(true)
-                : router.push('/password/check')
+              isDesktop ? handleOpenModal() : router.push('/password/check')
             }
           >
             <div className="flex h-12 w-12 items-center justify-center p-3">
@@ -79,7 +95,7 @@ const MyPageAccountOptions = () => {
           {/* Logout */}
           <div
             className="mt-6 flex cursor-pointer items-center"
-            onClick={handleLogout}
+            onClick={openLogoutModal}
           >
             <div className="flex h-12 w-12 items-center justify-center">
               <OptimizedImage
@@ -103,7 +119,7 @@ const MyPageAccountOptions = () => {
           }
         >
           <button
-            className="cursor-pointer p-3 text-body-mm text-grayscale-800 underline"
+            className="cursor-pointer p-3 text-body-mm text-grayscale-600 underline"
             onClick={openDeleteModal}
           >
             회원 탈퇴
@@ -111,9 +127,7 @@ const MyPageAccountOptions = () => {
         </div>
       </div>
 
-      {isOpenResetModal && (
-        <ResetPasswordModal handleClose={() => setIsOpenResetModal(false)} />
-      )}
+      {isOpenModal && <ResetPasswordModal handleClose={handleCloseModal} />}
     </>
   );
 };
