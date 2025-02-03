@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import PreferenceLayout from './PreferenceLayout';
@@ -40,7 +39,7 @@ const PreferenceFood = ({
 
         {/* X 버튼 */}
         {surveyData.food && (
-          <Image
+          <OptimizedImage
             src="/assets/icons/cancel.svg"
             className="absolute right-[11px] top-1/2 h-[40px] w-[40px] -translate-y-1/2 transform p-[8px]"
             alt="초기화 아이콘"

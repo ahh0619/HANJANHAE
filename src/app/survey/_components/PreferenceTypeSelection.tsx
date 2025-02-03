@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { memo, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import MobileAlcoholExplanationModal from './MobileAlcoholExplanationModal';
@@ -62,7 +62,7 @@ const PreferenceTypeSelection = ({
             onClick={openModal}
           >
             주류용어설명
-            <Image
+            <OptimizedImage
               src="/fi_alert-circle.svg"
               alt="설명 아이콘"
               width={24}

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 type MobileAlcoholExplanationModalProps = {
   isOpen: boolean;
@@ -22,7 +22,7 @@ const MobileAlcoholExplanationModal = ({
         onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫히지 않음
       >
         {/* 닫기 버튼 */}
-        <Image
+        <OptimizedImage
           src="/assets/icons/cancelDark.svg"
           alt="닫기 아이콘"
           width={24}

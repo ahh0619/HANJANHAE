@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useModalStore from '@/store/modalStore';
 import { SurveyType } from '@/types/preferences';
 
@@ -59,7 +58,7 @@ const AlcoholTypeSelector = ({
         onClick={openModal}
       >
         주류용어설명
-        <Image
+        <OptimizedImage
           src="/fi_alert-circle.svg"
           alt="설명 아이콘"
           width={24}

@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+import OptimizedImage from '@/components/common/OptimizedImage';
 import { SurveyType } from '@/types/preferences';
 
 import ProgressBar from './ProgressBar';
@@ -28,7 +27,7 @@ const PreferenceLayout = ({
     <div className="flex flex-col items-center">
       {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-[375px] items-center px-[4px]">
-        <Image
+        <OptimizedImage
           src="/assets/icons/chevron-left.svg"
           alt="뒤로가기 아이콘"
           width={40}

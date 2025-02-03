@@ -29,14 +29,13 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
           href={'/'}
           className="mb-[36px] flex w-full justify-start sm:px-2"
         >
-          <div className="flex h-[44px] w-[367px] items-center p-[8px]">
-            <OptimizedImage
-              src="/assets/icons/chevron-left.svg"
-              alt="뒤로가기 아이콘"
-              width={24}
-              height={24}
-            />
-          </div>
+          <OptimizedImage
+            src="/assets/icons/chevron-left.svg"
+            alt="뒤로가기 아이콘"
+            width={40}
+            height={40}
+            className="flex h-[44px] p-[8px]"
+          />
         </Link>
 
         <div className="mb-[36px] flex w-full flex-col justify-start px-4 sm:px-6">
