@@ -61,7 +61,9 @@ export const useToggleLike = (userId: string) => {
     },
 
     onSuccess: (res, drinkId) => {
-      if (!res.liked) {
+      if (res.liked) {
+        openToast('좋아요에 추가되었어요');
+      } else {
         openToast('좋아요가 해제되었어요');
       }
     },

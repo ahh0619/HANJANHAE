@@ -51,14 +51,18 @@ const RootLayout = ({
           src="https://developers.kakao.com/sdk/js/kakao.min.js"
           strategy="lazyOnload"
         />
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
+          strategy="beforeInteractive"
+        />
       </head>
       <body
-        className={`${pretendard.variable} font-sans antialiased xl:flex xl:h-screen xl:flex-col`}
+        className={`${pretendard.variable} font-sans text-grayscale-900 antialiased xl:flex xl:h-screen xl:flex-col`}
       >
         <Providers>
           <KakaoInit />
           <Header />
-          <main className="m-auto mb-32 w-full max-w-[600px] xl:max-w-none xl:flex-1">
+          <main className="m-auto mb-32 w-full max-w-[600px] xl:mt-[102px] xl:max-w-none xl:flex-1">
             {children}
           </main>
           <Footer />

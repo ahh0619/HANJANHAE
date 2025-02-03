@@ -13,10 +13,17 @@ const BackButton = ({ className }: BackButtonProps) => {
 
   return (
     <button
-      className={`flex items-center p-2 ${className}`}
+      type="button"
+      className={`relative flex h-10 w-10 items-center justify-center ${className}`}
+      aria-label="뒤로 가기"
       onClick={() => router.back()}
     >
-      <OptimizedImage src="/assets/icons/chevron-left.svg" alt="Back" />
+      <div className="absolute inset-0 rounded-full bg-etc-white" />
+      <OptimizedImage
+        src="/assets/icons/chevron-left.svg"
+        alt="Back"
+        className="z-10"
+      />
     </button>
   );
 };

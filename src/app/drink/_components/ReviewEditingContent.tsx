@@ -31,7 +31,7 @@ const ReviewEditingContent = ({
         ref={textareaRef}
         value={editComment || ''}
         onChange={(e) => onEditCommentChange(e.target.value)}
-        className="mb-1 mt-2 h-32 min-h-[100px] w-full resize-none overflow-auto rounded-2xl border bg-grayscale-200 p-4 text-body-mm text-grayscale-600 focus:border-grayscale-600"
+        className="mb-1 mt-2 h-32 min-h-[100px] w-full resize-none overflow-auto rounded-2xl border border-grayscale-600 bg-grayscale-150 p-4 text-body-mm text-grayscale-600 focus:border-grayscale-700"
         maxLength={100}
         placeholder="리뷰를 작성하세요."
       />

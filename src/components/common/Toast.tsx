@@ -27,7 +27,7 @@ const Toast: React.FC<ToastProps> = ({ message, duration = 3000, onClose }) => {
 
   const toastContent = (
     <div
-      className={`fixed bottom-[106px] left-1/2 z-[99999] -translate-x-1/2 transform whitespace-pre rounded-lg bg-gray-800 px-4 py-2 text-center text-label-lm text-white shadow-lg transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} xl:bottom-[76px]`}
+      className={`fixed bottom-[106px] left-1/2 z-[99999] -translate-x-1/2 transform whitespace-pre rounded-lg bg-gray-900 px-4 py-2 text-center text-label-lm text-grayscale-100 shadow-lg transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'} xl:bottom-[76px]`}
     >
       {message}
     </div>

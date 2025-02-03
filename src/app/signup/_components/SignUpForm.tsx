@@ -4,8 +4,9 @@ import { useState } from 'react';
 
 import Button from '@/components/auth/Button';
 import CheckField from '@/components/auth/CheckField';
+import ConfirmModal from '@/components/auth/ConfirmModal';
 import InputField from '@/components/auth/InputField';
-import Modal from '@/components/auth/Modal';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import useSignUp from '@/hooks/auth/useSignUp';
 
 type SignUpFormProps = {
@@ -19,8 +20,9 @@ const SignUpForm = ({
   handleMoveStep,
   handleSelectTerms,
 }: SignUpFormProps) => {
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
+
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [terms, setTerms] = useState({ use: false, personal: false });
 
   /* 모두 체크 여부 토글 */
@@ -43,7 +45,7 @@ const SignUpForm = ({
   const handleMoveNext = () => {
     if (!terms.use || !terms.personal) {
       setErrorMessage(['약관 동의는 필수입니다.', '모든 항목에 동의해주세요.']);
-      setIsOpenModal(true);
+      handleOpenModal();
     } else {
       handleMoveStep(2);
     }
@@ -51,7 +53,7 @@ const SignUpForm = ({
 
   const handleErrorMessage = (message: string[]) => {
     setErrorMessage(message);
-    setIsOpenModal(true);
+    handleOpenModal();
   };
 
   const { handleSubmit, register, onSubmit, errors } = useSignUp({
@@ -157,10 +159,10 @@ const SignUpForm = ({
       </form>
 
       {isOpenModal && (
-        <Modal
+        <ConfirmModal
           title={errorMessage[0]}
           content={errorMessage[1]}
-          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+          button={{ text: '확인', onClick: () => handleCloseModal }}
         />
       )}
     </>

@@ -22,9 +22,11 @@ const DrinkDescription = ({
 
   return (
     <section className="mt-3 px-5 xl:mt-5 xl:px-0">
-      <div className="flex items-center justify-between">
-        <h2 className="text-title-xl text-grayscale-900">{name}</h2>
-        <div className="flex">
+      <div className="flex items-start justify-between">
+        <h2 className="flex-1 break-words text-title-xl text-grayscale-900">
+          {name}
+        </h2>
+        <div className="flex shrink-0 items-center">
           <LikeButton isLiked={isLiked} onClick={handleToggleLike} />
           <ShareButton
             title={name}

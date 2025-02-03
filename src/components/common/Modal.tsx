@@ -36,11 +36,11 @@ const Modal: React.FC<ModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white p-5 text-center shadow-lg xl:w-[400px] xl:px-3 xl:py-5">
+      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white px-5 pb-2 pt-5 text-center shadow-lg xl:w-[400px] xl:px-3 xl:py-5">
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
-            className="absolute right-3 top-3 text-black hover:text-gray-600"
+            className="absolute right-3 top-3 text-grayscale-900 hover:text-gray-600"
             onClick={onClose}
             aria-label="Close"
           >
@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
           {/* Optional Action */}
           {optionalAction && (
             <button
-              className="!mt-6 text-label-mm text-grayscale-500 underline hover:text-grayscale-700 xl:!mb-5"
+              className="!mt-3 py-3 text-label-mm text-grayscale-500 underline hover:text-grayscale-700 xl:!mb-2"
               onClick={optionalAction.onClick}
             >
               {optionalAction.text}
