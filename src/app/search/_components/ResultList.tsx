@@ -1,5 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
 
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
@@ -7,21 +6,17 @@ import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
 import useSearchSortedResults from '@/hooks/search/useSearchSortedResults';
-import useFilterStore from '@/store/filterStore';
-import useFocusStore from '@/store/focusStore';
 
 import Skeleton from './Skeleton';
 import TotalAndSort from './TotalAndSort';
 
 const ResultList = ({ user }) => {
-  const router = useRouter();
   const userId = user?.id || '';
-  const { isFiltered } = useFilterStore();
-  const { isSearchFocus } = useFocusStore();
+
   const {
     SearchSortData,
     totalCount: searchSortTotal,
-    isLoading: sortSearchIsLoading,
+    isPending: sortSearchIsLoading,
     isError: sortSearchIsError,
     fetchNextPage: fetchNextSearchSortPage,
     hasNextPage: hasNextSearchSortPage,
@@ -30,34 +25,46 @@ const ResultList = ({ user }) => {
   const {
     filterSortData,
     totalCount: filterSortTotal,
-    isLoading: sortFilterIsLoading,
+    isPending: sortFilterIsLoading,
     isError: sortFilterIsError,
     fetchNextPage: fetchNextFilterSortPage,
     hasNextPage: hasNextFilterSortPage,
   } = useFilterSortedResults();
-
   const {
     likedData,
     totalCount: likedTotal,
-    isLoading: likeIsLoading,
+    isPending: likeIsLoading,
     isError: likeIsError,
     fetchNextPage: fetchNextLikePage,
     hasNextPage: hasNextLikePage,
   } = useFilterLikedResults();
+  console.log(likedData);
 
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
 
   // 3개 중 우선순위대로 활성 데이터 선택
-  const activeData = isSearchActive
-    ? SearchSortData
-    : isFilterActive
-      ? filterSortData
-      : isLikedActive
-        ? likedData
-        : [];
+  // const activeData = isSearchActive
+  //   ? SearchSortData
+  //   : isFilterActive
+  //     ? filterSortData
+  //     : isLikedActive
+  //       ? likedData
+  //       : [];
 
+  const activeData = Array.from(
+    new Map(
+      [
+        // filterSortData가 있으면 사용, 없으면 SearchSortData를 대체
+        ...(filterSortData && filterSortData.length > 0
+          ? filterSortData
+          : (SearchSortData ?? [])),
+        // likedData가 배열이면 추가
+        ...(Array.isArray(likedData) && likedData.length > 0 ? likedData : []),
+      ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
+    ).values(),
+  );
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
   const activeHasNextPage = isSearchActive
     ? hasNextSearchSortPage
@@ -80,7 +87,12 @@ const ResultList = ({ user }) => {
     fetchNextPage: activeFetchNextPage,
   });
 
-  const isLoading = sortSearchIsLoading || sortFilterIsLoading || likeIsLoading;
+  const isPending =
+    filterSortData && filterSortData.length > 0
+      ? sortFilterIsLoading
+      : likedData && likedData.length > 0
+        ? likeIsLoading
+        : sortSearchIsLoading;
   const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
@@ -104,15 +116,15 @@ const ResultList = ({ user }) => {
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {isLoading && <Skeleton />}
-      {!isLoading && activeData.length === 0 && (
+      {isPending && <Skeleton />}
+      {!isPending && activeData.length === 0 && (
         <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
         </div>
       )}
 
       {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
-      <div className="mx-[56px] my-0 grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
+      <div className="mx-[56px] my-0 mt-[12px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:mt-[16px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {
             const isLiked = likeMap[result.id] || false;

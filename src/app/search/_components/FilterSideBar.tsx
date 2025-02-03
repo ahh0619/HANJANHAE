@@ -1,16 +1,17 @@
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
-
-const tasteMapping: { [key: string]: string } = {
-  sweetness: '단맛',
-  acidity: '신맛',
-  carbonation: '청량감',
-  body: '바디감',
-};
+import { generateUrl } from '@/utils/filter/generateUrl';
+import {
+  getAlcoholStrength,
+  getSelectedTypes,
+  getTastePreferences,
+} from '@/utils/filter/queryParamsUtils';
 
 type FilterItem = {
   label: string; // 필터에 표시되는 텍스트
@@ -19,18 +20,35 @@ type FilterItem = {
 };
 
 const FilterSideBar = () => {
+  
+  const searchParams = useSearchParams();
+  const shouldHideFilterSidebar = searchParams.get('keyword') !== null;
+  const router = useRouter();
   const { openModal } = useModalStore();
   const {
     selectedTypes,
     alcoholStrength,
     tastePreferences,
+    setSelectedTypes,
+    setAlcoholStrength,
+    setTastePreferences,
     removeSelectedType,
     removeAlcoholStrength,
     removeTastePreference,
     setTriggerFetch,
     setValues,
   } = useFilterStore();
-  console.log(selectedTypes, alcoholStrength, tastePreferences);
+  const paramSelectedTypes = shouldHideFilterSidebar
+    ? []
+    : getSelectedTypes(searchParams);
+  const paramAlcoholStrength: [number, number] = shouldHideFilterSidebar
+    ? [0, 100]
+    : getAlcoholStrength(searchParams);
+  const paramTastePreferences = shouldHideFilterSidebar
+    ? {}
+    : getTastePreferences(searchParams);
+  console.log(paramTastePreferences);
+  const [isUserAction, setIsUserAction] = useState(false);
   const getStrengthLabel = (
     strength: [number, number] | null | undefined,
   ): string => {
@@ -55,9 +73,14 @@ const FilterSideBar = () => {
   // 여기 있는 데이터는 변하지 않기 때문에 밖에 두는 것이 좋다.
   // 최상위 폴더나 파일 같은거 만들어서
 
-  // tastePreferences를 한글로 변환하는 키-값 매핑
-
   // tastePreferences 값(숫자)을 텍스트로 변환하는 매핑
+  const tasteMapping: { [key: string]: string } = {
+    sweetness: '단맛',
+    acidity: '신맛',
+    carbonation: '청량감',
+    body: '바디감',
+  };
+
   const tasteLabels: { [key: number]: string } = {
     1: '매우 약함',
     2: '약함',
@@ -66,50 +89,69 @@ const FilterSideBar = () => {
     5: '매우 강함',
   };
 
-  // tastePreferences 객체를 순회하여 텍스트로 변환
-  const tasteFilters = Object.entries(tastePreferences).map(([key, value]) => ({
-    label: `${tasteMapping[key] || key}: ${tasteLabels[value] || '알 수 없음'}`,
-    value,
-  }));
-
   // 변환된 필터 데이터를 배열로 구성
   // 이 부분을 좀 리팩토링을 한번 해볼만 하다.
   const filters: FilterItem[] = [
-    ...selectedTypes.map((type) => ({
+    ...paramSelectedTypes.map((type) => ({
       label: type,
       value: type,
       original: type, // selectedTypes에서 영문 원문 그대로 사용
     })),
     {
-      label: getStrengthLabel(alcoholStrength),
-      value: [alcoholStrength[0], alcoholStrength[1]] as [number, number], // as처리 못지우는지 확인
+      label: getStrengthLabel(paramAlcoholStrength),
+      value: [paramAlcoholStrength[0], paramAlcoholStrength[1]] as [
+        number,
+        number,
+      ],
       original: 'strength', // 도수에 대한 원문 값
     },
-    ...Object.entries(tastePreferences).map(([key, value]) => ({
-      label: `${tasteMapping[key] || key}: ${tasteLabels[value] || '알 수 없음'}`,
-      value: value,
-      original: key, // tastePreferences의 key를 original로 사용
-    })),
+    ...Object.entries(paramTastePreferences).map(([key, value]) => {
+      let normalizedKey = key.toLowerCase().trim();
+      const numericValue = Number(value); // 여기서 숫자로 변환
+      normalizedKey = normalizedKey.replace(/^"(.*)"$/, '$1'); // replace 없으면 동작이 안됨
+      console.log(normalizedKey);
+      console.log(tasteMapping[normalizedKey]);
+      return {
+        label: `${tasteMapping[normalizedKey] || key}: ${tasteLabels[numericValue] || '알 수 없음'}`,
+        value: numericValue, // 혹은 value: numericValue
+        original: key, // tastePreferences의 key를 original로 사용
+      };
+    }),
   ]
     .filter((item) => item.label !== undefined)
     .filter(
       (item) => item.label !== '알 수 없음' && item.label !== '전체 도수',
     );
+
   const handleRemoveType = (original: string) => {
-    removeSelectedType(original); // selectedTypes에서 해당 타입을 삭제
-    setTriggerFetch(true);
+    console.log(1);
+    setIsUserAction(true);
+    removeSelectedType(original);
   };
 
   const handleRemoveStrength = () => {
+    console.log(1);
     setValues([1, 3]);
-    removeAlcoholStrength(); // alcoholStrength를 초기화
-    setTriggerFetch(true);
+    setIsUserAction(true);
+    removeAlcoholStrength();
   };
 
   const handleRemoveTastePreference = (value: string) => {
-    removeTastePreference(value); // tastePreferences에서 해당 맛 항목을 삭제
-    setTriggerFetch(true);
+    console.log(1);
+    setIsUserAction(true);
+    const replaceValue = value.replace(/^"(.*)"$/, '$1');
+    removeTastePreference(replaceValue);
   };
+
+  useEffect(() => {
+    if (!isUserAction) return;
+    const newUrl = generateUrl({
+      selectedTypes,
+      alcoholStrength,
+      tastePreferences,
+    });
+    router.push(newUrl);
+  }, [selectedTypes, alcoholStrength, tastePreferences]);
 
   return (
     <div className="mx-auto mt-[16px] flex h-[32px] max-w-md items-center justify-between gap-2 rounded-lg xl:mb-[30px] xl:mt-[30px] xl:w-[588px] xl:max-w-none">
@@ -132,14 +174,14 @@ const FilterSideBar = () => {
                   onClick={() => {
                     if (
                       Array.isArray(filter.value) && // filter.value가 배열인지 확인
-                      Array.isArray(alcoholStrength) && // alcoholStrength도 배열인지 확인
-                      filter.value.length === alcoholStrength.length && // 길이 비교
+                      Array.isArray(paramAlcoholStrength) && // alcoholStrength도 배열인지 확인
+                      filter.value.length === paramAlcoholStrength.length && // 길이 비교
                       filter.value.every(
-                        (val, index) => val === alcoholStrength[index],
+                        (val, index) => val === paramAlcoholStrength[index],
                       ) // 모든 요소 비교
                     ) {
                       handleRemoveStrength();
-                    } else if (filter.original in tastePreferences) {
+                    } else if (filter.original in paramTastePreferences) {
                       handleRemoveTastePreference(filter.original); // 맛 필터 삭제
                     } else {
                       handleRemoveType(filter.original); // 술 타입 필터 삭제

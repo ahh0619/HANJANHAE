@@ -1,5 +1,4 @@
 'use client';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -8,17 +7,19 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
+import { generateUrl } from '@/utils/filter/generateUrl';
 
 const SearchBar = ({
   value,
   onChange,
+  shouldShowResults,
 }: {
   value: string;
   onChange: (val: string) => void;
+  shouldShowResults: boolean;
 }) => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const queryClient = useQueryClient();
   const {
     triggerFetch,
     isFiltered,
@@ -43,17 +44,13 @@ const SearchBar = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      queryClient.removeQueries({
-        queryKey: ['filterDrinks'],
-        exact: false,
-      });
       const newKeyword = inputRef.current?.value.trim() || '';
-      router.push(`/search?query=${encodeURIComponent(newKeyword)}`);
       setKeyword(newKeyword);
-      setTriggerFetch(false);
-      setIsSearchFocuse(false);
-      setSearchTriggerFetch(true);
-      setIsFiltered(true);
+      // newKeyword를 직접 사용합니다.
+      const newUrl = generateUrl({
+        keyword: newKeyword,
+      });
+      router.push(newUrl);
       setSelectedSort('alphabetical');
     }
   };
@@ -74,7 +71,7 @@ const SearchBar = ({
     <div
       className={`${
         isSearchFocus || isFiltered ? 'mt-0' : 'mt-0'
-      } !xl:w-[482px] m-0 mx-auto flex w-full items-center xl:mx-0 xl:w-[482px] ${isFiltered && `xl:w-[588px]`}`}
+      } !xl:w-[482px] m-0 mx-auto flex w-full items-center xl:mx-0 xl:w-[482px] ${shouldShowResults && `xl:w-[588px]`}`}
     >
       <div
         className={`flex h-[48px] w-full items-center justify-between gap-3 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
@@ -104,7 +101,7 @@ const SearchBar = ({
             onBlur={handleBlur}
           />
         </div>
-        {(isSearchFocus || isFiltered) && (
+        {shouldShowResults && (
           <OptimizedImage
             src="/assets/icons/cancelDark.svg"
             alt="검색어 삭제 버튼"

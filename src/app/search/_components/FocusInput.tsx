@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 
@@ -13,11 +14,15 @@ import SearchBar from './SearchBar';
 export type FocusInputProps = {
   searchValue: string;
   setSearchValue: (value: string) => void;
+  shouldShowResults: boolean;
+  shouldHideFilterSidebar: boolean;
 };
 
 const FocusInput: React.FC<FocusInputProps> = ({
   searchValue,
   setSearchValue,
+  shouldShowResults,
+  shouldHideFilterSidebar,
 }) => {
   const { triggerFetch, setTriggerFetch, isFiltered } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
@@ -29,23 +34,36 @@ const FocusInput: React.FC<FocusInputProps> = ({
   }, [triggerFetch]);
 
   return (
-    <div className="w-full bg-[#FFF] text-center xl:bg-[#FFEAED80]">
+    <div className="w-full bg-[#FFF] text-center xl:relative xl:bg-[#FFEAED80]">
       {/* 검색바와 취소 버튼 */}
       <div
-        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${isFiltered ? '!pb-0' : 'xl:pb-[108px]'}`}
+        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${shouldShowResults ? `xl:mt-[60px] xl:pb-0` : `xl:mt-[162px] xl:pb-[108px]`} `}
       >
         <div className={`relative z-30 xl:h-auto`}>
-          <SearchBar value={searchValue} onChange={setSearchValue} />
+          <SearchBar
+            value={searchValue}
+            onChange={setSearchValue}
+            shouldShowResults={shouldShowResults}
+          />
           {isSearchFocus && (
             <RecommendCategory setSearchValue={setSearchValue} />
           )}
         </div>
 
-        {!isFiltered && <HomeScreenButton className="block xl:hidden" />}
-        {!isFiltered && <HomeScreenButton className="hidden xl:block" />}
+        {!shouldShowResults && <HomeScreenButton className="block xl:hidden" />}
+        {!shouldShowResults && <HomeScreenButton className="hidden xl:block" />}
       </div>
       {/* 필터된 결과 sideBar */}
-      {isFiltered && <FilterSideBar />}
+      {shouldShowResults && <FilterSideBar />}
+      {!shouldShowResults && (
+        <OptimizedImage
+          src="/assets/Subcharacter.svg"
+          alt="서브캐릭터 이미지"
+          className="absolute bottom-0 right-[80px] hidden xl:block"
+          width="67"
+          height="61"
+        />
+      )}
     </div>
   );
 };

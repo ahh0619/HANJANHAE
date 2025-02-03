@@ -24,7 +24,7 @@ const AlcholType = () => {
       <h3 className="text-title-mb font-bold leading-[135%] text-grayscale-900">
         술 종류로 찾기 (중복선택 가능)
       </h3>
-      <div className="flex flex-wrap gap-4 pt-[16px]">
+      <div className="flex flex-wrap gap-4 gap-y-3 pt-[16px]">
         {alcholList.map((type) => (
           <button
             key={type}

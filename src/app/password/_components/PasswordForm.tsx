@@ -1,18 +1,23 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
+import { useAuth } from '@/app/providers/AuthProvider';
 import Button from '@/components/auth/Button';
 import ConfirmModal from '@/components/auth/ConfirmModal';
 import InputField from '@/components/auth/InputField';
 import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import useResetPassword from '@/hooks/auth/useResetPassword';
+import { useAuthStore } from '@/store/authStore';
 
 const PasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get('code');
+  const router = useRouter();
 
+  const { user } = useAuthStore();
+  const { logout } = useAuth();
   const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
 
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -52,7 +57,13 @@ const PasswordForm = () => {
         <ConfirmModal
           title={errorMessage}
           content="다시 시도해주세요."
-          button={{ text: '확인', onClick: handleCloseModal }}
+          button={{
+            text: '확인',
+            onClick: async () => {
+              handleCloseModal();
+              user ? router.push('/') : await logout();
+            },
+          }}
         />
       )}
     </>

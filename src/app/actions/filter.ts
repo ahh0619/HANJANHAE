@@ -92,7 +92,7 @@ type Drink = Database['public']['Tables']['drinks']['Row'];
 // }
 
 const getRange = (page: number, pageSize: number): [number, number] => {
-  return [(page - 1) * pageSize, pageSize];
+  return [(page - 1) * pageSize, page * pageSize - 1]; // ✅ limit 조정
 };
 
 export async function filterDrinks({
@@ -222,7 +222,7 @@ export async function filterSortedDrinks({
   alcoholStrength,
   tastePreferences,
   page = 1,
-  pageSize = 10,
+  pageSize = 20,
   sortBy = 'name',
   sortOrder = 'asc',
 }: FilterParams & {
@@ -274,9 +274,10 @@ export async function filterSortedDrinks({
   // 페이지네이션 적용
 
   const [offset, limit] = getRange(page, pageSize);
-  query = query.range(offset, offset + limit);
+  query = query.range(offset, limit);
 
   const { data, count, error } = await query;
+  console.log(data, count);
 
   // 에러 처리
   if (error) {
@@ -316,7 +317,7 @@ export async function filterKeywordSortedDrinks({
   totalCount: number;
 }> {
   const supabase = createClient();
-
+  console.log('?????????????????????????????????????????');
   // 페이지네이션 적용
   const [offset, limit] = getRange(page, pageSize);
 
@@ -325,7 +326,7 @@ export async function filterKeywordSortedDrinks({
     .select('id,name,image,type', { count: 'exact' })
     .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
     .order(sortBy, { ascending: sortOrder === 'asc' })
-    .range(offset, offset + limit - 1);
+    .range(offset, limit);
 
   if (error) {
     throw new Error('Error fetching data by keyword');

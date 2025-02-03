@@ -80,7 +80,7 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       />
 
       {/* 범위 텍스트 및 중간 도수 동그라미 */}
-      <div className="absolute top-[14px] flex w-full justify-between text-caption-mm font-medium text-gray-900">
+      <div className="absolute top-[14px] mt-[8px] flex w-full justify-between text-caption-mm font-medium text-gray-900">
         <div className="text-left">
           저도수
           <br />
@@ -98,7 +98,7 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
                   ? -1
                   : 0,
               position: 'absolute',
-              top: '-20px',
+              top: '-28px',
               left: '50%',
               transform: 'translateX(-50%)',
               width: '20px',
@@ -124,3 +124,4 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
 };
 
 export { DualRangeSlider };
+

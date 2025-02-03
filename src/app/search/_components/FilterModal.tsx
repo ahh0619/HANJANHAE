@@ -1,20 +1,22 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import OptimizedImage from '@/components/common/OptimizedImage';
 import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore, { useBodyLock } from '@/store/modalStore';
 import useSortStore from '@/store/selectStore';
+import { generateUrl } from '@/utils/filter/generateUrl';
 
 import FilterType from './FilterTypes';
 
 const FilterModal = () => {
   const router = useRouter();
+
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
@@ -48,15 +50,12 @@ const FilterModal = () => {
   }, [isModalOpen]);
 
   const handleApplyfilters = () => {
-    const defaultKeyword = 'filtered';
-    router.push(`/search?query=${defaultKeyword}`);
-    queryClient.removeQueries({
-      queryKey: ['filterDrinks'],
-      exact: false,
+    const newUrl = generateUrl({
+      selectedTypes,
+      alcoholStrength,
+      tastePreferences,
     });
-    if (alcoholStrength === null) {
-      setAlcoholStrength([0, 100]);
-    }
+    router.push(newUrl);
     closeModal();
     setIsFiltered(true);
     setTriggerFetch(true);
@@ -91,21 +90,30 @@ const FilterModal = () => {
         <div className="relative left-1/2 flex h-[95%] max-w-[600px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg">
           {/* Modal Header */}
           <div
-            className="mt-[12px] flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
+            className="flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
             style={{ height: 'auto', padding: '12px 19px' }}
           >
-            <OptimizedImage
+            {/* <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
               className="cursor-pointer"
               onClick={closeModal}
+            /> */}
+            <Image
+              src="/assets/icons/cancelDark.svg"
+              alt="검색 키워드 삭제 아이콘"
+              onClick={closeModal}
+              width={40}
+              height={40}
+              className="p-2"
             />
+
             <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
             <button
               onClick={handleFilterReset}
-              className="text-label-lm font-medium leading-[150%] text-gray-900"
+              className="p-3 text-label-lm font-medium leading-[150%] text-gray-900"
             >
               초기화
             </button>
@@ -122,7 +130,7 @@ const FilterModal = () => {
               onClick={handleApplyfilters}
               className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
             >
-              {totalCount} 개가 검색되었습니다.
+              {totalCount}개의 결과 보기
             </button>
           </div>
         </div>
