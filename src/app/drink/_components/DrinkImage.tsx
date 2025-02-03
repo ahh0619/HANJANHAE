@@ -15,7 +15,7 @@ const DrinkImage = ({
     </div>
 
     {/* Image */}
-    <div className="relative h-[420px] w-full overflow-hidden border-b border-grayscale-200 bg-etc-white xl:rounded-2xl xl:rounded-b-2xl xl:border">
+    <div className="relative h-[420px] w-full overflow-hidden border-b border-grayscale-200 bg-etc-white xl:h-[430px] xl:rounded-2xl xl:rounded-b-2xl xl:border">
       {image ? (
         <OptimizedImage
           src={image}
