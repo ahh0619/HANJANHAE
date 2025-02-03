@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { validate as uuid } from 'uuid';
 
@@ -35,7 +36,7 @@ export const generateMetadata = async ({
 
 const DrinkDetailPage = ({ params }: DrinkDetailPageProps) => {
   if (!uuid(params.id)) {
-    throw new Error();
+    notFound();
   }
 
   return (
