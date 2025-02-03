@@ -9,7 +9,7 @@ type ModalProps = {
   };
 };
 
-const Modal = ({ title, content, button }: ModalProps) => {
+const ConfirmModal = ({ title, content, button }: ModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-5">
       <div className="w-full max-w-[400px] rounded-2xl bg-etc-white px-8 py-5 text-center">
@@ -27,4 +27,4 @@ const Modal = ({ title, content, button }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default ConfirmModal;

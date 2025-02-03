@@ -1,18 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import Button from '@/components/auth/Button';
 import ResetPasswordModal from '@/components/auth/ResetPasswordModal';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 
 const OptionLink = () => {
   const router = useRouter();
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
 
-  const [isOpenResetModal, setIsOpenResetModal] = useState<boolean>(false);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
   return (
     <>
@@ -21,9 +21,7 @@ const OptionLink = () => {
           category="option"
           label="비밀번호 찾기"
           handleClick={() =>
-            isDesktop
-              ? setIsOpenResetModal(true)
-              : router.push('/password/check')
+            isDesktop ? handleOpenModal() : router.push('/password/check')
           }
         />
         <p className="text-label-lm text-grayscale-500">|</p>
@@ -34,9 +32,7 @@ const OptionLink = () => {
         />
       </div>
 
-      {isOpenResetModal && (
-        <ResetPasswordModal handleClose={() => setIsOpenResetModal(false)} />
-      )}
+      {isOpenModal && <ResetPasswordModal handleClose={handleCloseModal} />}
     </>
   );
 };
