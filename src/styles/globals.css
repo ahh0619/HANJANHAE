@@ -196,6 +196,7 @@ body {
 
   /* Label */
   --font-label-xlm: 20px medium 150%;
+  --font-label-lmb: 16px bold 150%;
   --font-label-lm: 16px medium 150%;
   --font-label-mb: 12px bold 150%;
   --font-label-mm: 12px medium 150%;
