@@ -28,7 +28,7 @@ const MainSection = ({ place }: MainSectionProps) => {
         <OptimizedImage
           src={place.image}
           alt={place.name}
-          className="mb-3 h-[280px] w-full rounded-[8px] object-cover xl:h-[337px] xl:w-[486px]"
+          className="mb-3 h-[280px] w-full object-cover xl:h-[337px] xl:w-[486px]"
           width={isDesktop ? 486 : 375}
           height={isDesktop ? 337 : 280}
         />
