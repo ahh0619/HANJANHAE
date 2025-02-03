@@ -29,11 +29,13 @@ const useFilterSortedResults = () => {
     alcoholStrength,
     tastePreferences,
   };
+  const effectiveKeyword = isLikedMode ? undefined : filterParams;
+
   console.log('filterParams:', filterParams); // ✅ 필터 값 확인
 
   const { data, isPending, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ['filterDrinks', filterParams],
+      queryKey: ['filterDrinks', effectiveKeyword],
       queryFn: ({ pageParam = 1 }) => {
         return filterSortedDrinks({ ...filterParams, page: pageParam });
       },
