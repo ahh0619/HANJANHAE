@@ -20,7 +20,9 @@ type FilterItem = {
 };
 
 const FilterSideBar = () => {
+  
   const searchParams = useSearchParams();
+  const shouldHideFilterSidebar = searchParams.get('keyword') !== null;
   const router = useRouter();
   const { openModal } = useModalStore();
   const {
@@ -36,10 +38,15 @@ const FilterSideBar = () => {
     setTriggerFetch,
     setValues,
   } = useFilterStore();
-  const paramSelectedTypes = getSelectedTypes(searchParams);
-
-  const paramAlcoholStrength = getAlcoholStrength(searchParams);
-  const paramTastePreferences = getTastePreferences(searchParams);
+  const paramSelectedTypes = shouldHideFilterSidebar
+    ? []
+    : getSelectedTypes(searchParams);
+  const paramAlcoholStrength: [number, number] = shouldHideFilterSidebar
+    ? [0, 100]
+    : getAlcoholStrength(searchParams);
+  const paramTastePreferences = shouldHideFilterSidebar
+    ? {}
+    : getTastePreferences(searchParams);
   console.log(paramTastePreferences);
   const [isUserAction, setIsUserAction] = useState(false);
   const getStrengthLabel = (
