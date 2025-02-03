@@ -33,7 +33,7 @@ const PreferenceFood = ({
         <input
           type="text"
           placeholder="여기에 안주를 입력해주세요"
-          className="h-[48px] w-full rounded-[8px] border border-grayscale-300 p-[12px] text-grayscale-900 focus:outline-none"
+          className="h-[48px] w-full rounded-[8px] border border-grayscale-300 p-[12px] text-grayscale-900 focus:border-grayscale-900 focus:outline-none"
           value={surveyData.food}
           onChange={onChange}
         />

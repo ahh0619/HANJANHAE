@@ -14,7 +14,7 @@ const FavoriteFoodInput = ({ preferences, handleSelect }: PreferenceProps) => {
         value={preferences.food}
         onChange={(e) => handleSelect('food', e.target.value)}
         placeholder="예) 골뱅이무침"
-        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:outline-none"
+        className="w-full rounded-[8px] border border-grayscale-300 p-3 text-caption-lm text-grayscale-900 focus:border-grayscale-900 focus:outline-none"
       />
 
       {/* 힌트 텍스트 */}
