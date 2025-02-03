@@ -1,8 +1,9 @@
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import usePreferences from '@/hooks/preference/usePreferences';
 import useFunnel from '@/hooks/survey/useFunnel';
+import { saveSurveyData } from '@/lib/recommendations';
 
 import PreferenceAcidity from './PreferenceAcidity';
 import PreferenceAlcoholLevel from './PreferenceAlcoholLevel';
@@ -12,35 +13,31 @@ import PreferenceFood from './PreferenceFood';
 import PreferenceSweetness from './PreferenceSweetness';
 import PreferenceTypeSelection from './PreferenceTypeSelection';
 
-// 1. Funnel 패턴의 각 단계에 불필요한 state가 계속 존재한다. -> surveryData로만 관리하는 것이 좋겠다.
-// 2. surveyData는 usePreferences의 preferences state와 구조가 동일하다. -> 변경 로직도 동일하다.
-// 3. 다른 부분은 useEffect 부분이 다르다
-//    -> 모바일 버전 컴포넌트, 데스크탑 버전 컴포넌트를 따로 만들어 useEffect는 따로 사용한다.
 const MobilePreferencesSection = () => {
   const { Funnel, Step, next, prev, currentStep } = useFunnel('주종');
   const {
     preferences: surveyData,
     handlePreferenceChange,
     handleTypeChange,
-    handleSubmit,
+    // handleSubmit,
     isLoading,
-    error,
+    // error,
   } = usePreferences('create');
-
+  const [submitError, setSubmitError] = useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
     if (currentStep === '완료') {
       handleSubmit();
     }
-  }, [currentStep, handleSubmit]);
+  }, [currentStep]);
 
   if (isLoading) {
     return null;
   }
 
-  if (error) {
-    throw new Error(error);
+  if (submitError) {
+    throw new Error(submitError);
   }
 
   const handleNext = (nextStep: string) => {
@@ -51,6 +48,17 @@ const MobilePreferencesSection = () => {
     prev(prevStep);
   };
 
+  const handleSubmit = async () => {
+    try {
+      await saveSurveyData(surveyData);
+      router.push('/preferences/result');
+    } catch (error) {
+      setSubmitError(error.message);
+    }
+  };
+
+  console.log('surveyData: ', surveyData);
+
   return (
     <div className="flex w-full justify-center">
       <Funnel currentStep={currentStep}>
@@ -60,6 +68,7 @@ const MobilePreferencesSection = () => {
             handleTypeChange={handleTypeChange}
             onNext={() => handleNext('도수')}
             onPrev={() => router.push('/')}
+            currentStep={1}
           />
         </Step>
         <Step name="도수">
@@ -68,6 +77,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('단맛')}
             onPrev={() => handlePrev('주종')}
+            currentStep={2}
           />
         </Step>
         <Step name="단맛">
@@ -76,6 +86,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('신맛')}
             onPrev={() => handlePrev('도수')}
+            currentStep={3}
           />
         </Step>
         <Step name="신맛">
@@ -84,6 +95,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('청량감')}
             onPrev={() => handlePrev('단맛')}
+            currentStep={4}
           />
         </Step>
         <Step name="청량감">
@@ -92,6 +104,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('바디감')}
             onPrev={() => handlePrev('신맛')}
+            currentStep={5}
           />
         </Step>
         <Step name="바디감">
@@ -100,6 +113,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('안주')}
             onPrev={() => handlePrev('청량감')}
+            currentStep={6}
           />
         </Step>
         <Step name="안주">
@@ -108,6 +122,7 @@ const MobilePreferencesSection = () => {
             handlePreferenceChange={handlePreferenceChange}
             onNext={() => handleNext('완료')}
             onPrev={() => handlePrev('바디감')}
+            currentStep={7}
           />
         </Step>
       </Funnel>

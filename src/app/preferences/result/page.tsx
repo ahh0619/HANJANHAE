@@ -1,12 +1,12 @@
 import { fetchUser } from '@/app/actions/auth';
 
-import DrinkReco from './_components/DrinkReco';
+import DrinkResult from './_components/DrinkResult';
 
 const Result = async () => {
   const user = await fetchUser();
 
   return (
-    <DrinkReco
+    <DrinkResult
       userId={user ? user.id : null}
       nickname={user ? user.nickname : '게스트'}
     />
