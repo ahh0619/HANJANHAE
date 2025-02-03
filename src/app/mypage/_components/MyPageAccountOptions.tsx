@@ -2,7 +2,6 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import { deleteUser } from '@/app/actions/auth';
@@ -10,16 +9,17 @@ import { useAuth } from '@/app/providers/AuthProvider';
 import { useModal } from '@/app/providers/ModalProvider';
 import ResetPasswordModal from '@/components/auth/ResetPasswordModal';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import { useAuthStore } from '@/store/authStore';
 
 const MyPageAccountOptions = () => {
-  const [isOpenResetModal, setIsOpenResetModal] = useState<boolean>(false);
   const router = useRouter();
   const { logout } = useAuth();
   const queryClient = useQueryClient();
   const { removeUser } = useAuthStore();
 
   const { openModal, closeModal } = useModal();
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
@@ -77,9 +77,7 @@ const MyPageAccountOptions = () => {
           <div
             className="flex max-w-[182px] cursor-pointer items-center"
             onClick={() =>
-              isDesktop
-                ? setIsOpenResetModal(true)
-                : router.push('/password/check')
+              isDesktop ? handleOpenModal() : router.push('/password/check')
             }
           >
             <div className="flex h-12 w-12 items-center justify-center p-3">
@@ -129,9 +127,7 @@ const MyPageAccountOptions = () => {
         </div>
       </div>
 
-      {isOpenResetModal && (
-        <ResetPasswordModal handleClose={() => setIsOpenResetModal(false)} />
-      )}
+      {isOpenModal && <ResetPasswordModal handleClose={handleCloseModal} />}
     </>
   );
 };

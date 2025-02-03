@@ -4,22 +4,24 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/auth/Button';
+import ConfirmModal from '@/components/auth/ConfirmModal';
 import InputField from '@/components/auth/InputField';
-import Modal from '@/components/auth/Modal';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 import useResetPassword from '@/hooks/auth/useResetPassword';
 
 const PasswordForm = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get('code');
 
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
+
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { handleSubmit, register, onSubmit, errors } = useResetPassword({
     token,
     handleError: (message: string) => {
       setErrorMessage(message);
-      setIsOpenModal(true);
+      handleOpenModal();
     },
   });
 
@@ -47,10 +49,10 @@ const PasswordForm = () => {
       </form>
 
       {isOpenModal && (
-        <Modal
+        <ConfirmModal
           title={errorMessage}
           content="다시 시도해주세요."
-          button={{ text: '확인', onClick: () => setIsOpenModal(false) }}
+          button={{ text: '확인', onClick: handleCloseModal }}
         />
       )}
     </>

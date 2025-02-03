@@ -3,9 +3,10 @@
 import { useState } from 'react';
 
 import Button from '@/components/auth/Button';
+import ConfirmModal from '@/components/auth/ConfirmModal';
 import InputField from '@/components/auth/InputField';
-import Modal from '@/components/auth/Modal';
 import useCheckEmail from '@/hooks/auth/useCheckEmail';
+import useConfirmModal from '@/hooks/auth/useConfirmModal';
 
 type EmailFormProps = {
   isModal?: boolean;
@@ -13,13 +14,14 @@ type EmailFormProps = {
 };
 
 const EmailForm = ({ isModal, handleClose }: EmailFormProps) => {
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useConfirmModal();
+
   const [modalMessage, setModalMessage] = useState<string[]>([]);
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const { handleSubmit, register, onSubmit, errors } = useCheckEmail({
     handleMessage: (message: string[]) => {
       setModalMessage(message);
-      setIsOpenModal(true);
+      handleOpenModal();
     },
   });
 
@@ -40,13 +42,13 @@ const EmailForm = ({ isModal, handleClose }: EmailFormProps) => {
       </form>
 
       {isOpenModal && (
-        <Modal
+        <ConfirmModal
           title={modalMessage[0]}
           content={modalMessage[1]}
           button={{
             text: '확인',
             onClick: () => {
-              setIsOpenModal(false);
+              handleCloseModal();
               handleClose && handleClose();
             },
           }}
