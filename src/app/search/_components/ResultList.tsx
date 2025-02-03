@@ -96,6 +96,7 @@ const ResultList = ({ user }) => {
   const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
+  
   const {
     isLoading: likeLoading,
     likeMap,

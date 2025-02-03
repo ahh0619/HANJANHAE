@@ -1,5 +1,3 @@
-import React from 'react';
-
 import OptimizedImage from '@/components/common/OptimizedImage';
 
 const SearchLogo: React.FC = () => {

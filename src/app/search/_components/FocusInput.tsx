@@ -18,12 +18,12 @@ export type FocusInputProps = {
   shouldHideFilterSidebar: boolean;
 };
 
-const FocusInput: React.FC<FocusInputProps> = ({
+const FocusInput = ({
   searchValue,
   setSearchValue,
   shouldShowResults,
   shouldHideFilterSidebar,
-}) => {
+}: FocusInputProps) => {
   const { triggerFetch, setTriggerFetch, isFiltered } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   // 검색어 상태 관리
@@ -34,10 +34,12 @@ const FocusInput: React.FC<FocusInputProps> = ({
   }, [triggerFetch]);
 
   return (
-    <div className="w-full bg-[#FFF] text-center xl:relative xl:bg-[#FFEAED80]">
+    <div
+      className={`w-full bg-[#FFF] text-center xl:relative xl:bg-[#FFF4F6]${shouldShowResults && `xl:bg-[#fff]`}`}
+    >
       {/* 검색바와 취소 버튼 */}
       <div
-        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:mt-[162px] xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${shouldShowResults ? `xl:mt-[60px] xl:pb-0` : `xl:mt-[162px] xl:pb-[108px]`} `}
+        className={`mx-auto mt-[32px] block w-[100%] max-w-md pb-0 xl:flex xl:max-w-none xl:items-center xl:justify-center xl:gap-5 ${shouldShowResults ? `xl:mt-[60px] xl:pb-0` : `xl:mt-[60px] xl:pb-[108px]`} `}
       >
         <div className={`relative z-30 xl:h-auto`}>
           <SearchBar
@@ -54,6 +56,7 @@ const FocusInput: React.FC<FocusInputProps> = ({
         {!shouldShowResults && <HomeScreenButton className="hidden xl:block" />}
       </div>
       {/* 필터된 결과 sideBar */}
+      {/* 삼항 연산자로 수정할 수 있으면 수정 */}
       {shouldShowResults && <FilterSideBar />}
       {!shouldShowResults && (
         <OptimizedImage

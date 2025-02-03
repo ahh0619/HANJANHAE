@@ -101,12 +101,13 @@ const SearchBar = ({
             onBlur={handleBlur}
           />
         </div>
-        {shouldShowResults && (
+        {isSearchFocus && (
           <OptimizedImage
             src="/assets/icons/cancelDark.svg"
             alt="검색어 삭제 버튼"
             className="cursor-pointer"
             onClick={handleReset}
+            onMouseDown={(e) => e.preventDefault()}
           />
         )}
       </div>

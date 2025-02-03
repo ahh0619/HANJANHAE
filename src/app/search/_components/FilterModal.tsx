@@ -16,6 +16,7 @@ import FilterType from './FilterTypes';
 
 const FilterModal = () => {
   const router = useRouter();
+  // 사용하지 않는 코드들은 모두 정리하기
 
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
@@ -49,6 +50,14 @@ const FilterModal = () => {
     }
   }, [isModalOpen]);
 
+  // 라우터 이동이나 모달 닫는건?
+  // 보통은 하나의 함수는 하나의 일만 하는데
+  // 여긴 분리를 해야 좋을 것 같다.
+  // setIsFilter가 쓰이는 부분을 모두 수정을 한다면?
+  // setIsFilter는 true false로 만드는 일들이 많을텐데
+  // 이게 분산이 되어 있는데 한번에 처리할 수 있을까?
+
+  // 어디를 수정하면 코드의 맥락을 최소한으로 파악해서 수정할 수 있는가?
   const handleApplyfilters = () => {
     const newUrl = generateUrl({
       selectedTypes,

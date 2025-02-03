@@ -59,7 +59,9 @@ const SearchWrap = () => {
           shouldShowResults={shouldShowResults}
           shouldHideFilterSidebar={shouldHideFilterSidebar}
         />
+        {/*굳이 조건문 떡칠보단 하나의 삼항연산자로 합치는걸 고려해보기 */}
         {shouldShowResults && <FilterSearchResults />}
+        {/* 이 부분은 한번 체크해보기*/ }
         {!shouldShowResults && <StandByScreen className="block xl:hidden" />}
         {!shouldShowResults && <StandByScreen className="hidden xl:flex" />}
         {isModalOpen && <FilterModal />}
