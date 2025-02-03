@@ -1,6 +1,7 @@
+import Image from 'next/image';
+
 import { SurveyType } from '@/types/preferences';
 
-import Image from 'next/image';
 import ProgressBar from './ProgressBar';
 import StepButton from './StepButton';
 

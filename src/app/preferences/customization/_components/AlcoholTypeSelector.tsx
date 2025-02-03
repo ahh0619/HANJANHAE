@@ -45,7 +45,7 @@ const AlcoholTypeSelector = ({
             onClick={() => handleTypeChange(type.key)}
             className={`flex items-center justify-center rounded-full border px-[12px] py-[8px] text-label-lm leading-5 ${
               preferences?.type?.includes(type.key)
-                ? 'border-transparent bg-primary-100 text-grayscale-50'
+                ? 'border-transparent bg-primary-100 text-grayscale-100'
                 : 'border-grayscale-500 bg-white text-grayscale-900'
             }`}
           >
