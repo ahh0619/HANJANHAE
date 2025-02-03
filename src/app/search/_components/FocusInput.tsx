@@ -13,11 +13,15 @@ import SearchBar from './SearchBar';
 export type FocusInputProps = {
   searchValue: string;
   setSearchValue: (value: string) => void;
+  shouldShowResults: boolean;
+  shouldHideFilterSidebar: boolean;
 };
 
 const FocusInput: React.FC<FocusInputProps> = ({
   searchValue,
   setSearchValue,
+  shouldShowResults,
+  shouldHideFilterSidebar,
 }) => {
   const { triggerFetch, setTriggerFetch, isFiltered } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
@@ -41,11 +45,11 @@ const FocusInput: React.FC<FocusInputProps> = ({
           )}
         </div>
 
-        {!isFiltered && <HomeScreenButton className="block xl:hidden" />}
-        {!isFiltered && <HomeScreenButton className="hidden xl:block" />}
+        {!shouldShowResults && <HomeScreenButton className="block xl:hidden" />}
+        {!shouldShowResults && <HomeScreenButton className="hidden xl:block" />}
       </div>
       {/* 필터된 결과 sideBar */}
-      {isFiltered && <FilterSideBar />}
+      {shouldShowResults && !shouldHideFilterSidebar && <FilterSideBar />}
     </div>
   );
 };

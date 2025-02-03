@@ -1,50 +1,42 @@
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { filterKeywordSortedDrinks } from '@/app/actions/filter';
-import useSearchStore from '@/store/keywordStore';
-import useSortStore from '@/store/selectStore';
+import { getKeyword, getLiked } from '@/utils/filter/queryParamsUtils';
 
 const useSearchSortedResults = () => {
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const { keyword, searchTriggerFetch, setSearchTriggerFetch } =
-    useSearchStore();
-  const { selectedSort } = useSortStore();
+
+  const keyword = getKeyword(searchParams);
+  const liked = getLiked(searchParams); // 'liked' 또는 ''
+  const isLikedMode = liked === 'liked';
+  const hasValidParams = searchParams.get('keyword') !== null;
 
   const {
     data: SearchData,
-    isLoading,
+    isPending,
     isError,
     fetchNextPage,
     hasNextPage,
-    refetch,
   } = useInfiniteQuery({
-    queryKey: ['filterDrinks', keyword, selectedSort === 'alphabetical'],
+    queryKey: ['filterDrinks', keyword],
     queryFn: ({ pageParam = 1 }) =>
       filterKeywordSortedDrinks({ keyword, page: pageParam }),
     getNextPageParam: (lastPage) =>
       lastPage.hasNextPage ? lastPage.nextPage : null,
-    enabled: false,
     initialPageParam: 1,
     staleTime: 1000 * 60 * 5,
     retry: 1,
+    enabled: hasValidParams && !isLikedMode, // ✅ sort=liked일 때 비활성화
   });
-
-  // triggerFetch true일 때 refetch 호출
-  useEffect(() => {
-    if (searchTriggerFetch) {
-      refetch(); // enabled false를 이용한 트리거
-
-      setSearchTriggerFetch(false);
-    }
-  }, [searchTriggerFetch]);
 
   // 전체 데이터 개수 계산
   const totalCount = SearchData?.pages[0]?.totalCount || 0;
 
   return {
     SearchSortData: SearchData?.pages.flatMap((page) => page.drinks) || [],
-    isLoading,
+    isPending,
     isError,
     totalCount,
     fetchNextPage,

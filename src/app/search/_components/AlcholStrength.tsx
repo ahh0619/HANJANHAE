@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 
 import useFilterStore from '@/store/filterStore';
 
@@ -38,7 +37,7 @@ const AlcholeStrength = () => {
   return (
     <div className="my-10 h-[102px]">
       <h3 className="mb-[22px] text-title-mb font-bold leading-[135%] text-grayscale-900">
-        도수로 찾기
+        도수로 찾기 (중복선택 가능)
       </h3>
       <DualRangeSlider
         label={(value) => value}
