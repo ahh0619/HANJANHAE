@@ -162,7 +162,7 @@ const SignUpForm = ({
         <ConfirmModal
           title={errorMessage[0]}
           content={errorMessage[1]}
-          button={{ text: '확인', onClick: () => handleCloseModal }}
+          button={{ text: '확인', onClick: handleCloseModal }}
         />
       )}
     </>

@@ -75,12 +75,7 @@ const ProductCard = ({
         {/* 이미지 영역 */}
         <div className={classes.image}>
           {/* fill 모드 */}
-          <OptimizedImage
-            src={imageUrl}
-            alt={name}
-            fill
-            className="rounded-lg object-cover"
-          />
+          <OptimizedImage src={imageUrl} alt={name} fill />
         </div>
 
         {/* 이름 */}

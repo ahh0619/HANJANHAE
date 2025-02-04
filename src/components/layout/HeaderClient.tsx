@@ -38,7 +38,7 @@ const HeaderClient = () => {
         isSearchPage && !isScrolled ? 'bg-[#FFEAED80]' : 'bg-white'
       }`}
     >
-      <div className="mx-auto flex h-full w-[1200px] items-center justify-between px-10">
+      <div className="mx-auto flex h-full w-[1200px] items-center justify-between">
         <div className="flex items-center gap-[62px]">
           <Link href="/">
             <Logo />
@@ -48,7 +48,7 @@ const HeaderClient = () => {
             {/* AI 전통주 추천 목록 */}
             <Link
               href="/preferences/result"
-              className={`border-b-2 px-3 py-2 text-label-lm transition-colors ${
+              className={`text-label-lmb border-b-2 px-3 py-2 transition-colors ${
                 isActive('/preferences/result')
                   ? 'border-primary text-primary'
                   : 'border-transparent text-grayscale-900 hover:border-grayscale-900'
@@ -60,7 +60,7 @@ const HeaderClient = () => {
             {/* 전통주 검색 */}
             <Link
               href="/search"
-              className={`border-b-2 px-3 py-2 text-label-lm transition-colors ${
+              className={`text-label-lmb border-b-2 px-3 py-2 transition-colors ${
                 isSearchPage
                   ? 'border-primary text-primary'
                   : 'border-transparent text-grayscale-900 hover:border-grayscale-900'

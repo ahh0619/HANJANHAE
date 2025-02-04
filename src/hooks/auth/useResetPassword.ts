@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { resetPassword } from '@/app/actions/auth';
 import { useAuthStore } from '@/store/authStore';
 import { ResetPasswordType } from '@/types/Auth';
+import { manageResetPasswordError } from '@/utils/auth/manageError';
 
 type ResetPasswordProps = {
   token: string;
@@ -51,7 +52,7 @@ const useResetPassword = ({ token, handleError }: ResetPasswordProps) => {
       await resetPassword({ user, token, password: values.password });
     } catch (error) {
       Sentry.captureException(error);
-      handleError('비밀번호 변경에 실패했습니다.');
+      handleError(manageResetPasswordError(error.message));
     }
   };
 
