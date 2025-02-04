@@ -52,6 +52,7 @@ const SearchBar = ({
       });
       router.push(newUrl);
       setSelectedSort('alphabetical');
+      setIsSearchFocuse(false);
     }
   };
 
@@ -99,6 +100,7 @@ const SearchBar = ({
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            autoComplete="off"
           />
         </div>
         {isSearchFocus && (

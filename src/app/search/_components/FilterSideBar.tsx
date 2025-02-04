@@ -163,7 +163,7 @@ const FilterSideBar = () => {
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <div
                 key={index}
-                className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
+                className="flex flex-none shrink-0 items-center gap-1 rounded-[16px] border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
               >
                 <span className="flex items-center text-label-mm">
                   {filter.label}

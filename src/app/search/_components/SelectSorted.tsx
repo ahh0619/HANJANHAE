@@ -38,11 +38,11 @@ export function SelectSorted() {
   };
   return (
     <Select value={selectedSort} onValueChange={handleValueChange}>
-      <SelectTrigger>
+      <SelectTrigger className="">
         <SelectValue placeholder={selectedSort} />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup className="rounded-[8px] shadow-select">
+        <SelectGroup className="h-[90px] rounded-[8px]">
           <SelectItem value="alphabetical">가나다 순</SelectItem>
           <SelectItem value="liked">좋아요 순</SelectItem>
         </SelectGroup>

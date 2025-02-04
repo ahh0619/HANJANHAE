@@ -35,7 +35,7 @@ const FocusInput = ({
 
   return (
     <div
-      className={`w-full bg-[#FFF] text-center xl:relative xl:bg-[#FFF4F6]${shouldShowResults && `xl:bg-[#fff]`}`}
+      className={`w-full bg-[#FFF] text-center xl:relative xl:bg-[#FFF4F6] ${shouldShowResults && `xl:bg-[#fff]`}`}
     >
       {/* 검색바와 취소 버튼 */}
       <div

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import useDisableScroll from '@/hooks/search/useDisableScroll';
 import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
@@ -39,7 +40,6 @@ const FilterModal = () => {
 
   // 추가된 상태: 애니메이션 트리거
   const [isAnimating, setIsAnimating] = useState(false);
-
   useEffect(() => {
     if (isModalOpen) {
       // 모달이 열릴 때 애니메이션 활성화
@@ -83,7 +83,7 @@ const FilterModal = () => {
     <>
       {/* Background Overlay */}
       <div
-        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in ${
+        className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in xl:bg-opacity-50 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={closeModal}
@@ -96,7 +96,7 @@ const FilterModal = () => {
         }`}
       >
         {/* Modal Box */}
-        <div className="relative left-1/2 flex h-[95%] max-w-[600px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg">
+        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
           {/* Modal Header */}
           <div
             className="flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
@@ -105,7 +105,7 @@ const FilterModal = () => {
             {/* <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
-              className="cursor-pointer"
+              className="cursor-pointer p-2"
               onClick={closeModal}
             /> */}
             <Image
@@ -114,10 +114,10 @@ const FilterModal = () => {
               onClick={closeModal}
               width={40}
               height={40}
-              className="p-2"
+              className="cursor-pointer p-2"
             />
 
-            <h2 className="text-title-xl font-bold leading-[135%] text-grayscale-900">
+            <h2 className="pl-[13px] text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
             <button
@@ -129,12 +129,12 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="scroll-hidden flex-grow px-[19px] pb-[117px] pt-12">
+          <div className="scroll-hidden mb-[100px] mt-0 flex-grow px-[19px] pt-12 xl:mt-12 xl:pt-0">
             <FilterType />
           </div>
 
           {/* Apply Button */}
-          <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center bg-white p-[12px_20px] pb-[33px]">
+          <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center rounded-b-[0] bg-white p-[12px_20px] pb-[33px] xl:rounded-b-[12px]">
             <button
               onClick={handleApplyfilters}
               className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
