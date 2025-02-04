@@ -12,7 +12,7 @@ const messages = [
 ];
 
 const LoadingAnimation = () => {
-  const [messageIndex, setMessageIndex] = useState<number>(0);
+  const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,7 +23,7 @@ const LoadingAnimation = () => {
   }, []);
 
   return (
-    <div className="-mb-32 flex h-svh flex-col items-center justify-center overflow-hidden">
+    <div className="-mb-32 flex h-lvh flex-col items-center justify-center">
       <Lottie loop animationData={animationData} play className="h-48 w-48" />
       <p className="mt-[32px] text-title-lb text-grayscale-400">
         {messages[messageIndex]}

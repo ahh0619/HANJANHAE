@@ -5,12 +5,12 @@ import useRecommendations from '@/hooks/result/useRecomendations';
 import DrinkList from './DrinkList';
 import LoadingAnimation from './LoadingAnimation';
 
-type DrinkResultProps = {
-  userId?: string | null;
+type DrinkAuthRecoProps = {
+  userId?: string | undefined;
   nickname: string;
 };
 
-const DrinkResult = ({ userId, nickname }: DrinkResultProps) => {
+const DrinkReco = ({ userId, nickname }: DrinkAuthRecoProps) => {
   const { drinks, error } = useRecommendations(userId);
 
   if (error !== '') {
@@ -31,4 +31,4 @@ const DrinkResult = ({ userId, nickname }: DrinkResultProps) => {
   );
 };
 
-export default DrinkResult;
+export default DrinkReco;

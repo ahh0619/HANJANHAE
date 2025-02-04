@@ -3,11 +3,11 @@ import { create } from 'zustand';
 import { fetchUser } from '@/app/actions/auth';
 import { hasSurveyRecord } from '@/app/actions/preference';
 
-type SurveyState = {
+interface SurveyState {
   isSurveyCompleted: boolean;
   setIsSurveyCompleted: (completed: boolean) => void;
   fetchSurveyStatus: () => Promise<void>;
-};
+}
 
 export const useSurveyStore = create<SurveyState>((set) => ({
   isSurveyCompleted: false,

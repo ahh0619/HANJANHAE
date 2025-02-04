@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { recommendDrinks } from '@/app/actions/preference';
 import { useSurveyStore } from '@/store/surveyStore';
-import { ResultType } from '@/types/preferences';
+import { Tables } from '@/types/supabase';
 
 const useGuestDrinkRecommendations = () => {
   const [error, setError] = useState('');
-  const [drinks, setDrinks] = useState<ResultType[] | null>(null);
+  const [drinks, setDrinks] = useState<Tables<'reco_results'>[] | null>(null);
   const { setIsSurveyCompleted } = useSurveyStore();
 
   useEffect(() => {

@@ -7,10 +7,10 @@ import {
   fetchSurveyData,
   recommendDrinks,
 } from '@/app/actions/preference';
-import { ResultType } from '@/types/preferences';
+import { Tables } from '@/types/supabase';
 
 type fetchRecommendProps = {
-  setDrinks: Dispatch<SetStateAction<ResultType[] | null>>;
+  setDrinks: Dispatch<SetStateAction<Tables<'reco_results'>[] | null>>;
   setError: Dispatch<SetStateAction<string>>;
   setIsSurveyCompleted: (completed: boolean) => void;
   userId?: string | undefined;

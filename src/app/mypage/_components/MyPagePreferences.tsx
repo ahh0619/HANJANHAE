@@ -1,37 +1,21 @@
-import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import { useSurveyStore } from '@/store/surveyStore';
 
-const MyPagePreferences = () => {
+const MyPagePreferences = ({ userId }: { userId: string }) => {
   const { isSurveyCompleted, fetchSurveyStatus } = useSurveyStore();
-  const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     fetchSurveyStatus();
   }, [fetchSurveyStatus]);
 
-  const handleBannerClick = () => {
-    if (!isSurveyCompleted) {
-      router.push('/survey');
-      return;
-    }
-
-    const isFromResultPage = pathname.includes('/preferences/result');
-    if (isFromResultPage) {
-      localStorage.setItem('fromResultPage', 'yes');
-    }
-
-    router.push('/preferences/customization');
-  };
-
   return (
     <div className="mt-8 flex w-full justify-center px-5">
       {/* 배너 전체 */}
-      <div
-        onClick={handleBannerClick}
+      <Link
+        href={isSurveyCompleted ? '/preferences/customization' : '/survey'}
         className="relative flex h-[72px] w-full items-center rounded-xl bg-gradient-banner hover:opacity-90"
       >
         {/* 왼쪽 아이콘 및 텍스트 */}
@@ -56,7 +40,7 @@ const MyPagePreferences = () => {
             height={72}
           />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

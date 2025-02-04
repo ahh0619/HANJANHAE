@@ -1,12 +1,11 @@
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import Modal from '@/components/common/Modal';
-import useModalStore from '@/store/modalStore';
-import { SurveyType } from '@/types/preferences';
 
 type StepButtonProps = {
   content: string;
-  onClick: (data: Partial<SurveyType>) => void;
+  onClick: () => void;
   disabled: boolean;
 };
 
@@ -15,8 +14,16 @@ const StepButton = ({
   onClick,
   disabled = false,
 }: StepButtonProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="fixed bottom-[0px] left-0 flex w-full flex-col items-center px-[20px]">

@@ -50,7 +50,7 @@ const MyPageComponent: React.FC<MyPageComponentProps> = ({
     <>
       <MyPageHeader />
       <MyPageProfileSection userData={userData} onEditClick={handleModalOpen} />
-      <MyPagePreferences />
+      <MyPagePreferences userId={userData.id} />
       <MyPageAccountOptions />
       <ProfileEditModal
         isOpen={isModalOpen}

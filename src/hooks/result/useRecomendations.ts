@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchAuthRecommend, fetchGuestRecommend } from '@/lib/recommendations';
 import { useSurveyStore } from '@/store/surveyStore';
 
-const useRecommendations = (userId: string | null) => {
+const useRecommendations = (userId: string | undefined) => {
   const [error, setError] = useState('');
   const [drinks, setDrinks] = useState(null);
   const { setIsSurveyCompleted } = useSurveyStore();
@@ -21,6 +21,7 @@ const useRecommendations = (userId: string | null) => {
         setDrinks,
         setError,
         setIsSurveyCompleted,
+        userId,
       });
     }
   }, [userId]);

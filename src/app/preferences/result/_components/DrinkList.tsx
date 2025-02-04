@@ -5,10 +5,10 @@ import Link from 'next/link';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
-import { ResultType } from '@/types/preferences';
+import { Tables } from '@/types/supabase';
 
 type DrinkListProps = {
-  drinks: ResultType[];
+  drinks: Tables<'reco_results'>[];
   title: string;
   userId: string | null;
 };
@@ -22,20 +22,21 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   });
 
   return (
-    <div className="mx-auto mb-[-108px] w-full max-w-7xl">
+    <div className="mx-auto w-full max-w-7xl">
       {/* Back Button과 제목 */}
       <div className="mx-auto flex w-[374px] flex-col items-center sm:w-full xl:hidden">
         <Link
           href={'/'}
           className="mb-[36px] flex w-full justify-start sm:px-2"
         >
-          <OptimizedImage
-            src="/assets/icons/chevron-left.svg"
-            alt="뒤로가기 아이콘"
-            width={40}
-            height={40}
-            className="flex h-[44px] p-[8px]"
-          />
+          <div className="flex h-[44px] w-[367px] items-center p-[8px]">
+            <OptimizedImage
+              src="/assets/icons/chevron-left.svg"
+              alt="뒤로가기 아이콘"
+              width={24}
+              height={24}
+            />
+          </div>
         </Link>
 
         <div className="mb-[36px] flex w-full flex-col justify-start px-4 sm:px-6">
@@ -53,8 +54,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
             const isLiked = likeMap[drink.drink_id] || false;
 
             return (
-              <Link
-                href={`/drink/${drink.drink_id}`}
+              <div
                 key={drink.name}
                 className="mx-auto flex h-[186px] w-full items-start gap-5 sm:w-[580px] xl:h-[222px]"
               >
@@ -103,7 +103,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                     </p>
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>

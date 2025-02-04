@@ -2,12 +2,12 @@ type ProgressBarProps = {
   currentStep: number;
 };
 
-const STEPS = [1, 2, 3, 4, 5, 6, 7];
-
 const ProgressBar = ({ currentStep }: ProgressBarProps) => {
+  const steps = [1, 2, 3, 4, 5, 6, 7];
+
   return (
     <div className="mt-[0px] flex h-[20px] w-[375px] px-[20px]">
-      {STEPS.map((step, index) => (
+      {steps.map((step, index) => (
         <div key={step} className="flex items-center">
           {/* 동그라미 */}
           <p
@@ -23,7 +23,7 @@ const ProgressBar = ({ currentStep }: ProgressBarProps) => {
           </p>
 
           {/* 선 */}
-          {index < STEPS.length - 1 && (
+          {index < steps.length - 1 && (
             <div
               className={`h-[2px] w-[42.5px] ${
                 step < currentStep ? 'bg-gray-300' : 'bg-gray-200'

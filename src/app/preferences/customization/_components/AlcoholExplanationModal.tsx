@@ -1,26 +1,13 @@
-import OptimizedImage from '@/components/common/OptimizedImage';
-
-type AlcoholExplanationModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
-
-const AlcoholExplanationModal = ({
-  isOpen,
-  onClose,
-}: AlcoholExplanationModalProps) => {
+const AlcoholExplanationModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative h-[456px] w-[560px] rounded-2xl bg-white shadow-lg">
         {/* 닫기 버튼 */}
-        <OptimizedImage
+        <img
           src="/assets/icons/cancelDark.svg"
-          className="absolute right-[16px] top-[16px] p-[8px]"
-          alt="닫기 아이콘"
-          width={40}
-          height={40}
+          className="absolute right-[24px] top-[24px]"
           onClick={onClose}
         />
 

@@ -4,16 +4,14 @@ import { useEffect, useState } from 'react';
 import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
 import { saveSurveyData } from '@/lib/recommendations';
 import { useAuthStore } from '@/store/authStore';
-import { SurveyType } from '@/types/preferences';
+import { Tables } from '@/types/supabase';
 
 type Mode = 'create' | 'edit';
-
 const usePreferences = (mode: Mode) => {
-  const [preferences, setPreferences] = useState<Partial<SurveyType> | null>(
-    null,
-  );
+  const [preferences, setPreferences] =
+    useState<Partial<Tables<'survey'> | null>>(null);
   const [defaultPreferences, setDefaultPreferences] =
-    useState<Partial<SurveyType> | null>(null);
+    useState<Tables<'survey'> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -33,17 +31,15 @@ const usePreferences = (mode: Mode) => {
     if (mode === 'edit' && user) {
       // 'edit' 모드일 때만 기본값 로드
       const loadSurveyDefaults = async () => {
-        const defaults = await fetchSurveyData(user.id);
-
-        if (!defaults) {
+        try {
+          const defaults = await fetchSurveyData(user.id);
+          setPreferences(defaults);
+          setDefaultPreferences(defaults);
+        } catch (err) {
           setError('기존 설문조사 결과 가져오기 실패');
+        } finally {
           setIsLoading(false);
-          return;
         }
-
-        setPreferences(defaults);
-        setDefaultPreferences(defaults);
-        setIsLoading(false);
       };
 
       loadSurveyDefaults();

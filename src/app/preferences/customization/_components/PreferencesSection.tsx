@@ -2,12 +2,15 @@ import BackButton from '@/components/common/BackButton';
 
 import PreferencesForm from './PreferencesForm';
 
-type PreferencesSectionProps = {
+interface PreferencesSectionProps {
   title: string;
   mode: 'edit' | 'create';
-};
+}
 
-const PreferencesSection = ({ title, mode }: PreferencesSectionProps) => {
+const PreferencesSection: React.FC<PreferencesSectionProps> = ({
+  title,
+  mode,
+}) => {
   return (
     <div className="mx-auto max-w-[400px]">
       <div className="relative mb-[32px] flex h-[44px] w-full items-center xl:mb-[64px] xl:h-[32px]">
