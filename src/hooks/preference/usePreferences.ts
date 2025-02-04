@@ -102,7 +102,7 @@ const usePreferences = (mode: Mode) => {
     preferences?.acidity !== null &&
     preferences?.carbonation !== null &&
     preferences?.body !== null &&
-    preferences?.food !== null;
+    preferences?.food !== '';
 
   const hasPreferencesChanged =
     JSON.stringify(preferences) !== JSON.stringify(defaultPreferences);
