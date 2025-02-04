@@ -47,7 +47,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
       </div>
 
       {/* 카드 리스트 */}
-      <div className="mx-auto flex flex-col items-center px-4 sm:px-6 xl:h-[846px] xl:py-[50px]">
+      <div className="mx-auto flex flex-col items-center px-4 sm:px-6 xl:mb-[160px] xl:h-[846px] xl:py-[50px]">
         <div className="grid grid-cols-1 gap-x-8 gap-y-[20px] sm:grid-cols-1 xl:grid-cols-2 xl:gap-y-[40px]">
           {drinks.map((drink) => {
             const isLiked = likeMap[drink.drink_id] || false;
