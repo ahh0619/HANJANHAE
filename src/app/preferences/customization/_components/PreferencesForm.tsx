@@ -88,7 +88,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
   if (error || submitError) throw new Error(error || submitError);
 
   return (
-    <div className="px-[19px]">
+    <div className="px-[19px] xl:px-0">
       <AlcoholTypeSelector
         mode={mode}
         preferences={preferences}
