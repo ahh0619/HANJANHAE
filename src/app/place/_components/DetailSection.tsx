@@ -75,7 +75,7 @@ const DetailSection = ({ place }: DetailSectionProps) => {
   }, [isIgnoreScroll, isDesktop]);
 
   return (
-    <div className="px-5 pb-12 xl:pb-[220px]">
+    <div className="px-5 pb-12 xl:pb-[220px] xl:px-6">
       <Category
         items={CATEGORY_DATA.map((item) => ({
           id: item.id,
