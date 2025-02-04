@@ -26,7 +26,7 @@ const DetailSection = ({ place }: DetailSectionProps) => {
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
-  const NAV_HEIGHT = 170;
+  const NAV_HEIGHT = 180;
 
   const handleChangeCategory = (id: string, name: string) => {
     setIsIgnoreScroll(true);
@@ -58,7 +58,6 @@ const DetailSection = ({ place }: DetailSectionProps) => {
       const menuTop = menuElement.offsetTop;
       const mapTop = mapElement.offsetTop;
 
-      const scrollPos = window.scrollY;
       if (window.scrollY + NAV_HEIGHT - 60 >= mapTop) {
         setCategory('지도');
       } else if (window.scrollY + NAV_HEIGHT - 60 >= menuTop) {
@@ -76,7 +75,7 @@ const DetailSection = ({ place }: DetailSectionProps) => {
   }, [isIgnoreScroll, isDesktop]);
 
   return (
-    <div className="px-5 pb-12 xl:pb-[220px]">
+    <div className="px-5 pb-12 xl:pb-[220px] xl:px-6">
       <Category
         items={CATEGORY_DATA.map((item) => ({
           id: item.id,

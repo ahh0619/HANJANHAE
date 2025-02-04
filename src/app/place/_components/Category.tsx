@@ -23,7 +23,7 @@ const Category = ({ items, handleChange }: CategoryProps) => {
       </div>
 
       <div className="relative mb-8">
-        <div className="absolute left-[-20px] right-[-20px] h-[1px] bg-grayscale-300"></div>
+        <div className="absolute left-[-20px] right-[-20px] h-[1px] bg-grayscale-300 xl:left-[-24px] xl:right-[-24px]"></div>
       </div>
     </div>
   );
