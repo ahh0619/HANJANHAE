@@ -242,14 +242,30 @@ html {
   /* 기본 스크롤 동작 유지 */
   overflow-y: scroll;
   overflow-x: hidden;
+  
 
   /* 스크롤바 숨기기 */
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
 
+
 .scroll-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
+}
+
+@media (min-width: 1280px) {
+  .scroll-hidden {
+    overflow-x: hidden;  /* 가로 스크롤 숨김 */
+    overflow-y: auto;    /* 세로 스크롤 표시 */
+    
+    -ms-overflow-style: auto; /* IE/Edge */
+    scrollbar-width: auto; /* Firefox */
+  }
+
+  .scroll-hidden::-webkit-scrollbar {
+    display: block; /* Chrome, Safari */
+  }
 }
 
 /* rc slider css */
@@ -271,3 +287,8 @@ html {
   /* border: solid 4px var(--primary-100, #BF324B) ! important; */
   margin-top: -6px !important;
 }
+/* select overflow 속성 숨김*/
+[data-radix-select-viewport] {
+  overflow: visible !important;
+}
+

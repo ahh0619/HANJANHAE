@@ -7,7 +7,7 @@ type StandBySCreenProps = {
 const StandByScreen: React.FC<StandBySCreenProps> = ({ className }) => {
   return (
     <div
-      className={`bg-gray mt-[76px] flex flex-col items-center xl:mt-[146px] ${className}`}
+      className={`bg-gray mt-[76px] flex flex-col items-center xl:mt-[100px] ${className}`}
     >
       <OptimizedImage
         src="/assets/icons/Character_search.svg"

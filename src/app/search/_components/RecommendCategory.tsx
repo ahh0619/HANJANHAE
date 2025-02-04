@@ -20,7 +20,7 @@ const RecommendCategory: React.FC<RecommendCateGory> = ({
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const categories = ['복분자', '약주', '막걸리'];
+  const categories = ['리큐르', '약주', '막걸리'];
   const {
     searchTriggerFetch,
     keyword,

@@ -1,7 +1,13 @@
+import { Suspense } from 'react';
+
 import HeaderClient from './HeaderClient';
 
 const Header = () => {
-  return <HeaderClient />;
+  return (
+    <Suspense>
+      <HeaderClient />
+    </Suspense>
+  );
 };
 
 export default Header;
