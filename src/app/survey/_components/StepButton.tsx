@@ -23,7 +23,7 @@ const StepButton = ({
       <button
         className={`w-[335px] rounded-[8px] px-[16px] py-[12px] text-label-xlm ${
           disabled
-            ? 'cursor-not-allowed bg-grayscale-200 text-grayscale-50'
+            ? 'cursor-not-allowed bg-grayscale-200 text-grayscale-100'
             : 'bg-primary text-grayscale-100'
         }`}
         onClick={onClick}

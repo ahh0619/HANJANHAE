@@ -37,12 +37,12 @@ const AlcoholTypeSelector = ({
         </span>
       </label>
       {/* 버튼 목록 */}
-      <div className="flex h-[92px] w-[311px] flex-wrap gap-x-[16px] gap-y-[12px]">
+      <div className="flex h-[92px] w-[311px] flex-wrap gap-x-[16px] gap-y-[12px] xl:w-[370px]">
         {ALCOHOL_TYPES.map((type) => (
           <button
             key={type.key}
             onClick={() => handleTypeChange(type.key)}
-            className={`flex items-center justify-center rounded-full border px-[12px] py-[8px] text-label-lm leading-5 ${
+            className={`flex items-center justify-center rounded-[16px] border px-[12px] py-[8px] text-label-lm leading-5 ${
               preferences?.type?.includes(type.key)
                 ? 'border-transparent bg-primary-100 text-grayscale-100'
                 : 'border-grayscale-500 bg-white text-grayscale-900'

@@ -110,13 +110,13 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
       <button
         onClick={handleSubmit}
         disabled={!isFormComplete || !hasPreferencesChanged}
-        className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm xl:mb-[220px] ${
+        className={`mb-[20px] w-full rounded-[8px] py-[12px] text-label-xlm xl:mb-[92px] ${
           isFormComplete && hasPreferencesChanged
             ? 'bg-primary text-grayscale-100'
             : 'cursor-not-allowed bg-grayscale-200 text-grayscale-100'
         }`}
       >
-        {mode === 'edit' ? '수정하기' : '저장하기'}
+        {mode === 'edit' ? '수정하기' : '완료'}
       </button>
     </div>
   );
