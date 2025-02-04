@@ -52,6 +52,7 @@ const SearchBar = ({
       });
       router.push(newUrl);
       setSelectedSort('alphabetical');
+      setIsSearchFocuse(false);
     }
   };
 
@@ -99,14 +100,16 @@ const SearchBar = ({
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            autoComplete="off"
           />
         </div>
-        {shouldShowResults && (
+        {isSearchFocus && (
           <OptimizedImage
             src="/assets/icons/cancelDark.svg"
             alt="검색어 삭제 버튼"
             className="cursor-pointer"
             onClick={handleReset}
+            onMouseDown={(e) => e.preventDefault()}
           />
         )}
       </div>
