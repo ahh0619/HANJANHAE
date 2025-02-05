@@ -60,73 +60,71 @@ const MobilePreferencesSection = () => {
   console.log('surveyData: ', surveyData);
 
   return (
-    <div className="flex w-full justify-center">
-      <Funnel currentStep={currentStep}>
-        <Step name="주종">
-          <PreferenceTypeSelection
-            surveyData={surveyData}
-            handleTypeChange={handleTypeChange}
-            onNext={() => handleNext('도수')}
-            onPrev={() => router.push('/')}
-            currentStep={1}
-          />
-        </Step>
-        <Step name="도수">
-          <PreferenceAlcoholLevel
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('단맛')}
-            onPrev={() => handlePrev('주종')}
-            currentStep={2}
-          />
-        </Step>
-        <Step name="단맛">
-          <PreferenceSweetness
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('신맛')}
-            onPrev={() => handlePrev('도수')}
-            currentStep={3}
-          />
-        </Step>
-        <Step name="신맛">
-          <PreferenceAcidity
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('청량감')}
-            onPrev={() => handlePrev('단맛')}
-            currentStep={4}
-          />
-        </Step>
-        <Step name="청량감">
-          <PreferenceCarbonation
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('바디감')}
-            onPrev={() => handlePrev('신맛')}
-            currentStep={5}
-          />
-        </Step>
-        <Step name="바디감">
-          <PreferenceBody
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('안주')}
-            onPrev={() => handlePrev('청량감')}
-            currentStep={6}
-          />
-        </Step>
-        <Step name="안주">
-          <PreferenceFood
-            surveyData={surveyData}
-            handlePreferenceChange={handlePreferenceChange}
-            onNext={() => handleNext('완료')}
-            onPrev={() => handlePrev('바디감')}
-            currentStep={7}
-          />
-        </Step>
-      </Funnel>
-    </div>
+    <Funnel currentStep={currentStep}>
+      <Step name="주종">
+        <PreferenceTypeSelection
+          surveyData={surveyData}
+          handleTypeChange={handleTypeChange}
+          onNext={() => handleNext('도수')}
+          onPrev={() => router.push('/')}
+          currentStep={1}
+        />
+      </Step>
+      <Step name="도수">
+        <PreferenceAlcoholLevel
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('단맛')}
+          onPrev={() => handlePrev('주종')}
+          currentStep={2}
+        />
+      </Step>
+      <Step name="단맛">
+        <PreferenceSweetness
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('신맛')}
+          onPrev={() => handlePrev('도수')}
+          currentStep={3}
+        />
+      </Step>
+      <Step name="신맛">
+        <PreferenceAcidity
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('청량감')}
+          onPrev={() => handlePrev('단맛')}
+          currentStep={4}
+        />
+      </Step>
+      <Step name="청량감">
+        <PreferenceCarbonation
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('바디감')}
+          onPrev={() => handlePrev('신맛')}
+          currentStep={5}
+        />
+      </Step>
+      <Step name="바디감">
+        <PreferenceBody
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('안주')}
+          onPrev={() => handlePrev('청량감')}
+          currentStep={6}
+        />
+      </Step>
+      <Step name="안주">
+        <PreferenceFood
+          surveyData={surveyData}
+          handlePreferenceChange={handlePreferenceChange}
+          onNext={() => handleNext('완료')}
+          onPrev={() => handlePrev('바디감')}
+          currentStep={7}
+        />
+      </Step>
+    </Funnel>
   );
 };
 
