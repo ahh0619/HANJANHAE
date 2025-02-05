@@ -28,17 +28,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: '한잔해',
     description: 'AI 추천 기반 전통주를 만나보세요!',
-    images: [
-      {
-        url: '/assets/thumbnail.png',
-        width: 1086,
-        height: 360,
-        alt: '한잔해 썸네일',
-      },
-    ],
+    images: {
+      url: '/assets/thumbnail.png',
+      width: 1086,
+      height: 360,
+      alt: '한잔해 썸네일',
+    },
   },
   themeColor: '#ffffff',
-
   appleWebApp: {
     capable: true,
     title: '한잔해',
