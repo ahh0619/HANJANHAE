@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { Database } from './supabase';
 
 // FocusInput 컴포넌트 Props
@@ -22,13 +23,16 @@ export type StandBySCreenProps = {
 export type SearchBarProps = {
   value: string;
   onChange: (val: string) => void;
+  setSearchValue: (val: string) => void;
   shouldShowResults: boolean;
+  inputRef: RefObject<HTMLInputElement>;
 };
 
 // RecommendCateGory 컴포넌트 Props
 export type RecommendCateGory = {
   className?: string;
   setSearchValue: (val: string) => void;
+  inputRef: RefObject<HTMLInputElement>;
 };
 
 // HomeScreenButtonProps 컴포넌트 Props

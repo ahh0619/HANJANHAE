@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
+import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 
@@ -19,9 +19,9 @@ const pretendard = localFont({
   preload: true,
 });
 
-const Footer = dynamic(() => import('@/components/layout/Footer'), {
-  ssr: false,
-});
+// const Footer = dynamic(() => import('@/components/layout/Footer'), {
+//   ssr: false,
+// });
 export const metadata: Metadata = {
   title: '한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',

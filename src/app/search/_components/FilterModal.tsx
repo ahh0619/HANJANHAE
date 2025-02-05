@@ -90,24 +90,21 @@ const FilterModal = () => {
 
       {/* 모달 Wrap */}
       <div
-        className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
+        className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 xl:translate-y-0 xl:duration-700 ${
           isAnimating ? 'translate-y-0' : 'translate-y-[120%]'
         }`}
       >
         {/* 모달 Scroll Box */}
-        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
+        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white p-5 shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
           {/* Modal Header */}
-          <div
-            className="flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
-            style={{ height: 'auto', padding: '12px 19px' }}
-          >
+          <div className="flex h-auto items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] pt-3 xl:px-[16px]">
             <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
               className="cursor-pointer p-2"
               onClick={closeModal}
             />
-            <h2 className="pl-[13px] text-title-xl font-bold leading-[135%] text-grayscale-900">
+            <h2 className="pl-[20px] text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>
             <button
@@ -119,7 +116,7 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="scroll-hidden mb-[100px] mt-0 flex-grow px-[19px] pt-12 xl:mt-12 xl:pt-0">
+          <div className="scroll-hidden mb-[100px] mt-0 flex-grow pt-12 xl:mt-12 xl:px-[16px] xl:pt-0">
             <FilterType />
           </div>
 
@@ -127,7 +124,7 @@ const FilterModal = () => {
           <div className="fixed bottom-[0] left-1/2 z-[102] flex w-[100%] max-w-[600px] -translate-x-1/2 transform justify-center rounded-b-[0] bg-white p-[12px_20px] pb-[33px] xl:rounded-b-[12px]">
             <button
               onClick={handleApplyfilters}
-              className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white"
+              className="text-label-xml flex w-[335px] shrink-0 items-center justify-center rounded-[8px] bg-primary p-[12px_16px] font-medium leading-[30px] text-white xl:w-[100%]"
             >
               {totalCount}개의 결과 보기
             </button>

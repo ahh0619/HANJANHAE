@@ -1,6 +1,6 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
@@ -10,9 +10,16 @@ import useSortStore from '@/store/selectStore';
 import { SearchBarProps } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
-const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
+const SearchBar = ({
+  value,
+  onChange,
+  shouldShowResults,
+  inputRef,
+  setSearchValue,
+}: SearchBarProps) => {
   const router = useRouter();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const {
     triggerFetch,
     isFiltered,
@@ -35,8 +42,9 @@ const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
     setSelectedSort('alphabetical'); // 초기값 세팅
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      e.currentTarget.blur();
       const newKeyword = inputRef.current?.value.trim() || '';
       setKeyword(newKeyword);
       // newKeyword를 직접 사용합니다.
@@ -61,6 +69,12 @@ const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
     setIsSearchFocuse(false);
   };
 
+  useEffect(() => {
+    if (pathname === '/search' && !searchParams.has('keyword')) {
+      setSearchValue('');
+    }
+  }, [pathname, searchParams]);
+
   return (
     <div
       className={`${
@@ -74,7 +88,7 @@ const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
       >
         <OptimizedImage
           src={
-            isFiltered
+            !isSearchFocus
               ? '/assets/icons/search-gray.svg'
               : '/assets/icons/search.svg'
           }
@@ -100,7 +114,7 @@ const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
           <OptimizedImage
             src="/assets/icons/cancelDark.svg"
             alt="검색어 삭제 버튼"
-            className="cursor-pointer"
+            className="cursor-pointer p-2"
             onClick={handleReset}
             onMouseDown={(e) => e.preventDefault()}
           />
