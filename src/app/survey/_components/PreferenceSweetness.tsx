@@ -32,7 +32,6 @@ const PreferenceSweetness = ({
       disabled={!surveyData.sweetness}
       currentStep={currentStep}
     >
-      {/* 선택 옵션 */}
       <div className="flex w-full justify-between px-[20px]">
         {OPTIONS.map((option, index) => (
           <OptionItem

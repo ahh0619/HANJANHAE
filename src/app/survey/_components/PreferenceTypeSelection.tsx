@@ -72,7 +72,6 @@ const PreferenceTypeSelection = ({
         </div>
       </PreferenceLayout>
 
-      {/* 모달 */}
       {isMobile ? (
         <MobileAlcoholExplanationModal
           isOpen={isModalOpen}

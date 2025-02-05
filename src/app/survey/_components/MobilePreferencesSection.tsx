@@ -19,9 +19,7 @@ const MobilePreferencesSection = () => {
     preferences: surveyData,
     handlePreferenceChange,
     handleTypeChange,
-    // handleSubmit,
     isLoading,
-    // error,
   } = usePreferences('create');
   const [submitError, setSubmitError] = useState<string>('');
   const router = useRouter();
@@ -56,8 +54,6 @@ const MobilePreferencesSection = () => {
       setSubmitError(error.message);
     }
   };
-
-  console.log('surveyData: ', surveyData);
 
   return (
     <Funnel currentStep={currentStep}>

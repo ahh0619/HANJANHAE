@@ -7,6 +7,16 @@ type OptionItemProps = {
   onSelect: (value: string) => void;
 };
 
+const getAlignment = (index?: number) => {
+  if (index === undefined) return 'flex flex-col items-center';
+  const alignments = [
+    'flex flex-col items-start',
+    'flex flex-col items-center',
+    'flex flex-col items-end',
+  ];
+  return alignments[index] || '';
+};
+
 const OptionItem = ({
   value,
   label,
@@ -15,16 +25,7 @@ const OptionItem = ({
   index,
   onSelect,
 }: OptionItemProps) => {
-  const alignment =
-    index === undefined
-      ? 'flex flex-col items-center' // index가 없을 경우 기본값 설정
-      : index === 0
-        ? 'flex flex-col items-start'
-        : index === 1
-          ? 'flex flex-col items-center'
-          : index === 2
-            ? 'flex flex-col items-end'
-            : '';
+  const alignment = getAlignment(index);
 
   return (
     <label className={`flex cursor-pointer flex-col ${alignment}`}>

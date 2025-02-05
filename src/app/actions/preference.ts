@@ -47,12 +47,9 @@ export const recommendDrinks = async ({
     const replaceddata = data.replace(/```json|```/g, '').trim(); // 1. 백틱과 ```json 제거
 
     const jsonData = JSON.parse(replaceddata);
-    console.log('ai jsonData: ', jsonData);
 
     // drinks 데이터 확인 및 최종 결과 생성
     const finalResults = await fetchDrinksWithReason(jsonData);
-
-    console.log('Final Results:', finalResults);
 
     if (userId) {
       await addRecoResult({ recoData: finalResults, userId });
@@ -76,7 +73,6 @@ export const hasRecoResult = async (
     .limit(1);
 
   if (error) {
-    console.error('전통주 추천 결과 확인중 에러 발생:', error);
     return null;
   }
 
@@ -130,7 +126,6 @@ export const addRecoResult = async ({
     drink_id: item.drink_id,
   }));
 
-  console.log('insertdata: ', insertData);
   const { error } = await supabase.from('reco_results').insert(insertData);
 
   if (error) {
@@ -189,11 +184,8 @@ export const fetchDrinksWithReason = async (
       .single();
 
     if (error) {
-      console.error(`Supabase error for name "${name}":`, error);
-      continue; // 에러 발생 시 스킵
+      continue;
     }
-
-    console.log('drinkdata: ', drinkData);
 
     if (drinkData) {
       const { id, ...rest } = drinkData;
@@ -255,7 +247,6 @@ export const hasSurveyRecord = async (userId: string): Promise<boolean> => {
     .limit(1);
 
   if (error) {
-    console.error('Error fetching survey record:', error);
     return false;
   }
 

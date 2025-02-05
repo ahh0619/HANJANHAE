@@ -31,14 +31,13 @@ const AlcoholTypeSelector = ({
 
   return (
     <div className="mb-10 w-full xl:mb-[72px]">
-      {/* 제목 */}
       <label className="mb-[16px] block text-title-mb xl:mb-[20px] xl:text-title-lb">
         1. 어떤 종류의 술을 선호하시나요?
         <span className="ml-1 inline xl:block xl:before:content-['\2002']">
           (중복선택 가능)
         </span>
       </label>
-      {/* 버튼 목록 */}
+
       <div className="flex h-[92px] w-[311px] flex-wrap gap-x-[16px] gap-y-[12px] xl:w-[370px]">
         {ALCOHOL_TYPES.map((type) => (
           <button
@@ -69,7 +68,6 @@ const AlcoholTypeSelector = ({
         />
       </div>
 
-      {/* 모달 */}
       <AlcoholExplanationModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
