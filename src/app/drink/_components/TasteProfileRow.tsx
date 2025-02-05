@@ -20,7 +20,7 @@ const TasteProfileRow: React.FC<TasteProfileRowProps> = ({ label, value }) => {
     <div className="flex w-[336px] items-center gap-x-12 xl:w-[486px] xl:gap-x-14">
       {/* 라벨 */}
       <div>
-        <p className="w-[42px] flex-shrink-0 text-body-mm text-grayscale-900">
+        <p className="w-[44px] flex-shrink-0 text-body-mm text-grayscale-900">
           {label}
         </p>
       </div>
