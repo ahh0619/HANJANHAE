@@ -1,17 +1,11 @@
 import React from 'react';
 
+import { TASTE_PROFILE_COLORS } from '@/constants/tasteProfileColors';
+
 type TasteProfileRowProps = {
   label: string;
   value: number | null | undefined;
 };
-
-const TASTE_PROFILE_COLORS = [
-  'bg-secondary-200',
-  'bg-secondary-300',
-  'bg-primary-100',
-  'bg-primary-200',
-  'bg-primary-300',
-];
 
 const TasteProfileRow: React.FC<TasteProfileRowProps> = ({ label, value }) => {
   return (
