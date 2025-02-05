@@ -104,8 +104,6 @@ const FilterSideBar = () => {
       let normalizedKey = key.toLowerCase().trim();
       const numericValue = Number(value); // 여기서 숫자로 변환
       normalizedKey = normalizedKey.replace(/^"(.*)"$/, '$1'); // replace 없으면 동작이 안됨
-      console.log(normalizedKey);
-      console.log(tasteMapping[normalizedKey]);
       return {
         label: `${tasteMapping[normalizedKey] || key}: ${tasteLabels[numericValue] || '알 수 없음'}`,
         value: numericValue, // 혹은 value: numericValue
