@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -31,6 +32,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
 
   const { openToast } = useToast();
 
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
@@ -60,14 +63,17 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     drinkIds: allDrinkIds,
   });
 
+  const [hasErrorToastShown, setHasErrorToastShown] = useState(false);
+
   useEffect(() => {
-    if (isSeasonError || isFoodError || isMoodError) {
+    if (!hasErrorToastShown && (isSeasonError || isFoodError || isMoodError)) {
       openToast(
-        `AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.`,
+        'AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.',
         3000,
       );
+      setHasErrorToastShown(true);
     }
-  }, [isSeasonError, isFoodError, isMoodError, openToast]);
+  }, [isSeasonError, isFoodError, isMoodError, openToast, hasErrorToastShown]);
 
   if (!isBrowser) {
     return null;
@@ -81,8 +87,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
 
   return (
     <div className="mt-9 space-y-9 px-5 xl:mt-[100px] xl:px-10">
-      {sections.map((section, idx) => (
-        <section key={idx}>
+      {sections.map((section, sectionIndex) => (
+        <section key={sectionIndex}>
           <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
             {section.title}
           </h2>
@@ -96,8 +102,11 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
                 },
               }}
             >
-              {section.items.map((item) => {
+              {section.items.map((item, itemIndex) => {
                 const isLiked = likeMap[item.id] || false;
+                const isPriority = isDesktop
+                  ? sectionIndex < 2
+                  : sectionIndex < 2 && itemIndex < 3;
                 return (
                   <SwiperSlide key={item.id} style={{ width: 'auto' }}>
                     <ProductCard
@@ -106,6 +115,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
                       imageUrl={item.image}
                       isLiked={isLiked}
                       onToggleLike={() => handleToggleLike(item.id)}
+                      ispriority={isPriority}
                     />
                   </SwiperSlide>
                 );

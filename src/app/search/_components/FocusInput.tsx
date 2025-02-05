@@ -5,18 +5,13 @@ import { useEffect } from 'react';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
+import { FocusInputProps } from '@/types/search';
 
 import FilterSideBar from './FilterSideBar';
 import HomeScreenButton from './HomeScreenButton';
 import RecommendCategory from './RecommendCategory';
 import SearchBar from './SearchBar';
 
-export type FocusInputProps = {
-  searchValue: string;
-  setSearchValue: (value: string) => void;
-  shouldShowResults: boolean;
-  shouldHideFilterSidebar: boolean;
-};
 
 const FocusInput = ({
   searchValue,

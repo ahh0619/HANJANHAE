@@ -1,11 +1,10 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import useDisableScroll from '@/hooks/search/useDisableScroll';
+import OptimizedImage from '@/components/common/OptimizedImage';
 import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
@@ -59,6 +58,8 @@ const FilterModal = () => {
 
   // 어디를 수정하면 코드의 맥락을 최소한으로 파악해서 수정할 수 있는가?
   const handleApplyfilters = () => {
+    setIsFiltered(true);
+    setTriggerFetch(true);
     const newUrl = generateUrl({
       selectedTypes,
       alcoholStrength,
@@ -66,8 +67,6 @@ const FilterModal = () => {
     });
     router.push(newUrl);
     closeModal();
-    setIsFiltered(true);
-    setTriggerFetch(true);
     setSelectedSort('alphabetical');
   };
 
@@ -81,7 +80,7 @@ const FilterModal = () => {
 
   return (
     <>
-      {/* Background Overlay */}
+      {/* 모달 배경 */}
       <div
         className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in xl:bg-opacity-50 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
@@ -89,34 +88,25 @@ const FilterModal = () => {
         onClick={closeModal}
       />
 
-      {/* Modal Content */}
+      {/* 모달 Wrap */}
       <div
         className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 ${
           isAnimating ? 'translate-y-0' : 'translate-y-[120%]'
         }`}
       >
-        {/* Modal Box */}
+        {/* 모달 Scroll Box */}
         <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
           {/* Modal Header */}
           <div
             className="flex items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] px-[19px]"
             style={{ height: 'auto', padding: '12px 19px' }}
           >
-            {/* <OptimizedImage
+            <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
               className="cursor-pointer p-2"
               onClick={closeModal}
-            /> */}
-            <Image
-              src="/assets/icons/cancelDark.svg"
-              alt="검색 키워드 삭제 아이콘"
-              onClick={closeModal}
-              width={40}
-              height={40}
-              className="cursor-pointer p-2"
             />
-
             <h2 className="pl-[13px] text-title-xl font-bold leading-[135%] text-grayscale-900">
               필터
             </h2>

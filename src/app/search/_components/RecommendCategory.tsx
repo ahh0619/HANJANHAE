@@ -7,19 +7,14 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
+import { RecommendCateGory } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
-type RecommendCateGory = {
-  className?: string;
-  setSearchValue: (val: string) => void;
-};
-
-const RecommendCategory: React.FC<RecommendCateGory> = ({
+const RecommendCategory = ({
   setSearchValue,
   className,
-}) => {
+}: RecommendCateGory) => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const categories = ['리큐르', '약주', '막걸리'];
   const {
     searchTriggerFetch,
