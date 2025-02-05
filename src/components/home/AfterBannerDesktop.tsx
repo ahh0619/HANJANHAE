@@ -12,7 +12,7 @@ const AfterBannerDesktop = () => {
       <div className="flex flex-col">
         <p className="text-title-2xl text-grayscale-100">취향 조사 완료!</p>
         <p className="mt-2 text-title-2xl text-grayscale-100">
-          나만을 위한 추천 리스트가 생성되었어요
+          나만을 위한 추천 리스트를 확인해보세요
         </p>
 
         <button className="it mt-10 flex h-[62px] w-fit items-center rounded-full bg-grayscale-100 bg-white p-4 text-label-xlm text-primary">

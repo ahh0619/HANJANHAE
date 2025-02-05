@@ -3,7 +3,11 @@ import React, { Children, ReactElement, useCallback, useState } from 'react';
 import { StepProps } from '@/types/surveyTypes';
 
 const Step = ({ children }: StepProps) => {
-  return <div>{children}</div>;
+  return (
+    <div className="mx-auto flex w-full max-w-[450px] justify-center">
+      {children}
+    </div>
+  );
 };
 
 const Funnel = ({

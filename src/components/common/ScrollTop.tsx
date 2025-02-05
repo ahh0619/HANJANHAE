@@ -34,7 +34,7 @@ const ScrollTop = () => {
   };
 
   if (
-    ['/signup', '/signin'].includes(pathname) ||
+    ['/signup', '/signin', '/preferences/result'].includes(pathname) ||
     pathname.startsWith('/place')
   ) {
     return null;

@@ -20,13 +20,13 @@ const Page = () => {
   }
 
   return (
-    <div className="flex w-full justify-center">
+    <>
       {isXL ? (
         <PreferencesSection title="내 취향 조사" mode="create" />
       ) : (
         <MobilePreferencesSection />
       )}
-    </div>
+    </>
   );
 };
 
