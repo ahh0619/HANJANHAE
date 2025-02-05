@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: 'https://hanjanhae.vercel.app/assets/thumbnail.png',
-        width: 1086,
-        height: 360,
+        width: 800,
+        height: 400,
         alt: '한잔해 썸네일',
       },
     ],
