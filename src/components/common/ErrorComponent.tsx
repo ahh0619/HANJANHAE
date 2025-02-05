@@ -39,14 +39,14 @@ const ErrorComponent = ({
         <div className="flex flex-row gap-2">
           <button
             onClick={reset}
-            className="text-label-lmb h-[48px] w-[88.7px] rounded-lg border border-primary px-4 py-3 text-primary transition-colors hover:bg-primary hover:text-etc-white"
+            className="h-[48px] w-[88.7px] flex-shrink-0 rounded-lg border border-primary px-4 py-3 text-label-lmb text-primary transition-colors hover:bg-primary hover:text-etc-white"
           >
             이전으로
           </button>
           {/* "홈으로" 버튼 */}
           <button
             onClick={() => router.push('/')}
-            className="text-label-lmb h-[48px] w-[88.7px] rounded-lg border border-primary px-4 py-3 text-primary transition-colors hover:bg-primary hover:text-etc-white"
+            className="h-[48px] w-[88.7px] flex-shrink-0 rounded-lg border border-primary px-4 py-3 text-label-lmb text-primary transition-colors hover:bg-primary hover:text-etc-white"
           >
             홈으로
           </button>
