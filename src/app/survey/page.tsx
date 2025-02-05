@@ -5,17 +5,25 @@ import { useMediaQuery } from 'react-responsive';
 
 import PreferencesSection from '@/app/preferences/customization/_components/PreferencesSection';
 
+import { useModal } from '../providers/ModalProvider';
 import MobilePreferencesSection from './_components/MobilePreferencesSection';
 
 const Page = () => {
-  const [isClient, setIsClient] = useState<boolean>(false);
+  const [isMounted, setisMounted] = useState<boolean>(false);
   const isXL = useMediaQuery({ query: '(min-width: 1280px)' });
+  const { closeModal } = useModal();
 
   useEffect(() => {
-    setIsClient(true);
+    setisMounted(true);
   }, []);
 
-  if (!isClient) {
+  useEffect(() => {
+    if (isXL) {
+      closeModal();
+    }
+  }, [isXL]);
+
+  if (!isMounted) {
     return null;
   }
 

@@ -1,4 +1,5 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useDisableScroll from '@/hooks/search/useDisableScroll';
 import useModalStore from '@/store/modalStore';
 import { SurveyType } from '@/types/preferences';
 
@@ -26,6 +27,7 @@ const AlcoholTypeSelector = ({
   mode,
 }: AlcoholTypeSelectorProps) => {
   const { isModalOpen, openModal, closeModal } = useModalStore();
+  useDisableScroll(isModalOpen);
 
   return (
     <div className="mb-10 w-full xl:mb-[72px]">

@@ -1,8 +1,9 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useModalStore from '@/store/modalStore';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
 import MobileAlcoholExplanationModal from './MobileAlcoholExplanationModal';
@@ -26,9 +27,7 @@ const PreferenceTypeSelection = ({
   currentStep,
 }: PreferenceTypeProps) => {
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const { isModalOpen, openModal, closeModal } = useModalStore();
 
   return (
     <>
