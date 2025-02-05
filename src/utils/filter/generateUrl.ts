@@ -1,16 +1,12 @@
+import { GenerateUrlType } from '@/types/search';
+
 export const generateUrl = ({
   selectedTypes = [],
   alcoholStrength = null,
   tastePreferences = {},
   keyword = '',
   sort = 'alphabetical', // 기본 정렬 값 추가
-}: {
-  selectedTypes?: string[];
-  alcoholStrength?: [number, number] | null;
-  tastePreferences?: Record<string, any>;
-  keyword?: string;
-  sort?: string;
-}): string => {
+}: GenerateUrlType): string => {
   const queryParams = [
     // 선택된 주종
     selectedTypes.length > 0 ? `selectedTypes=${selectedTypes.join(',')}` : '',
@@ -30,7 +26,7 @@ export const generateUrl = ({
     sort ? `sort=${encodeURIComponent(sort)}` : '',
   ]
     .filter(Boolean) // 빈 문자열 제거
-    .join('&');      // '&'로 연결
+    .join('&'); // '&'로 연결
 
   return `/search${queryParams ? `?${queryParams}` : ''}`;
 };

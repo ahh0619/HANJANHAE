@@ -1,220 +1,61 @@
 'use server';
-// app/actions/filterData.ts (서버 액션)
 
-import { Database } from '@/types/supabase';
+import {
+  Drink,
+  DrinkColums,
+  FilterParams,
+  KeywordParams,
+  LikedDrinksWithCount,
+} from '@/types/search';
 import { createClient } from '@/utils/supabase/client';
 
+// 객체 리터럴 문제로 반환되지 않음
+// export type PaginatedResponse<T> = {
+//   items: T[];
+//   nextPage: number | null;
+//   hasNextPage: boolean;
+//   totalCount: number;
+// };
+// export type PaginatedPromise<T> = Promise<PaginatedResponse<T>>;
 
-export type TastePreferences = {
-  sweetness?: number;
-  acidity?: number;
-  carbonation?: number;
-  body?: number;
-};
+// export type DrinkResponse = PaginatedPromise<Drink>;
 
-export type FilterParams = {
-  types: string[];
-  alcoholStrength?: [number, number] | null;
-  tastePreferences?: TastePreferences;
-};
+const allColumns: DrinkColums[] = [
+  'id',
+  'name',
+  'type',
+  'alcohol_content',
+  'image',
+  'sweetness',
+  'acidity',
+  'carbonation',
+  'body',
+];
+// id,name,image,type
 
-export type FilterInifnite = {
-  types: string[];
-  alcoholStrength?: [number, number] | null;
-  tastePreferences?: Record<string, number>;
-  size: number;
-  pageParam: number | null;
-};
+// 동적화로 위에서 변수 값만 변경해서 .select()에 뿌리는 방식
+const excludedKeywordColumns: DrinkColums[] = [
+  'alcohol_content',
+  'sweetness',
+  'acidity',
+  'carbonation',
+  'body',
+];
+//type, alcohol_content, sweetness, acidity, carbonation, body
+const excludedTotalColumns: DrinkColums[] = ['id', 'name', 'type', 'image'];
 
-export type PopularDrinks = {
-  id: string;
-  name: string;
-  image: string;
-  like_count: number;
-};
-export type DrinkWithLikeStats = {
-  id: number; // 음료 ID
-  name: string; // 음료 이름
-  image: string; // 음료 이미지 URL
-  like_count: number; // 각 음료의 좋아요 개수
-  total_likes: number; // 전체 좋아요 개수
-};
+const getColumnsExcept = (excluded: DrinkColums[]): string[] =>
+  allColumns.filter((column) => !excluded.includes(column));
 
-type FetchDrinksWithLikeCountResponse = Database["public"]["Functions"]["fetch_drinks_with_like_count"]["Returns"];
-
-type Drink = Database['public']['Tables']['drinks']['Row'];
-
-// 삭제 예정 필터링 로직
-// export async function filterDrinks({
-//   types,
-//   alcoholStrength,
-//   tastePreferences,
-// }: FilterParams): Promise<Drink[]> {
-//   const supabase = createClient();
-//   // 전체 말고 필요한 필드만 선택해서 가져오기
-//   // let query = supabase.from('drinks').select('*');
-//   let query = supabase
-//     .from('drinks')
-//     .select(
-//       'id, name, type, alcohol_content,image,sweetness, acidity, carbonation, body',
-//     );
-
-//   // 술 타입 필터링
-//   if (types.length > 0) {
-//     query = query.in('type', types);
-//   }
-
-//   // 도수 필터링
-//   if (alcoholStrength) {
-//     const [min, max] = alcoholStrength;
-
-//     // alcohol_content는 numeric 필드이므로 범위로 필터링
-//     query = query.gte('alcohol_content', min).lte('alcohol_content', max);
-//   } else {
-//     // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
-//     query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
-//   }
-
-//   // 맛 카테고리 필터링
-//   if (tastePreferences) {
-//     Object.entries(tastePreferences).forEach(([category, value]) => {
-//       query = query.eq(category, value);
-//     });
-//   }
-
-//   const { data, error } = await query;
-
-//   if (error) {
-//     throw new Error('Error fetching filtered data');
-//   }
-
-//   return data as Drink[];
-// }
+const selectedFilterColumns = allColumns.join(',');
+const selectedKeywordColumns = getColumnsExcept(excludedKeywordColumns).join(
+  ',',
+);
+const selectedTotalColumns = getColumnsExcept(excludedTotalColumns).join(',');
 
 const getRange = (page: number, pageSize: number): [number, number] => {
-  return [(page - 1) * pageSize, page * pageSize - 1]; // ✅ limit 조정
+  return [(page - 1) * pageSize, page * pageSize - 1];
 };
-
-export async function filterDrinks({
-  types,
-  alcoholStrength,
-  tastePreferences,
-  page = 1,
-  pageSize = 10,
-}: FilterParams & { page?: number; pageSize?: number }): Promise<{
-  drinks: Drink[];
-  nextPage: number | null;
-  hasNextPage: boolean;
-  totalCount: number; // 전체 개수 추가
-}> {
-  const supabase = createClient();
-  // 전체 말고 필요한 필드만 선택해서 가져오기
-  // let query = supabase.from('drinks').select('*');
-  let query = supabase
-    .from('drinks')
-    .select(
-      'id, name, type, alcohol_content,image,sweetness, acidity, carbonation, body',
-      { count: 'exact' },
-    );
-
-  // 술 타입 필터링
-  if (types.length > 0) {
-    query = query.in('type', types);
-  }
-
-  // 도수 필터링
-  if (alcoholStrength) {
-    const [min, max] = alcoholStrength;
-
-    // alcohol_content는 numeric 필드이므로 범위로 필터링
-    query = query.gte('alcohol_content', min).lte('alcohol_content', max);
-  } else {
-    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
-    query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
-  }
-
-  // 맛 카테고리 필터링
-  if (tastePreferences) {
-    Object.entries(tastePreferences).forEach(([category, value]) => {
-      query = query.eq(category, value);
-    });
-  }
-  // 페이지네이션 적용
-  const [offset, limit] = getRange(page, pageSize);
-  query = query.range(offset, offset + limit);
-
-  const { data, count, error } = await query;
-
-  // 에러 처리
-  if (error) {
-    throw new Error('Error fetching filtered data');
-  }
-
-  // 다음 페이지 존재유무 확인
-  const hasNextPage = data.length === pageSize;
-  const nextPage = hasNextPage ? page + 1 : null;
-
-  return {
-    drinks: data as Drink[],
-    nextPage,
-    hasNextPage,
-    totalCount: count || 0, // 전체 카운트 반환
-  };
-}
-
-// 기존의 안쓰는 로직 기록용으로 남겨둔 것 삭제 예정
-// export async function filterDrinksByKeyword(keyword: string): Promise<Drink[]> {
-//   const supabase = createClient();
-//   const { data, error } = await supabase
-//     .from('drinks')
-//     .select('id, name,image')
-//     .ilike('name', `%${keyword}%`); // name 컬럼에서 keyword를 포함하는 데이터 검색
-//   if (error) {
-//     throw new Error('Error fetching data by keyword');
-//   }
-
-//   return (data as Drink[]) || [];
-// }
-
-export async function filterDrinksByKeyword({
-  keyword,
-  page = 1,
-  pageSize = 20,
-}: {
-  keyword: string;
-  page?: number;
-  pageSize?: number;
-}): Promise<{
-  drinks: Drink[];
-  nextPage: number | null;
-  hasNextPage: boolean;
-  totalCount: number;
-}> {
-  const supabase = createClient();
-
-  // 페이지네이션 적용
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize;
-
-  const { data, count, error } = await supabase
-    .from('drinks')
-    .select('id, name,image', { count: 'exact' })
-    .ilike('name', `%${keyword}%`) // name 컬럼에서 keyword를 포함하는 데이터 검색
-    .range(offset, offset + limit - 1);
-
-  // 에러처리
-  if (error) {
-    throw new Error('Error fetching data by keyword');
-  }
-  const hasNextPage = data.length === pageSize;
-  const nextPage = hasNextPage ? page + 1 : null;
-  return {
-    drinks: (data as Drink[]) || [],
-    nextPage,
-    hasNextPage,
-    totalCount: count || 0, // 전체 카운트 반환
-  };
-}
 
 // 필터값 sort
 export async function filterSortedDrinks({
@@ -225,12 +66,7 @@ export async function filterSortedDrinks({
   pageSize = 20,
   sortBy = 'name',
   sortOrder = 'asc',
-}: FilterParams & {
-  page?: number;
-  pageSize?: number;
-  sortBy?: keyof Drink;
-  sortOrder?: 'asc' | 'desc';
-}): Promise<{
+}: FilterParams): Promise<{
   drinks: Drink[];
   nextPage: number | null;
   hasNextPage: boolean;
@@ -241,10 +77,7 @@ export async function filterSortedDrinks({
   // let query = supabase.from('drinks').select('*');
   let query = supabase
     .from('drinks')
-    .select(
-      'id, name, type, alcohol_content,image,sweetness, acidity, carbonation, body',
-      { count: 'exact' },
-    );
+    .select(selectedFilterColumns, { count: 'exact' });
 
   // 술 타입 필터링
   if (types.length > 0) {
@@ -288,8 +121,10 @@ export async function filterSortedDrinks({
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
 
+  // 객체 리터럴은 알려진 속성만 이용할 수 있어서
+  // 제네릭 형태로 범용성 있는 형태로 사용이 안되는거 물어보기
   return {
-    drinks: data as Drink[],
+    drinks: data as unknown as Drink[],
     nextPage,
     hasNextPage,
     totalCount: count || 0,
@@ -304,13 +139,7 @@ export async function filterKeywordSortedDrinks({
   pageSize = 20,
   sortBy = 'name',
   sortOrder = 'asc',
-}: {
-  keyword: string;
-  page?: number;
-  pageSize?: number;
-  sortBy?: keyof Drink;
-  sortOrder?: 'asc' | 'desc';
-}): Promise<{
+}: KeywordParams): Promise<{
   drinks: Drink[];
   nextPage: number | null;
   hasNextPage: boolean;
@@ -322,7 +151,7 @@ export async function filterKeywordSortedDrinks({
 
   const { data, count, error } = await supabase
     .from('drinks')
-    .select('id,name,image,type', { count: 'exact' })
+    .select(selectedKeywordColumns, { count: 'exact' })
     .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, limit);
@@ -333,7 +162,7 @@ export async function filterKeywordSortedDrinks({
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
   return {
-    drinks: (data as Drink[]) || [],
+    drinks: (data as unknown as Drink[]) || [],
     nextPage,
     hasNextPage,
     totalCount: count || 0, // 전체 카운트 반환
@@ -349,7 +178,7 @@ export const getPopularDrinks = async ({
   page?: number;
   pageSize?: number;
 }): Promise<{
-  likedDrinks: any[];
+  likedDrinks: LikedDrinksWithCount[];
   nextPage: number | null;
   hasNextPage: boolean;
   totalCount: number;
@@ -408,12 +237,10 @@ export async function getDrinkCount({
   const supabase = createClient();
   // 전체 말고 필요한 필드만 선택해서 가져오기
   // let query = supabase.from('drinks').select('*');
-  let query = supabase
-    .from('drinks')
-    .select('type, alcohol_content, sweetness, acidity, carbonation, body', {
-      count: 'exact',
-      head: true,
-    });
+  let query = supabase.from('drinks').select(selectedTotalColumns, {
+    count: 'exact',
+    head: true,
+  });
 
   // 술 타입 필터링
   if (types.length > 0) {
@@ -450,5 +277,3 @@ export async function getDrinkCount({
     totalCount: count || 0, // 전체 카운트 반환
   };
 }
-
-

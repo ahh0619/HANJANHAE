@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { FilterParams, getDrinkCount } from '@/app/actions/filter';
+import { getDrinkCount } from '@/app/actions/filter';
 import useFilterStore from '@/store/filterStore';
+import { FilterParams } from '@/types/search';
 
 const useDrinkCount = () => {
   const { selectedTypes, alcoholStrength, tastePreferences } = useFilterStore();

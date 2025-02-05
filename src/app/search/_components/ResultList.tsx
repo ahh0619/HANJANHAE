@@ -1,16 +1,29 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+import { fetchUser } from '@/app/actions/auth';
 import ProductCard from '@/components/common/ProductCard';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import useFilterSortedResults from '@/hooks/search/useFilterSortedResults';
 import { useIntersectionObserver } from '@/hooks/search/useInterSectionObserver';
 import useFilterLikedResults from '@/hooks/search/useLikedResults';
 import useSearchSortedResults from '@/hooks/search/useSearchSortedResults';
+import { UserType } from '@/types/Auth';
 
 import Skeleton from './Skeleton';
 import TotalAndSort from './TotalAndSort';
 
-const ResultList = ({ user }) => {
+const ResultList = () => {
+  const [user, setUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await fetchUser();
+      setUser(user);
+    };
+    getUser();
+  }, []);
   const userId = user?.id || '';
 
   const {
@@ -44,27 +57,27 @@ const ResultList = ({ user }) => {
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
 
-  // 3개 중 우선순위대로 활성 데이터 선택
-  // const activeData = isSearchActive
-  //   ? SearchSortData
-  //   : isFilterActive
-  //     ? filterSortData
-  //     : isLikedActive
-  //       ? likedData
-  //       : [];
+  // type any뜨는거 해결해야 함.
+  const cleanData = (data: any[]) =>
+    data.filter((item) => typeof item.id === 'string');
 
   const activeData = Array.from(
     new Map(
       [
-        // filterSortData가 있으면 사용, 없으면 SearchSortData를 대체
-        ...(filterSortData && filterSortData.length > 0
-          ? filterSortData
-          : (SearchSortData ?? [])),
-        // likedData가 배열이면 추가
-        ...(Array.isArray(likedData) && likedData.length > 0 ? likedData : []),
+        ...cleanData(
+          filterSortData && filterSortData.length > 0
+            ? filterSortData
+            : (SearchSortData ?? []),
+        ),
+        ...cleanData(
+          Array.isArray(likedData) && likedData.length > 0 ? likedData : [],
+        ),
       ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
     ).values(),
   );
+  console.log(filterSortData);
+  console.log(SearchSortData);
+  console.log(likedData);
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
   const activeHasNextPage = isSearchActive
     ? hasNextSearchSortPage
@@ -96,7 +109,7 @@ const ResultList = ({ user }) => {
   const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
-  
+
   const {
     isLoading: likeLoading,
     likeMap,
@@ -110,14 +123,15 @@ const ResultList = ({ user }) => {
   // 페이지 레이아웃 남겨두고 다른 코드 남겨두고 결과 부분만 잠시 문제가 있습니다~
   // 표시하고 싶을 수도 있다.
   // 만약 그럴거라면 react query 이용하고 있다면,
+  if (isPending) return <Skeleton />;
+
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
-  // if(isLoading) return <Skeleton/>
+
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {isPending && <Skeleton />}
       {!isPending && activeData.length === 0 && (
         <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
