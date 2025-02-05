@@ -27,7 +27,7 @@ const MainSection = ({ place }: MainSectionProps) => {
             src={place.image}
             alt={place.name}
             fill
-            className="object-cover"
+            className="object-cover xl:rounded-2xl"
           />
         </div>
       </div>
