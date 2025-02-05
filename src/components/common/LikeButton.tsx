@@ -1,6 +1,6 @@
 'use client';
 
-import { HeartIcon } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 type LikeButtonProps = {
   isLiked: boolean;
@@ -14,10 +14,13 @@ const LikeButton = ({ isLiked, onClick }: LikeButtonProps) => {
       className="flex h-10 w-10 items-center justify-center rounded-full p-2 transition-colors"
       aria-label={isLiked ? '좋아요 취소' : '좋아요'}
     >
-      <HeartIcon
-        className={`h-6 w-6 transition-colors ${
-          isLiked ? 'fill-primary text-primary' : 'text-grayscale-900'
-        }`}
+      <OptimizedImage
+        src={
+          isLiked ? '/assets/icons/heart_filled.svg' : '/assets/icons/heart.svg'
+        }
+        alt={isLiked ? '좋아요 취소' : '좋아요'}
+        width={24}
+        height={24}
       />
     </button>
   );

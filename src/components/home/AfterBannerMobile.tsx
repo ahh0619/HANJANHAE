@@ -11,7 +11,7 @@ const AfterBannerMobile = () => {
       <div className="flex flex-col justify-between">
         <div className="text-title-lb text-grayscale-100">
           <p>취향 조사 완료!</p>
-          <p>나만을 위한 추천 리스트가</p>
+          <p>나만을 위한 추천 리스트를</p>
           <p>확인해보세요</p>
         </div>
         <button className="mt-4 flex h-[26px] w-[58px] items-center justify-center rounded-xl bg-grayscale-100 text-body-sm text-primary">

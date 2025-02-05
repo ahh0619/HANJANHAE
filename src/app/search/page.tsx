@@ -4,7 +4,7 @@ import SearchWrap from './_components/SearchWrap';
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div>로딩 중...</div>}>
+    <Suspense>
       <SearchWrap />
     </Suspense>
   );

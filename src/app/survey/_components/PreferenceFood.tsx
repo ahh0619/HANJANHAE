@@ -28,7 +28,7 @@ const PreferenceFood = ({
       currentStep={currentStep}
     >
       {/* 선택 옵션 */}
-      <div className="relative w-[335px]">
+      <div className="relative w-full px-[20px]">
         <input
           type="text"
           placeholder="여기에 안주를 입력해주세요"

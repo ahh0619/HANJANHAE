@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 
+import { transformCloudinaryUrl } from '@/utils/common/transformCloudinaryUrl';
+
 import LikeButton from './LikeButton';
 import OptimizedImage from './OptimizedImage';
 
@@ -15,6 +17,7 @@ type ProductCardProps = {
   onToggleLike: () => void;
   scenario?: ProductCardScenario;
   isNameVisible?: boolean;
+  ispriority?: boolean;
 };
 
 const scenarioToClass = (scenario: ProductCardScenario) => {
@@ -60,8 +63,10 @@ const ProductCard = ({
   onToggleLike,
   scenario = 'default',
   isNameVisible = true,
+  ispriority = false,
 }: ProductCardProps) => {
   const classes = scenarioToClass(scenario);
+  const optimizedUrl = transformCloudinaryUrl(imageUrl);
 
   return (
     <div className={classes.container}>
@@ -76,10 +81,10 @@ const ProductCard = ({
         <div className={classes.image}>
           {/* fill 모드 */}
           <OptimizedImage
-            src={imageUrl}
+            src={optimizedUrl}
             alt={name}
             fill
-            className="rounded-lg object-cover"
+            priority={ispriority}
           />
         </div>
 

@@ -20,7 +20,9 @@ type FilterItem = {
 };
 
 const FilterSideBar = () => {
+  
   const searchParams = useSearchParams();
+  const shouldHideFilterSidebar = searchParams.get('keyword') !== null;
   const router = useRouter();
   const { openModal } = useModalStore();
   const {
@@ -36,10 +38,15 @@ const FilterSideBar = () => {
     setTriggerFetch,
     setValues,
   } = useFilterStore();
-  const paramSelectedTypes = getSelectedTypes(searchParams);
-
-  const paramAlcoholStrength = getAlcoholStrength(searchParams);
-  const paramTastePreferences = getTastePreferences(searchParams);
+  const paramSelectedTypes = shouldHideFilterSidebar
+    ? []
+    : getSelectedTypes(searchParams);
+  const paramAlcoholStrength: [number, number] = shouldHideFilterSidebar
+    ? [0, 100]
+    : getAlcoholStrength(searchParams);
+  const paramTastePreferences = shouldHideFilterSidebar
+    ? {}
+    : getTastePreferences(searchParams);
   console.log(paramTastePreferences);
   const [isUserAction, setIsUserAction] = useState(false);
   const getStrengthLabel = (
@@ -156,7 +163,7 @@ const FilterSideBar = () => {
             <SwiperSlide key={index} style={{ width: 'auto' }}>
               <div
                 key={index}
-                className="flex flex-none shrink-0 items-center gap-1 rounded-full border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
+                className="flex flex-none shrink-0 items-center gap-1 rounded-[16px] border border-primary-200 bg-white px-3 py-2 text-sm font-bold text-primary-200"
               >
                 <span className="flex items-center text-label-mm">
                   {filter.label}

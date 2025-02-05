@@ -1,5 +1,4 @@
 'use client';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -13,13 +12,14 @@ import { generateUrl } from '@/utils/filter/generateUrl';
 const SearchBar = ({
   value,
   onChange,
+  shouldShowResults,
 }: {
   value: string;
   onChange: (val: string) => void;
+  shouldShowResults: boolean;
 }) => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const queryClient = useQueryClient();
   const {
     triggerFetch,
     isFiltered,
@@ -52,6 +52,7 @@ const SearchBar = ({
       });
       router.push(newUrl);
       setSelectedSort('alphabetical');
+      setIsSearchFocuse(false);
     }
   };
 
@@ -71,7 +72,7 @@ const SearchBar = ({
     <div
       className={`${
         isSearchFocus || isFiltered ? 'mt-0' : 'mt-0'
-      } !xl:w-[482px] m-0 mx-auto flex w-full items-center xl:mx-0 xl:w-[482px] ${isFiltered && `xl:w-[588px]`}`}
+      } !xl:w-[482px] m-0 mx-auto flex w-full items-center xl:mx-0 xl:w-[482px] ${shouldShowResults && `xl:w-[588px]`}`}
     >
       <div
         className={`flex h-[48px] w-full items-center justify-between gap-3 rounded-[8px] border border-grayscale-300 bg-white p-[4px_12px] transition ${
@@ -99,14 +100,16 @@ const SearchBar = ({
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            autoComplete="off"
           />
         </div>
-        {(isSearchFocus || isFiltered) && (
+        {isSearchFocus && (
           <OptimizedImage
             src="/assets/icons/cancelDark.svg"
             alt="검색어 삭제 버튼"
             className="cursor-pointer"
             onClick={handleReset}
+            onMouseDown={(e) => e.preventDefault()}
           />
         )}
       </div>

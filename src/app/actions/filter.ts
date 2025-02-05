@@ -95,8 +95,6 @@ const getRange = (page: number, pageSize: number): [number, number] => {
   return [(page - 1) * pageSize, page * pageSize - 1]; // ✅ limit 조정
 };
 
-console.log(getRange(1, 20));
-
 export async function filterDrinks({
   types,
   alcoholStrength,
@@ -319,7 +317,6 @@ export async function filterKeywordSortedDrinks({
   totalCount: number;
 }> {
   const supabase = createClient();
-  console.log('?????????????????????????????????????????');
   // 페이지네이션 적용
   const [offset, limit] = getRange(page, pageSize);
 
@@ -328,7 +325,7 @@ export async function filterKeywordSortedDrinks({
     .select('id,name,image,type', { count: 'exact' })
     .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
     .order(sortBy, { ascending: sortOrder === 'asc' })
-    .range(offset, offset + limit - 1);
+    .range(offset, limit);
 
   if (error) {
     throw new Error('Error fetching data by keyword');

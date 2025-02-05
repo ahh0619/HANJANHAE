@@ -54,7 +54,10 @@ const LoggedInMenu = () => {
       </Link>
 
       <div className="relative">
-        <button onClick={handleMyPageClick} className="flex items-center p-3">
+        <button
+          onClick={handleMyPageClick}
+          className="flex items-center gap-2 p-3"
+        >
           <OptimizedImage
             src="/assets/icons/header-user.svg"
             alt="마이페이지"

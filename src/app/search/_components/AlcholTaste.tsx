@@ -40,7 +40,7 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
 
   return (
     <div className="mt-10 h-[100px]">
-      <h3 className="mb-[22px] text-title-mb font-bold leading-[135%] text-grayscale-900">
+      <h3 className="mb-[16px] text-title-mb font-bold leading-[135%] text-grayscale-900">
         {category}으로 찾기
       </h3>
       <div className="flex items-center justify-between">

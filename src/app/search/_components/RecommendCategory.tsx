@@ -7,6 +7,7 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
+import { generateUrl } from '@/utils/filter/generateUrl';
 
 type RecommendCateGory = {
   className?: string;
@@ -19,7 +20,7 @@ const RecommendCategory: React.FC<RecommendCateGory> = ({
 }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const categories = ['복분자', '약주', '막걸리'];
+  const categories = ['리큐르', '약주', '막걸리'];
   const {
     searchTriggerFetch,
     keyword,
@@ -39,13 +40,12 @@ const RecommendCategory: React.FC<RecommendCateGory> = ({
   const { selectedSort, setSelectedSort } = useSortStore();
 
   const handleCategoryClick = (category: string) => {
-    queryClient.removeQueries({
-      queryKey: ['filterDrinks'],
-      exact: false,
-    });
     setSearchValue(category);
     setKeyword(category);
-    router.push(`/search?query=${encodeURIComponent(category)}`);
+    const newUrl = generateUrl({
+      keyword: category,
+    });
+    router.push(newUrl);
     setTriggerFetch(false);
     setIsFiltered(true);
     setIsSearchFocuse(false);

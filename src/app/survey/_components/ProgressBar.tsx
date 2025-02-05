@@ -6,32 +6,27 @@ const STEPS = [1, 2, 3, 4, 5, 6, 7];
 
 const ProgressBar = ({ currentStep }: ProgressBarProps) => {
   return (
-    <div className="mt-[0px] flex h-[20px] w-[375px] px-[20px]">
-      {STEPS.map((step, index) => (
-        <div key={step} className="flex items-center">
-          {/* 동그라미 */}
+    <div className="relative mt-0 flex h-[20px] w-full items-center px-[20px]">
+      {/* 전체 선 (가운데 정렬, 시작과 끝이 동그라미와 일치) */}
+      <div className="absolute left-1/2 right-1/2 top-0 h-[2px] w-[calc(100%-40px)] -translate-x-1/2 -translate-y-1/2 transform bg-gray-200" />
+
+      {/* 동그라미 배치 */}
+      <div className="relative flex w-full items-center justify-between">
+        {STEPS.map((step) => (
           <p
-            className={`flex items-center justify-center rounded-full border-2 text-[16.335px] font-bold leading-normal ${
+            key={step}
+            className={`relative z-10 flex h-[20px] w-[20px] -translate-y-1/2 transform items-center justify-center rounded-full border-2 text-[16.335px] font-bold leading-normal ${
               step === currentStep
-                ? 'h-[20px] w-[20px] border-primary-200 bg-primary-200 text-white' // 현재 단계
+                ? 'border-primary-200 bg-primary-200 text-white' // 현재 단계
                 : step < currentStep
-                  ? 'h-[10px] w-[10px] border-gray-300 bg-gray-300' // 이전 단계
-                  : 'h-[10px] w-[10px] border-gray-300 bg-white' // 이후 단계
+                  ? 'border-gray-300 bg-gray-300' // 이전 단계
+                  : 'border-gray-300 bg-white' // 이후 단계
             }`}
           >
             {step === currentStep ? step : ''}
           </p>
-
-          {/* 선 */}
-          {index < STEPS.length - 1 && (
-            <div
-              className={`h-[2px] w-[42.5px] ${
-                step < currentStep ? 'bg-gray-300' : 'bg-gray-200'
-              }`}
-            ></div>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
