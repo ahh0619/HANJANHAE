@@ -1,7 +1,6 @@
 import { useRouter } from 'next/navigation';
 
-import Modal from '@/components/common/Modal';
-import useModalStore from '@/store/modalStore';
+import { useModal } from '@/app/providers/ModalProvider';
 import { SurveyType } from '@/types/preferences';
 
 type StepButtonProps = {
@@ -16,7 +15,26 @@ const StepButton = ({
   disabled = false,
 }: StepButtonProps) => {
   const router = useRouter();
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { openModal, closeModal } = useModal();
+
+  const openSurveyExitModal = () => {
+    openModal({
+      title: '취향 설문을 종료하시겠어요?',
+      content: '지금 종료하시면 설문은 저장되지 않습니다.',
+      secondaryAction: {
+        text: '계속하기',
+        onClick: closeModal,
+      },
+      primaryAction: {
+        text: '종료하기',
+        onClick: () => {
+          router.push('/');
+          closeModal();
+        },
+      },
+      showCloseButton: false,
+    });
+  };
 
   return (
     <div className="fixed bottom-[0px] flex w-full max-w-[450px] flex-col items-center px-[20px]">
@@ -34,31 +52,10 @@ const StepButton = ({
 
       <button
         className="mb-[20px] mt-[24px] h-[48px] text-label-lm text-grayscale-500 underline"
-        onClick={openModal}
+        onClick={openSurveyExitModal}
       >
         그만할래요
       </button>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title="취향 설문을 종료하시겠어요?"
-        content={`지금 종료하시면 설문은 저장되지 않습니다.`}
-        secondaryAction={{
-          text: '계속하기 ',
-          onClick: () => {
-            closeModal();
-          },
-        }}
-        primaryAction={{
-          text: '종료하기',
-          onClick: () => {
-            router.push('/');
-            closeModal();
-          },
-        }}
-        showCloseButton={false}
-      />
     </div>
   );
 };

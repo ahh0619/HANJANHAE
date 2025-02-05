@@ -1,8 +1,6 @@
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { fetchSurveyData, updateSurvey } from '@/app/actions/preference';
-import { saveSurveyData } from '@/lib/recommendations';
+import { fetchSurveyData } from '@/app/actions/preference';
 import { useAuthStore } from '@/store/authStore';
 import { SurveyType } from '@/types/preferences';
 
@@ -16,18 +14,7 @@ const usePreferences = (mode: Mode) => {
     useState<Partial<SurveyType> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
   const { user } = useAuthStore();
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     if (mode === 'edit' && user) {
@@ -80,21 +67,6 @@ const usePreferences = (mode: Mode) => {
     });
   };
 
-  const handleSubmit = async () => {
-    console.log('Preferences Saved:', preferences);
-    try {
-      if (mode === 'edit') {
-        await updateSurvey({ surveyData: preferences, userId: user.id });
-        openModal();
-      } else {
-        await saveSurveyData(preferences);
-        router.push('/preferences/result');
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
   const isFormComplete =
     preferences?.type.length > 0 &&
     preferences?.level !== null &&
@@ -111,15 +83,10 @@ const usePreferences = (mode: Mode) => {
     preferences,
     handlePreferenceChange,
     handleTypeChange,
-    handleSubmit,
     isFormComplete,
     hasPreferencesChanged,
     isLoading,
     error,
-    openModal,
-    closeModal,
-    isModalOpen,
-    setIsModalOpen,
   };
 };
 
