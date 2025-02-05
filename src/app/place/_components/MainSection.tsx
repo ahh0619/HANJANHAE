@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useMediaQuery } from 'react-responsive';
 
 import Button from '@/components/auth/Button';
 import OptimizedImage from '@/components/common/OptimizedImage';
@@ -15,8 +14,6 @@ type MainSectionProps = {
 const MainSection = ({ place }: MainSectionProps) => {
   const router = useRouter();
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
-
   return (
     <div className="xl:sticky xl:top-[102px] xl:shrink-0 xl:pb-[200px]">
       <div className="relative">
@@ -25,13 +22,14 @@ const MainSection = ({ place }: MainSectionProps) => {
           label=""
           handleClick={() => router.back()}
         />
-        <OptimizedImage
-          src={place.image}
-          alt={place.name}
-          className="mb-3 h-[280px] w-full object-cover xl:h-[337px] xl:w-[486px]"
-          width={isDesktop ? 486 : 375}
-          height={isDesktop ? 337 : 280}
-        />
+        <div className="mb-3 h-[280px] w-full object-cover xl:h-[337px] xl:w-[486px]">
+          <OptimizedImage
+            src={place.image}
+            alt={place.name}
+            fill
+            className="object-cover xl:rounded-2xl"
+          />
+        </div>
       </div>
 
       <div className="mb-3 flex items-center justify-between px-5">

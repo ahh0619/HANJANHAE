@@ -31,12 +31,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: '한잔해',
     description: 'AI 추천 기반 전통주를 만나보세요!',
-    images: {
-      url: '/assets/thumbnail.png',
-      width: 1086,
-      height: 360,
-      alt: '한잔해 썸네일',
-    },
+    images: [
+      {
+        url: 'https://hanjanhae.vercel.app/assets/thumbnail.png',
+        width: 800,
+        height: 400,
+        alt: '한잔해 썸네일',
+      },
+    ],
   },
   themeColor: '#ffffff',
   appleWebApp: {
@@ -62,7 +64,6 @@ const RootLayout = ({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
           strategy="beforeInteractive"
         />
-        {/* <Script src="/service-worker.js" /> */}
       </head>
       <body
         className={`${pretendard.variable} font-sans text-grayscale-900 antialiased xl:flex xl:h-screen xl:flex-col`}

@@ -20,12 +20,16 @@ const TasteProfileRow: React.FC<TasteProfileRowProps> = ({ label, value }) => {
     <div className="flex w-[336px] items-center gap-x-12 xl:w-[486px] xl:gap-x-14">
       {/* 라벨 */}
       <div>
-        <p className="w-[42px] text-body-mm text-grayscale-900">{label}</p>
+        <p className="w-[44px] flex-shrink-0 text-body-mm text-grayscale-900">
+          {label}
+        </p>
       </div>
 
       {/* 약함과 Bars */}
       <div className="flex items-center gap-x-1">
-        <span className="text-caption-mm text-grayscale-500">약함</span>
+        <span className="flex-shrink-0 text-caption-mm text-grayscale-500">
+          약함
+        </span>
 
         {/* 5칸짜리 바들 */}
         <div className="flex max-w-[246px] flex-1 space-x-1">
@@ -37,7 +41,9 @@ const TasteProfileRow: React.FC<TasteProfileRowProps> = ({ label, value }) => {
           })}
         </div>
 
-        <span className="text-caption-mm text-grayscale-500">강함</span>
+        <span className="flex-shrink-0 text-caption-mm text-grayscale-500">
+          강함
+        </span>
       </div>
     </div>
   );
