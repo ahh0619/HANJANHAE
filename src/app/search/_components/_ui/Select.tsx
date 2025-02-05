@@ -81,7 +81,7 @@ const SelectContent = React.forwardRef<
       align="end"
       ref={ref}
       className={cn(
-        'text-popover-foreground relative -top-1 right-0 z-50 mx-auto max-h-96 w-[120px] w-[full] min-w-[8rem] rounded-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+        'text-popover-foreground relative -top-1 right-0 z-50 mx-auto max-h-96 w-[94px] rounded-md shadow-select data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
         position === 'popper' &&
           'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
         className,
@@ -124,7 +124,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative box-border flex w-[94px] cursor-default select-none items-center justify-center gap-1 border border-transparent bg-white p-3 text-label-mm shadow-md focus:bg-secondary-100 focus:outline-none focus:ring-0',
+      'relative box-border flex w-[94px] cursor-default select-none items-center justify-center gap-1 border border-transparent bg-white p-3 text-label-mm focus:bg-secondary-100 focus:outline-none focus:ring-0',
       'data-[state=checked]:border-secondary-100 data-[state=checked]:bg-secondary-100', // 체크 상태 스타일 추가
       'first:rounded-t-md last:rounded-b-md',
       className,

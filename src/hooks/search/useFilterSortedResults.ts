@@ -12,7 +12,6 @@ import {
 
 const useFilterSortedResults = () => {
   const searchParams = useSearchParams();
-  console.log(searchParams);
 
   const selectedTypes = getSelectedTypes(searchParams);
   const alcoholStrength = getAlcoholStrength(searchParams);
@@ -46,8 +45,6 @@ const useFilterSortedResults = () => {
       retry: 1,
       enabled: hasValidParams && !isLikedMode,
     });
-
-  console.log('hasNextPage:', hasNextPage);
 
   return {
     filterSortData: data?.pages.flatMap((page) => page.drinks) || [],

@@ -1,6 +1,5 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import useFilterStore from '@/store/filterStore';
@@ -13,6 +12,7 @@ import { generateUrl } from '@/utils/filter/generateUrl';
 const RecommendCategory = ({
   setSearchValue,
   className,
+  inputRef,
 }: RecommendCateGory) => {
   const router = useRouter();
   const categories = ['리큐르', '약주', '막걸리'];
@@ -37,6 +37,7 @@ const RecommendCategory = ({
   const handleCategoryClick = (category: string) => {
     setSearchValue(category);
     setKeyword(category);
+    inputRef.current?.blur();
     const newUrl = generateUrl({
       keyword: category,
     });
