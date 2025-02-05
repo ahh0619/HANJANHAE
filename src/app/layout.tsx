@@ -37,6 +37,13 @@ export const metadata: Metadata = {
       },
     ],
   },
+  themeColor: '#ffffff',
+
+  appleWebApp: {
+    capable: true,
+    title: '한잔해',
+    statusBarStyle: 'default',
+  },
 };
 
 const RootLayout = ({
