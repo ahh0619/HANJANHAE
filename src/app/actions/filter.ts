@@ -110,7 +110,6 @@ export async function filterSortedDrinks({
   query = query.range(offset, limit);
 
   const { data, count, error } = await query;
-  console.log(data, count);
 
   // 에러 처리
   if (error) {
@@ -186,13 +185,9 @@ export const getPopularDrinks = async ({
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc('fetch_drinks_with_like_count');
-  if (data) {
-    console.log(data); // data가 DrinkWithLikeStats[] 타입과 일치
-  }
   // 수정된 RPC 함수 호출
 
   if (error) {
-    console.error('Error fetching popular drinks:', error);
     return {
       likedDrinks: [],
       nextPage: null,

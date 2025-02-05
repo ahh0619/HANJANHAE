@@ -32,7 +32,6 @@ const SearchWrap = () => {
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const { isModalOpen } = useModalStore();
   useDisableScroll(isModalOpen);
-  console.log(isFiltered);
   useEffect(() => {
     const handlePopState = () => {
       if (window.location.pathname === '/search') {
