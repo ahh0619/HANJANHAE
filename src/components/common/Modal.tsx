@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white px-5 pb-2 pt-5 text-center shadow-lg xl:w-[400px] xl:px-3 xl:py-5">
+      <div className={`relative flex h-auto w-auto max-w-sm flex-col items-center justify-center rounded-xl bg-etc-white px-5 ${optionalAction ? 'pb-2' : 'pb-[18px]'} pt-5 text-center shadow-lg xl:w-[400px] xl:px-3 xl:py-5`}>
         {/* Close Button (X) */}
         {showCloseButton && (
           <button
