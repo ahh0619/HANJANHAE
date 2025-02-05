@@ -31,6 +31,7 @@ const MyPageAccountOptions = () => {
   const openLogoutModal = () => {
     openModal({
       title: '로그아웃을 하시겠어요?',
+      content: '일부 기능 이용이 제한됩니다.',
       secondaryAction: {
         text: '돌아가기',
         onClick: closeModal,
