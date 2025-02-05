@@ -31,7 +31,10 @@ export default function Home() {
       return;
     }
     if (messagingResolve) {
-      const token = await getToken(messagingResolve);
+      const token = await getToken(messagingResolve, {
+        vapidKey:
+          'BBQI8rviuuVrykTQA00ru0m5UlO9gfFaNSHeR9_i4ml_pCDFqZP5TOpCitQg8VI0N_HusDZMjkAsJ3M1UM7wXHM',
+      });
       setToken(token);
     }
 

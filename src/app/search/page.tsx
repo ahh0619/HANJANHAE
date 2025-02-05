@@ -2,10 +2,12 @@ import { Suspense } from 'react';
 
 import SearchWrap from './_components/SearchWrap';
 
-export default function SearchPage() {
+const SearchPage = () => {
   return (
     <Suspense>
       <SearchWrap />
     </Suspense>
   );
-}
+};
+
+export default SearchPage;

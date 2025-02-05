@@ -6,18 +6,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
+import { FilterItem } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 import {
   getAlcoholStrength,
   getSelectedTypes,
   getTastePreferences,
 } from '@/utils/filter/queryParamsUtils';
-
-type FilterItem = {
-  label: string; // 필터에 표시되는 텍스트
-  value: string | number | [number, number]; // 값은 문자열, 숫자, 또는 배열
-  original: string; // 고유 식별자
-};
 
 const FilterSideBar = () => {
   

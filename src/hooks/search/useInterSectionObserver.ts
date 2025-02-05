@@ -2,11 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-type UseIntersectionObserverParams = {
-  hasNextPage: boolean; // 다음 페이지 존재 여부
-  fetchNextPage: () => void; // 다음 페이지 데이터를 가져오는 함수
-  threshold?: number; // 옵저버의 교차 임계값 (기본값: 1.0)
-};
+import { UseIntersectionObserverParams } from '@/types/search';
 
 export const useIntersectionObserver = ({
   hasNextPage,

@@ -1,11 +1,8 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useModalStore from '@/store/modalStore';
+import { HomeScreenButtonProps } from '@/types/search';
 
-type HomeScreenButtonProps = {
-  className?: string;
-};
-
-const HomeScreenButton: React.FC<HomeScreenButtonProps> = ({className}) => {
+const HomeScreenButton = ({ className }: HomeScreenButtonProps) => {
   const { openModal } = useModalStore();
 
   return (

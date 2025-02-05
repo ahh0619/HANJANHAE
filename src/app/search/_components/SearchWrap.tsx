@@ -10,8 +10,8 @@ import useSearchStore from '@/store/keywordStore';
 import useModalStore from '@/store/modalStore';
 
 import FilterModal from './FilterModal';
-import FilterSearchResults from './FilterSearchResults';
 import FocusInput from './FocusInput';
+import ResultList from './ResultList';
 import SearchLogo from './SearchLogo';
 import StandByScreen from './StandByScreen';
 
@@ -61,7 +61,7 @@ const SearchWrap = () => {
           shouldHideFilterSidebar={shouldHideFilterSidebar}
         />
         {/*굳이 조건문 떡칠보단 하나의 삼항연산자로 합치는걸 고려해보기 */}
-        {shouldShowResults && <FilterSearchResults />}
+        {shouldShowResults && <ResultList />}
         {/* 이 부분은 한번 체크해보기*/}
         {!shouldShowResults && <StandByScreen className="block xl:hidden" />}
         {!shouldShowResults && <StandByScreen className="hidden xl:flex" />}

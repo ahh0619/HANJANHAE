@@ -1,10 +1,7 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
+import { StandBySCreenProps } from '@/types/search';
 
-type StandBySCreenProps = {
-  className?: string;
-};
-
-const StandByScreen: React.FC<StandBySCreenProps> = ({ className }) => {
+const StandByScreen = ({ className }: StandBySCreenProps) => {
   return (
     <div
       className={`bg-gray mt-[76px] flex flex-col items-center xl:mt-[100px] ${className}`}
