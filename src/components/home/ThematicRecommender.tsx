@@ -105,10 +105,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
               {section.items.map((item, itemIndex) => {
                 const isLiked = likeMap[item.id] || false;
                 const isPriority = isDesktop
-                  ? true
-                  : sectionIndex < 2
-                    ? itemIndex < 3
-                    : false;
+                  ? sectionIndex < 2
+                  : sectionIndex < 2 && itemIndex < 3;
                 return (
                   <SwiperSlide key={item.id} style={{ width: 'auto' }}>
                     <ProductCard
