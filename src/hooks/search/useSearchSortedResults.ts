@@ -12,7 +12,6 @@ const useSearchSortedResults = () => {
   const liked = getLiked(searchParams); // "liked" 또는 ""
   const isLikedMode = liked === 'liked';
 
-  // liked 모드라면 검색 쿼리에서 keyword를 무시하도록 합니다.
   // 즉, liked 모드에서는 effectiveKeyword가 undefined가 되어, 검색 쿼리는 활성화되지 않습니다.
   const effectiveKeyword = isLikedMode ? undefined : keyword;
 
@@ -26,7 +25,6 @@ const useSearchSortedResults = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    // effectiveKeyword가 undefined이면, 쿼리 키에 포함되지 않으므로 별개의 쿼리가 실행되지 않습니다.
     queryKey: ['filterDrinks', effectiveKeyword],
     queryFn: ({ pageParam = 1 }) =>
       filterKeywordSortedDrinks({
@@ -38,11 +36,8 @@ const useSearchSortedResults = () => {
     initialPageParam: 1,
     staleTime: 1000 * 60 * 5,
     retry: 1,
-    // liked 모드일 때는 이 쿼리를 실행하지 않습니다.
     enabled: hasValidParams,
   });
-
-  // 전체 데이터 개수 계산
   const totalCount = SearchData?.pages[0]?.totalCount || 0;
 
   return {

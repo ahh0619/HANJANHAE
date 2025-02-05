@@ -1,9 +1,6 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
-
-type TasteRadioButtonProps = {
-  category: string; // "단맛", "신맛" 등 맛 카테고리
-};
+import { TasteRadioButtonProps } from '@/types/search';
 
 const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
   const { tastePreferences, setTastePreferences, removeTastePreference } =

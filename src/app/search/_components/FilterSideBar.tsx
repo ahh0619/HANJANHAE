@@ -6,18 +6,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useModalStore from '@/store/modalStore';
+import { FilterItem } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 import {
   getAlcoholStrength,
   getSelectedTypes,
   getTastePreferences,
 } from '@/utils/filter/queryParamsUtils';
-
-type FilterItem = {
-  label: string; // 필터에 표시되는 텍스트
-  value: string | number | [number, number]; // 값은 문자열, 숫자, 또는 배열
-  original: string; // 고유 식별자
-};
 
 const FilterSideBar = () => {
   
@@ -109,8 +104,6 @@ const FilterSideBar = () => {
       let normalizedKey = key.toLowerCase().trim();
       const numericValue = Number(value); // 여기서 숫자로 변환
       normalizedKey = normalizedKey.replace(/^"(.*)"$/, '$1'); // replace 없으면 동작이 안됨
-      console.log(normalizedKey);
-      console.log(tasteMapping[normalizedKey]);
       return {
         label: `${tasteMapping[normalizedKey] || key}: ${tasteLabels[numericValue] || '알 수 없음'}`,
         value: numericValue, // 혹은 value: numericValue

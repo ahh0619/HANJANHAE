@@ -1,6 +1,6 @@
 import OptimizedImage from '@/components/common/OptimizedImage';
 
-const SearchLogo: React.FC = () => {
+const SearchLogo = () => {
   return (
     <div className="mb-[48px] mt-[33.5px] block flex items-center justify-center xl:hidden">
       <OptimizedImage
