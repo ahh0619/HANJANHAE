@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import 'swiper/css/scrollbar';
+import { Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useProgressbar } from '@/hooks/common/useProgressbar';
 import { PlaceType } from '@/types/place';
 
 import PlaceCard from '../common/PlaceCard';
@@ -17,9 +16,6 @@ type PlaceSectionProps = {
 
 const PlaceSection = ({ places }: PlaceSectionProps) => {
   const [isBrowser, setIsBrowser] = useState(false);
-  const swiperRef = useRef(null);
-  const { onMouseDown, onMouseMove, onMouseUp, isDragging } =
-    useProgressbar(swiperRef);
 
   useEffect(() => {
     setIsBrowser(true);
@@ -39,10 +35,7 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
         <>
           {/* 스와이퍼 */}
           <Swiper
-            modules={[Pagination]}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
+            modules={[Scrollbar]}
             spaceBetween={12}
             slidesPerView="auto"
             breakpoints={{
@@ -50,7 +43,11 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
                 spaceBetween: 20,
               },
             }}
-            pagination={{ el: '.swiper-pagination-place', type: 'progressbar' }}
+            scrollbar={{
+              el: '.swiper-scrollbar-place',
+              draggable: true,
+              hide: false,
+            }}
           >
             {places.map((place) => (
               <SwiperSlide key={place.id} style={{ width: 'auto' }}>
@@ -62,12 +59,7 @@ const PlaceSection = ({ places }: PlaceSectionProps) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div
-            className="swiper-pagination-place mt-4 hidden rounded xl:block"
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-          />
+          <div className="swiper-scrollbar-place mt-4 hidden rounded xl:block" />
         </>
       )}
     </section>

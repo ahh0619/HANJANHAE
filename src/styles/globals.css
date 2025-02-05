@@ -87,24 +87,6 @@
   }
 }
 
-.swiper-pagination-progressbar {
-  @apply h-3 w-full bg-secondary-100 !important;
-  @apply overflow-hidden rounded !important;
-  position: relative !important;
-  top: auto !important;
-  bottom: auto !important;
-}
-
-.swiper-pagination-progressbar-fill {
-  @apply bg-primary-100 !important;
-  position: absolute !important;
-  opacity: 1 !important;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
-
 :root {
   /* Primary Colors */
   --primary-color: #bf324b;
@@ -242,13 +224,11 @@ html {
   /* 기본 스크롤 동작 유지 */
   overflow-y: scroll;
   overflow-x: hidden;
-  
 
   /* 스크롤바 숨기기 */
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
-
 
 .scroll-hidden::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
@@ -256,9 +236,9 @@ html {
 
 @media (min-width: 1280px) {
   .scroll-hidden {
-    overflow-x: hidden;  /* 가로 스크롤 숨김 */
-    overflow-y: auto;    /* 세로 스크롤 표시 */
-    
+    overflow-x: hidden; /* 가로 스크롤 숨김 */
+    overflow-y: auto; /* 세로 스크롤 표시 */
+
     -ms-overflow-style: auto; /* IE/Edge */
     scrollbar-width: auto; /* Firefox */
   }
@@ -292,3 +272,30 @@ html {
   overflow: visible !important;
 }
 
+/* ‘플레이스’ 스크롤바 전체 배경 */
+.swiper-scrollbar-place {
+  background-color: #ffeaed;
+  height: 12px;
+  border-radius: 4px;
+}
+
+/* ‘플레이스’ 스크롤바의 핸들(드래그 바) */
+.swiper-scrollbar-place .swiper-scrollbar-drag {
+  background-color: #bf324b;
+  height: 12px;
+  border-radius: 4px;
+}
+
+/* ‘드링크’ 스크롤바 전체 배경 */
+.swiper-scrollbar-drink {
+  background-color: #ffeaed;
+  height: 12px;
+  border-radius: 4px;
+}
+
+/* ‘드링크’ 스크롤바의 핸들(드래그 바) */
+.swiper-scrollbar-drink .swiper-scrollbar-drag {
+  background-color: #bf324b;
+  height: 12px;
+  border-radius: 4px;
+}

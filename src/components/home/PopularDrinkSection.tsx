@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import 'swiper/css/scrollbar';
+import { Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useProgressbar } from '@/hooks/common/useProgressbar';
 import { useMultipleDrinkLike } from '@/hooks/like/useMultipleDrinkLike';
 import { useAuthStore } from '@/store/authStore';
 import { PopularDrinkType } from '@/types/drink';
@@ -22,9 +21,6 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
   const userId = user?.id || '';
 
   const [isBrowser, setIsBrowser] = useState(false);
-  const swiperRef = useRef(null);
-  const { onMouseDown, onMouseMove, onMouseUp, isDragging } =
-    useProgressbar(swiperRef);
 
   useEffect(() => {
     setIsBrowser(true);
@@ -49,10 +45,7 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
       ) : (
         <>
           <Swiper
-            modules={[Pagination]}
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper;
-            }}
+            modules={[Scrollbar]}
             spaceBetween={12}
             slidesPerView="auto"
             breakpoints={{
@@ -60,7 +53,11 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
                 spaceBetween: 20,
               },
             }}
-            pagination={{ el: '.swiper-pagination-drink', type: 'progressbar' }}
+            scrollbar={{
+              el: '.swiper-scrollbar-drink',
+              draggable: true,
+              hide: false,
+            }}
           >
             {drinks.map((drink) => {
               const isLiked = likeMap[drink.id] || false;
@@ -77,12 +74,7 @@ const PopularDrinkSection = ({ drinks }: PopularDrinkSectionProps) => {
               );
             })}
           </Swiper>
-          <div
-            className="swiper-pagination-drink mt-4 hidden rounded xl:block"
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}
-          />
+          <div className="swiper-scrollbar-drink mt-4 hidden rounded xl:block" />
         </>
       )}
     </section>
