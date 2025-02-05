@@ -21,7 +21,6 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     청량감: 'carbonation',
     바디감: 'body',
   };
-  console.log(tastePreferences);
   const handleCategoryClick = (value: number) => {
     const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
 

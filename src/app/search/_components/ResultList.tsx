@@ -51,8 +51,6 @@ const ResultList = () => {
     fetchNextPage: fetchNextLikePage,
     hasNextPage: hasNextLikePage,
   } = useFilterLikedResults();
-  console.log(likedData);
-
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
@@ -75,9 +73,6 @@ const ResultList = () => {
       ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
     ).values(),
   );
-  console.log(filterSortData);
-  console.log(SearchSortData);
-  console.log(likedData);
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
   const activeHasNextPage = isSearchActive
     ? hasNextSearchSortPage

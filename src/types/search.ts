@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+
 import { Database } from './supabase';
 
 // FocusInput 컴포넌트 Props

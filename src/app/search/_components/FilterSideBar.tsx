@@ -42,7 +42,6 @@ const FilterSideBar = () => {
   const paramTastePreferences = shouldHideFilterSidebar
     ? {}
     : getTastePreferences(searchParams);
-  console.log(paramTastePreferences);
   const [isUserAction, setIsUserAction] = useState(false);
   const getStrengthLabel = (
     strength: [number, number] | null | undefined,
@@ -117,20 +116,17 @@ const FilterSideBar = () => {
     );
 
   const handleRemoveType = (original: string) => {
-    console.log(1);
     setIsUserAction(true);
     removeSelectedType(original);
   };
 
   const handleRemoveStrength = () => {
-    console.log(1);
     setValues([1, 3]);
     setIsUserAction(true);
     removeAlcoholStrength();
   };
 
   const handleRemoveTastePreference = (value: string) => {
-    console.log(1);
     setIsUserAction(true);
     const replaceValue = value.replace(/^"(.*)"$/, '$1');
     removeTastePreference(replaceValue);
