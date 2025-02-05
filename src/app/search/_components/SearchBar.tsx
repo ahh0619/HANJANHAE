@@ -43,7 +43,7 @@ const SearchBar = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.nativeEvent.isComposing === false) {
       e.currentTarget.blur();
       const newKeyword = inputRef.current?.value.trim() || '';
       setKeyword(newKeyword);
