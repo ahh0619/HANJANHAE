@@ -1,11 +1,12 @@
+import { formatDrinkInfoValue } from '@/utils/drink/formatValue';
+
 type InfoRowProps = {
   label: string;
   value: string | number | null;
 };
 
 const DrinkInfoRow = ({ label, value }: InfoRowProps) => {
-  const formattedValue =
-    typeof value === 'number' ? `${value}%` : value || '정보 없음';
+  const formattedValue = formatDrinkInfoValue(value);
 
   return (
     <div className="grid grid-cols-[60px,1fr] gap-x-4">
