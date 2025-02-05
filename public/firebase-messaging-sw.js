@@ -1,41 +1,31 @@
-// Import the functions you need from the SDKs you need
-// import { getAnalytics } from 'firebase/analytics';
 importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
 importScripts(
   'https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js',
 );
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: 'AIzaSyA0NXjBM4Xx8Kil7WLEmrIcidw7-LGbaDs',
+  authDomain: 'hanjanhae-8eb99.firebaseapp.com',
+  projectId: 'hanjanhae-8eb99',
+  storageBucket: 'hanjanhae-8eb99.firebasestorage.app',
+  messagingSenderId: '592077681910',
+  appId: '1:592077681910:web:b062f6351fc5926a8028d7',
+  measurementId: 'G-WB9DWKB5Z7',
 };
-
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// const messaging = firebase.messaging();
 
 firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log('background in ');
-  const title = payload.notification.title + ' (onBackgroundMessage)';
-  const notificationOptions = {
-    body: payload.notification.body,
-    icon: 'https://avatars.githubusercontent.com/sasha1107',
-  };
+  console.log('[firebase-messaging-sw.js] 백그라운드 메시지 수신', payload);
 
-  self.registration.showNotification(title, notificationOptions);
+  const title = payload.data?.title ?? '백그라운드 알림';
+  const body = payload.data?.body ?? '';
+  const icon = '/icons/icon-192.png';
+
+  self.registration.showNotification(title, {
+    body,
+    icon,
+  });
 });

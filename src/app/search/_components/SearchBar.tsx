@@ -7,17 +7,10 @@ import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
 import useSortStore from '@/store/selectStore';
+import { SearchBarProps } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
-const SearchBar = ({
-  value,
-  onChange,
-  shouldShowResults,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  shouldShowResults: boolean;
-}) => {
+const SearchBar = ({ value, onChange, shouldShowResults }: SearchBarProps) => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const {

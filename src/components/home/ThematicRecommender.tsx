@@ -60,14 +60,17 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
     drinkIds: allDrinkIds,
   });
 
+  const [hasErrorToastShown, setHasErrorToastShown] = useState(false);
+
   useEffect(() => {
-    if (isSeasonError || isFoodError || isMoodError) {
+    if (!hasErrorToastShown && (isSeasonError || isFoodError || isMoodError)) {
       openToast(
-        `AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.`,
+        'AI가 추천결과를 가져오지 못하여\n일부 항목은 랜덤 전통주로 대체되었습니다.',
         3000,
       );
+      setHasErrorToastShown(true);
     }
-  }, [isSeasonError, isFoodError, isMoodError, openToast]);
+  }, [isSeasonError, isFoodError, isMoodError, openToast, hasErrorToastShown]);
 
   if (!isBrowser) {
     return null;

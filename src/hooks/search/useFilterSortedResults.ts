@@ -1,7 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
-import { FilterParams, filterSortedDrinks } from '@/app/actions/filter';
+import { filterSortedDrinks } from '@/app/actions/filter';
+import { FilterParams } from '@/types/search';
 import {
   getAlcoholStrength,
   getLiked,
@@ -30,8 +31,6 @@ const useFilterSortedResults = () => {
     tastePreferences,
   };
   const effectiveKeyword = isLikedMode ? undefined : filterParams;
-
-  console.log('filterParams:', filterParams); // ✅ 필터 값 확인
 
   const { data, isPending, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery({

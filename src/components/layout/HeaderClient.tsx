@@ -17,8 +17,8 @@ const HeaderClient = () => {
 
   const isActive = (href: string) => href === pathname;
   const isSearchPage = isActive('/search');
-
   const hasSearchParams = searchParams.toString().length > 0;
+  const isExactSearchPage = isSearchPage && !hasSearchParams;
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -38,7 +38,7 @@ const HeaderClient = () => {
   return (
     <header
       className={`fixed top-0 z-50 hidden h-[102px] w-full transition-colors duration-300 xl:block ${
-        !hasSearchParams && !isScrolled ? 'bg-[#FFEAED80]' : 'bg-white'
+        isExactSearchPage && !isScrolled ? 'bg-[#FFEAED80]' : 'bg-white'
       }`}
     >
       <div className="mx-auto flex h-full w-[1200px] items-center justify-between">
