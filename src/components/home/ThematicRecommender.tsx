@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -30,6 +31,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
   const userId = user?.id || '';
 
   const { openToast } = useToast();
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
 
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
@@ -84,8 +87,8 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
 
   return (
     <div className="mt-9 space-y-9 px-5 xl:mt-[100px] xl:px-10">
-      {sections.map((section, idx) => (
-        <section key={idx}>
+      {sections.map((section, sectionIndex) => (
+        <section key={sectionIndex}>
           <h2 className="mb-3 text-title-lb text-grayscale-900 xl:mb-11 xl:mt-[100px] xl:text-title-xl">
             {section.title}
           </h2>
@@ -99,8 +102,13 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
                 },
               }}
             >
-              {section.items.map((item) => {
+              {section.items.map((item, itemIndex) => {
                 const isLiked = likeMap[item.id] || false;
+                const isPriority = isDesktop
+                  ? true
+                  : sectionIndex < 2
+                    ? itemIndex < 3
+                    : false;
                 return (
                   <SwiperSlide key={item.id} style={{ width: 'auto' }}>
                     <ProductCard
@@ -109,6 +117,7 @@ const ThematicRecommender = ({ recommendations }: ThematicRecommenderProps) => {
                       imageUrl={item.image}
                       isLiked={isLiked}
                       onToggleLike={() => handleToggleLike(item.id)}
+                      ispriority={isPriority}
                     />
                   </SwiperSlide>
                 );

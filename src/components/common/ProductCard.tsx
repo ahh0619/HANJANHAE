@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useMediaQuery } from 'react-responsive';
 
 import { transformCloudinaryUrl } from '@/utils/common/transformCloudinaryUrl';
 
@@ -66,7 +67,11 @@ const ProductCard = ({
   ispriority = false,
 }: ProductCardProps) => {
   const classes = scenarioToClass(scenario);
-  const optimizedUrl = transformCloudinaryUrl(imageUrl);
+  const isDesktop = useMediaQuery({ query: '(min-width: 1280px)' });
+  const mobileUrl = transformCloudinaryUrl(imageUrl, 275);
+  const desktopUrl = transformCloudinaryUrl(imageUrl, 448);
+
+  const finalRenderImageUrl = isDesktop ? desktopUrl : mobileUrl;
 
   return (
     <div className={classes.container}>
@@ -81,7 +86,7 @@ const ProductCard = ({
         <div className={classes.image}>
           {/* fill 모드 */}
           <OptimizedImage
-            src={optimizedUrl}
+            src={finalRenderImageUrl}
             alt={name}
             fill
             priority={ispriority}
