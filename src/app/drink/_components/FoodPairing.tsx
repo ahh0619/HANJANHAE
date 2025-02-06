@@ -1,14 +1,17 @@
 import { fetchFoodPairings } from '@/app/actions/foodpairing';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import { FALLBACK_PAIRINGS } from '@/constants/fallbackPairings';
 
 const FoodPairing = async ({ drinkId }: { drinkId: string }) => {
   const pairings = await fetchFoodPairings(drinkId);
+
+  const finalPairings = pairings.length > 0 ? pairings : FALLBACK_PAIRINGS;
 
   return (
     <section className="mx-auto w-full">
       <h3 className="text-title-lb text-grayscale-900">추천 페어링 음식</h3>
       <div className="mt-4 grid grid-cols-3 justify-items-center gap-8 xl:mt-5 xl:gap-[72px]">
-        {pairings.map((food, index) => (
+        {finalPairings.map((food, index) => (
           <div
             key={index}
             className="flex flex-col items-center justify-center"

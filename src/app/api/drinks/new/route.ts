@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         body: newDrink.name
           ? `"${newDrink.name}" 가 새로 등록되었어요!`
           : '새 음료가 등록되었어요!',
-        click_action: 'https://hanjanhae.vercel.app',
+        click_action: `https://hanjanhae.vercel.app/drink/${newDrink.id}`,
       },
     };
 

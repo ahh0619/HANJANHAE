@@ -73,6 +73,8 @@ export const PushTokenProvider = () => {
         const title = payload.data?.title || '';
         const body = payload.data?.body || '';
         const icon = '/icons/icon-192.png';
+        const clickUrl =
+          payload.data?.click_action || 'https://hanjanhae.vercel.app';
 
         const notification = new Notification(title, {
           body,
@@ -82,7 +84,7 @@ export const PushTokenProvider = () => {
         // 예: 알림 클릭 시 특정 URL로 이동
         notification.onclick = (e) => {
           e.preventDefault();
-          window.open('https://hanjanhae.vercel.app', '_blank')?.focus();
+          window.open(clickUrl, '_blank')?.focus();
           notification.close();
         };
       }
