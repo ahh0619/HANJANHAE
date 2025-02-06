@@ -13,7 +13,6 @@
   더 많은 사람들이 전통주의 매력을 느끼고 즐길 수 있도록 돕기 위해 기획되었습니다.
 - **프로젝트 한 줄 설명 :** <br>사용자 취향에 따른 전통주 추천 및 음식과의 페어링, 전통주 관련 경험을 함께 제공하는 플랫폼.
 
----
 <br>
 
 # 👨‍👩‍👧‍👦 팀 소개
@@ -27,6 +26,8 @@
 <br>
 
 ### 📋 [팀 노션 보러가기](https://www.notion.so/teamsparta/b-028a734a1008456eb3bac5078f586d1d)
+
+<br>
 
 <br>
 
@@ -80,7 +81,9 @@
 - 전통주 상세 페이지에서 리뷰(내용, 별점)를 작성해 다른 사용자와 소통할 수 있습니다.
 - **무한 스크롤** 형태로 리뷰를 볼 수 있어 편리하며, 내 리뷰는 수정·삭제가 가능합니다.
 - **공유하기** 기능을 통해 카카오톡 등 다양한 채널로 손쉽게 콘텐츠를 공유할 수 있습니다.
----
+<br>
+
+<br>
 
 ### 🍀 부가 기능
 
@@ -113,13 +116,13 @@
         - 대량의 메시지 트래픽 처리 경험이 풍부해, 스케일링 문제에 대한 부담이 적습니다.
     3. **다른 Firebase 서비스와의 연계 가능성**
         - 필요 시 Firebase Authentication, Cloud Functions 등 다른 Firebase 서비스를 손쉽게 연동할 수 있어 확장성이 높습니다.
-      
-***
+
+<br>
 
 # 📅 개발기간
 ### 2024. 12. 31. ~ 2025. 02. 06.
 
-***
+<br>
 
 # ⚙️ 기술스택
 
@@ -161,20 +164,27 @@
   <img src="https://img.shields.io/badge/OPEN%20AI%20Assistants-412991?style=for-the-badge&logo=OpenAI&logoColor=white" alt="OPEN AI Assistants Badge">
 
 </div>
+<br>
 
-***
+<br>
 
 # 🚀 시스템 아키텍처
 
 예정
 
-***
+<br>
+
+<br>
 
 # 🔖 ERD
 
 ![스크린샷 2025-02-06 144523](https://github.com/user-attachments/assets/1d8d561b-41d3-4df4-9ae0-5b27ebdcfc66)
 
-# 프로젝트 구조
+<br>
+
+<br>
+
+# 📖 프로젝트 구조
 
 ```
 📦 HANJANHAE
@@ -304,9 +314,148 @@
 └─ 📄 yarn.lock
 ```
 
-***
+<br>
+
+<br>
 
 # 트러블 슈팅
+
+<details>
+<summary><b>로그인 성공 시 zustand에 유저 정보가 제대로 저장되지 않는 이슈</b></h4></summary>
+<div markdown="1">
+
+### **문제 발생**
+
+로그인 성공 시 유저 정보를 zustand에 저장하고 이후 유저 정보가 필요할 때마다 매번 API를 호출하는 것이 아니라 zustand에 저장된 유저 정보를 가져와서 사용하도록 구현하였는데, 로그인을 성공했음에도 불구하고 유저 정보를 제대로 받아오지 못하고 새로고침을 해야 비로소 유저 정보를 받아오는 문제가 발생하였다.
+
+### 원인 파악
+
+```jsx
+'use client';
+
+import { createContext, useContext, useEffect, useState } from 'react';
+
+import { useAuthStore } from '@/store/authStore';
+import { SignInDataType } from '@/types/Auth';
+
+import { fetchUser, signout } from '../actions/auth';
+
+const AuthContext = createContext(null);
+
+export const AuthProvider = ({ children }) => {
+  const { user, setUser, removeUser } = useAuthStore();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const fetchSignedUser = async () => {
+      try {
+        setUser(await fetchUser());
+        setIsAuthenticated(true);
+      } catch (error) {
+        setUser(null);
+        setIsAuthenticated(false);
+      }
+    };
+
+    fetchSignedUser();
+  }, [isAuthenticated]);
+
+/* 로그인 */const login = async (values: SignInDataType) => {
+    try {
+      await signin();
+      setIsAuthenticated(true);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+/* 로그아웃 */const logout = async () => {
+    try {
+      await signout();
+      removeUser();
+      setIsAuthenticated(false);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+```
+
+```jsx
+export const fetchUser = async (): Promise<UserType | null> => {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return null;
+  }
+
+  const { data: userData, error: userError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (userError || !userData) {
+    throw new Error(userError.message || '유저 정보를 가져올 수 없습니다.');
+  }
+
+  return {
+    id: userData.id,
+    nickname: userData.nickname,
+    profile_image: userData.profile_image || null,
+    agree_terms: userData.agree_terms,
+  };
+};
+```
+
+기존 코드를 살펴보면 다음 3가지 동작이 발생할 때마다 fetchUser()의 결과값을 zustand의 user에 반영해주고 있다.
+
+- 서비스에 처음 접속했을 때
+- 화면이 새로고침 됐을 때
+- isAuthenticated 값이 변경될 때
+
+코드에는 문제가 없는 것 같은데 왜 원하는대로 동작을 안하지? 라는 생각을 하면서 fetchUser() 코드를 살펴보는 순간 원인을 알게 되었다. fetchUser() 코드를 살펴보면 getUser()에서 오류가 발생하거나 user 데이터를 반환해주지 않는 경우 에러가 아닌 null 값을 반환하고 있다.
+
+즉, fetchUser()가 null을 반환하게 되면 에러가 나는 상황이 아니기 때문에 isAuthenticated에 true를 적용해주게 되고, 그렇게 되면 로그인을 성공해도 isAuthenticated가 이미 true이기 때문에 useEffect가 실행되지 않아서 setUser()가 실행되지 않게 되는 것이다.
+
+### 해결
+
+```jsx
+useEffect(() => {
+    const fetchSignedUser = async () => {
+        try {
+            const currentUser = await fetchUser();
+            setUser(currentUser);
+            setIsAuthenticated(!!currentUser);
+        } catch (error) {
+            setUser(null);
+            setIsAuthenticated(false);
+        }
+    };
+
+    fetchSignedUser();
+}, [isAuthenticated]);
+```
+
+최종적으로, 단순히 fetchUser()에서 에러가 발생하지 않는다고 무조건 isAuthenticated를 true로 적용하는 것이 아니라 반환값에 따라 적용해줌으로써 문제를 해결할 수 있었다.
+
+<br>
+</div>
+</details>
 
 
 
