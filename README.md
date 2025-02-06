@@ -457,5 +457,902 @@ useEffect(() => {
 </div>
 </details>
 
+<details>
+<summary><b>배포 링크에서 로그인이 너무 오래 걸리는 이슈</b></h4></summary>
+<div markdown="1">
 
+### **문제 발생**
 
+MVP 기능 개발을 마무리하고 중간 발표를 위해서 vercel에 배포를 하였는데, 로컬에서는 문제없이 동작하던 로그인 기능이 배포 링크에서는 너무 오래 걸리는 현상이 발생하였다.
+
+### 원인 파악
+
+가장 먼저 region 문제가 아닐까 싶어서 확인해봤는데 vercel과 supabase 모두 서울로 잘 설정되어 있었다. 계속해서 원인을 찾아보던 중 비슷한 문제를 겪고 있는 stack overflow를 발견하였고, server action을 route handler로 변경해보기로 하였다.
+
+https://stackoverflow.com/questions/78078248/dalle3-request-in-next-js-14-server-actions-leading-to-function-invocation-timeo
+
+### 해결
+
+```jsx
+/* 변경 전 server action */
+
+export const signin = async (data: SignInDataType): Promise<void> => {
+  const supabase = createClient();
+
+  const { email, password } = data;
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw new Error(error.message);
+
+  redirect('/');
+};
+```
+
+```jsx
+/* 변경 후 route handler */
+
+export async function POST(request: Request) {
+  const supabase = createClient();
+
+  const { email, password } = await request.json();
+
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      return NextResponse.json({ errorMessage: error.message });
+    }
+
+    return NextResponse.json({ successMessage: '로그인 성공' });
+  } catch (error: any) {
+    return NextResponse.json({ errorMessage: 'server error' });
+  }
+}
+```
+
+route handler를 사용하니 문제가 해결되었다. 콜드 스타트로 인해 route handler보다는 server action의 속도가 빠르다고 알고 있었는데 정확히 반대되는 결과가 나왔고, 30초 가까이 걸리던 로그인 기능이 server action을 route handler로 변경해주는 것만으로 해결된 이유가 궁금해졌다. 명확한 이유를 알아내지는 못했지만 다음과 같은 이유가 아닐까 추측해보았다.
+
+- 엣지(Edge)와 Node.js(Serverless) 환경의 차이
+    - 엣지 런타임은 빠른 응답을 위해 경량화된 환경에서 동작을 하기 때문에 Node.js의 일부 모듈이나 네이티브 API를 사용할 수 없거나 동작 방식이 달라서 문제가 생길 수 있음
+    - Supabase, OpenAI 같은 일부 라이브러리는 엣지 런타임에 완벽히 호환되지 않는 부분들이 종종 보고됨
+    - WebSocket, 이벤트 스트리밍, 특정 노드 내장 모듈 의존성 등이 있는 경우 문제가 발생할 수 있음
+- 타임아웃(Timeout) 정책 차이
+    - Vercel의 엣지 함수는 기본적으로 매우 짧은 타임아웃이 설정되어 있음
+    - Node.js 함수는 엣지 함수보다 조금 더 긴 타임아웃이나 다른 정책을 적용받을 수 있음
+
+<br>
+</div>
+</details>
+
+<details>
+<summary><b>throw new Error 동작하지 않는 이슈</b></h4></summary>
+<div markdown="1">
+
+### 🛠️ 트러블슈팅: 비동기 함수에서 throw한 에러가 `error.tsx`로 이동하지 않는 문제
+
+---
+
+## 🧐 문제점
+
+Next.js의 클라이언트 컴포넌트에서 `handleSubmit` 함수 내에서 발생한 예외를 `throw new Error(error.message)`로 던졌으나, 예상과 달리 Next.js의 `error.tsx`로 넘어가지 않고 브라우저 콘솔에 `Uncaught (in promise) Error: ...` 만 출력되는 문제가 발생했다.
+
+### 🔍 코드 예시
+
+```tsx
+tsx
+복사편집
+const handleSubmit = async () => {
+  try {
+    if (mode === 'edit') {
+      await updateSurvey({ surveyData: preferences, userId: user.id });
+      handleOpenModal();
+    } else {
+      await saveSurveyData(preferences);
+      router.push('/preferences/result');
+    }
+  } catch (error) {
+    console.log('내 생각대로 왜 안돼');
+    throw new Error(error.message); // `error.tsx`로 넘어가지 않음
+  }
+};
+
+```
+
+### ❗ 예상했던 동작
+
+- `throw new Error(error.message);`가 실행되면 Next.js가 자동으로 `error.tsx`로 이동할 것으로 기대함.
+
+### ❗ 실제 발생한 현상
+
+- `error.tsx`로 넘어가지 않고 브라우저 콘솔에 `Uncaught (in promise)` 오류 메시지가 출력됨.
+- Next.js가 에러를 감지하지 못하고 기본적으로 Promise reject 상태로 남아 있음.
+
+---
+
+## 🔎 원인 분석
+
+1. **비동기 함수에서 발생한 에러는 렌더링 과정에서 발생한 것이 아니다.**
+    - Next.js의 `error.tsx`는 React의 **Error Boundary**를 기반으로 동작하며, 기본적으로 **렌더링 과정(Render Phase) 중 발생한 에러**만 감지할 수 있음.
+    - 하지만 `handleSubmit` 내부에서 발생한 에러는 **이벤트 핸들러(Event Handler)에서 실행된 비동기 코드의 일부**이며, React의 Error Boundary는 이러한 비동기 에러를 잡지 않음.
+2. **비동기 함수에서 발생한 에러는 `Promise.reject` 형태로 처리된다.**
+    - 비동기 함수(`async`/`await`) 내부에서 `throw`하면, JavaScript 엔진은 이를 `Promise.reject(new Error(...))` 형태로 처리함.
+    - React의 렌더링 과정과 별개의 **비동기 콜 스택에서 발생한 에러**이므로 Error Boundary에서 감지할 수 없음.
+3. **렌더링 과정에서 `throw`해야만 `error.tsx`가 작동한다.**
+    - Next.js에서 `error.tsx`(혹은 React의 `ErrorBoundary`)는 컴포넌트가 렌더링되는 동안 발생한 예외를 감지할 수 있음.
+    - 따라서 `catch` 블록에서 직접 `throw`하는 것이 아니라, 상태(state)를 업데이트하여 컴포넌트가 **렌더링 과정 중에** 에러를 던지도록 해야 함.
+
+---
+
+## ✅ 해결 과정
+
+### 🎯 해결 방법: 상태를 활용하여 렌더링 과정에서 에러를 발생시키기
+
+### 1️⃣ `useState`를 활용하여 `error` 상태를 저장
+
+비동기 함수에서 `throw`하는 대신, 에러 상태를 업데이트한 후, **렌더링 과정에서 `throw`** 하도록 수정한다.
+
+```tsx
+tsx
+복사편집
+import { useState } from 'react';
+
+const MyComponent = () => {
+  const [submitError, setSubmitError] = useState(null);
+
+  const handleSubmit = async () => {
+    try {
+      if (mode === 'edit') {
+        await updateSurvey({ surveyData: preferences, userId: user.id });
+        handleOpenModal();
+      } else {
+        await saveSurveyData(preferences);
+        router.push('/preferences/result');
+      }
+    } catch (error) {
+      console.log('내 생각대로 왜 안돼');
+      setSubmitError(error.message); // 상태 업데이트
+    }
+  };
+
+  if (submitError) throw new Error(submitError); // 렌더링 과정에서 에러 발생
+
+  return <button onClick={handleSubmit}>제출</button>;
+};
+
+```
+
+### 🔍 적용 후 예상 동작
+
+- `handleSubmit` 내에서 `setSubmitError(error.message);`가 실행되면,→ `submitError` 상태가 업데이트됨→ React가 해당 컴포넌트를 **재렌더링**함→ 재렌더링 과정에서 `if (submitError) throw new Error(submitError);`가 실행됨→ **이제 이 에러는 “렌더링 과정”에서 발생한 것이므로, `error.tsx`로 정상적으로 이동**함.
+
+---
+
+## 🏆 최종 결론
+
+- **비동기 함수에서 발생한 에러를 React Error Boundary(Next.js의 `error.tsx`)가 자동으로 잡지 않는 이유**→ 비동기 콜백에서 발생한 에러는 **React의 렌더링 과정과 별개로 실행**되기 때문.
+- **해결 방법**→ 에러를 `setState`로 저장하고, 렌더링 과정에서 `throw new Error(...)`를 실행하면 해결됨.
+- **Next.js에서 클라이언트 이벤트 핸들러에서 발생한 에러를 자동으로 `error.tsx`로 이동시키고 싶다면**→ 반드시 “렌더링 중”에 `throw`를 발생시키도록 설계해야 함.
+
+<br>
+</div>
+</details>
+
+<details>
+<summary><b>tailwind css 클래스명을 함수로 분리했을때 값을 불러와지지만 클래스 적용이 되지 않는 이슈</b></h4></summary>
+<div markdown="1">
+
+### 트러블슈팅 : ProductCard
+
+이게 무슨 말이냐하면 이 컴포넌트가 세 가지 버전으로 재사용이 되어야했다.
+
+이전에는 모바일만 했었으니까 쉽게 커스텀을 할 수 있었는데
+데스크탑 버전도 같이 구현해야돼서 참 애를 먹었다.
+
+### 첫 시도
+
+```tsx
+export const productCardVariants = {
+  default: {
+    mobile: {
+      container: 'w-[124px] h-[186px]',
+      image: 'w-[124px] h-[152px]',
+      marginName: 'mt-3',
+    },
+    desktop: {
+      container: 'xl:w-[224px] xl:h-[333px]',
+      image: 'xl:w-[224px] xl:h-[291px]',
+      marginName: 'xl:mt-5',
+    },
+  },
+  result: {
+    mobile: {
+      container: 'w-[124px] h-[186px]',
+      image: 'w-[124px] h-[186px]',
+      marginName: '',
+    },
+    desktop: {
+      container: 'xl:w-[160px] xl:h-[222px]',
+      image: 'xl:w-[160px] xl:h-[222px]',
+      marginName: '',
+    },
+  },
+  search: {
+    mobile: {
+      container: 'w-[163px] h-[241px]',
+      image: 'w-[163px] h-[207px]',
+      marginName: 'mt-3',
+    },
+    desktop: {
+      container: 'xl:w-[224px] xl:h-[333px]',
+      image: 'xl:w-[224px] xl:h-[291px]',
+      marginName: 'xl:mt-5',
+    },
+  },
+  like: {
+    mobile: {
+      container: 'w-[163px] h-[241px]',
+      image: 'w-[163px] h-[207px]',
+      marginName: 'mt-3',
+    },
+    desktop: {
+      container: 'xl:w-[224px] xl:h-[333px]',
+      image: 'xl:w-[224px] xl:h-[291px]',
+      marginName: 'xl:mt-5',
+    },
+  },
+} as const;
+
+export type ProductCardScenario = keyof typeof productCardVariants;
+
+```
+
+- 이렇게 유틸 함수를 하나 만들고,
+
+---
+
+```tsx
+'use client';
+
+import Link from 'next/link';
+import React from 'react';
+import { twMerge } from 'tailwind-merge'; // tailwind merge용 라이브러리(optional)
+
+import LikeButton from './LikeButton';
+import OptimizedImage from './OptimizedImage';
+import {
+  productCardVariants,
+  ProductCardScenario,
+} from '@/constants/productCardVariants';
+
+type ProductCardProps = {
+  /** 전통주 id */
+  id: string;
+  /** 전통주 이름 */
+  name: string;
+  /** 이미지 URL */
+  imageUrl: string;
+  /** 좋아요 여부 */
+  isLiked: boolean;
+  /** 좋아요 토글 함수 */
+  onToggleLike: () => void;
+  /** 데스크탑 & 모바일에서 적용할 사이즈 시나리오 */
+  scenario?: ProductCardScenario; // 추가
+  /** 술 이름 노출 여부 */
+  isNameVisible?: boolean;
+};
+
+/**
+ * 모바일 & 데스크탑에 대응 가능한 Product Card
+ */
+const ProductCard: React.FC<ProductCardProps> = ({
+  id,
+  name,
+  imageUrl,
+  isLiked,
+  onToggleLike,
+  scenario = 'default', // 기본값
+  isNameVisible = true,
+}) => {
+  // scenario 에 해당하는 class들 가져오기
+  const classes = productCardVariants[scenario];
+
+  return (
+    <div
+      // container 부분
+      className={twMerge(
+        'relative flex flex-col', // 공통
+        classes.mobile.container, // 모바일 사이즈
+        classes.desktop.container, // 데스크탑 사이즈
+      )}
+    >
+      {/* 좋아요 버튼 */}
+      <div className="absolute bottom-[34px] right-0 z-10">
+        <LikeButton isLiked={isLiked} onClick={onToggleLike} />
+      </div>
+
+      {/* 상세 페이지 링크 */}
+      <Link href={`/drink/${id}`} className="flex flex-col">
+        {/* 이미지 영역 */}
+        <div
+          className={twMerge(
+            // 공통적인 스타일(테두리, 배경 등)
+            'relative overflow-hidden rounded-[8px] border border-grayscale-200 bg-gray-100 bg-opacity-50',
+            // scenario별로 image 스타일
+            classes.mobile.image,
+            classes.desktop.image,
+          )}
+        >
+          <OptimizedImage
+            src={imageUrl}
+            alt={name}
+            fill
+            className="rounded-lg object-cover"
+          />
+        </div>
+
+        {/* 이름 */}
+        {isNameVisible && (
+          <div
+            className={twMerge(
+              // scenario별 margin top
+              classes.mobile.marginName,
+              classes.desktop.marginName,
+              // 공통적으로 들어가는 스타일
+              'w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm',
+            )}
+          >
+            {name}
+          </div>
+        )}
+      </Link>
+    </div>
+  );
+};
+
+export default ProductCard;
+
+```
+
+- 이런식으로 했는데, 이미지 높이가 1.1212px이렇게 됐다.
+하드코딩을 하면 분명히 되는데 이렇게만 하면 왜 안되지???
+도대체 이유를 모르겠어서 오랜시간 헤메다가 피드백을 요청했다.
+- 모든 값이 불러와지고 클래스도 잘 들어가지만
+Tailwind가 위와 같은식으로 불러오면 먹히질 않는다...
+
+---
+
+### 피드백 반영
+
+```tsx
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* ======================== default 시나리오 ======================== */
+  .product-card-default {
+    @apply relative flex h-[186px] w-[124px] flex-col;
+  }
+  .product-card-default-image {
+    @apply relative h-[152px] w-[124px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  /* 좋아요 버튼 (default) */
+  .product-card-default-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-default {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-default-image {
+      @apply h-[291px] w-[224px];
+    }
+    /* 데스크톱에서만 bottom-44px, right-8px */
+    .product-card-default-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+
+  /* ======================== result 시나리오 ======================== */
+  .product-card-result {
+    @apply relative flex h-[186px] w-[124px] flex-col;
+  }
+  .product-card-result-image {
+    @apply relative h-[186px] w-[124px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  /* 좋아요 버튼 (result) → bottom:0, right:0 */
+  .product-card-result-likeBtn {
+    @apply absolute bottom-0 right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-result {
+      @apply h-[222px] w-[160px];
+    }
+    .product-card-result-image {
+      @apply h-[222px] w-[160px];
+    }
+    /* result 시나리오에서 데스크톱도 그대로 bottom-0 right-0
+       => 별도 추가 스타일이 없다면 비워둬도 됨
+    */
+  }
+
+  /* ======================== search 시나리오 ======================== */
+  .product-card-search {
+    @apply relative flex h-[241px] w-[163px] flex-col;
+  }
+  .product-card-search-image {
+    @apply relative h-[207px] w-[163px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  /* 좋아요 버튼도 default와 동일한 위치라 가정 */
+  .product-card-search-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-search {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-search-image {
+      @apply h-[291px] w-[224px];
+    }
+    /* desktop 시 위치 */
+    .product-card-search-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+
+  /* ======================== like 시나리오 ======================== */
+  .product-card-like {
+    @apply relative flex h-[241px] w-[163px] flex-col;
+  }
+  .product-card-like-image {
+    @apply relative h-[207px] w-[163px] overflow-hidden rounded-lg border border-grayscale-200 bg-gray-100 bg-opacity-50;
+  }
+  /* 좋아요 버튼도 default와 동일한 위치라 가정 */
+  .product-card-like-likeBtn {
+    @apply absolute bottom-[34px] right-0 z-10;
+  }
+
+  @screen xl {
+    .product-card-like {
+      @apply h-[333px] w-[224px];
+    }
+    .product-card-like-image {
+      @apply h-[291px] w-[224px];
+    }
+    .product-card-like-likeBtn {
+      @apply bottom-[44px] right-[8px];
+    }
+  }
+}
+
+```
+
+- 대충 이런식으로 글로벌.css에 설정해주고,
+
+---
+
+```tsx
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+
+import LikeButton from './LikeButton';
+
+type ProductCardScenario = 'default' | 'result' | 'search' | 'like';
+
+type ProductCardProps = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  isLiked: boolean;
+  onToggleLike: () => void;
+  scenario?: ProductCardScenario;
+  isNameVisible?: boolean;
+};
+
+const scenarioToClass = (scenario: ProductCardScenario) => {
+  switch (scenario) {
+    case 'default':
+      return {
+        container: 'product-card-default',
+        image: 'product-card-default-image',
+        likeBtn: 'product-card-default-likeBtn',
+      };
+    case 'result':
+      return {
+        container: 'product-card-result',
+        image: 'product-card-result-image',
+        likeBtn: 'product-card-result-likeBtn',
+      };
+    case 'search':
+      return {
+        container: 'product-card-search',
+        image: 'product-card-search-image',
+        likeBtn: 'product-card-search-likeBtn',
+      };
+    case 'like':
+      return {
+        container: 'product-card-like',
+        image: 'product-card-like-image',
+        likeBtn: 'product-card-like-likeBtn',
+      };
+    default:
+      return {
+        container: 'product-card-default',
+        image: 'product-card-default-image',
+        likeBtn: 'product-card-default-likeBtn',
+      };
+  }
+};
+
+const ProductCard = ({
+  id,
+  name,
+  imageUrl,
+  isLiked,
+  onToggleLike,
+  scenario = 'default',
+  isNameVisible = true,
+}: ProductCardProps) => {
+  const classes = scenarioToClass(scenario);
+
+  return (
+    <div className={classes.container}>
+      {/* 좋아요 버튼 */}
+      <div className={classes.likeBtn}>
+        <LikeButton isLiked={isLiked} onClick={onToggleLike} />
+      </div>
+
+      {/* 상세 페이지 링크 */}
+      <Link href={`/drink/${id}`} className="flex flex-col">
+        {/* 이미지 영역 */}
+        <div className={classes.image}>
+          {/* fill 모드 */}
+          <Image
+            src={imageUrl}
+            alt={name}
+            fill
+            className="rounded-lg object-cover"
+          />
+        </div>
+
+        {/* 이름 */}
+        {isNameVisible && (
+          <div className="mt-3 w-full overflow-hidden text-ellipsis whitespace-nowrap text-left text-title-mm xl:mt-5">
+            {name}
+          </div>
+        )}
+      </Link>
+    </div>
+  );
+};
+
+export default ProductCard;
+
+```
+
+- 이런식으로 해줬더니 이제 잘된다.
+- `scenarioToClass` :
+유틸함수로 분리가 가능할것 같아서 분리했다가 실패했다.
+마찬가지로 다른 파일에서 불러오는것은 안될것같아서 어쩔 수 없이 이 컴포넌트내에서 처리했다.
+
+<br>
+</div>
+</details>
+
+<details>
+<summary><b>검색 시 데이터 깜빡이면서 2번 불러오는 문제</b></h4></summary>
+<div markdown="1">
+
+## 문제발생 :
+
+기존 setState 를 이용해 검색을 하던 방식에서
+
+파라미터를 이용한 검색 로직으로 리팩토링 중
+
+데이터를 파라미터를 통해 불러오긴 하나
+
+이전 데이터를 한번 보여주고 깜빡이며 새로운 데이터를 
+
+불러오는 문제가 발생하였습니다.
+
+## 원인 :
+
+```jsx
+// useInfiniteQuery 커스텀 훅
+
+const useFilterSortedResults = () => {
+  const searchParams = useSearchParams();
+
+  const selectedTypes = getSelectedTypes(searchParams);
+  const alcoholStrength = getAlcoholStrength(searchParams);
+  const tastePreferences = getTastePreferences(searchParams);
+  const { selectedSort } = useSortStore();
+
+  const filterParams: FilterParams = {
+    types: selectedTypes,
+    alcoholStrength,
+    tastePreferences,
+  };
+
+  const { data, isLoading, isError, fetchNextPage, hasNextPage, refetch } =
+    useInfiniteQuery({
+      // filterSortedDrinks
+      queryKey: ['filterDrinks', filterParams, selectedSort === 'alphabetical'],
+      queryFn: ({ pageParam = 1 }) =>
+        filterSortedDrinks({ ...filterParams, page: pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.hasNextPage ? lastPage.nextPage : null,
+      initialPageParam: 1,
+      enabled: false,
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    });
+  // triggerFetch true일 때 refetch 호출
+  useEffect(() => {
+    if (triggerFetch) {
+      refetch(); // enabled false를 이용한 트리거
+      setTriggerFetch(false);
+    }
+  }, [triggerFetch]);
+
+  // 전체 데이터 개수 계산
+  const totalCount = data?.pages[0]?.totalCount || 0;
+
+  return {
+    filterSortData: data?.pages.flatMap((page) => page.drinks) || [],
+    isLoading,
+    totalCount,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+  };
+};
+```
+
+```jsx
+ // 필터 정보 적용눌렀을 때 
+ const handleApplyfilters = () => {
+    const newUrl = useNavigateToFilter();
+    queryClient.removeQueries({
+      queryKey: ['filterDrinks'],
+      exact: false,
+    });
+    router.push(newUrl);
+    if (alcoholStrength === null) {
+      setAlcoholStrength([0, 100]);
+    }
+    closeModal();
+    setIsFiltered(true);
+    setTriggerFetch(true);
+    setSelectedSort('alphabetical');
+  };
+```
+
+이전에 단순이 검색할 때 라우터만 변경되게 흉내냈고,
+
+queryClient.removeQueries() 로 기존의 queryKey를 한번
+
+지워내고, 새로운 데이터를 패칭하는 방식을 사용하였다.
+
+검색버튼을 눌렀을 때 useInfiniteQuery에선 useEffect로
+
+triggerFetch가 변경되었을 때 enabled로 인해 동작하게 구동하였습니다.
+
+## 원인 파악 :
+
+```jsx
+const useNavigateToFilter = () => {
+  const router = useRouter(); 
+
+  const navigateToFilter = useCallback(
+    (
+      selectedTypes: string[],
+      alcoholStrength: [number, number] | null,
+      tastePreferences: TastePreferences,
+    ) => {
+      if (!router) return; 
+
+      const params = new URLSearchParams();
+
+      if (selectedTypes.length > 0) {
+        params.append('selectedTypes', selectedTypes.join(','));
+      }
+
+      if (alcoholStrength) {
+        params.append('alcoholStrength', JSON.stringify(alcoholStrength));
+      }
+
+      if (Object.keys(tastePreferences).length > 0) {
+        params.append(
+          'tastePreferences',
+          encodeURIComponent(JSON.stringify(tastePreferences)),
+        );
+      }
+
+      router.replace(`/search?${params.toString()}`);
+    },
+    [router],
+  );
+
+  return navigateToFilter;
+};
+
+```
+
+```jsx
+ const handleApplyfilters = () => {
+    const newUrl = useNavigateToFilter();
+    queryClient.removeQueries({
+      queryKey: ['filterDrinks'],
+      exact: false,
+    });
+    router.push(newUrl);
+    setTriggerFetch(true);
+  };
+```
+
+필터를 진행했을 때 파라미터로 전환하는 useNavigateToFilter 라는 유틸함수를 이용하였고,
+
+(커스텀 훅이라 생각했지만 커스텀 훅의 형태는 아니기에 정정합니다.)
+
+위의 필터 값을 파라미터로 변환하는 과정에서
+
+.append() 를 이용하였는데 URLsearchParams의 내부 메서드를 여러번 호출하기 때문에 원인이 될 수 있었다.
+
+또한 아래의 queryClient.removeQueries도 문제였는데
+
+비동기로 처리되어 이전에 깜빡이는 문제의 원인은
+
+캐싱된 데이터 지워짐 → 파라미터에 이미 존재하는 값이 존재함 → useInfiniteQuery가 패칭함 → 뒤늦게 router.push가 이루어짐 → useInfiniteQuery가 변경된 URL로 재요청을 보냄
+
+## 해결 :
+
+```jsx
+// useInfiniteQuery 커스텀 훅 리팩토링
+const useFilterSortedResults = () => {
+  const searchParams = useSearchParams();
+
+  const selectedTypes = getSelectedTypes(searchParams);
+  const alcoholStrength = getAlcoholStrength(searchParams);
+  const tastePreferences = getTastePreferences(searchParams);
+
+  const liked = getLiked(searchParams);
+  const isLikedMode = liked === 'liked';
+  const hasValidParams =
+    searchParams.get('selectedTypes') !== null ||
+    searchParams.get('alcoholStrength') !== null ||
+    searchParams.get('tastePreferences') !== null;
+
+  const filterParams: FilterParams = {
+    types: selectedTypes,
+    alcoholStrength,
+    tastePreferences,
+  };
+  const effectiveKeyword = isLikedMode ? undefined : filterParams;
+
+  const { data, isPending, isError, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ['filterDrinks', effectiveKeyword],
+      queryFn: ({ pageParam = 1 }) => {
+        return filterSortedDrinks({ ...filterParams, page: pageParam });
+      },
+      getNextPageParam: (lastPage) => {
+        return lastPage.hasNextPage ? lastPage.nextPage : null;
+      },
+      initialPageParam: 1,
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+      enabled: hasValidParams && !isLikedMode,
+    });
+
+  return {
+    filterSortData: data?.pages.flatMap((page) => page.drinks) || [],
+    isPending,
+    totalCount: data?.pages[0]?.totalCount || 0,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+  };
+};
+```
+
+```jsx
+// .append() 대신 & 를 이용 
+export const generateUrl = ({
+  selectedTypes = [],
+  alcoholStrength = null,
+  tastePreferences = {},
+  keyword = '',
+  sort = 'alphabetical',
+}: GenerateUrlType): string => {
+  const queryParams = [
+    selectedTypes.length > 0 ? `selectedTypes=${selectedTypes.join(',')}` : '',
+
+    alcoholStrength ? `alcoholStrength=${JSON.stringify(alcoholStrength)}` : '',
+
+    Object.keys(tastePreferences).length > 0
+      ? `tastePreferences=${encodeURIComponent(JSON.stringify(tastePreferences))}`
+      : '',
+
+    keyword ? `keyword=${encodeURIComponent(keyword)}` : '',
+
+    sort ? `sort=${encodeURIComponent(sort)}` : '',
+  ]
+    .filter(Boolean)
+    .join('&');
+
+  return `/search${queryParams ? `?${queryParams}` : ''}`;
+};
+
+// 파라미터 생성 함수 하나로 관리하다 개별 함수로 분리
+export const getSelectedTypes = (searchParams: URLSearchParams): string[] => {
+  return searchParams.get('selectedTypes')
+    ? searchParams.get('selectedTypes')!.split(',')
+    : [];
+};
+
+export const getAlcoholStrength = (
+  searchParams: URLSearchParams,
+): [number, number] | null => {
+  if (!searchParams.get('alcoholStrength')) return null;
+  try {
+    const values = JSON.parse(searchParams.get('alcoholStrength')!) as [
+      number,
+      number,
+    ];
+    return Array.isArray(values) && values.length === 2 ? values : null;
+  } catch (error) {
+    console.error('Invalid alcoholStrength format:', error);
+    return null;
+  }
+};
+
+export const getTastePreferences = (
+  searchParams: URLSearchParams,
+): Record<string, number> => {
+  if (!searchParams.get('tastePreferences')) return {};
+  return Object.fromEntries(
+    searchParams
+      .get('tastePreferences')!
+      .replace(/^\{|\}$/g, '')
+      .split(',')
+      .map((pair) => {
+        const [key, value] = pair.split(':').map((item) => item.trim());
+        return [key, Number(value)];
+      }),
+  );
+};
+
+```
+
+```jsx
+  // 입력 시 아래와 같이 수정
+  const handleApplyfilters = () => {
+    setIsFiltered(true);
+    const newUrl = generateUrl({
+      selectedTypes,
+      alcoholStrength,
+      tastePreferences,
+    });
+    router.push(newUrl);
+    closeModal();
+  };
+```
+
+위와 같이 수정하여 2번 깜빡이는 문제를 해결하였다.
+
+<br>
+</div>
+</details>
