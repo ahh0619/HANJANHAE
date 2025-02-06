@@ -21,10 +21,23 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/10-396-57-178.png" alt="안현희" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-239-26-75.png" alt="김현지" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-512-32-308.png" alt="박가나" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-239-26-73.png" alt="김호준" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/10-605-57-250.png" alt="조혜빈" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-46-35-137.png" alt="유지연" width="100"> |
 | **팀장** | **팀원** | **팀원** | **팀원** | **디자이너** | **디자이너** |
+| 말포이 | 론 위즐리 | 헤르미온느 | 해리포터 | 덤블도어 | 도비 |
 | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ahh0619/HANJANHAE)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@hhyun19/posts) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/hyeonjy)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@hg024246/posts) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ParkGana)<br>[![Tistory Badge](https://img.shields.io/badge/TISTORY-F36C00?style=for-the-badge&logo=blogger&logoColor=white)](https://dev-gana.tistory.com/) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/minjun2131)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@minjun23221/posts) | [![HelloThere Badge](https://img.shields.io/badge/HELLO%20THERE-FFA500?style=for-the-badge)](#)<br>[![Designer Badge](https://img.shields.io/badge/%F0%9F%8E%A8LET’S%20CREATE-C084FC?style=for-the-badge&logoColor=white)](#) | [![HiGuys Badge](https://img.shields.io/badge/HI%20GUYS-FFA500?style=for-the-badge)](#)<br>[![Designer Badge](https://img.shields.io/badge/%F0%9F%8E%A8NEED%20DESIGN%3F-FF5CAC?style=for-the-badge&logoColor=white)](#) |
 
+<br>
 
+## 역할 분담
 
+아래 아이콘과 함께 **기능 담당**을 표로 정리했습니다.
+
+|         | 담당 기능                                                      |
+|:-------:|:------------------------------------------------------------:|
+| 🍶 **안현희**  | **공통 컴포넌트**, **주류 상세 페이지**, **마이 페이지**     |
+| 🐱 **김현지**  | **취향 조사 페이지**, **좋아요 페이지**, **내 취향 관리 페이지** |
+| 📝 **박가나**  | **홈 페이지**, **회원가입/로그인 페이지**, **다이닝바 상세 페이지** |
+| 🔍 **김호준**  | **검색 페이지**, **검색 결과 페이지**                      |
+| 🎨 **조혜빈**  | **UX/UI, 모바일 및 웹 디자인**                              |
+| 🎨 **유지연**  | **UX/UI, 모바일 및 웹 디자인**                              |
 
 
 
