@@ -22,8 +22,37 @@ messaging.onBackgroundMessage((payload) => {
   const body = payload.data?.body ?? '';
   const icon = '/icons/icon-192.png';
 
+  const clickUrl = payload.data?.click_action || 'https://hanjanhae.vercel.app';
+
   self.registration.showNotification(title, {
     body,
     icon,
+    data: {
+      url: clickUrl,
+    },
   });
+});
+
+self.addEventListener('notificationclick', async (event) => {
+  event.notification.close();
+  event.waitUntil(
+    (async () => {
+      const urlToOpen =
+        event.notification.data?.url || 'https://hanjanhae.vercel.app';
+      const clientList = await clients.matchAll({
+        type: 'window',
+        includeUncontrolled: true,
+      });
+
+      const matchedClient = clientList.find((client) =>
+        client.url.includes(urlToOpen),
+      );
+
+      if (matchedClient && 'focus' in matchedClient) {
+        return matchedClient.focus();
+      } else {
+        return clients.openWindow(urlToOpen);
+      }
+    })(),
+  );
 });
