@@ -173,7 +173,8 @@
 
 # 🚀 시스템 아키텍처
 
-예정
+![undefined (3)](https://github.com/user-attachments/assets/9e8423d0-0c53-44d4-9131-0415bee54296)
+
 
 <br>
 
