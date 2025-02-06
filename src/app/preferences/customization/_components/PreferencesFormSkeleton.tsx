@@ -1,7 +1,7 @@
 const PreferencesFormSkeleton = () => {
   return (
     <div className="px-[19px]">
-      {/* 1. 술 종류 선택 영역 스켈레톤 */}
+      {/* 1. 술 종류 선택 영역  */}
       <div className="mb-10 h-[130px] w-[311px] xl:w-[350px]">
         <div className="mb-[16px] h-[20px] w-[250px] animate-pulse rounded bg-gray-200 xl:h-[27px]" />
         <div className="mb-[16px] mt-[3px] hidden h-[27px] w-[150px] animate-pulse rounded bg-gray-200 xl:block" />
@@ -16,7 +16,7 @@ const PreferencesFormSkeleton = () => {
         </div>
       </div>
 
-      {/* 2. 도수 선택 영역 스켈레톤 */}
+      {/* 2. 도수 선택 영역 */}
       <div className="mb-10 xl:mt-[100px]">
         <div className="mb-[16px] h-[20px] w-[150px] animate-pulse rounded bg-gray-200 xl:h-[27px]" />
 
@@ -49,13 +49,13 @@ const PreferencesFormSkeleton = () => {
         </div>
       ))}
 
-      {/* 4. 안주 입력 영역 스켈레톤 */}
+      {/* 4. 안주 입력 영역 */}
       <div className="mb-[60px] mt-[50px]">
         <div className="mb-[16px] h-[40px] w-[230px] animate-pulse rounded bg-gray-200" />
         <div className="h-[48px] w-full animate-pulse rounded bg-gray-200" />
       </div>
 
-      {/* 5. 저장하기 버튼 스켈레톤 */}
+      {/* 5. 저장하기 버튼  */}
       <div className="mb-[20px] mt-[80px] h-[54px] w-full animate-pulse rounded-[8px] bg-gray-200 xl:mt-[170px]" />
     </div>
   );

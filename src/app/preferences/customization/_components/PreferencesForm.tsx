@@ -78,9 +78,7 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
         router.push('/preferences/result');
       }
     } catch (error) {
-      console.log('내 생각대로 왜 안돼');
       setSubmitError(error.message);
-      // throw Error(error.message);
     }
   };
 

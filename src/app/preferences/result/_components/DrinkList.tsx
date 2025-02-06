@@ -16,14 +16,13 @@ type DrinkListProps = {
 const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   const allDrinkIds = drinks.map((d) => d.drink_id);
 
-  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
+  const { likeMap, handleToggleLike } = useMultipleDrinkLike({
     userId: userId || '',
     drinkIds: allDrinkIds,
   });
 
   return (
-    <div className="mx-auto mb-[-108px] w-full min-w-[340px] max-w-[640px] xl:max-w-none">
-      {/* Back Button과 제목 */}
+    <div className="mx-auto mb-[-108px] w-full min-w-[340px] max-w-[640px] xl:max-w-none xl:px-[0px]">
       <div className="mx-auto flex w-full flex-col items-center xl:hidden">
         <Link
           href={'/'}
@@ -47,18 +46,16 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
       </div>
 
       {/* 카드 리스트 */}
-      <div className="mx-auto flex w-full min-w-[340px] flex-col items-center px-[20px] xl:mb-[160px] xl:h-[846px] xl:py-[50px]">
+      <div className="mx-auto flex w-full min-w-[340px] flex-col items-center px-[20px] xl:mb-[160px] xl:h-[846px] xl:px-[40px] xl:py-[50px]">
         <div className="grid grid-cols-1 gap-x-8 gap-y-[20px] sm:grid-cols-1 xl:grid-cols-2 xl:gap-y-[40px]">
           {drinks.map((drink) => {
             const isLiked = likeMap[drink.drink_id] || false;
 
             return (
-              <Link
-                href={`/drink/${drink.drink_id}`}
+              <div
                 key={drink.name}
                 className="mx-auto flex h-[186px] w-full items-start gap-5 xl:h-[222px]"
               >
-                {/* 이미지 영역 */}
                 <div className="flex-shrink-0">
                   <ProductCard
                     id={drink.drink_id}
@@ -71,11 +68,12 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                   />
                 </div>
 
-                {/* 텍스트 영역 */}
-                <div className="flex flex-col justify-start">
-                  {/* 주종 */}
+                <Link
+                  href={`/drink/${drink.drink_id}`}
+                  className="flex w-full flex-col justify-start"
+                >
                   <div className="flex text-grayscale-900">
-                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                    <p className="w-[45px] flex-shrink-0 text-title-sb xl:w-[60px] xl:text-title-mb">
                       주종
                     </p>
                     <p className="ml-[12px] text-body-sm xl:text-body-mm">
@@ -83,9 +81,8 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                     </p>
                   </div>
 
-                  {/* 술 이름 */}
                   <div className="mt-[12px] flex text-grayscale-900">
-                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                    <p className="w-[45px] flex-shrink-0 text-title-sb xl:w-[60px] xl:text-title-mb">
                       술 이름
                     </p>
                     <p className="ml-[12px] text-body-sm xl:text-body-mm">
@@ -93,17 +90,16 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
                     </p>
                   </div>
 
-                  {/* 추천 이유 */}
                   <div className="mt-[12px] flex text-grayscale-900">
-                    <p className="w-[45px] text-title-sb xl:w-[60px] xl:text-title-mb">
+                    <p className="w-[45px] flex-shrink-0 text-title-sb xl:w-[60px] xl:text-title-mb">
                       추천 이유
                     </p>
                     <p className="ml-[12px] text-body-sm xl:text-body-mm">
                       {drink.reason}
                     </p>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             );
           })}
         </div>

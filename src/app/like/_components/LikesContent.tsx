@@ -37,7 +37,7 @@ const LikesContent = () => {
   const allLikes = likesData?.pages.flatMap((page) => page.data) || [];
   const allDrinkIds = allLikes.map((item) => item.drink_id);
 
-  const { isLoading, likeMap, handleToggleLike } = useMultipleDrinkLike({
+  const { likeMap, handleToggleLike } = useMultipleDrinkLike({
     userId,
     drinkIds: allDrinkIds,
   });

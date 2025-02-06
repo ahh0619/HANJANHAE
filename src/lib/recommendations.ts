@@ -21,9 +21,11 @@ export const fetchGuestRecommend = async ({
   setError,
   setIsSurveyCompleted,
 }: fetchRecommendProps) => {
+  // 로컬 스토리지에서 전통주 추천 결과 조회
   const recoData = localStorage.getItem('recoData');
 
   if (recoData) {
+    // 기존 추천 결과가 있으면 바로 적용
     setDrinks(JSON.parse(recoData));
     return;
   }
@@ -31,11 +33,11 @@ export const fetchGuestRecommend = async ({
   const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
 
   if (!surveyData || Object.keys(surveyData).length === 0) {
-    console.log('설문조사 없음');
     setError('설문조사한 결과가 없습니다');
     return;
   }
 
+  // AI를 활용하여 전통주 추천 리스트 생성
   const updatedRecoData = await recommendDrinks({
     surveyData,
   });
@@ -56,25 +58,23 @@ export const fetchAuthRecommend = async ({
   setIsSurveyCompleted,
   userId,
 }: fetchRecommendProps) => {
-  // Step 1:전통주 추천리스트(슈퍼베이스 테이블 )
+  // 데이터베이스에서 전통주 추천 결과 조회
   const recoData = await fetchRecoData(userId);
-  console.log('recoData: ', recoData);
 
   if (recoData.length > 0) {
-    // Step 2-1:  2-1) 1번 데이터가 있으면 state에 넣어주고
+    // 기존 추천 결과가 있으면 바로 적용
     setDrinks(recoData);
     return;
   }
 
-  // Step 2-2:  1번 데이터가 없으면, 설문조사 결과 가져오기
   const surveyData = await fetchSurveyData(userId);
 
   if (!surveyData) {
-    console.log('설문조사 없음');
     setError('설문조사한 결과가 없습니다');
     return;
   }
 
+  // AI를 활용하여 전통주 추천 리스트 생성
   const updatedRecoData = await recommendDrinks({
     surveyData,
     userId,
@@ -101,7 +101,6 @@ export const saveSurveyData = async (surveyData) => {
       localStorage.setItem('surveyData', JSON.stringify(surveyData));
     }
   } catch (error) {
-    console.error('Failed to save survey data:', error);
     throw new Error('설문조사 저장 실패!');
   }
 };

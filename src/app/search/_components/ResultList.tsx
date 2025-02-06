@@ -51,8 +51,6 @@ const ResultList = () => {
     fetchNextPage: fetchNextLikePage,
     hasNextPage: hasNextLikePage,
   } = useFilterLikedResults();
-  console.log(likedData);
-
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
@@ -75,9 +73,6 @@ const ResultList = () => {
       ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
     ).values(),
   );
-  console.log(filterSortData);
-  console.log(SearchSortData);
-  console.log(likedData);
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
   const activeHasNextPage = isSearchActive
     ? hasNextSearchSortPage
@@ -139,7 +134,7 @@ const ResultList = () => {
       )}
 
       {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
-      <div className="mx-[56px] my-0 mb-0 mt-[12px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:mx-[40px] xl:mb-[92px] xl:mt-[16px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
+      <div className="mx-[56px] my-0 mb-0 mt-[12px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:mx-[40px] xl:mt-[16px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {
             const isLiked = likeMap[result.id] || false;
