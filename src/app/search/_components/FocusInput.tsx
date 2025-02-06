@@ -64,7 +64,6 @@ const FocusInput = ({
           />
         )}
       </div>
-      {/* 필터된 결과 sideBar */}
       {/* 삼항 연산자로 수정할 수 있으면 수정 */}
       {shouldShowResults && <FilterSideBar />}
     </div>

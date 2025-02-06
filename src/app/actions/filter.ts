@@ -9,17 +9,6 @@ import {
 } from '@/types/search';
 import { createClient } from '@/utils/supabase/client';
 
-// 객체 리터럴 문제로 반환되지 않음
-// export type PaginatedResponse<T> = {
-//   items: T[];
-//   nextPage: number | null;
-//   hasNextPage: boolean;
-//   totalCount: number;
-// };
-// export type PaginatedPromise<T> = Promise<PaginatedResponse<T>>;
-
-// export type DrinkResponse = PaginatedPromise<Drink>;
-
 const allColumns: DrinkColums[] = [
   'id',
   'name',
@@ -31,9 +20,7 @@ const allColumns: DrinkColums[] = [
   'carbonation',
   'body',
 ];
-// id,name,image,type
 
-// 동적화로 위에서 변수 값만 변경해서 .select()에 뿌리는 방식
 const excludedKeywordColumns: DrinkColums[] = [
   'alcohol_content',
   'sweetness',
@@ -41,7 +28,6 @@ const excludedKeywordColumns: DrinkColums[] = [
   'carbonation',
   'body',
 ];
-//type, alcohol_content, sweetness, acidity, carbonation, body
 const excludedTotalColumns: DrinkColums[] = ['id', 'name', 'type', 'image'];
 
 const getColumnsExcept = (excluded: DrinkColums[]): string[] =>
@@ -60,7 +46,6 @@ const getRange = (page: number, pageSize: number): [number, number] => {
   return [(page - 1) * pageSize, page * pageSize - 1];
 };
 
-// 필터값 sort
 export async function filterSortedDrinks({
   types,
   alcoholStrength,
@@ -76,55 +61,38 @@ export async function filterSortedDrinks({
   totalCount: number;
 }> {
   const supabase = createClient();
-  // 전체 말고 필요한 필드만 선택해서 가져오기
-  // let query = supabase.from('drinks').select('*');
   let query = supabase
     .from('drinks')
     .select(selectedFilterColumns, { count: 'exact' });
 
-  // 술 타입 필터링
   if (types.length > 0) {
     query = query.in('type', types);
   }
-
-  // 도수 필터링
   if (alcoholStrength) {
     const [min, max] = alcoholStrength;
-
-    // alcohol_content는 numeric 필드이므로 범위로 필터링
     query = query.gte('alcohol_content', min).lte('alcohol_content', max);
   } else {
-    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
     query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
   }
-
-  // 맛 카테고리 필터링
   if (tastePreferences) {
     Object.entries(tastePreferences).forEach(([category, value]) => {
       query = query.eq(category, value);
     });
   }
-  // 정렬 추가
   query = query.order(sortBy, { ascending: sortOrder === `asc` });
-
-  // 페이지네이션 적용
 
   const [offset, limit] = getRange(page, pageSize);
   query = query.range(offset, limit);
 
   const { data, count, error } = await query;
 
-  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
 
-  // 다음 페이지 존재유무 확인
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
-
-  // 객체 리터럴은 알려진 속성만 이용할 수 있어서
-  // 제네릭 형태로 범용성 있는 형태로 사용이 안되는거 물어보기
+  console.log(data);
   return {
     drinks: data as unknown as Drink[],
     nextPage,
@@ -132,8 +100,6 @@ export async function filterSortedDrinks({
     totalCount: count || 0,
   };
 }
-
-// 검색값 sort
 
 export async function filterKeywordSortedDrinks({
   keyword,
@@ -148,14 +114,14 @@ export async function filterKeywordSortedDrinks({
   totalCount: number;
 }> {
   const supabase = createClient();
-  // 페이지네이션 적용
+
   const [offset, limit] = getRange(page, pageSize);
-  // 또는, 만약 단어 경계가 명확하다면 원하는 방식으로 토큰 분리
+
   const { data, count, error } = await supabase
     .from('drinks')
     .select(selectedKeywordColumns, { count: 'exact' })
     .or(
-      `name.ilike.%${keyword},type.ilike.%${keyword}%,name_nospace.ilike.%${keyword}%,type_nospace.ilike.%${keyword}%`,
+      `name.ilike.%${keyword}%,type.ilike.%${keyword}%,name_nospace.ilike.%${keyword}%,type_nospace.ilike.%${keyword}%`,
     )
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, limit);
@@ -163,18 +129,15 @@ export async function filterKeywordSortedDrinks({
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
-  console.log(data);
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
   return {
     drinks: (data as unknown as Drink[]) || [],
     nextPage,
     hasNextPage,
-    totalCount: count || 0, // 전체 카운트 반환
+    totalCount: count || 0,
   };
 }
-
-// 좋아요 sort
 
 export const getPopularDrinks = async ({
   page = 1,
@@ -191,7 +154,6 @@ export const getPopularDrinks = async ({
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc('fetch_drinks_with_like_count');
-  // 수정된 RPC 함수 호출
 
   if (error) {
     return {
@@ -207,16 +169,13 @@ export const getPopularDrinks = async ({
 
   const totalCount = data?.[0]?.total_likes || 0;
 
-  // name, image, like_count를 기준으로 음료 데이터를 정렬
   const sortedDrinks = data
     ? data.sort((a: any, b: any) => b.like_count - a.like_count)
     : [];
 
-  // 페이지네이션
   const [offset] = getRange(page, pageSize);
   const paginatedLiked = sortedDrinks.slice(offset, offset + pageSize);
 
-  // 다음 페이지 존재 여부 확인
   const hasNextPage = offset + pageSize < sortedDrinks.length;
   const nextPage = hasNextPage ? page + 1 : null;
 
@@ -233,48 +192,40 @@ export async function getDrinkCount({
   alcoholStrength,
   tastePreferences,
 }: FilterParams): Promise<{
-  totalCount: number; // 전체 개수 추가
+  totalCount: number;
 }> {
   const supabase = createClient();
-  // 전체 말고 필요한 필드만 선택해서 가져오기
-  // let query = supabase.from('drinks').select('*');
+
   let query = supabase.from('drinks').select(selectedTotalColumns, {
     count: 'exact',
     head: true,
   });
 
-  // 술 타입 필터링
   if (types.length > 0) {
     query = query.in('type', types);
   }
 
-  // 도수 필터링
   if (alcoholStrength) {
     const [min, max] = alcoholStrength;
 
-    // alcohol_content는 numeric 필드이므로 범위로 필터링
     query = query.gte('alcohol_content', min).lte('alcohol_content', max);
   } else {
-    // alcoholStrength가 없으면 기본값인 0 ~ 100 범위로 필터링
     query = query.gte('alcohol_content', 0).lte('alcohol_content', 100);
   }
 
-  // 맛 카테고리 필터링
   if (tastePreferences) {
     Object.entries(tastePreferences).forEach(([category, value]) => {
       query = query.eq(category, value);
     });
   }
-  // 페이지네이션 적용
 
   const { count, error } = await query;
 
-  // 에러 처리
   if (error) {
     throw new Error('Error fetching filtered data');
   }
 
   return {
-    totalCount: count || 0, // 전체 카운트 반환
+    totalCount: count || 0,
   };
 }
