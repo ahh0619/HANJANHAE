@@ -64,7 +64,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (invalidTokens.length > 0) {
-      console.log('Invalid FCM tokens:', invalidTokens);
       const { error: deleteError } = await supabase
         .from('user_fcm_tokens')
         .delete()

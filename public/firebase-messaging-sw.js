@@ -18,8 +18,6 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log('[firebase-messaging-sw.js] 백그라운드 메시지 수신', payload);
-
   const title = payload.data?.title ?? '백그라운드 알림';
   const body = payload.data?.body ?? '';
   const icon = '/icons/icon-192.png';
