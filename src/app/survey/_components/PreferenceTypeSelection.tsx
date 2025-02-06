@@ -3,6 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import AlcoholExplanationModal from '@/app/preferences/customization/_components/AlcoholExplanationModal';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import useDisableScroll from '@/hooks/search/useDisableScroll';
 import useModalStore from '@/store/modalStore';
 import { PreferenceTypeProps } from '@/types/surveyTypes';
 
@@ -28,6 +29,7 @@ const PreferenceTypeSelection = ({
 }: PreferenceTypeProps) => {
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
   const { isModalOpen, openModal, closeModal } = useModalStore();
+  useDisableScroll(isModalOpen);
 
   return (
     <>
