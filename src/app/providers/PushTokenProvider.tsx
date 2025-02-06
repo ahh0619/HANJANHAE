@@ -80,8 +80,10 @@ export const PushTokenProvider = () => {
         });
 
         // 예: 알림 클릭 시 특정 URL로 이동
-        notification.onclick = () => {
-          window.open('/', '_blank')?.focus();
+        notification.onclick = (e) => {
+          e.preventDefault();
+          window.open('https://hanjanhae.vercel.app', '_blank')?.focus();
+          notification.close();
         };
       }
     });
