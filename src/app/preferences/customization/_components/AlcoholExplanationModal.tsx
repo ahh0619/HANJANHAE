@@ -14,7 +14,6 @@ const AlcoholExplanationModal = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative h-[456px] w-[560px] rounded-2xl bg-white shadow-lg">
-        {/* 닫기 버튼 */}
         <OptimizedImage
           src="/assets/icons/cancelDark.svg"
           className="absolute right-[16px] top-[16px] p-[8px]"
@@ -24,14 +23,11 @@ const AlcoholExplanationModal = ({
           onClick={onClose}
         />
 
-        {/* 모달 내부 내용 (스크롤 가능) */}
         <div className="flex h-full flex-col p-[24px]">
-          {/* 제목 */}
           <h2 className="mb-[8px] mt-[24px] text-center text-title-xl font-bold">
             주류 용어 설명
           </h2>
 
-          {/* 주류 설명 리스트 (항상 스크롤바 표시) */}
           <div className="scrollbar-thin scrollbar-thumb-grayscale-300 scrollbar-track-gray-100 flex-1 overflow-y-scroll px-[16px]">
             <div className="mb-[35px]">
               <span className="text-title-lb">탁주</span>

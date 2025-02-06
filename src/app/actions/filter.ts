@@ -48,9 +48,12 @@ const getColumnsExcept = (excluded: DrinkColums[]): string[] =>
   allColumns.filter((column) => !excluded.includes(column));
 
 const selectedFilterColumns = allColumns.join(',');
-const selectedKeywordColumns = getColumnsExcept(excludedKeywordColumns).join(
-  ',',
-);
+const selectedKeywordColumns = [
+  ...getColumnsExcept(excludedKeywordColumns),
+  'name_nospace',
+  'type_nospace',
+].join(',');
+
 const selectedTotalColumns = getColumnsExcept(excludedTotalColumns).join(',');
 
 const getRange = (page: number, pageSize: number): [number, number] => {
@@ -110,7 +113,6 @@ export async function filterSortedDrinks({
   query = query.range(offset, limit);
 
   const { data, count, error } = await query;
-  console.log(data, count);
 
   // 에러 처리
   if (error) {
@@ -148,17 +150,20 @@ export async function filterKeywordSortedDrinks({
   const supabase = createClient();
   // 페이지네이션 적용
   const [offset, limit] = getRange(page, pageSize);
-
+  // 또는, 만약 단어 경계가 명확하다면 원하는 방식으로 토큰 분리
   const { data, count, error } = await supabase
     .from('drinks')
     .select(selectedKeywordColumns, { count: 'exact' })
-    .or(`name.ilike.%${keyword},type.ilike.%${keyword}%`) // name 또는 type에 keyword 포함
+    .or(
+      `name.ilike.%${keyword},type.ilike.%${keyword}%,name_nospace.ilike.%${keyword}%,type_nospace.ilike.%${keyword}%`,
+    )
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, limit);
 
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
+  console.log(data);
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
   return {
@@ -186,13 +191,9 @@ export const getPopularDrinks = async ({
   const supabase = createClient();
 
   const { data, error } = await supabase.rpc('fetch_drinks_with_like_count');
-  if (data) {
-    console.log(data); // data가 DrinkWithLikeStats[] 타입과 일치
-  }
   // 수정된 RPC 함수 호출
 
   if (error) {
-    console.error('Error fetching popular drinks:', error);
     return {
       likedDrinks: [],
       nextPage: null,

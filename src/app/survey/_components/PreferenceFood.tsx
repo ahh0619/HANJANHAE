@@ -27,7 +27,6 @@ const PreferenceFood = ({
       disabled={!surveyData.food}
       currentStep={currentStep}
     >
-      {/* 선택 옵션 */}
       <div className="relative w-full px-[20px]">
         <input
           type="text"
@@ -37,11 +36,10 @@ const PreferenceFood = ({
           onChange={onChange}
         />
 
-        {/* X 버튼 */}
         {surveyData.food && (
           <OptimizedImage
             src="/assets/icons/cancel.svg"
-            className="absolute right-[11px] top-1/2 h-[40px] w-[40px] -translate-y-1/2 transform p-[8px]"
+            className="absolute right-[31px] top-1/2 h-[40px] w-[40px] -translate-y-1/2 transform p-[8px]"
             alt="초기화 아이콘"
             width={24}
             height={24}
@@ -54,7 +52,7 @@ const PreferenceFood = ({
       </div>
 
       <p className="mt-[4px] w-full px-[20px] text-caption-sm text-grayscale-600">
-        예) 해물파전, 김치전
+        예&#41; 해물파전, 김치전
       </p>
     </PreferenceLayout>
   );

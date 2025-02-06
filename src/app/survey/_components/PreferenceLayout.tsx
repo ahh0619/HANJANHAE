@@ -25,7 +25,6 @@ const PreferenceLayout = ({
 }: PreferenceLayoutProps) => {
   return (
     <div className="flex w-full flex-col">
-      {/* 제목 */}
       <div className="relative mb-[32px] flex h-[44px] w-full items-center">
         <OptimizedImage
           src="/assets/icons/chevron-left.svg"
@@ -40,10 +39,8 @@ const PreferenceLayout = ({
         </h1>
       </div>
 
-      {/* 진행바 */}
       <ProgressBar currentStep={currentStep} />
 
-      {/* 질문 */}
       <div
         className={`my-[56px] w-full px-[20px] ${subquestion ? 'mb-[32px]' : ''}`}
       >
@@ -56,7 +53,6 @@ const PreferenceLayout = ({
       {/* 선택 옵션 */}
       {children}
 
-      {/* 버튼 */}
       <StepButton
         content={currentStep === 7 ? '완료' : '다음'}
         onClick={onNext}

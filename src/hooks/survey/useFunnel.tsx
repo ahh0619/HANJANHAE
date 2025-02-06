@@ -17,7 +17,6 @@ const Funnel = ({
   children: React.ReactNode;
   currentStep: any;
 }) => {
-  console.log('funnel!!');
   const steps = Children.toArray(children).filter(
     (child): child is ReactElement<StepProps> => {
       return React.isValidElement(child) && child.type === Step;

@@ -14,7 +14,6 @@ const DrinkResult = ({ userId, nickname }: DrinkResultProps) => {
   const { drinks, error } = useRecommendations(userId);
 
   if (error !== '') {
-    console.log('에러난다~~');
     throw new Error(error);
   }
 
