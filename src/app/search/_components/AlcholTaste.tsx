@@ -7,7 +7,6 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     useFilterStore();
 
   const levels = [
-    // 텍스트와 숫자 매핑
     { label: '매우 약함', value: 1 },
     { label: '약함', value: 2 },
     { label: '보통', value: 3 },
@@ -22,17 +21,16 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
     바디감: 'body',
   };
   const handleCategoryClick = (value: number) => {
-    const mappedCategory = categoryMapping[category] || category; // 한글 영문으로 변환하기
+    const mappedCategory = categoryMapping[category] || category;
 
     if (tastePreferences[mappedCategory] === value) {
-      removeTastePreference(mappedCategory); // 초기화
+      removeTastePreference(mappedCategory);
     } else {
-      setTastePreferences(mappedCategory, value); // 선택된 값 저장
+      setTastePreferences(mappedCategory, value);
     }
   };
 
   const selectedValue = tastePreferences[categoryMapping[category]] || null;
-
 
   return (
     <div className="mt-10 h-[100px]">
@@ -52,13 +50,11 @@ const AlcholeTaste = ({ category }: TasteRadioButtonProps) => {
               className={`flex h-10 w-10 cursor-pointer items-center justify-center`}
             >
               {selectedValue === value ? (
-                // 클릭된 상태의 SVG
                 <OptimizedImage
                   src="/assets/icons/Radio-Button-clicked.svg"
                   alt="선택 아이콘"
                 />
               ) : (
-                // 기본 상태의 SVG
                 <OptimizedImage
                   src="/assets/icons/Radio-Button.svg"
                   alt="선택해제 아이콘"

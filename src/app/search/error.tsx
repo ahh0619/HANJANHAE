@@ -12,6 +12,6 @@ const Error = ({ error, reset }: ErrorProps) => {
     console.error(error);
   }, [error]);
 
-  return <ErrorComponent reset={reset} />;
+  return <ErrorComponent reset={reset} message={`검색 결과를 찾는 중 오류가 발생했습니다.`} />;
 };
 export default Error;

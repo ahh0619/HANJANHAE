@@ -17,7 +17,7 @@ export const useIntersectionObserver = ({
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          fetchNextPage(); // 데이터 페칭 함수 호출
+          fetchNextPage();
         }
       },
       { threshold },
@@ -28,7 +28,7 @@ export const useIntersectionObserver = ({
 
     return () => {
       if (currentElement) {
-        observer.unobserve(currentElement); // 클린업
+        observer.unobserve(currentElement);
       }
     };
   }, [fetchNextPage, hasNextPage, threshold]);
