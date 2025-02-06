@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
         body: newDrink.name
           ? `"${newDrink.name}" 가 새로 등록되었어요!`
           : '새 음료가 등록되었어요!',
+        click_action: 'https://hanjanhae.vercel.app',
       },
     };
 
@@ -64,7 +65,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (invalidTokens.length > 0) {
-      console.log('Invalid FCM tokens:', invalidTokens);
       const { error: deleteError } = await supabase
         .from('user_fcm_tokens')
         .delete()

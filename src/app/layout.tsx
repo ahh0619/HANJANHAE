@@ -10,6 +10,7 @@ import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 
 import { Providers } from './providers';
+import { RegisterServiceWorker } from './RegisterServiceWorker';
 
 const pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
@@ -75,6 +76,7 @@ const RootLayout = ({
           <main className="m-auto mb-32 w-full max-w-[600px] xl:mt-[102px] xl:max-w-none xl:flex-1">
             {children}
           </main>
+          <RegisterServiceWorker />
           <Footer />
           <ScrollTop />
           <BottomNavBar />
