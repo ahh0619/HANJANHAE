@@ -4,7 +4,7 @@ import React from 'react';
 
 import { AuthProvider } from './providers/AuthProvider';
 import { ModalProvider } from './providers/ModalProvider';
-import PushTokenProvider from './providers/PushTokenProvider';
+import { PushTokenProvider } from './providers/PushTokenProvider';
 import QueryProvider from './providers/QueryProvider';
 import { ToastProvider } from './providers/ToastProvider';
 
