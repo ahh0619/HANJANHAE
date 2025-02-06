@@ -55,7 +55,7 @@ const ResultList = () => {
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
 
-  // type any뜨는거 해결해야 함.
+  // 데이터 동적 선택
   const cleanData = (data: any[]) =>
     data.filter((item) => typeof item.id === 'string');
 
@@ -70,7 +70,7 @@ const ResultList = () => {
         ...cleanData(
           Array.isArray(likedData) && likedData.length > 0 ? likedData : [],
         ),
-      ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
+      ].map((item) => [item.id, item]),
     ).values(),
   );
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
@@ -91,7 +91,7 @@ const ResultList = () => {
         : () => {};
 
   const observerRef = useIntersectionObserver({
-    hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
+    hasNextPage: activeHasNextPage && activeData.length > 0,
     fetchNextPage: activeFetchNextPage,
   });
 
@@ -112,12 +112,6 @@ const ResultList = () => {
   } = useMultipleDrinkLike({ userId, drinkIds: allDrinkIds });
 
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
-
-  // 에러가 났을 때 error.tsx로 안가도 될 수 있다
-  // -> 페이지 전체가 error.tsx로 보내는데 별 거 아닌 부분에서는 안가도 된다.
-  // 페이지 레이아웃 남겨두고 다른 코드 남겨두고 결과 부분만 잠시 문제가 있습니다~
-  // 표시하고 싶을 수도 있다.
-  // 만약 그럴거라면 react query 이용하고 있다면,
   if (isPending) return <Skeleton />;
 
   if (isError) {
@@ -151,7 +145,6 @@ const ResultList = () => {
             );
           })}
 
-        {/* 무한 스크롤 감지용 */}
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
     </>

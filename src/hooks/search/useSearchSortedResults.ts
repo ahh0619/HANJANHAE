@@ -7,15 +7,11 @@ import { getKeyword, getLiked } from '@/utils/filter/queryParamsUtils';
 const useSearchSortedResults = () => {
   const searchParams = useSearchParams();
 
-  // URL에서 keyword와 sort 값을 가져옵니다.
-  const keyword = getKeyword(searchParams); // 예: "막걸리"
-  const liked = getLiked(searchParams); // "liked" 또는 ""
+  const keyword = getKeyword(searchParams);
+  const liked = getLiked(searchParams);
   const isLikedMode = liked === 'liked';
 
-  // 즉, liked 모드에서는 effectiveKeyword가 undefined가 되어, 검색 쿼리는 활성화되지 않습니다.
   const effectiveKeyword = isLikedMode ? undefined : keyword;
-
-  // 검색 모드일 때만 유효한 파라미터로 판단합니다.
   const hasValidParams = !isLikedMode && searchParams.get('keyword') !== null;
 
   const {

@@ -1,4 +1,3 @@
-// queryParamsUtils.ts
 export const getSelectedTypes = (searchParams: URLSearchParams): string[] => {
   return searchParams.get('selectedTypes')
     ? searchParams.get('selectedTypes')!.split(',')
@@ -32,7 +31,7 @@ export const getTastePreferences = (
       .split(',')
       .map((pair) => {
         const [key, value] = pair.split(':').map((item) => item.trim());
-        return [key, Number(value)]; // 숫자로 변환
+        return [key, Number(value)];
       }),
   );
 };

@@ -38,8 +38,8 @@ const SearchBar = ({
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
   const { selectedSort, setSelectedSort } = useSortStore();
   const handleReset = () => {
-    onChange(''); // value 값  지우기
-    setSelectedSort('alphabetical'); // 초기값 세팅
+    onChange('');
+    setSelectedSort('alphabetical');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -47,7 +47,6 @@ const SearchBar = ({
       e.currentTarget.blur();
       const newKeyword = inputRef.current?.value.trim() || '';
       setKeyword(newKeyword);
-      // newKeyword를 직접 사용합니다.
       const newUrl = generateUrl({
         keyword: newKeyword,
       });

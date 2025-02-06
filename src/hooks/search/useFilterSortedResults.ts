@@ -17,7 +17,7 @@ const useFilterSortedResults = () => {
   const alcoholStrength = getAlcoholStrength(searchParams);
   const tastePreferences = getTastePreferences(searchParams);
 
-  const liked = getLiked(searchParams); // 'liked' 또는 ''
+  const liked = getLiked(searchParams);
   const isLikedMode = liked === 'liked';
   const hasValidParams =
     searchParams.get('selectedTypes') !== null ||

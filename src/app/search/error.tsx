@@ -12,6 +12,6 @@ const Error = ({ error, reset }: ErrorProps) => {
     console.error(error);
   }, [error]);
 
-  return <ErrorComponent reset={reset} />;
+  return <ErrorComponent reset={reset} message={error.message} />;
 };
 export default Error;
