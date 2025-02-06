@@ -54,7 +54,6 @@ const ResultList = () => {
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
-
   // 데이터 동적 선택
   const cleanData = (data: any[]) =>
     data.filter((item) => typeof item.id === 'string');
@@ -94,26 +93,17 @@ const ResultList = () => {
     hasNextPage: activeHasNextPage && activeData.length > 0,
     fetchNextPage: activeFetchNextPage,
   });
-
-  const isPending =
-    filterSortData && filterSortData.length > 0
-      ? sortFilterIsLoading
-      : likedData && likedData.length > 0
-        ? likeIsLoading
-        : sortSearchIsLoading;
+  const isPending = sortFilterIsLoading && sortSearchIsLoading && likeIsLoading;
   const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
-
   const {
     isLoading: likeLoading,
     likeMap,
     handleToggleLike,
   } = useMultipleDrinkLike({ userId, drinkIds: allDrinkIds });
-
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
   if (isPending) return <Skeleton />;
-
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
@@ -121,13 +111,15 @@ const ResultList = () => {
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {!isPending && activeData.length === 0 && (
+      {activeData.length === 0 && (
         <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
         </div>
       )}
 
-      {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
+      {!isPending && activeData.length > 0 && (
+        <TotalAndSort totalData={totalData} />
+      )}
       <div className="mx-[56px] my-0 mb-0 mt-[12px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:mx-[40px] xl:mt-[16px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {

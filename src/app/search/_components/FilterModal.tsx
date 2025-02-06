@@ -79,9 +79,9 @@ const FilterModal = () => {
         }`}
       >
         {/* Modal Wrap */}
-        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white p-5 shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
+        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white p-5 shadow-lg xl:absolute xl:top-1/2 xl:h-[462px] xl:-translate-y-1/2 xl:rounded-b-[12px] xl:rounded-t-[12px]">
           {/* Modal Header */}
-          <div className="flex h-auto items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] pt-3 xl:px-[16px]">
+          <div className="flex h-auto items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)]">
             <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
@@ -100,7 +100,7 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="scroll-hidden mb-[0] mt-0 flex-grow pb-[105px] pt-12 xl:mb-[105px] xl:mt-12 xl:px-[16px] xl:pb-[0] xl:pt-0">
+          <div className="scroll-hidden mb-[0] mt-0 flex-grow pb-[105px] pt-[36px] xl:mb-[79px] xl:mt-[8px] xl:px-[16px] xl:pb-[0] xl:pt-0">
             <FilterType />
           </div>
 

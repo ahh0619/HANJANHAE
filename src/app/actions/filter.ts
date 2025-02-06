@@ -92,7 +92,7 @@ export async function filterSortedDrinks({
 
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
-
+  console.log(data);
   return {
     drinks: data as unknown as Drink[],
     nextPage,
@@ -121,7 +121,7 @@ export async function filterKeywordSortedDrinks({
     .from('drinks')
     .select(selectedKeywordColumns, { count: 'exact' })
     .or(
-      `name.ilike.%${keyword},type.ilike.%${keyword}%,name_nospace.ilike.%${keyword}%,type_nospace.ilike.%${keyword}%`,
+      `name.ilike.%${keyword}%,type.ilike.%${keyword}%,name_nospace.ilike.%${keyword}%,type_nospace.ilike.%${keyword}%`,
     )
     .order(sortBy, { ascending: sortOrder === 'asc' })
     .range(offset, limit);
@@ -129,7 +129,6 @@ export async function filterKeywordSortedDrinks({
   if (error) {
     throw new Error('Error fetching data by keyword');
   }
-  console.log(data);
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
   return {
