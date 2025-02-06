@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const DrinkDetailNavigator = () => {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
-  const [ignoreScroll, setIgnoreScroll] = useState(false);
+  const ignoreScrollRef = useRef(false);
 
   const NAV_HEIGHT = 182;
 
   const handleTabClick = (targetId: 'info' | 'review') => {
     setActiveTab(targetId);
 
-    setIgnoreScroll(true);
+    ignoreScrollRef.current = true;
 
     const el = document.getElementById(targetId);
     if (el) {
@@ -21,13 +21,13 @@ const DrinkDetailNavigator = () => {
     }
 
     setTimeout(() => {
-      setIgnoreScroll(false);
+      ignoreScrollRef.current = false;
     }, 600);
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      if (ignoreScroll) return;
+      if (ignoreScrollRef.current) return;
 
       const reviewEl = document.getElementById('review');
       if (!reviewEl) return;
@@ -47,7 +47,7 @@ const DrinkDetailNavigator = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [ignoreScroll]);
+  }, []);
 
   return (
     <nav className="border-b border-grayscale-200 bg-etc-white px-6">

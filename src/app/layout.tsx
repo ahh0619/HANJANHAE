@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 
 import BottomNavBar from '@/components/common/BottomNavBar';
 import KakaoInit from '@/components/common/KakaoInit';
 import ScrollTop from '@/components/common/ScrollTop';
-import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import '@/styles/globals.css';
 
 import { Providers } from './providers';
+import { RegisterServiceWorker } from './RegisterServiceWorker';
 
 const pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
@@ -19,9 +20,10 @@ const pretendard = localFont({
   preload: true,
 });
 
-// const Footer = dynamic(() => import('@/components/layout/Footer'), {
-//   ssr: false,
-// });
+const Footer = dynamic(() => import('@/components/layout/Footer'), {
+  ssr: false,
+});
+
 export const metadata: Metadata = {
   title: '한잔해',
   description: 'AI 추천 기반 전통주를 만나보세요!',
@@ -74,6 +76,7 @@ const RootLayout = ({
           <main className="m-auto mb-32 w-full max-w-[600px] xl:mt-[102px] xl:max-w-none xl:flex-1">
             {children}
           </main>
+          <RegisterServiceWorker />
           <Footer />
           <ScrollTop />
           <BottomNavBar />
