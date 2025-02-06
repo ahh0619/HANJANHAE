@@ -22,7 +22,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
   });
 
   return (
-    <div className="mx-auto mb-[-108px] w-full min-w-[340px] max-w-[640px] xl:max-w-none xl:px-[0px]">
+    <div className="mx-auto mb-[-108px] w-full min-w-[340px] max-w-[640px] xl:max-w-[1200px] xl:px-[0px]">
       <div className="mx-auto flex w-full flex-col items-center xl:hidden">
         <Link
           href={'/'}
@@ -46,7 +46,7 @@ const DrinkList = ({ drinks, title, userId }: DrinkListProps) => {
       </div>
 
       {/* 카드 리스트 */}
-      <div className="mx-auto flex w-full min-w-[340px] flex-col items-center px-[20px] xl:mb-[160px] xl:h-[846px] xl:px-[40px] xl:py-[50px]">
+      <div className="mx-auto flex w-full min-w-[340px] flex-col items-center px-[20px] xl:mb-[160px] xl:h-[846px] xl:px-[0px] xl:py-[50px]">
         <div className="grid grid-cols-1 gap-x-8 gap-y-[20px] sm:grid-cols-1 xl:grid-cols-2 xl:gap-y-[40px]">
           {drinks.map((drink) => {
             const isLiked = likeMap[drink.drink_id] || false;
