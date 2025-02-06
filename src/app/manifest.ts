@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-export default function manifest(): MetadataRoute.Manifest {
+export const manifest = (): MetadataRoute.Manifest => {
   return {
     name: '한잔해',
     short_name: 'HANJANHAE',
@@ -22,4 +22,4 @@ export default function manifest(): MetadataRoute.Manifest {
       },
     ],
   };
-}
+};
