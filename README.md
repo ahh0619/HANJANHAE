@@ -585,8 +585,6 @@ Next.js의 클라이언트 컴포넌트에서 `handleSubmit` 함수 내에서 �
 ### 🔍 코드 예시
 
 ```tsx
-tsx
-복사편집
 const handleSubmit = async () => {
   try {
     if (mode === 'edit') {
@@ -638,8 +636,6 @@ const handleSubmit = async () => {
 비동기 함수에서 `throw`하는 대신, 에러 상태를 업데이트한 후, **렌더링 과정에서 `throw`** 하도록 수정한다.
 
 ```tsx
-tsx
-복사편집
 import { useState } from 'react';
 
 const MyComponent = () => {
