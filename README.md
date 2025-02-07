@@ -1087,7 +1087,7 @@ export default ProductCard;
 </details>
 
 <details>
-<summary><b>검색 시 데이터 깜빡이면서 2번 불러오는 문제</b></h4></summary>
+<summary><b>이전 데이터가 잠깐 표시된 후 새로운 데이터가 로드되면서 화면이 깜빡이는 현상</b></h4></summary>
 <div markdown="1">
 
 ## 문제발생 :
