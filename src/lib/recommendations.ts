@@ -33,7 +33,7 @@ export const fetchGuestRecommend = async ({
   const surveyData = JSON.parse(localStorage.getItem('surveyData') || '{}');
 
   if (!surveyData || Object.keys(surveyData).length === 0) {
-    setError('설문조사한 결과가 없습니다');
+    setError('설문조사를 먼저 진행해주세요');
     return;
   }
 
@@ -70,7 +70,7 @@ export const fetchAuthRecommend = async ({
   const surveyData = await fetchSurveyData(userId);
 
   if (!surveyData) {
-    setError('설문조사한 결과가 없습니다');
+    setError('설문조사를 먼저 진행해주세요');
     return;
   }
 

@@ -18,8 +18,6 @@ const ResultError = ({
           className="mb-5"
         />
 
-        <h1 className="mb-4 text-title-2xl">Error</h1>
-
         <div className="mb-9 flex flex-col items-center text-center text-body-mm text-grayscale-700">
           {message.split('\n').map((line, idx) => (
             <p key={idx}>{line}</p>
