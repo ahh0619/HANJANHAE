@@ -88,6 +88,10 @@
 }
 
 :root {
+  font-family: var(--font-pretendard) !important;
+}
+
+:root {
   /* Primary Colors */
   --primary-color: #bf324b;
   --primary-hover-color: #a22b40;
