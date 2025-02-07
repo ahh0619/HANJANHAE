@@ -13,6 +13,7 @@ import AlcoholLevelSelector from './AlcoholLevelSelector';
 import AlcoholTypeSelector from './AlcoholTypeSelector';
 import FavoriteFoodInput from './FavoriteFoodInput';
 import PreferencesFormSkeleton from './PreferencesFormSkeleton';
+import ResultError from './ResultError';
 import TasteSelector from './TasteSelector';
 
 type PreferencesFormProps = {
@@ -83,7 +84,8 @@ const PreferencesForm = ({ mode }: PreferencesFormProps) => {
   };
 
   if (isLoading) return <PreferencesFormSkeleton />;
-  if (error || submitError) throw new Error(error || submitError);
+  if (error || submitError)
+    return <ResultError message={error || submitError} />;
 
   return (
     <div className="px-[19px] xl:px-0">
