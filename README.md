@@ -20,7 +20,7 @@
 | **안현희** | **김현지** | **박가나** | **김호준** | **조혜빈** | **유지연** |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/10-396-57-178.png" alt="안현희" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-239-26-75.png" alt="김현지" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-512-32-308.png" alt="박가나" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-239-26-73.png" alt="김호준" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/10-605-57-250.png" alt="조혜빈" width="100"> | <img src="https://cdn-static.zep.us/static/assets/baked-avartar-images/2-46-35-137.png" alt="유지연" width="100"> |
-| **팀장** | **팀원** | **팀원** | **팀원** | **디자이너** | **디자이너** |
+| **팀장** | **부팀장** | **팀원** | **팀원** | **디자이너** | **디자이너** |
 | 말포이 | 론 위즐리 | 헤르미온느 | 해리포터 | 덤블도어 | 도비 |
 | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ahh0619/HANJANHAE)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@hhyun19/posts) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/hyeonjy)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@hg024246/posts) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ParkGana)<br>[![Tistory Badge](https://img.shields.io/badge/TISTORY-F36C00?style=for-the-badge&logo=blogger&logoColor=white)](https://dev-gana.tistory.com/) | [![Github Badge](https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/minjun2131)<br>[![Velog Badge](https://img.shields.io/badge/VELOG-20C997?style=for-the-badge&logo=velog&logoColor=white)](https://velog.io/@minjun23221/posts) | [![HelloThere Badge](https://img.shields.io/badge/HELLO%20THERE-FFA500?style=for-the-badge)](#)<br>[![Designer Badge](https://img.shields.io/badge/%F0%9F%8E%A8LET’S%20CREATE-C084FC?style=for-the-badge&logoColor=white)](#) | [![HiGuys Badge](https://img.shields.io/badge/HI%20GUYS-FFA500?style=for-the-badge)](#)<br>[![Designer Badge](https://img.shields.io/badge/%F0%9F%8E%A8NEED%20DESIGN%3F-FF5CAC?style=for-the-badge&logoColor=white)](#) |
 
@@ -31,7 +31,7 @@
 |         | 담당 기능                                                      |
 |:-------:|:------------------------------------------------------------:|
 | ✝️ **안현희**  | **공통 컴포넌트**, **주류 상세 페이지**, **마이 페이지**     |
-| 🐰 **김현지**  | **취향 조사 페이지**, **좋아요 페이지**, **내 취향 관리 페이지** |
+| 🐰 **김현지**  | **취향 조사 페이지**, **좋아요 페이지**, **추천결과 페이지** |
 | 🍫 **박가나**  | **홈 페이지**, **회원가입/로그인 페이지**, **다이닝바 상세 페이지** |
 | 🕊️ **김호준**  | **검색 페이지**, **검색 결과 페이지**                      |
 | 🎨 **조혜빈**  | **UX/UI, 모바일 및 웹 디자인**                              |
@@ -574,15 +574,9 @@ route handler를 사용하니 문제가 해결되었다. 콜드 스타트로 인
 <summary><b>throw new Error 동작하지 않는 이슈</b></h4></summary>
 <div markdown="1">
 
-### 🛠️ 트러블슈팅: 비동기 함수에서 throw한 에러가 `error.tsx`로 이동하지 않는 문제
+### 문제발생
 
----
-
-## 🧐 문제점
-
-Next.js의 클라이언트 컴포넌트에서 `handleSubmit` 함수 내에서 발생한 예외를 `throw new Error(error.message)`로 던졌으나, 예상과 달리 Next.js의 `error.tsx`로 넘어가지 않고 브라우저 콘솔에 `Uncaught (in promise) Error: ...` 만 출력되는 문제가 발생했다.
-
-### 🔍 코드 예시
+Next.js의 클라이언트 컴포넌트에서 handleSubmit 함수 내에서 발생한 예외를 throw new Error(error.message)로 던졌으나, 예상과 달리 Next.js의 error.tsx로 넘어가지 않고 브라우저 콘솔에 Uncaught (in promise) Error: ... 만 출력되는 문제가 발생했다.
 
 ```tsx
 const handleSubmit = async () => {
@@ -595,45 +589,29 @@ const handleSubmit = async () => {
       router.push('/preferences/result');
     }
   } catch (error) {
-    console.log('내 생각대로 왜 안돼');
     throw new Error(error.message); // `error.tsx`로 넘어가지 않음
   }
 };
 
 ```
+error.tsx로 넘어가지 않고 브라우저 콘솔에 Uncaught (in promise) 오류 메시지가 출력됨.
+<br/>
 
-### ❗ 예상했던 동작
-
-- `throw new Error(error.message);`가 실행되면 Next.js가 자동으로 `error.tsx`로 이동할 것으로 기대함.
-
-### ❗ 실제 발생한 현상
-
-- `error.tsx`로 넘어가지 않고 브라우저 콘솔에 `Uncaught (in promise)` 오류 메시지가 출력됨.
-- Next.js가 에러를 감지하지 못하고 기본적으로 Promise reject 상태로 남아 있음.
-
----
-
-## 🔎 원인 분석
+### 원인 분석
 
 1. **비동기 함수에서 발생한 에러는 렌더링 과정에서 발생한 것이 아니다.**
-    - Next.js의 `error.tsx`는 React의 **Error Boundary**를 기반으로 동작하며, 기본적으로 **렌더링 과정(Render Phase) 중 발생한 에러**만 감지할 수 있음.
-    - 하지만 `handleSubmit` 내부에서 발생한 에러는 **이벤트 핸들러(Event Handler)에서 실행된 비동기 코드의 일부**이며, React의 Error Boundary는 이러한 비동기 에러를 잡지 않음.
-2. **비동기 함수에서 발생한 에러는 `Promise.reject` 형태로 처리된다.**
-    - 비동기 함수(`async`/`await`) 내부에서 `throw`하면, JavaScript 엔진은 이를 `Promise.reject(new Error(...))` 형태로 처리함.
-    - React의 렌더링 과정과 별개의 **비동기 콜 스택에서 발생한 에러**이므로 Error Boundary에서 감지할 수 없음.
-3. **렌더링 과정에서 `throw`해야만 `error.tsx`가 작동한다.**
-    - Next.js에서 `error.tsx`(혹은 React의 `ErrorBoundary`)는 컴포넌트가 렌더링되는 동안 발생한 예외를 감지할 수 있음.
-    - 따라서 `catch` 블록에서 직접 `throw`하는 것이 아니라, 상태(state)를 업데이트하여 컴포넌트가 **렌더링 과정 중에** 에러를 던지도록 해야 함.
+    - Next.js의 error.tsx는 React의 Error Boundary를 기반으로 동작하며, 기본적으로 렌더링 과정 중 발생한 에러만 감지할 수 있음.
+    - 하지만 handleSubmit 내부에서 발생한 에러는 이벤트 핸들러에서 실행된 비동기 코드의 일부이며, React의 Error Boundary는 이러한 비동기 에러를 잡지 않음.
+2. **비동기 함수에서 발생한 에러는 Promise.reject 형태로 처리된다.**
+    - 비동기 함수(async/await) 내부에서 throw하면, JavaScript 엔진은 이를 Promise.reject(new Error(...)) 형태로 처리함.
+    - React의 렌더링 과정과 별개의 비동기 콜 스택에서 발생한 에러이므로 Error Boundary에서 감지할 수 없음.
+3. **렌더링 과정에서 throw해야만 error.tsx가 작동한다.**
+    - Next.js에서 error.tsx(혹은 React의 ErrorBoundary)는 컴포넌트가 렌더링되는 동안 발생한 예외를 감지할 수 있음.
+    - 따라서 catch 블록에서 직접 throw하는 것이 아니라, 상태를 업데이트하여 컴포넌트가 렌더링 과정 중에 에러를 던지도록 해야 함.
 
----
+### 해결
 
-## ✅ 해결 과정
-
-### 🎯 해결 방법: 상태를 활용하여 렌더링 과정에서 에러를 발생시키기
-
-### 1️⃣ `useState`를 활용하여 `error` 상태를 저장
-
-비동기 함수에서 `throw`하는 대신, 에러 상태를 업데이트한 후, **렌더링 과정에서 `throw`** 하도록 수정한다.
+비동기 함수에서 throw하는 대신, 에러 상태를 업데이트한 후, 렌더링 과정에서 throw 하도록 수정했다.
 
 ```tsx
 import { useState } from 'react';
@@ -651,7 +629,6 @@ const MyComponent = () => {
         router.push('/preferences/result');
       }
     } catch (error) {
-      console.log('내 생각대로 왜 안돼');
       setSubmitError(error.message); // 상태 업데이트
     }
   };
@@ -662,18 +639,7 @@ const MyComponent = () => {
 };
 
 ```
-
-### 🔍 적용 후 예상 동작
-
-- `handleSubmit` 내에서 `setSubmitError(error.message);`가 실행되면,→ `submitError` 상태가 업데이트됨→ React가 해당 컴포넌트를 **재렌더링**함→ 재렌더링 과정에서 `if (submitError) throw new Error(submitError);`가 실행됨→ **이제 이 에러는 “렌더링 과정”에서 발생한 것이므로, `error.tsx`로 정상적으로 이동**함.
-
----
-
-## 🏆 최종 결론
-
-- **비동기 함수에서 발생한 에러를 React Error Boundary(Next.js의 `error.tsx`)가 자동으로 잡지 않는 이유**→ 비동기 콜백에서 발생한 에러는 **React의 렌더링 과정과 별개로 실행**되기 때문.
-- **해결 방법**→ 에러를 `setState`로 저장하고, 렌더링 과정에서 `throw new Error(...)`를 실행하면 해결됨.
-- **Next.js에서 클라이언트 이벤트 핸들러에서 발생한 에러를 자동으로 `error.tsx`로 이동시키고 싶다면**→ 반드시 “렌더링 중”에 `throw`를 발생시키도록 설계해야 함.
+handleSubmit 함수에서 setSubmitError(error.message);가 실행되면, submitError 상태가 업데이트된다. 상태가 변경되면서 React는 해당 컴포넌트를 재렌더링하고, 이 과정에서 if (submitError) throw new Error(submitError);가 실행된다. 이렇게 해서 에러가 렌더링 중에 발생한 것으로 인식되어, Next.js의 error.tsx로 정상적으로 이동하게 되었다.
 
 <br>
 </div>
