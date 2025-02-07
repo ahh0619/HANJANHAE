@@ -54,8 +54,7 @@ const ResultList = () => {
   const isSearchActive = SearchSortData?.length > 0;
   const isFilterActive = filterSortData?.length > 0;
   const isLikedActive = likedData?.length > 0;
-
-  // type any뜨는거 해결해야 함.
+  // 데이터 동적 선택
   const cleanData = (data: any[]) =>
     data.filter((item) => typeof item.id === 'string');
 
@@ -70,7 +69,7 @@ const ResultList = () => {
         ...cleanData(
           Array.isArray(likedData) && likedData.length > 0 ? likedData : [],
         ),
-      ].map((item) => [item.id, item]), // id를 key로 하여 중복 제거
+      ].map((item) => [item.id, item]),
     ).values(),
   );
   // 활성 hasNextPage와 fetchNextPage도 동적으로 선택
@@ -91,35 +90,20 @@ const ResultList = () => {
         : () => {};
 
   const observerRef = useIntersectionObserver({
-    hasNextPage: activeHasNextPage && activeData.length > 0, // 데이터가 있을 때만 동작
+    hasNextPage: activeHasNextPage && activeData.length > 0,
     fetchNextPage: activeFetchNextPage,
   });
-
-  const isPending =
-    filterSortData && filterSortData.length > 0
-      ? sortFilterIsLoading
-      : likedData && likedData.length > 0
-        ? likeIsLoading
-        : sortSearchIsLoading;
+  const isPending = sortFilterIsLoading && sortSearchIsLoading && likeIsLoading;
   const isError = sortSearchIsError || sortFilterIsError || likeIsError;
 
   const allDrinkIds = activeData.map((item) => item.id);
-
   const {
     isLoading: likeLoading,
     likeMap,
     handleToggleLike,
   } = useMultipleDrinkLike({ userId, drinkIds: allDrinkIds });
-
   const totalData = filterSortTotal || searchSortTotal || likedTotal;
-
-  // 에러가 났을 때 error.tsx로 안가도 될 수 있다
-  // -> 페이지 전체가 error.tsx로 보내는데 별 거 아닌 부분에서는 안가도 된다.
-  // 페이지 레이아웃 남겨두고 다른 코드 남겨두고 결과 부분만 잠시 문제가 있습니다~
-  // 표시하고 싶을 수도 있다.
-  // 만약 그럴거라면 react query 이용하고 있다면,
   if (isPending) return <Skeleton />;
-
   if (isError) {
     throw new Error('데이터를 불러올 수 없습니다.');
   }
@@ -127,13 +111,15 @@ const ResultList = () => {
   return (
     <>
       {/* 로딩 중일 때 Skeleton 표시 */}
-      {!isPending && activeData.length === 0 && (
+      {activeData.length === 0 && (
         <div className="mt-8 h-[60px] text-center text-gray-500 xl:h-auto">
           검색 결과가 존재하지 않습니다.
         </div>
       )}
 
-      {activeData.length > 0 && <TotalAndSort totalData={totalData} />}
+      {!isPending && activeData.length > 0 && (
+        <TotalAndSort totalData={totalData} />
+      )}
       <div className="mx-[56px] my-0 mb-0 mt-[12px] grid w-full max-w-[448px] grid-cols-2 justify-items-center gap-[8px] xl:mx-[40px] xl:mt-[16px] xl:w-[1200px] xl:max-w-none xl:grid-cols-5 xl:gap-x-[20px] xl:gap-y-[56px]">
         {activeData.length > 0 &&
           activeData.map((result) => {
@@ -151,7 +137,6 @@ const ResultList = () => {
             );
           })}
 
-        {/* 무한 스크롤 감지용 */}
         <div ref={observerRef} style={{ height: '1px' }} />
       </div>
     </>

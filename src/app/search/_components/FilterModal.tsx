@@ -8,7 +8,7 @@ import OptimizedImage from '@/components/common/OptimizedImage';
 import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
-import useModalStore, { useBodyLock } from '@/store/modalStore';
+import useModalStore from '@/store/modalStore';
 import useSortStore from '@/store/selectStore';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
@@ -16,14 +16,11 @@ import FilterType from './FilterTypes';
 
 const FilterModal = () => {
   const router = useRouter();
-  // 사용하지 않는 코드들은 모두 정리하기
 
   const queryClient = useQueryClient();
   const { setIsSliderClicked } = useFocusStore();
   const { isModalOpen, closeModal } = useModalStore();
   const totalCount = useDrinkCount();
-  useBodyLock();
-
   const {
     selectedTypes,
     alcoholStrength,
@@ -37,26 +34,15 @@ const FilterModal = () => {
   const { setSelectedSort } = useSortStore();
   const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
 
-  // 추가된 상태: 애니메이션 트리거
   const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
     if (isModalOpen) {
-      // 모달이 열릴 때 애니메이션 활성화
-      setTimeout(() => setIsAnimating(true), 50); // 약간의 지연 추가
+      setTimeout(() => setIsAnimating(true), 50);
     } else {
-      // 모달이 닫힐 때 애니메이션 비활성화
       setIsAnimating(false);
     }
   }, [isModalOpen]);
 
-  // 라우터 이동이나 모달 닫는건?
-  // 보통은 하나의 함수는 하나의 일만 하는데
-  // 여긴 분리를 해야 좋을 것 같다.
-  // setIsFilter가 쓰이는 부분을 모두 수정을 한다면?
-  // setIsFilter는 true false로 만드는 일들이 많을텐데
-  // 이게 분산이 되어 있는데 한번에 처리할 수 있을까?
-
-  // 어디를 수정하면 코드의 맥락을 최소한으로 파악해서 수정할 수 있는가?
   const handleApplyfilters = () => {
     setIsFiltered(true);
     setTriggerFetch(true);
@@ -80,24 +66,22 @@ const FilterModal = () => {
 
   return (
     <>
-      {/* 모달 배경 */}
+      {/* Modal Background */}
       <div
         className={`fixed inset-0 z-[100] bg-black bg-opacity-10 transition-opacity duration-200 ease-in xl:bg-opacity-50 ${
           isAnimating ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={closeModal}
       />
-
-      {/* 모달 Wrap */}
       <div
         className={`ease fixed inset-0 z-[101] flex h-full transform flex-col justify-end transition-transform duration-500 xl:translate-y-0 xl:duration-700 ${
           isAnimating ? 'translate-y-0' : 'translate-y-[120%]'
         }`}
       >
-        {/* 모달 Scroll Box */}
-        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white p-5 shadow-lg xl:top-[-35%] xl:h-[462px] xl:rounded-b-[12px] xl:rounded-t-[12px]">
+        {/* Modal Wrap */}
+        <div className="relative left-1/2 flex h-[95%] max-w-[512px] -translate-x-1/2 transform flex-col rounded-t-[32px] bg-white p-5 shadow-lg xl:absolute xl:top-1/2 xl:h-[462px] xl:-translate-y-1/2 xl:rounded-b-[12px] xl:rounded-t-[12px]">
           {/* Modal Header */}
-          <div className="flex h-auto items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)] pt-3 xl:px-[16px]">
+          <div className="flex h-auto items-center justify-between rounded-t-[32px] bg-[var(--Etc-background)]">
             <OptimizedImage
               src="/assets/icons/cancelDark.svg"
               alt="검색 키워드 삭제 아이콘"
@@ -116,7 +100,7 @@ const FilterModal = () => {
           </div>
 
           {/* Scrollable Content */}
-          <div className="scroll-hidden mb-[0] mt-0 flex-grow pb-[105px] pt-12 xl:mb-[105px] xl:mt-12 xl:px-[16px] xl:pb-[0] xl:pt-0">
+          <div className="scroll-hidden mb-[0] mt-0 flex-grow pb-[105px] pt-[36px] xl:mb-[79px] xl:mt-[8px] xl:px-[16px] xl:pb-[0] xl:pt-0">
             <FilterType />
           </div>
 

@@ -22,23 +22,19 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   max = 3,
   step = 1,
 }) => {
-  // 핸들을 드래그하거나 슬라이더가 변경되기 전에 상태를 업데이트
   const { isSliderClicked, setIsSliderClicked } = useFocusStore();
-  const handleBeforeChange = () => {
-    setIsSliderClicked(true);
-  };
 
   const handleSliderChange = (newValues: [number, number]) => {
-    setIsSliderClicked(true); // 슬라이더 값이 변경되면 클릭 상태로 변경
+    setIsSliderClicked(true);
     onValueChange(newValues);
   };
 
   const handleMidButtonClick = () => {
-    const middleValue = Math.round((max + min) / 2); // 중앙값 계산
+    const middleValue = Math.round((max + min) / 2);
 
     if (value[0] === min && value[1] === max) {
       // 슬라이더 범위가 [min, max]일 때
-      onValueChange([min, middleValue]); // [min, middleValue]로 축소
+      onValueChange([min, middleValue]);
     } else {
       // 기본 동작: 중앙값 포함
       onValueChange([
@@ -47,7 +43,7 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       ]);
     }
 
-    setIsSliderClicked(true); // 버튼 클릭 시에도 트랙 색상을 업데이트
+    setIsSliderClicked(true);
   };
 
   return (
@@ -56,18 +52,17 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       <Slider
         range
         value={value}
-        onBeforeChange={handleBeforeChange} // 최초 드래그 시작 시 호출
-        onChange={handleSliderChange} // 드래그 중 값이 변경될 때 호출
+        onChange={handleSliderChange}
         min={min}
         max={max}
         step={step}
         styles={{
           track: {
-            backgroundColor: isSliderClicked ? '#BF324B' : '#E0E0E0', // 클릭 여부에 따라 색상 변경
+            backgroundColor: isSliderClicked ? '#BF324B' : '#E0E0E0',
             height: 8,
           },
           handle: {
-            borderColor: isSliderClicked ? '#BF324B' : '#E0E0E0', // 클릭 여부에 따라 색상 변경
+            borderColor: isSliderClicked ? '#BF324B' : '#E0E0E0',
             border: isSliderClicked ? 'solid 4px #BF324B' : 'solid 4px #E0E0E0',
             height: 18,
             width: 18,
@@ -104,13 +99,13 @@ const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
               width: '20px',
               height: '20px',
               borderRadius: '50%',
-              backgroundColor: !isSliderClicked // 클릭 여부에 따라 초기 색상 유지
+              backgroundColor: !isSliderClicked
                 ? '#E0E0E0'
                 : value[0] <= 2 && value[1] >= 2
                   ? '#BF324B'
                   : '#E0E0E0',
             }}
-            onClick={handleMidButtonClick} // 클릭 시 트랙 업데이트
+            onClick={handleMidButtonClick}
           />
         </div>
         <div className="text-right">

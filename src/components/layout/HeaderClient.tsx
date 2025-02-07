@@ -38,7 +38,7 @@ const HeaderClient = () => {
   return (
     <header
       className={`fixed top-0 z-50 hidden h-[102px] w-full transition-colors duration-300 xl:block ${
-        isExactSearchPage && !isScrolled ? 'bg-[#FFEAED80]' : 'bg-white'
+        isExactSearchPage && !isScrolled ? 'bg-[#FFF4F6]' : 'bg-white'
       }`}
     >
       <div className="mx-auto flex h-full w-[1200px] items-center justify-between">

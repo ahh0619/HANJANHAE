@@ -17,7 +17,7 @@ const useFilterSortedResults = () => {
   const alcoholStrength = getAlcoholStrength(searchParams);
   const tastePreferences = getTastePreferences(searchParams);
 
-  const liked = getLiked(searchParams); // 'liked' 또는 ''
+  const liked = getLiked(searchParams);
   const isLikedMode = liked === 'liked';
   const hasValidParams =
     searchParams.get('selectedTypes') !== null ||
@@ -37,9 +37,8 @@ const useFilterSortedResults = () => {
       queryFn: ({ pageParam = 1 }) => {
         return filterSortedDrinks({ ...filterParams, page: pageParam });
       },
-      getNextPageParam: (lastPage) => {
-        return lastPage.hasNextPage ? lastPage.nextPage : null;
-      },
+      getNextPageParam: (lastPage) =>
+        lastPage.hasNextPage ? lastPage.nextPage : null,
       initialPageParam: 1,
       staleTime: 1000 * 60 * 5,
       retry: 1,
