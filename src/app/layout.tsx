@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description: 'AI 추천 기반 전통주를 만나보세요!',
     images: [
       {
-        url: 'https://hanjanhae.vercel.app/assets/thumbnail.png',
+        url: 'https://hanjanhae.vercel.app/assets/thumbnail800.png',
         width: 800,
         height: 400,
         alt: '한잔해 썸네일',
