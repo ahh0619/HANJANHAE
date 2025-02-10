@@ -11,6 +11,16 @@ const Error = ({ error, reset }: ErrorProps) => {
     Sentry.captureException(error);
   }, [error]);
 
-  return <ErrorComponent reset={reset} message={error.message} />;
+  return (
+    <ErrorComponent
+      reset={reset}
+      title=""
+      message="설문조사를 먼저 진행해주세요"
+      showBackButton={false}
+      showHomeButton={false}
+      showSurveyButton={true}
+    />
+  );
 };
+
 export default Error;

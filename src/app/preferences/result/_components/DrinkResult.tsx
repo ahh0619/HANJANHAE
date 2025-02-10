@@ -4,7 +4,6 @@ import useRecommendations from '@/hooks/result/useRecomendations';
 
 import DrinkList from './DrinkList';
 import LoadingAnimation from './LoadingAnimation';
-import ResultError from './ResultError';
 
 type DrinkResultProps = {
   userId?: string | null;
@@ -15,7 +14,7 @@ const DrinkResult = ({ userId, nickname }: DrinkResultProps) => {
   const { drinks, error } = useRecommendations(userId);
 
   if (error !== '') {
-    return <ResultError message={error} />;
+    throw new Error(error);
   }
 
   if (drinks === null) {
