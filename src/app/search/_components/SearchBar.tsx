@@ -6,7 +6,6 @@ import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
-import useSortStore from '@/store/selectStore';
 import { SearchBarProps } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
@@ -20,26 +19,12 @@ const SearchBar = ({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const {
-    triggerFetch,
-    isFiltered,
-    resetFilters,
-    setIsFiltered,
-    setTriggerFetch,
-    setValues,
-  } = useFilterStore();
-  const {
-    searchTriggerFetch,
-    keyword,
-    setKeyword,
-    setSearchTriggerFetch,
-    resetSearchStore,
-  } = useSearchStore();
-  const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
-  const { selectedSort, setSelectedSort } = useSortStore();
+  const { isFiltered, resetFilters, setIsFiltered, setValues } =
+    useFilterStore();
+  const { keyword, setKeyword } = useSearchStore();
+  const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   const handleReset = () => {
     onChange('');
-    setSelectedSort('alphabetical');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -51,7 +36,6 @@ const SearchBar = ({
         keyword: newKeyword,
       });
       router.push(newUrl);
-      setSelectedSort('alphabetical');
       setIsSearchFocuse(false);
     }
   };

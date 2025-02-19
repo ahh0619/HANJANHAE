@@ -9,7 +9,6 @@ import useDrinkCount from '@/hooks/search/useDrinkCount';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useModalStore from '@/store/modalStore';
-import useSortStore from '@/store/selectStore';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
 import FilterType from './FilterTypes';
@@ -28,11 +27,9 @@ const FilterModal = () => {
     setAlcoholStrength,
     setIsFiltered,
     resetFilters,
-    setTriggerFetch,
     setValues,
   } = useFilterStore();
-  const { setSelectedSort } = useSortStore();
-  const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
+  const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
 
   const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
@@ -45,7 +42,6 @@ const FilterModal = () => {
 
   const handleApplyfilters = () => {
     setIsFiltered(true);
-    setTriggerFetch(true);
     const newUrl = generateUrl({
       selectedTypes,
       alcoholStrength,
@@ -53,7 +49,6 @@ const FilterModal = () => {
     });
     router.push(newUrl);
     closeModal();
-    setSelectedSort('alphabetical');
   };
 
   const handleFilterReset = () => {
@@ -61,7 +56,6 @@ const FilterModal = () => {
     setIsSliderClicked(false);
     setIsSearchFocuse(false);
     setValues([1, 3]);
-    setSelectedSort('alphabetical');
   };
 
   return (

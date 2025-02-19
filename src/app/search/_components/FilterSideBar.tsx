@@ -30,7 +30,6 @@ const FilterSideBar = () => {
     removeSelectedType,
     removeAlcoholStrength,
     removeTastePreference,
-    setTriggerFetch,
     setValues,
   } = useFilterStore();
   const paramSelectedTypes = shouldHideFilterSidebar
