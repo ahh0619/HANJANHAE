@@ -2,8 +2,7 @@
 
 
 import { useRouter, useSearchParams } from 'next/navigation';
-
-import useSortStore from '@/store/selectStore';
+import { useState } from 'react';
 
 import {
   Select,
@@ -13,19 +12,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from './_ui/Select';
-
 const SelectSorted = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { selectedSort, setSelectedSort } = useSortStore();
-  const handleValueChange = (value: string) => {
-    const newValue =
-      selectedSort === value
-        ? value === 'alphabetical'
-          ? 'liked'
-          : 'alphabetical'
-        : value;
+  const [selectedSort, setSelectedSort] = useState(
+    searchParams.get('sort') || 'liked',
+  );
 
+  const getNewSortValue = (currentSort: string, clickedValue: string) => {
+    return currentSort === clickedValue
+      ? clickedValue === 'alphabetical'
+        ? 'liked'
+        : 'alphabetical'
+      : clickedValue;
+  };
+  const handleValueChange = (value: string) => {
+    const newValue = getNewSortValue(selectedSort, value);
     setSelectedSort(newValue);
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set('sort', newValue);
