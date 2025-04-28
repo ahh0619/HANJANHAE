@@ -40,5 +40,5 @@ next-env.d.ts
 # Sentry Config File
 .env.sentry-build-plugin
 
-// 발표 및 관련자료 
+# 발표 및 관련자료 
 documents

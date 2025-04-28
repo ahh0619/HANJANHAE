@@ -46,7 +46,7 @@ const getRange = (page: number, pageSize: number): [number, number] => {
   return [(page - 1) * pageSize, page * pageSize - 1];
 };
 
-export async function filterSortedDrinks({
+export const filterSortedDrinks = async ({
   types,
   alcoholStrength,
   tastePreferences,
@@ -59,7 +59,7 @@ export async function filterSortedDrinks({
   nextPage: number | null;
   hasNextPage: boolean;
   totalCount: number;
-}> {
+}> => {
   const supabase = createClient();
   let query = supabase
     .from('drinks')
@@ -92,16 +92,15 @@ export async function filterSortedDrinks({
 
   const hasNextPage = data.length === pageSize;
   const nextPage = hasNextPage ? page + 1 : null;
-  console.log(data);
   return {
     drinks: data as unknown as Drink[],
     nextPage,
     hasNextPage,
     totalCount: count || 0,
   };
-}
+};
 
-export async function filterKeywordSortedDrinks({
+export const filterKeywordSortedDrinks = async ({
   keyword,
   page = 1,
   pageSize = 20,
@@ -112,7 +111,7 @@ export async function filterKeywordSortedDrinks({
   nextPage: number | null;
   hasNextPage: boolean;
   totalCount: number;
-}> {
+}> => {
   const supabase = createClient();
 
   const [offset, limit] = getRange(page, pageSize);
@@ -137,7 +136,7 @@ export async function filterKeywordSortedDrinks({
     hasNextPage,
     totalCount: count || 0,
   };
-}
+};
 
 export const getPopularDrinks = async ({
   page = 1,
@@ -187,13 +186,13 @@ export const getPopularDrinks = async ({
   };
 };
 
-export async function getDrinkCount({
+export const getDrinkCount = async ({
   types,
   alcoholStrength,
   tastePreferences,
 }: FilterParams): Promise<{
   totalCount: number;
-}> {
+}> => {
   const supabase = createClient();
 
   let query = supabase.from('drinks').select(selectedTotalColumns, {
@@ -228,4 +227,4 @@ export async function getDrinkCount({
   return {
     totalCount: count || 0,
   };
-}
+};

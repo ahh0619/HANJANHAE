@@ -17,7 +17,6 @@ export async function POST(req: Request) {
       sortBy: body.sortBy || 'name',
       sortOrder: body.sortOrder || 'asc',
     });
-    console.log(data);
     // 3) 결과를 JSON 형태로 응답
     return NextResponse.json(data);
   } catch (error: any) {
