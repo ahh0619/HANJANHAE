@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import OptimizedImage from '@/components/common/OptimizedImage';
 import useFilterStore from '@/store/filterStore';
@@ -18,14 +18,9 @@ const FocusInput = ({
   shouldShowResults,
   shouldHideFilterSidebar,
 }: FocusInputProps) => {
-  const { triggerFetch, setTriggerFetch, isFiltered } = useFilterStore();
+  const { isFiltered } = useFilterStore();
   const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
   // 검색어 상태 관리
-  useEffect(() => {
-    if (!triggerFetch) return;
-    setIsSearchFocuse(false);
-    setTriggerFetch(false);
-  }, [triggerFetch]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   return (

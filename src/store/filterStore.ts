@@ -4,13 +4,11 @@ type FilterStore = {
   selectedTypes: string[];
   alcoholStrength: [number, number];
   tastePreferences: Record<string, number>;
-  triggerFetch: boolean;
   isFiltered: boolean;
   setSelectedTypes: (types: string[]) => void;
   setAlcoholStrength: (strength: [number, number] | null) => void;
   setTastePreferences: (category: string, level: number) => void;
   resetFilters: () => void;
-  setTriggerFetch: (trigger: boolean) => void;
   setIsFiltered: (value: boolean) => void;
 
   values: number[] | null;
@@ -25,7 +23,6 @@ const useFilterStore = create<FilterStore>((set) => ({
   selectedTypes: [],
   alcoholStrength: [0, 100],
   tastePreferences: {},
-  triggerFetch: false,
   isFiltered: false,
   setSelectedTypes: (types) => set({ selectedTypes: types }),
   setAlcoholStrength: (strength) => set({ alcoholStrength: strength }),
@@ -39,7 +36,6 @@ const useFilterStore = create<FilterStore>((set) => ({
       alcoholStrength: [0, 100],
       tastePreferences: {},
     }),
-  setTriggerFetch: (trigger) => set({ triggerFetch: trigger }),
   setIsFiltered: (value) => set({ isFiltered: value }),
   values: [1, 3],
   setValues: (values) => set({ values }),

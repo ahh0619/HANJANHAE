@@ -16,15 +16,8 @@ import SearchLogo from './SearchLogo';
 import StandByScreen from './StandByScreen';
 
 const SearchWrap = () => {
-  const { searchTriggerFetch, setKeyword, setSearchTriggerFetch } =
-    useSearchStore();
-  const {
-    triggerFetch,
-    resetFilters,
-    setIsFiltered,
-    setTriggerFetch,
-    isFiltered,
-  } = useFilterStore();
+  const { setKeyword } = useSearchStore();
+  const { resetFilters, setIsFiltered, isFiltered } = useFilterStore();
   const searchParams = useSearchParams();
   const shouldShowResults = searchParams.toString() !== '';
   const shouldHideFilterSidebar = searchParams.get('keyword') !== null;

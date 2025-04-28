@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import useFilterStore from '@/store/filterStore';
 import useFocusStore from '@/store/focusStore';
 import useSearchStore from '@/store/keywordStore';
-import useSortStore from '@/store/selectStore';
 import { RecommendCateGory } from '@/types/search';
 import { generateUrl } from '@/utils/filter/generateUrl';
 
@@ -16,23 +15,10 @@ const RecommendCategory = ({
 }: RecommendCateGory) => {
   const router = useRouter();
   const categories = ['리큐르', '약주', '막걸리'];
-  const {
-    searchTriggerFetch,
-    keyword,
-    setKeyword,
-    setSearchTriggerFetch,
-    resetSearchStore,
-  } = useSearchStore();
-  const {
-    triggerFetch,
-    isFiltered,
-    resetFilters,
-    setIsFiltered,
-    setTriggerFetch,
-    setValues,
-  } = useFilterStore();
-  const { isSearchFocus, setIsSearchFocuse, resetStates } = useFocusStore();
-  const { selectedSort, setSelectedSort } = useSortStore();
+  const { keyword, setKeyword } = useSearchStore();
+  const { isFiltered, resetFilters, setIsFiltered, setValues } =
+    useFilterStore();
+  const { isSearchFocus, setIsSearchFocuse } = useFocusStore();
 
   const handleCategoryClick = (category: string) => {
     setSearchValue(category);
@@ -42,11 +28,9 @@ const RecommendCategory = ({
       keyword: category,
     });
     router.push(newUrl);
-    setTriggerFetch(false);
+
     setIsFiltered(true);
     setIsSearchFocuse(false);
-    setSearchTriggerFetch(true);
-    setSelectedSort('alphabetical');
   };
 
   return (
